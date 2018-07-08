@@ -1,0 +1,32 @@
+@import "./src/assets/scss/variable";
+@import "./src/assets/scss/mixing";
+
+
+.Orderplan{
+    background-color: #fff;
+    float: left;
+    padding: 15px 10px 7px 10px;
+    border-radius: 3px;
+    box-shadow: 0px 1px 3px #a5a5a5;
+    label{
+        font-size: 14px;
+        font-weight: 500;
+        text-align: left;
+        padding: 10px 5px;
+        color: #6f6e6e;
+        width: 70px;
+    }
+}
+.orderHD{
+    padding: 30px 0;
+}
+.orderoptionrt{
+    background-color: #fff;
+    float: left;
+    padding: 50px 10px 15px 10px;
+    border-radius: 3px;
+    box-shadow: 0px 1px 3px #a5a5a5;
+}
+.ui-datatable-reflow .ui-datatable-data > tr > td {
+    width: 100% !important;
+}

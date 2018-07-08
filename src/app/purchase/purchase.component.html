@@ -1,0 +1,257 @@
+<app-navbar></app-navbar>
+<section>
+  <div class="container-fluid">
+    <div class="wrrapermain">
+      <div class="wrraper">
+        <section>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="QuickIcon">
+                <ul>
+                  <li>
+                    <a href="javascript:void(0)">
+                      <i class="fa fa-pencil-square"></i>
+                      <span>Edit</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0)">
+                      <i class="fa fa-floppy-o"></i>
+                      <span>Save</span>
+                    </a>
+                  </li>
+                </ul>
+                <ul>
+                  <li>
+                    <a href="javascript:void(0)">
+                      <i class="fa fa-undo"></i>
+                      <span>Cancel</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0)">
+                      <i class="fa fa-window-close"></i>
+                      <span>close</span>
+                    </a>
+                  </li>
+                </ul>
+                <ul>
+                  <li>
+                    <a href="javascript:void(0)">
+                      <i class="fa fa-search"></i>
+                      <span>Search</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0)">
+                      <i class="fa fa-print"></i>
+                      <span>Print</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0)">
+                      <i class="fa fa-globe"></i>
+                      <span>Export</span>
+                    </a>
+                  </li>
+                </ul>
+                <ul>
+                  <li>
+                    <a href="javascript:void(0)">
+                      <i class="fa fa-trash-o"></i>
+                      <span>Delete</span>
+                    </a>
+                  </li>
+
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="transationdetal">
+                <div class="col-sm-8 no-pd">
+                  <div class="col-sm-12 no-pd">
+                    <div class="col-xs-12 col-sm-6 no-pd">
+                      <label>Tran ID</label>
+                      <p-dropdown [options]="transation" [(ngModel)]="selectedId" class="plandropdown">
+                        <ng-template let-item pTemplate="selectedItem">
+                          <span style="vertical-align:middle">{{item.label}}</span>
+                        </ng-template>
+                      </p-dropdown>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 no-pd text-align padding-right">
+                      <label>Date</label>
+                      <p-calendar [(ngModel)]="dates" [showIcon]="true" class="datedropdown"></p-calendar>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 no-pd">
+                    <label>Suppiler</label>
+                    <p-dropdown [options]="suppiler" [(ngModel)]="suppilerDetail" class="suppilerropdown">
+                      <ng-template let-item pTemplate="selectedItem">
+                        <span style="vertical-align:middle">{{item.label}}</span>
+                      </ng-template>
+                    </p-dropdown>
+                    <button type="button" (click)="showDialog()" pButton class="suplierbtn">
+                      <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                    </button>
+                    <p-dialog [(visible)]="display">
+                      <div class="orderovelay">
+                        <h4>Order Term</h4>
+                        <div class="row">
+                          <form>
+                            <div class="col-sm-6 form-group">
+                              <label for="payment">Payment Term</label>
+                              <input type="text" id="payment" pInputText />
+                            </div>
+                            <div class="col-sm-6 form-group">
+                              <label for="supply">Suppiler Ref</label>
+                              <input type="text" id="supply" pInputText />
+                            </div>
+                            <div class="col-sm-6 form-group">
+                              <label for="transp">Transporter</label>
+                              <input type="text" id="transp" pInputText />
+                            </div>
+                            <div class="col-sm-6 form-group">
+                              <label for="packing">Packing & Forwarding</label>
+                              <input type="text" id="packing" pInputText />
+                            </div>
+                            <div class="col-sm-6 form-group">
+                              <label for="freight">Freight</label>
+                              <input type="text" id="freight" pInputText />
+                            </div>
+                            <div class="col-sm-6 form-group">
+                              <label for="due">Due Date</label>
+                              <p-calendar [(ngModel)]="dates" [showIcon]="true" class="datedropdown"></p-calendar>
+                            </div>
+                            <div class="col-sm-12">
+                              <label for="delivery">Delivery Terms</label>
+                              <textarea pInputTextarea autoResize="autoResize"></textarea>
+                            </div>
+                            <div class="col-sm-12 btnsbt">
+                              <button type="button">Ok</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </p-dialog>
+
+                  </div>
+                  <div class="col-sm-12 no-pd">
+                    <div class="col-sm-8 no-pd">
+                      <label>Type</label>
+                      <p-dropdown [options]="suppilertype" [(ngModel)]="suppilerTypeDetail" class="Supldropdown">
+                        <ng-template let-item pTemplate="selectedItem">
+                          <span style="vertical-align:middle">{{item.label}}</span>
+                        </ng-template>
+                      </p-dropdown>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4 no-pd">
+                  <div class="orderoption">
+                    <h4>PO Status</h4>
+                    <p-radioButton name="groupname" value="val1" label="Amendment No" [(ngModel)]="selectedValue" class="optionvalue"></p-radioButton>
+                    <p-radioButton name="groupname" value="val2" label="Standard" [(ngModel)]="selectedValue" class="optionvalue"></p-radioButton>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="ItemDetail">
+                <h4>Item Detail</h4>
+                <p-table [value]="sales" class="ItemList">
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th>Code</th>
+                      <th>Item Name</th>
+                      <th>Desc</th>
+                      <th>Qty</th>
+                      <th>Packing</th>
+                      <th>No pr Pkg</th>
+                      <th>Rate</th>
+                      <th>Amount</th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-sale>
+                    <tr>
+                      <td>{{sale.code}}</td>
+                      <td>{{sale.itemName}}</td>
+                      <td>{{sale.desc}}</td>
+                      <td>{{sale.qty}}</td>
+                      <td>{{sale.packing}}</td>
+                      <td>{{sale.noprPkg}}</td>
+                      <td>{{sale.rate}}</td>
+                      <td>{{sale.amount}}</td>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="footer">
+                    <tr>
+                      <td colspan="6">Totals</td>
+                      <td>Total</td>
+                      <td>$531,020</td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
+            </div>
+          </div>
+
+        </section>
+        <section>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="ItemDetail">
+                <h4>Tax & Other Charges</h4>
+                <p-table [value]="taxs" class="ItemList taxsitem">
+
+                  <ng-template pTemplate="body" let-tax>
+                    <tr>
+                      <td colspan="6">{{tax.name}}</td>
+                      <td>{{tax.rate}}</td>
+                      <td>{{tax.amount}}</td>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="footer">
+                    <tr>
+                      <td colspan="7">Totals</td>
+
+                      <td>$531,020</td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
+            </div>
+          </div>
+
+        </section>
+        <section>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="ItemDetail TotalAmount">
+                <p-table [value]="taxs" class="ItemList taxsitem">
+                  <ng-template pTemplate="footer">
+                    <tr>
+                      <td colspan="6"></td>
+                      <td>Totals Amount</td>
+
+                      <td>$531,020</td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
+            </div>
+          </div>
+
+        </section>
+      </div>
+    </div>
+  </div>
+</section>
+<app-footer></app-footer>

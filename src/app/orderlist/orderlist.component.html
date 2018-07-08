@@ -1,0 +1,125 @@
+<app-navbar></app-navbar>
+<section>
+    <div class="container-fluid">
+        <div class="wrrapermain">
+            <div class="wrraper">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="QuickIcon">
+                            <ul>
+                                <li>
+                                    <a href="javascript:void(0)">
+                                        <i class="fa fa-pencil-square"></i>
+                                        <span>Edit</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">
+                                        <i class="fa fa-floppy-o"></i>
+                                        <span>Save</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">
+                                        <i class="fa fa-undo"></i>
+                                        <span>Cancel</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">
+                                        <i class="fa fa-window-close"></i>
+                                        <span>close</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">
+                                        <i class="fa fa-search"></i>
+                                        <span>Search</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">
+                                        <i class="fa fa-print"></i>
+                                        <span>Print</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">
+                                        <i class="fa fa-globe"></i>
+                                        <span>Export</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">
+                                        <i class="fa fa-trash-o"></i>
+                                        <span>Delete</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 no-pd orderHD">
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="Orderplan">
+                                <div class="col-sm-12 no-pd">
+                                    <label>Plan No</label>
+                                    <p-dropdown [options]="cars" [(ngModel)]="selectedCar" class="plandropdown">
+                                        <ng-template let-item pTemplate="selectedItem">
+                                            <span style="vertical-align:middle">{{item.label}}</span>
+                                        </ng-template>
+                                    </p-dropdown>
+                                </div>
+                                <div class="col-sm-12 no-pd">
+                                    <label>Date</label>
+                                    <p-calendar [(ngModel)]="date3" [showIcon]="true" class="datedropdown"></p-calendar>
+                                </div>
+                                <div class="col-sm-12 no-pd">
+                                    <label>Doc No</label>
+                                    <input id="input" type="text" size="30" pInputText [(ngModel)]="text" class="docdropdown">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="col-sm-12 orderoptionrt no-pd">
+
+                                <div class="orderoption">
+                                    <h4>Options</h4>
+                                    <p-checkbox name="group1" value="New York" label="New York" [(ngModel)]="selectedCities" inputId="ny" class="optionvalue"></p-checkbox>
+                                    <p-checkbox name="group1" value="San Francisco" label="San Francisco" [(ngModel)]="selectedCities" inputId="sf" class="optionvalue"></p-checkbox>
+                                    <p-checkbox name="group1" value="Los Angeles" label="Los Angeles" [(ngModel)]="selectedCities" inputId="la" class="optionvalue"></p-checkbox>
+                                </div>
+                                <div class="orderPO ">
+                                    <span>
+                                        <input id="input" type="text" placeholder="Generate PO" class="form-control">
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 orderlist">
+                        <p-dataTable [value]="transactions" [paginator]="true" [rows]="10" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]" [resizableColumns]="true"
+                            scrollable="true" [responsive]="true" [stacked]="stacked" #dt>
+                            <p-column field="code" header="code" [sortable]="true"></p-column>
+                            <p-column field="ItemName" header="Item Name" [sortable]="true"></p-column>
+                            <p-column field="PrevQty" header="Prev Qty" [sortable]="true"></p-column>
+                            <p-column field="CurrentQty" header="Current Qty" [sortable]="true"></p-column>
+                            <p-column field="ReqQty" header="Req Qty" [sortable]="true"></p-column>
+                            <p-column field="StoreStock" header="Store Stock" [sortable]="true"></p-column>
+                            <p-column field="WIPStock" header="WIP Stock" [sortable]="true"></p-column>
+                            <p-column field="QtyonOrder" header="Qty on Order" [sortable]="true"></p-column>
+                            <p-column field="LeadTime" header="Lead Time" [sortable]="true"></p-column>
+                            <p-column field="MOQ" header="MOQ" [sortable]="true"></p-column>
+                            <p-column field="NetQty" header="Net Qty" [sortable]="true"></p-column>
+                            <p-column field="Supplier" header="Supplier" [sortable]="true"></p-column>
+                        </p-dataTable>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<app-footer></app-footer>

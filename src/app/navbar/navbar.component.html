@@ -1,0 +1,56 @@
+<header>
+  <div class="container-fluid">
+    <div class="main-header ">
+      <div class="main-nav">
+        <nav class="navbar">
+          <div class="navbar-header">
+            <a href="#" class="navbar-brand">
+              <img src="assets/images/logo.png" alt="">
+            </a>
+            <button type="text" (click)="display = true" pButton icon="pi pi-plus" label="Show" class="navbarleft">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
+          <div class="userprofile">
+            <ul>
+              <li>
+                <a href="#">
+                  <i class="fa fa-bell" aria-hidden="true"></i>
+                </a>
+
+              </li>
+              <li>
+                <span>
+                  <i class="fa fa-user" aria-hidden="true"></i>
+                </span>
+                <ul>
+                  <li>
+                    <a href="#">Name</a>
+                  </li>
+                  <li>
+                    <a href="#">Sign Out</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <p-sidebar [(visible)]="display" [styleClass]="sidebarnavbg">
+          <div class="sidebarnav">
+            <div class="profilelogo">
+              <img src="assets/images/profile.jpg" class="img-responsive" alt="profile">
+            </div>
+            <ul>
+              <li>Sushil K.</li>
+              <li>Basic member</li>
+              <li><a href="javascript:void(0)">Upgrade</a></li>
+            </ul>
+            <p-panelMenu [model]="items" [style]="{'width':'100%'}"></p-panelMenu>
+          </div>
+        </p-sidebar>
+      </div>
+    </div>
+  </div>
+</header>
