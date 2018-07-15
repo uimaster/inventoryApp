@@ -8,6 +8,7 @@ export enum AuthActionTypes {
 
 }
 
+
 export class LogIn implements Action {
   readonly type = AuthActionTypes.LOGIN;
   constructor(public payload: any) {}
@@ -22,6 +23,7 @@ export class LogInFailure implements Action {
   readonly type = AuthActionTypes.LOGIN_FAILURE;
   constructor(public payload: any) {}
 }
+
 
 export type All =
   | LogIn

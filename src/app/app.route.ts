@@ -6,6 +6,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { RestPasswordComponent } from './reset-password/rest-password.component';
 import { OrderlistComponent } from './orderlist/orderlist.component';
 import { PurchaseComponent } from './purchase/purchase.component';
+import {StockItemComponent} from './stock-item/stock-item.component';
 
 export const routes: Routes = [
     { path:'', redirectTo:'login', pathMatch: 'full'},
@@ -14,6 +15,7 @@ export const routes: Routes = [
     { path:'resetpassword', component: RestPasswordComponent },
     { path:'orderlist', component: OrderlistComponent },
     { path:'purchase', component: PurchaseComponent },
+  { path:'stock-items', component: StockItemComponent },
     {path: '**', component: LoginComponent}
 ]
 
