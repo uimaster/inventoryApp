@@ -21,6 +21,8 @@
     "@angular/platform-browser": "^5.2.0",
     "@angular/platform-browser-dynamic": "^5.2.0",
     "@angular/router": "^5.2.0",
+    "@ngrx/effects": "^5.2.0",
+    "@ngrx/store": "5.2.0",
     "angular-font-awesome": "^3.1.2",
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",

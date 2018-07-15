@@ -7,7 +7,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { RestPasswordComponent } from './reset-password/rest-password.component';
 import { routing } from './app.route';
 import { ChartsModule } from 'ng2-charts';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SidebarModule} from 'primeng/sidebar';
 import {DataTableModule} from 'primeng/datatable';
 import {TableModule} from 'primeng/table';
@@ -23,6 +23,12 @@ import { PurchaseComponent } from './purchase/purchase.component';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {DialogModule} from 'primeng/dialog';
 import {InputTextareaModule} from 'primeng/inputtextarea';
+import {HttpClientModule} from '@angular/common/http';
+import {AuthService} from './services/auth.service';
+import {EffectsModule} from '@ngrx/effects';
+import {AuthEffects} from './store/effects/auth.effects';
+import {StoreModule} from '@ngrx/store';
+import {reducers} from './store/app.states';
 
 
 
@@ -40,6 +46,10 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
   ],
   imports: [
     FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    StoreModule.forRoot(reducers, {}),
+    EffectsModule.forRoot([AuthEffects]),
     BrowserAnimationsModule,
     BrowserModule,
     routing,
@@ -55,9 +65,9 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
     RadioButtonModule,
     DialogModule,
     InputTextareaModule
-    
+
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
