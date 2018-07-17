@@ -23,24 +23,24 @@ export class OrderlistComponent implements OnInit {
         NetQty: number,
         Supplier: string,
     }[];
-    //for plan no dropdown
+    // for plan no dropdown
     cars: SelectItem[];
     selectedCar: string;
-    //for date
+    // for date
     dates: Date[];
     rangeDates: Date[];
     minDate: Date;
     maxDate: Date;
     es: any;
     tr: any;
-    invalidDates: Array<Date>
+    invalidDates: Array<Date>;
 
     text: string;
 
     selectedCities: string[] = [];
     selectedCategories: string[] = ['Technology', 'Sports'];
-    checked: boolean = false;
-    constructor() { 
+    checked= false;
+    constructor() {
         this.cars = [
             {label: 'Audi', value: 'Audi'},
             {label: 'BMW', value: 'BMW'},
@@ -215,24 +215,25 @@ export class OrderlistComponent implements OnInit {
 
         this.es = {
             firstDayOfWeek: 1,
-            dayNames: [ "domingo","lunes","martes","miércoles","jueves","viernes","sábado" ],
-            dayNamesShort: [ "dom","lun","mar","mié","jue","vie","sáb" ],
-            dayNamesMin: [ "D","L","M","X","J","V","S" ],
-            monthNames: [ "enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre" ],
-            monthNamesShort: [ "ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic" ],
+            dayNames: [ 'domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado' ],
+            dayNamesShort: [ 'dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb' ],
+            dayNamesMin: [ 'D', 'L', 'M', 'X', 'J', 'V', 'S' ],
+            monthNames: [ 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto',
+             'septiembre', 'octubre', 'noviembre', 'diciembre' ],
+            monthNamesShort: [ 'ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic' ],
             today: 'Hoy',
             clear: 'Borrar'
         }
         this.tr = {
             firstDayOfWeek : 1
-        }
-        let today = new Date();
-        let month = today.getMonth();
-        let year = today.getFullYear();
-        let prevMonth = (month === 0) ? 11 : month -1;
-        let prevYear = (prevMonth === 11) ? year - 1 : year;
-        let nextMonth = (month === 11) ? 0 : month + 1;
-        let nextYear = (nextMonth === 0) ? year + 1 : year;
+        };
+        const today = new Date();
+        const month = today.getMonth();
+        const year = today.getFullYear();
+        const prevMonth = (month === 0) ? 11 : month -1;
+        const prevYear = (prevMonth === 11) ? year - 1 : year;
+        const nextMonth = (month === 11) ? 0 : month + 1;
+        const nextYear = (nextMonth === 0) ? year + 1 : year;
         this.minDate = new Date();
         this.minDate.setMonth(prevMonth);
         this.minDate.setFullYear(prevYear);
@@ -240,10 +241,10 @@ export class OrderlistComponent implements OnInit {
         this.maxDate.setMonth(nextMonth);
         this.maxDate.setFullYear(nextYear);
 
-        let invalidDate = new Date();
+        const invalidDate = new Date();
         invalidDate.setDate(today.getDate() - 1);
         this.invalidDates = [today,invalidDate];
-    
+
     }
 
 }
