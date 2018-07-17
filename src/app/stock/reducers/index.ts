@@ -1,17 +1,18 @@
-import * as auth from './auth.reducers';
+import * as stock from './stock.reducers';
 
 import {createFeatureSelector} from '@ngrx/store';
 
 export interface StockState {
+  stocks: any[];
   message: any;
 }
 
 export interface AppState {
-  authState: auth.State;
+  stockState: StockState;
 }
 
 export const reducers = {
-  auth: auth.reducer,
+  stock: stock.reducer
 };
 
 export const selectAuthState = createFeatureSelector<AppState>('auth');

@@ -23,12 +23,16 @@ import { PurchaseComponent } from './dump-components/purchase/purchase.component
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {DialogModule} from 'primeng/dialog';
 import {InputTextareaModule} from 'primeng/inputtextarea';
-import {HttpClientModule} from '@angular/common/http';
-import {AuthService} from '../app/auth/services/auth.service';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
+import {AuthService} from './auth/services/auth.service';
 import {EffectsModule} from '@ngrx/effects';
 import {AuthEffects} from './auth/effects/auth.effects';
 import {StoreModule} from '@ngrx/store';
 import {reducers} from './auth/reducers';
+import {TokenInterceptor} from './auth/services/token.interceptor';
+import { StockItemComponent } from './stock/component/stock-item.component';
+import {StockEffects} from './stock/effects/stock.effects';
+import {StockService} from './stock/services/stock.service';
 
 
 
@@ -42,14 +46,15 @@ import {reducers} from './auth/reducers';
     NavbarComponent,
     OrderlistComponent,
     FooterComponent,
-    PurchaseComponent
+    PurchaseComponent,
+    StockItemComponent
   ],
   imports: [
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     StoreModule.forRoot(reducers, {}),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, StockEffects]),
     BrowserAnimationsModule,
     BrowserModule,
     routing,
@@ -67,7 +72,13 @@ import {reducers} from './auth/reducers';
     InputTextareaModule
 
   ],
-  providers: [AuthService],
+  providers: [AuthService, StockService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

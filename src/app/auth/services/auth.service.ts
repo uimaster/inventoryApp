@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {User} from '../models/user';
+import {InterceptorSkipHeader} from './token.interceptor';
 
 
 @Injectable()
@@ -16,8 +17,14 @@ export class AuthService {
 
   logIn(username: string, password: string): Observable<any> {
     let headers = new HttpHeaders();
+<<<<<<< HEAD:src/app/auth/services/auth.service.ts
     headers = headers.append('Authorization', 'Basic ' + btoa(username + ':' + password));
     headers = headers.append('Content-Type', 'application/x-www-form-urlencoded');
+=======
+    headers = headers.append("Authorization", "Basic " + btoa(username + ":" + password));
+    headers = headers.append("Content-Type", "application/x-www-form-urlencoded");
+    headers = headers.append(InterceptorSkipHeader, '');
+>>>>>>> stocks:src/app/services/auth.service.ts
     const url = `${this.BASE_URL}/jwtauth/Token`;
     return this.http.post<User>(url, {username, password}, {headers: headers});
   }

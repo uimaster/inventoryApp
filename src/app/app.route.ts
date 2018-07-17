@@ -1,7 +1,7 @@
 import { Routes, RouterModule } from '@angular/router';
 import { ModuleWithProviders } from '@angular/core';
 
-import { LoginComponent } from '../app/auth/component/login.component';
+import { LoginComponent } from './auth/component/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RestPasswordComponent } from './dump-components/reset-password/rest-password.component';
 import { OrderlistComponent } from './dump-components/orderlist/orderlist.component';
