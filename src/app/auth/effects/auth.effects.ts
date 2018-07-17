@@ -9,7 +9,7 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/catch';
 import { tap } from 'rxjs/operators';
 
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../services/auth.service';
 import {AuthActionTypes, LogIn, LogInFailure, LogInSuccess} from '../actions/auth.actions';
 
 
@@ -32,10 +32,9 @@ export class AuthEffects {
     .switchMap(payload => {
       return this.authService.logIn(payload.username, payload.password)
         .map((user) => {
-          //console.log(user.data.length);
-          if(user.data.length > 0){
+          if (user.data.length > 0) {
            return new LogInSuccess({token: user.data[0].bearerToken, username: payload.username});
-          }else{
+          } else {
 
             return new LogInFailure({error: user.message});
 

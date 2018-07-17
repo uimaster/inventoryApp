@@ -16,8 +16,8 @@ export class AuthService {
 
   logIn(username: string, password: string): Observable<any> {
     let headers = new HttpHeaders();
-    headers = headers.append("Authorization", "Basic " + btoa(username + ":" + password));
-    headers = headers.append("Content-Type", "application/x-www-form-urlencoded");
+    headers = headers.append('Authorization', 'Basic ' + btoa(username + ':' + password));
+    headers = headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const url = `${this.BASE_URL}/jwtauth/Token`;
     return this.http.post<User>(url, {username, password}, {headers: headers});
   }
