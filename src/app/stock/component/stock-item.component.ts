@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
-import {StockState} from '../store/app.states';
-import * as fromReducer from '../store/reducers/stock.reducers';
-import * as fromActions from '../store/actions/stock.actions';
+import {StockState} from '../reducers/index';
+import * as fromReducer from '../reducers/stock.reducers';
+import * as fromActions from '../actions/stock.actions';
 
 @Component({
   selector: 'app-stock-item',
@@ -12,13 +12,13 @@ import * as fromActions from '../store/actions/stock.actions';
 })
 export class StockItemComponent implements OnInit {
 
-  stocks$: Observable<any[]>
-  message$: Observable<any>
+  stocks$: Observable<any[]>;
+  message$: Observable<any>;
 
   constructor(private store: Store<StockState>) {
-   this.stocks$ = store.select(fromReducer.getStocks);
-    console.log(this.stocks$);
-    this.message$ = store.select(fromReducer.getMessage);
+  //  this.stocks$ = store.select(fromReducer.getStocks);
+  //   console.log(this.stocks$);
+  //   this.message$ = store.select(fromReducer.getMessage);
   }
 
   ngOnInit() {

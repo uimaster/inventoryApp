@@ -9,7 +9,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/debounceTime';
 import { of } from 'rxjs/observable/of';
 import * as fromActions from '../actions/stock.actions';
-import {StockService} from '../../services/stock.service';
+import {StockService} from '../services/stock.service';
 
 @Injectable()
 export class StockEffects {
@@ -26,7 +26,7 @@ export class StockEffects {
       this.stockService.getAllStocks()
         .map((data) => {
           // console.log(data);
-          new fromActions.ShowAllSuccessAction(data);
+          // new fromActions.ShowAllSuccessAction(data);
         })
     );
 
