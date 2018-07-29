@@ -30,6 +30,8 @@ export class LoginComponent implements OnInit {
       this.authService.logIn(formData).subscribe((res: LoginResponse) => {
         if (res && res.status == '200') {
           console.log(res);
+        } else {
+          alert(res.message);
         }
       });
     }
