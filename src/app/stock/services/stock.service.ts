@@ -12,11 +12,9 @@ export class StockService {
   constructor(private http: HttpClient) {}
 
   getAllStocks(): Observable<any> {
-    debugger;
     const params = new HttpParams().set('CompanyID', '1');
     return this.http.get(GETSTOCK_URL, {params}).pipe(
       map(res => {
-        console.log(res);
         return res;
       })
     );

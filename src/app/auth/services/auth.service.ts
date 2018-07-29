@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
-import {User} from '../models/user';
-import {InterceptorSkipHeader} from './token.interceptor';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
+import { Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/catch';
+import 'rxjs/Rx';
+import 'rxjs/add/operator/map';
+import { LoginRequest, LoginResponse } from '../models/user.model';
+import { InterceptorSkipHeader} from './token.interceptor';
 import { LOGIN_URL } from '../../shared/app.urls';
 
 
@@ -14,14 +17,19 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
-  logIn(username: string, password: string): Observable<any> {
-    debugger;
+  logIn(payload: LoginRequest): Observable<any> {
     let headers = new HttpHeaders();
-    headers = headers.append('Authorization', 'Basic ' + btoa(username + ':' + password));
+    headers = headers.append('Authorization', 'Basic ' + btoa(payload.userName + ':' + payload.password));
     headers = headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    headers = headers.append('DeviceType', '1');
     headers = headers.append(InterceptorSkipHeader, '');
-    // const url = `${this.BASE_URL}/jwtauth/Token`;
-    return this.http.post<User>(LOGIN_URL, {username, password}, {headers: headers});
+    return this.http.post(LOGIN_URL, payload, {headers: headers})
+    .map((res: LoginResponse) => {
+      if (res) {
+          return res;
+      }
+    })
+    .catch((error) => Observable.throw('server Error.'));
   }
 
 

@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 
-import * as fromStockAction from '../actions/stock.actions';
-import * as getStockReducer from '../reducers/stock.reducers';
-import * as getStockState from '../reducers/index';
+import { StockService } from '../services/stock.service';
+import { StockResponse } from '../models/stock.model';
 
 
 @Component({
@@ -18,29 +16,19 @@ export class StockItemComponent implements OnInit {
   stockListResponseFailed: Observable<boolean>;
 
   stockList = {};
-  constructor(private store: Store<getStockReducer.State>) { }
+  constructor( private stockService: StockService) { }
 
   ngOnInit() {
-    // this.dispatchAction();
-    // this.store.dispatch(new BookActions.AddBook('Add Book'));
-
-    this.stockListResponse = this.store.select(getStockState.GetStockListSuccess);
-    this.stockListResponse.subscribe(res => {
-      this.stockList = res.data;
-      console.log(res);
-    });
-
-    this.stockListResponseFailed = this.store.select(getStockState.GetStockListFailed);
-    this.stockListResponseFailed.subscribe(res => {
-      this.stockList = res;
-      console.log(res);
-    });
-
+    this.getStockList();
   }
 
-  
-  dispatchAction() {
-    this.store.dispatch(new fromStockAction.GetStockList('Get Stock List'));
+  getStockList() {
+    this.stockService.getAllStocks().subscribe((res: StockResponse) => {
+      if (res && res.status == '200')  {
+        console.log(res);
+      }
+    });
   }
+
 
 }

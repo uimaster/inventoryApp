@@ -6,14 +6,14 @@ import { OrderlistComponent } from './dump-components/orderlist/orderlist.compon
 import { PurchaseComponent } from './dump-components/purchase/purchase.component';
 
 export const routes: Routes = [
-    { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
+    { path: '', redirectTo: 'login', pathMatch: 'full'},
     { path: 'login', loadChildren: 'app/auth/auth.module#AuthModule' },
     { path: 'stocks', loadChildren: 'app/stock/stock.module#StockModule' },
     { path: 'dashboard', component: DashboardComponent },
     { path: 'resetpassword', component: RestPasswordComponent },
     { path: 'orderlist', component: OrderlistComponent },
     { path: 'purchase', component: PurchaseComponent },
-    { path: '**', component: DashboardComponent}
+    { path: '**', loadChildren: 'app/auth/auth.module#AuthModule'}
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(routes);
