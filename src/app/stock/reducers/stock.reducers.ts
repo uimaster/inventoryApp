@@ -1,44 +1,52 @@
-// import { createFeatureSelector, createSelector } from '@ngrx/store';
-// import * as fromActions from '../actions/stock.actions';
-// import {StockState} from '../../auth/reducers';
+import { GetStockListActionUnion, GetStockActionTypes} from '../actions/stock.actions';
+import {StockState} from '../../auth/reducers';
 
-// export const initialState: StockState = {
-//   stocks: [],
-//   message: ''
-// };
-export function reducer() { }
-// export function reducer(state = initialState, action: fromActions.ALL_REDUCER_ACTIONS): StockState {
-//   switch (action.type) {
-//     case fromActions.SHOW_ALL_SUCCESS: {
-//       return {stocks: action.payload, message: 'Success'};
-//     }
-//     case fromActions.CREATE_SUCCESS: {
-//       return {articles: [action.payload], message: 'Article Created.'};
-//     }
-//     case fromActions.CREATE_FAILURE: {
-//       return {articles: [], message: action.payload};
-//     }
-//     case fromActions.GET_BY_ID_SUCCESS: {
-//       console.log(action.payload);
-//       return {articles: action.payload, message: 'Success'};
-//     }
-//     case fromActions.RESET: {
-//       return { articles: [], message: ''};
-//     }
-//     default: {
-//       return state;
-//     }
-//   }
-// }
+export interface State {
+  loading: boolean;
+  result: any;
+  error: boolean;
+}
 
-// export const getStockState = createFeatureSelector<StockState>('stockState');
+const initialState: State = {
+  loading: false,
+  result: null,
+  error: false
+}
 
-// export const getStocks = createSelector(
-//   getStockState,
-//   (state: StockState) => state.stocks
-// );
+export function Reducer( state = initialState, action: GetStockListActionUnion): State {
+  switch ( action.type ) {
+    case GetStockActionTypes.GETSTOCKLIST: {
+      return {
+        ...state,
+        loading: true
+      };
+    }
 
-// export const getMessage = createSelector(
-//   getStockState,
-//   (state: StockState) => state.message
-// );
+    case GetStockActionTypes.GETSTOCKLIST: {
+      return {
+        ...state,
+        loading: false,
+        result: action.payload
+      };
+    }
+
+    case GetStockActionTypes.GETSTOCKFAILED: {
+      return {
+        ...state,
+        loading: false,
+        // result: null,
+        error: action.payload
+      };
+    }
+
+    default: {
+      return initialState;
+    }
+  }
+}
+
+export const getLoading = ( state: State) => state.loading;
+export const getResult = ( state: State) => state.result;
+export const getError = ( state: State) => state.error;
+
+

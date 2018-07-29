@@ -1,16 +1,25 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
+import { map } from 'rxjs/operators';
+
+import { GETSTOCK_URL } from '../../shared/app.urls';
 
 
 @Injectable()
 export class StockService {
-  private BASE_URL = 'http://apietrax.iflotech.in/api';
 
   constructor(private http: HttpClient) {}
 
-  getAllStocks(): Observable<any[]> {
-    return this.http.get<any[]>(this.BASE_URL + '/Stockitem/GetStockItems?CompanyID=1');
+  getAllStocks(): Observable<any> {
+    debugger;
+    const params = new HttpParams().set('CompanyID', '1');
+    return this.http.get(GETSTOCK_URL, {params}).pipe(
+      map(res => {
+        console.log(res);
+        return res;
+      })
+    );
   }
 
 

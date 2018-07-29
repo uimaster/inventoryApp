@@ -91,7 +91,14 @@ a, input {
     border: 0;
     a{
       color: $white;
-      padding: 10px 15px;
+      padding: 15px;
+      font-size: 14px;
+      text-transform: uppercase;
+      border-right: 4px solid transparent;
+      .ui-menuitem-icon{
+        margin-right: 10px;
+        font-size: 20px;
+      }
     }
   }
   .ui-panelmenu{
@@ -114,7 +121,7 @@ a, input {
     }
   }
   .ui-state-active{
-    border-color: $white;
+    border-color: #186ba0;
   }
   .ui-corner-top,.ui-corner-bottom{
     border-radius: 0;
@@ -141,6 +148,7 @@ a, input {
         color: #fff;
         display: block;
         border-radius: 3px;
+        padding: 5px;
         &:hover{
           color: #3a903a;
           background-color: #fff;
@@ -407,11 +415,14 @@ a, input {
 }
 .ui-widget-content {
   background-color: #000;
+  border: 0;
 }
 .ui-sidebar .ui-sidebar-close {
   color: #fff;
-  font-size: 24px;
-  border-radius: 0;
+  font-size: 35px;
+  font-weight: normal;
+  margin-right: 6px;
+  margin-top: 2px;
 }
 .ui-sidebar .ui-sidebar-close:hover {
   border-color: transparent;
@@ -424,7 +435,7 @@ a, input {
     width: 200px !important;
     height: 36px;
     .ui-dropdown-label{
-      padding: 5px; 
+      padding: 5px;
       font-size: 16px;
       font-weight: 400;
       color: $black;
@@ -552,7 +563,7 @@ a, input {
     background-color: #fff;
   }
   .ui-widget-content.ui-datatable-odd{
-    background-color: #f3f3f3 !important; 
+    background-color: #f3f3f3 !important;
   }
   .ui-datatable th.ui-state-default{
     background-color: #f3f3f3;
@@ -570,7 +581,7 @@ a, input {
       background-color: $white;
       padding: 0px;
       border-radius: 3px;
-      
+
       &:last-child{
           border-right: 0;
       }
@@ -580,7 +591,7 @@ a, input {
           font-weight: 400;
           display: inline-block;
           text-align: center;
-         
+
           a{
               color: #c41735;
               display: block;
@@ -610,7 +621,7 @@ a, input {
     width: 200px !important;
     height: 36px;
     .ui-dropdown-label{
-      padding: 5px; 
+      padding: 5px;
       font-size: 16px;
       font-weight: 400;
       color: $black;
@@ -626,7 +637,7 @@ a, input {
   .suppilerropdown .ui-dropdown{
     width: calc(100% - 140px) !important;
     .ui-dropdown-label{
-      padding: 5px; 
+      padding: 5px;
       font-size: 16px;
       font-weight: 400;
       color: $black;
@@ -658,7 +669,7 @@ a, input {
   .Supldropdown .ui-dropdown{
     width: calc(100% - 75px )!important;
     .ui-dropdown-label{
-      padding: 5px; 
+      padding: 5px;
       font-size: 16px;
       font-weight: 400;
       color: $black;
@@ -798,8 +809,8 @@ a, input {
         display: inline-block;
       }
     }
-    
-    
+
+
   }
   .ui-widget-header,.ui-dialog.ui-widget .ui-dialog-titlebar {
     padding: 0;
@@ -871,7 +882,7 @@ a, input {
       }
     }
   }
-  
+
 }
 .ItemDetail.TotalAmount{
   padding: 20px 15px;

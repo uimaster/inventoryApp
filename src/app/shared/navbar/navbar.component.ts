@@ -14,32 +14,38 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
     this.items = [
       {
-        label: 'Profile',
+        label: 'Dashboard',
         icon: 'fa fa-fw fa-user',
+        url: '/dashboard'
       },
       {
-        label: 'Membership',
+        label: 'Stocks',
         icon: 'fa fa-fw fa-id-card',
+        url: '/stocks'
       },
       {
-        label: 'Settings',
+        label: 'Unit',
         icon: 'fa fa-fw fa-cog',
+        url: '/unit'
       },
       {
-        label: 'Refer a Friend',
-        icon: 'fa fa-fw fa-gift'
+        label: 'Stock Group',
+        icon: 'fa fa-fw fa-gift',
+        url: '/stock-group'
       },
       {
-        label: 'Refer a Client',
-        icon: 'fa fa-fw fa-briefcase'
+        label: 'Ledger List',
+        icon: 'fa fa-fw fa-briefcase',
+        url: '/ledger-list'
       },
-      {
-        label: 'Get Support',
-        icon: 'fa fa-fw fa-question-circle'
-      },
+      // {
+      //   label: 'Get Support',
+      //   icon: 'fa fa-fw fa-question-circle'
+      // },
       {
         label: 'Logout',
         icon: 'fa fa-fw fa-sign-out',
+        url: '/logout'
       }
     ];
 

@@ -24,6 +24,7 @@
     "@ngrx/effects": "^5.2.0",
     "@ngrx/router-store": "^6.0.1",
     "@ngrx/store": "5.2.0",
+    "@ngrx/store-devtools": "^6.0.1",
     "angular-font-awesome": "^3.1.2",
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",

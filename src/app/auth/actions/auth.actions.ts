@@ -25,7 +25,4 @@ export class LogInFailure implements Action {
 }
 
 
-export type All =
-  | LogIn
-  | LogInSuccess
-  | LogInFailure;
+export type All = | LogIn | LogInSuccess | LogInFailure;

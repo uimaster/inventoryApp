@@ -6,8 +6,11 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
 import { AuthService } from './services/auth.service';
-import {TokenInterceptor} from './services/token.interceptor';
-import {LoginComponent } from './component/login.component';
+import { TokenInterceptor } from './services/token.interceptor';
+import { LoginComponent } from './component/login.component';
+import { AuthRouter } from './auth.routes';
+import { AuthEffects } from './effects/auth.effects';
+import { reducers } from './reducers';
 
 @NgModule({
   declarations: [
@@ -16,8 +19,9 @@ import {LoginComponent } from './component/login.component';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    EffectsModule,
-    StoreModule
+    StoreModule.forRoot(reducers, {}),
+    EffectsModule.forRoot([AuthEffects]),
+    AuthRouter
   ],
   providers: [AuthService,
     {
@@ -28,4 +32,4 @@ import {LoginComponent } from './component/login.component';
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class AppModule { }
+export class AuthModule { }

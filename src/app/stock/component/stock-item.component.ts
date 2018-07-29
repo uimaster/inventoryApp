@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {Store} from '@ngrx/store';
-import {StockState} from '../reducers/index';
-import * as fromReducer from '../reducers/stock.reducers';
-import * as fromActions from '../actions/stock.actions';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+
+import * as fromStockAction from '../actions/stock.actions';
+import * as getStockReducer from '../reducers/stock.reducers';
+import * as getStockState from '../reducers/index';
+
 
 @Component({
   selector: 'app-stock-item',
@@ -12,20 +14,33 @@ import * as fromActions from '../actions/stock.actions';
 })
 export class StockItemComponent implements OnInit {
 
-  stocks$: Observable<any[]>;
-  message$: Observable<any>;
+  stockListResponse: Observable<any>;
+  stockListResponseFailed: Observable<boolean>;
 
-  constructor(private store: Store<StockState>) {
-  //  this.stocks$ = store.select(fromReducer.getStocks);
-  //   console.log(this.stocks$);
-  //   this.message$ = store.select(fromReducer.getMessage);
-  }
+  stockList = {};
+  constructor(private store: Store<getStockReducer.State>) { }
 
   ngOnInit() {
-    this.store.dispatch(new fromActions.ShowAllAction());
-   this.stocks$ = this.store.select('stocks');
-    console.log(this.stocks$);
+    // this.dispatchAction();
+    // this.store.dispatch(new BookActions.AddBook('Add Book'));
 
+    this.stockListResponse = this.store.select(getStockState.GetStockListSuccess);
+    this.stockListResponse.subscribe(res => {
+      this.stockList = res.data;
+      console.log(res);
+    });
+
+    this.stockListResponseFailed = this.store.select(getStockState.GetStockListFailed);
+    this.stockListResponseFailed.subscribe(res => {
+      this.stockList = res;
+      console.log(res);
+    });
+
+  }
+
+  
+  dispatchAction() {
+    this.store.dispatch(new fromStockAction.GetStockList('Get Stock List'));
   }
 
 }

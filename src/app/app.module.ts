@@ -1,84 +1,60 @@
 import { BrowserModule } from '@angular/platform-browser';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment.prod';
+
+import { ChartsModule } from 'ng2-charts';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './auth/component/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RestPasswordComponent } from './dump-components/reset-password/rest-password.component';
-import { routing } from './app.route';
-import { ChartsModule } from 'ng2-charts';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {SidebarModule} from 'primeng/sidebar';
-import {DataTableModule} from 'primeng/datatable';
-import {TableModule} from 'primeng/table';
+import { routing, routes} from './app.route';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { PurchaseComponent } from './dump-components/purchase/purchase.component';
+import { HttpClientModule} from '@angular/common/http';
+import { EffectsModule} from '@ngrx/effects';
+import { StoreModule} from '@ngrx/store';
+import { PrimeNGModule } from './app.primeNg.module';
+import { metaReducers, reducers } from './reducer';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { OrderlistComponent } from './dump-components/orderlist/orderlist.component';
-import {DropdownModule} from 'primeng/dropdown';
-import {CalendarModule} from 'primeng/calendar';
-import {InputTextModule} from 'primeng/inputtext';
-import {CheckboxModule} from 'primeng/checkbox';
 import { FooterComponent } from './shared/footer/footer.component';
-import {PanelMenuModule} from 'primeng/panelmenu';
-import { PurchaseComponent } from './dump-components/purchase/purchase.component';
-import {RadioButtonModule} from 'primeng/radiobutton';
-import {DialogModule} from 'primeng/dialog';
-import {InputTextareaModule} from 'primeng/inputtextarea';
-import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
-import {AuthService} from './auth/services/auth.service';
-import {EffectsModule} from '@ngrx/effects';
-import {AuthEffects} from './auth/effects/auth.effects';
-import {StoreModule} from '@ngrx/store';
-import {reducers} from './auth/reducers';
-import {TokenInterceptor} from './auth/services/token.interceptor';
-import { StockItemComponent } from './stock/component/stock-item.component';
-import {StockEffects} from './stock/effects/stock.effects';
-import {StockService} from './stock/services/stock.service';
 
-
-
+import { AuthModule } from './auth/auth.module';
+import { StockModule } from './stock/stock.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     DashboardComponent,
     RestPasswordComponent,
     NavbarComponent,
     OrderlistComponent,
     FooterComponent,
-    PurchaseComponent,
-    StockItemComponent
+    PurchaseComponent
   ],
   imports: [
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    StoreModule.forRoot(reducers, {}),
-    EffectsModule.forRoot([AuthEffects, StockEffects]),
+    routing,
+    RouterModule.forRoot(routes, { useHash: true}),
+    StoreModule.forRoot( reducers, { metaReducers}),
+    EffectsModule.forRoot([]),
+    // StoreDevtoolsModule.instrument({
+    //   name: 'Get Stock',
+    //   logOnly: environment.production,
+    // }),
     BrowserAnimationsModule,
     BrowserModule,
-    routing,
     ChartsModule,
-    SidebarModule,
-    DataTableModule,
-    TableModule,
-    DropdownModule,
-    CalendarModule,
-    InputTextModule,
-    CheckboxModule,
-    PanelMenuModule,
-    RadioButtonModule,
-    DialogModule,
-    InputTextareaModule
+    PrimeNGModule,
+    AuthModule,
+    StockModule
 
   ],
-  providers: [AuthService, StockService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
-      multi: true
-    },
-  ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

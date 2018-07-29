@@ -1,18 +1,21 @@
-import * as stock from './stock.reducers';
+import * as fromStockReducer from './stock.reducers';
+import { createFeatureSelector, createSelector} from '@ngrx/store';
 
-import {createFeatureSelector} from '@ngrx/store';
-
-export interface StockState {
-  stocks: any[];
-  message: any;
+export interface GetStockListState {
+  getStockListReducer: fromStockReducer.State;
 }
 
-export interface AppState {
-  stockState: StockState;
+export interface State extends fromStockReducer.State {
+  'getStockListReducer': State;
 }
 
 export const reducers = {
-  stock: stock.reducer
-};
+  getStockListReducer: fromStockReducer.Reducer
+}
 
-export const selectAuthState = createFeatureSelector<AppState>('auth');
+export const getStockListMailState = createFeatureSelector<GetStockListState>('getStockListReducer');
+
+export const getStockListState = createSelector( getStockListMailState, ( state: GetStockListState) => state.getStockListReducer);
+export const getStockListLoading = createSelector( getStockListState, fromStockReducer.getLoading);
+export const GetStockListSuccess = createSelector( getStockListState, fromStockReducer.getResult);
+export const GetStockListFailed = createSelector( getStockListState, fromStockReducer.getError);

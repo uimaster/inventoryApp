@@ -1,46 +1,25 @@
 import { Action } from '@ngrx/store';
 
-export const SHOW_ALL = '[STOCK] Show All';
-export const SHOW_ALL_SUCCESS = '[STOCK] Show All Success';
-// export const CREATE = '[ARTICLE] Create';
-// export const CREATE_SUCCESS = '[ARTICLE] Create Success';
-// export const CREATE_FAILURE = '[ARTICLE] Create Failure';
-// export const GET_BY_ID = '[ARTICLE] Get by Id';
-// export const GET_BY_ID_SUCCESS = '[ARTICLE] Get by Id Success';
-// export const RESET = '[ARTICLE] Reset';
-
-export class ShowAllAction implements Action {
-  readonly type = SHOW_ALL;
+export enum GetStockActionTypes {
+  GETSTOCKLIST = '[Get] Stock List',
+  GETSTOCKSUCCESS = '[Get] Stock List Success',
+  GETSTOCKFAILED = '[Get] Stock List failed'
 }
-export class ShowAllSuccessAction implements Action {
-  readonly type = SHOW_ALL_SUCCESS;
-  constructor(public payload: any[]) {}
-}
-// export class CreateAction implements Action {
-//   readonly type = CREATE;
-//   constructor(public payload: Article) {}
-// }
-// export class CreateSuccessAction implements Action {
-//   readonly type = CREATE_SUCCESS;
-//   constructor(public payload: Article) {}
-// }
-// export class CreateFailureAction implements Action {
-//   readonly type = CREATE_FAILURE;
-//   constructor(public payload: any) {}
-// }
-// export class GetByIdAction implements Action {
-//   readonly type = GET_BY_ID;
-//   constructor(public payload: string) {}
-// }
-// export class GetByIdSuccessAction implements Action {
-//   readonly type = GET_BY_ID_SUCCESS;
-//   constructor(public payload: Article[]) {}
-// }
-// export class ResetAction implements Action {
-//   readonly type = RESET;
-// }
 
-export type ALL_REDUCER_ACTIONS = ShowAllSuccessAction ;
-  //
-  // | CreateSuccessAction | CreateFailureAction
-  // | GetByIdSuccessAction | ResetAction;
+export class GetStockList implements Action {
+  readonly type = GetStockActionTypes.GETSTOCKLIST;
+  constructor( public payload: any) {}
+}
+
+export class GetStockListSuccess implements Action{
+  readonly type = GetStockActionTypes.GETSTOCKSUCCESS;
+  constructor ( public payload: any) {}
+}
+
+export class GetStockListFailed implements Action{
+  readonly type = GetStockActionTypes.GETSTOCKFAILED;
+  constructor ( public payload: any) {}
+}
+
+export type GetStockListActionUnion = GetStockList | GetStockListSuccess | GetStockListFailed;
+

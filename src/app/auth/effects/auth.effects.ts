@@ -24,7 +24,6 @@ export class AuthEffects {
 
 
   // effects go here
-
   @Effect()
   LogIn: Observable<any> = this.actions
     .ofType(AuthActionTypes.LOGIN)
