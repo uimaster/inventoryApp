@@ -19,9 +19,8 @@ export class AuthService {
 
   logIn(payload: LoginRequest): Observable<any> {
     let headers = new HttpHeaders();
-    headers = headers.append('Authorization', 'Basic ' + btoa(payload.userName + ':' + payload.password));
+    headers = headers.append('Authorization', 'Basic ' + btoa(payload.username + ':' + payload.password));
     headers = headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    headers = headers.append('DeviceType', '1');
     headers = headers.append(InterceptorSkipHeader, '');
     return this.http.post(LOGIN_URL, payload, {headers: headers})
     .map((res: LoginResponse) => {
