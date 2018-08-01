@@ -6,11 +6,11 @@ import { StockResponse } from '../models/stock.model';
 
 
 @Component({
-  selector: 'app-stock-item',
-  templateUrl: './stock-item.component.html',
-  styleUrls: ['./stock-item.component.scss']
+  selector: 'app-stock-detail-item',
+  templateUrl: './stock-detail.component.html',
+  styleUrls: ['./stock-detail.component.scss']
 })
-export class StockItemComponent implements OnInit {
+export class StockDetailComponent implements OnInit {
 
   stockListResponse: Observable<any>;
   stockListResponseFailed: Observable<boolean>;
@@ -19,7 +19,7 @@ export class StockItemComponent implements OnInit {
   constructor( private stockService: StockService) { }
 
   ngOnInit() {
-    this.getStockList();
+    //this.getStockList();
   }
 
   getStockList() {

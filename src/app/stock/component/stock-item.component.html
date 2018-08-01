@@ -3,7 +3,25 @@
 <section>
   <div class="Tabledata">
     <div class="table-responsive">
-      stock dummy data
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Item Name</th>
+          <th>Item Code</th>
+          <th>Stock Group Name</th>
+          <th>Unit Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let stock of stockList; index as i;">
+          <td><a routerLink="/stocks/{{stock.stockItemID}}"> {{stock.itemName}}</a></td>
+          <td>{{stock.itemCode}}</td>
+          <td>{{stock.stockGroupName}}</td>
+          <td>{{stock.unitName}}</td>
+
+        </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </section>
