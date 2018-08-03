@@ -18,6 +18,7 @@ import { FooterComponent } from './shared/footer/footer.component';
 
 import { AuthModule } from './auth/auth.module';
 import { StockModule } from './stock/stock.module';
+import {UnitModule} from './unit/unit.module';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { StockModule } from './stock/stock.module';
     ChartsModule,
     PrimeNGModule,
     AuthModule,
-    StockModule
+    StockModule,
+    UnitModule
 
   ],
   bootstrap: [AppComponent],

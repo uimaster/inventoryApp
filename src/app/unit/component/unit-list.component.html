@@ -1,0 +1,29 @@
+<app-navbar></app-navbar>
+<br/><br/>
+<section>
+  <div class="Tabledata">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Unit Namee</th>
+          <th>Company ID</th>
+          <th>userID</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <ng-container *ngIf="unitList">
+        <tr *ngFor="let unit of unitList; index as i;">
+          <td><a routerLink="/unit/{{unit.unit_ID}}"> {{unit.unitName}}</a></td>
+          <td>{{unit.company_ID}}</td>
+          <td>{{unit.userID}}</td>
+
+
+        </tr>
+        </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

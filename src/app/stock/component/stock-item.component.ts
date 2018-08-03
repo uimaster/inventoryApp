@@ -15,7 +15,7 @@ export class StockItemComponent implements OnInit {
   stockListResponse: Observable<any>;
   stockListResponseFailed: Observable<boolean>;
 
-  public stockList = {};
+  public stockList;
   constructor( private stockService: StockService) { }
 
   ngOnInit() {
