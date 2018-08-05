@@ -19,6 +19,7 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { AuthModule } from './auth/auth.module';
 import { StockModule } from './stock/stock.module';
 import {UnitModule} from './unit/unit.module';
+import {StockGroupModule} from "./stock-group/stock-group.module";
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import {UnitModule} from './unit/unit.module';
     PrimeNGModule,
     AuthModule,
     StockModule,
-    UnitModule
+    UnitModule,
+    StockGroupModule
 
   ],
   bootstrap: [AppComponent],
