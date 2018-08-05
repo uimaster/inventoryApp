@@ -20,6 +20,7 @@ import { AuthModule } from './auth/auth.module';
 import { StockModule } from './stock/stock.module';
 import {UnitModule} from './unit/unit.module';
 import {StockGroupModule} from "./stock-group/stock-group.module";
+import {LedgerModule} from "./ledger/ledger.module";
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import {StockGroupModule} from "./stock-group/stock-group.module";
     AuthModule,
     StockModule,
     UnitModule,
-    StockGroupModule
+    StockGroupModule,
+      LedgerModule
 
   ],
   bootstrap: [AppComponent],
