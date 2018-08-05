@@ -26,17 +26,17 @@ export class NavbarComponent implements OnInit {
       {
         label: 'Unit',
         icon: 'fa fa-fw fa-cog',
-        url: '/unit'
+        url: '/units'
       },
       {
         label: 'Stock Group',
         icon: 'fa fa-fw fa-gift',
-        url: '/stock-group'
+        url: '/stock-groups'
       },
       {
         label: 'Ledger List',
         icon: 'fa fa-fw fa-briefcase',
-        url: '/ledger-list'
+        url: '/ledgers'
       },
       // {
       //   label: 'Get Support',

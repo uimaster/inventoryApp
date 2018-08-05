@@ -12,23 +12,8 @@ import { StockResponse } from '../models/stock.model';
 })
 export class StockDetailComponent implements OnInit {
 
-  stockListResponse: Observable<any>;
-  stockListResponseFailed: Observable<boolean>;
-
-  public stockList = {};
-  constructor( private stockService: StockService) { }
-
   ngOnInit() {
-    //this.getStockList();
+    debugger;
+    console.log('hi stock detils');
   }
-
-  getStockList() {
-    this.stockService.getAllStocks().subscribe((res: StockResponse) => {
-      if (res && res.status == '200')  {
-        this.stockList = res.data;
-      }
-    });
-  }
-
-
 }
