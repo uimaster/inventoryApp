@@ -17,13 +17,13 @@ export class LedgerComponent implements OnInit, OnDestroy {
     constructor( private ledgerService: LedgerService, private ledgerSharedService: SharedLedgerService) { }
 
     ngOnInit() {
-        this.getLedgerData();
+       // this.getLedgerData();
     }
 
     getLedgerData() {
-        this.ledgerDataSubscription = this.ledgerSharedService.ledger.subscribe((res: Ledger) => {
-           console.log(res);
-        });
+        // this.ledgerDataSubscription = this.ledgerSharedService.ledger.subscribe((res: Ledger) => {
+        //    console.log(res);
+        // });
     }
 
     ngOnDestroy() {

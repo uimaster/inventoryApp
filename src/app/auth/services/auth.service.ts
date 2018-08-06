@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
-import 'rxjs/Rx';
+import 'rxjs';
 import 'rxjs/add/operator/map';
 import { LoginRequest, LoginResponse } from '../models/user.model';
 import { InterceptorSkipHeader} from './token.interceptor';

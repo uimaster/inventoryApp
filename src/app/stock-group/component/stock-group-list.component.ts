@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {StockGroupService} from "../services/stock-group.service";
-import {StockGroupResponse} from "../models/stock-group.model";
+import {StockGroupService} from '../services/stock-group.service';
+import {StockGroupResponse} from '../models/stock-group.model';
 
 
 @Component({
@@ -20,9 +20,9 @@ export class StockGroupListComponent implements OnInit {
 
     getStockGroupList() {
         this.stockGroupService.getAllStockGroups().subscribe((res: StockGroupResponse) => {
-            if (res && res.status == '200')  {
+            if (res && res.status === '200')  {
                 this.stockGroupList = res.data;
-                //console.log(this.unitList);
+                // console.log(this.unitList);
 
             }
         });

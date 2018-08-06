@@ -5,16 +5,16 @@ import {LedgerRouter} from "./ledger.routes";
 import {LedgerService} from "./services/ledger.service";
 import {LedgerComponent} from "./component/ledger.component";
 import {SharedLedgerService} from "./services/shared-ledger.service";
-
+import { LedgerRouteModule } from './ledger.route.module';
 @NgModule({
     declarations: [ LedgerListComponent , LedgerComponent],
     imports: [
-        LedgerRouter,
-        CommonModule
+      LedgerRouteModule,
+      CommonModule
     ],
     providers: [ LedgerService, SharedLedgerService ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 
-export class LedgerModule{}
+export class LedgerModule {}
 

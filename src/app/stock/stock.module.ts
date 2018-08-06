@@ -3,13 +3,12 @@ import { CommonModule } from '@angular/common';
 
 import { StockItemComponent } from './component/stock-item.component';
 import { StockService } from './services/stock.service';
-import { StockRouter } from './stock.routes';
-import {NavbarComponent} from '../shared/navbar/navbar.component';
-import {StockDetailComponent} from './component/stock-detail.component';
+import { StockRouteModule } from './stock.route.module';
+import { StockDetailComponent } from './component/stock-detail.component';
 @NgModule({
   declarations: [ StockItemComponent, StockDetailComponent ],
   imports: [
-    StockRouter,
+    StockRouteModule,
     CommonModule
   ],
   providers: [ StockService ],

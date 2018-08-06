@@ -3,9 +3,8 @@ import {LedgerListComponent} from "./component/ledger-list.component";
 import {LedgerComponent} from "./component/ledger.component";
 
 export const routes: Routes = [
-    { path: 'ledgers', component: LedgerListComponent
-    },
-    { path: 'ledger/:id', component: LedgerComponent
+    { path: 'ledgers', component: LedgerListComponent,
+        children:   [{path: ':id', component: LedgerComponent}]
     }
 ];
 
