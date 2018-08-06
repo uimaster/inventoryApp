@@ -1,17 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {LedgerResponse} from "../models/ledger.model";
+import {LedgerResponse, Ledger} from "../models/ledger.model";
 import {LedgerService} from "../services/ledger.service";
+import {SharedLedgerService} from "../services/shared-ledger.service";
+import {Router} from "@angular/router";
+import {Subscription} from "rxjs/Rx";
 
 @Component({
     selector: 'app-unit-list',
     templateUrl: './ledger-list.component.html',
     styleUrls: ['./ledger-list.component.scss']
 })
-export class LedgerListComponent implements OnInit {
+export class LedgerListComponent implements OnInit, OnDestroy {
 
     public ledgerList;
-    constructor( private ledgerService: LedgerService) { }
+    public ledgerDataSubscription: Subscription;
+    constructor( private ledgerService: LedgerService, private sharedledgerservice:SharedLedgerService, private router : Router) { }
 
     ngOnInit() {
         this.getLedgerList();
@@ -25,6 +29,17 @@ export class LedgerListComponent implements OnInit {
 
             }
         });
+    }
+
+    setLedger(ledger:Ledger,ledgerId){
+
+        this.sharedledgerservice.setLedger(ledger);
+        this.router.navigate(['/ledger', ledgerId]);
+
+    }
+
+    ngOnDestroy(){
+        //this.sharedledgerservice.setLedger();
     }
 
 

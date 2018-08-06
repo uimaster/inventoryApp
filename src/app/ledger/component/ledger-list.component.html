@@ -13,18 +13,20 @@
                     <th>Tax Type</th>
                     <th>Company Id</th>
                     <th>User Id</th>
+                    <th>Edit</th>
                 </tr>
                 </thead>
                 <tbody>
                 <ng-container *ngIf="ledgerList">
                     <tr *ngFor="let ledger of ledgerList; index as i;">
-                        <td><a routerLink="/ledgers/{{ledger.ledger_ID}}"> {{ledger.ledgerName}}</a></td>
+                        <td><a (click)="setLedger(ledger,ledger.ledger_ID)"> {{ledger.ledgerName}}</a></td>
                         <td>{{ledger.ledgerGroupID}}</td>
                         <td>{{ledger.rateofTax}}</td>
                         <td>{{ledger.calculatedOn}}</td>
                         <td>{{ledger.taxType}}</td>
                         <td>{{ledger.company_ID}}</td>
                         <td>{{ledger.uSerID}}</td>
+                        <td><a (click)="setLedger(ledger,ledger.ledger_ID)">Edit</a></td>
                     </tr>
                 </ng-container>
                 </tbody>
