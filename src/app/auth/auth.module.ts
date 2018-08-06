@@ -7,16 +7,16 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './services/auth.service';
 import { TokenInterceptor } from './services/token.interceptor';
 import { LoginComponent } from './component/login.component';
-import { AuthRouter } from './auth.routes';
+import { LoginRouteModule } from './auth.route.module';
 
 @NgModule({
   declarations: [
     LoginComponent
   ],
   imports: [
+    LoginRouteModule,
     CommonModule,
-    ReactiveFormsModule,
-    AuthRouter
+    ReactiveFormsModule
   ],
   providers: [AuthService,
     {

@@ -8,6 +8,7 @@ export const routes: Routes = [
   { path: '', component: StockItemComponent },
   { path: 'stocks', component: StockItemComponent,
     children: [
+      { path: '', component: StockDetailComponent},
       { path: 'stocks/:id', component: StockDetailComponent}
     ]
   }
