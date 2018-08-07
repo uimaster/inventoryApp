@@ -2,14 +2,17 @@
 <br/><br/>
 <section>
   <div class="Tabledata">
+
+
     <div class="table-responsive">
+      <button type="btn btn-primary">Add</button>
       <table class="table">
         <thead>
         <tr>
           <th>Unit Namee</th>
           <th>Company ID</th>
           <th>userID</th>
-
+          <th>Action</th>
         </tr>
         </thead>
         <tbody>
@@ -18,7 +21,7 @@
           <td><a routerLink="/unit/{{unit.unit_ID}}"> {{unit.unitName}}</a></td>
           <td>{{unit.company_ID}}</td>
           <td>{{unit.userID}}</td>
-
+          <td><a (click)="editUnit(unit.unit_ID)">Edit</a>  | <a (click)="deleteUnit(unit.unit_ID)">Delete</a> </td>
 
         </tr>
         </ng-container>

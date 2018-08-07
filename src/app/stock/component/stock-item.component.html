@@ -3,6 +3,7 @@
 <section>
   <div class="Tabledata">
     <div class="table-responsive">
+      <button type="btn btn-primary">Add</button>
       <table class="table">
         <thead>
         <tr>
@@ -10,6 +11,7 @@
           <th>Item Code</th>
           <th>Stock Group Name</th>
           <th>Unit Name</th>
+          <th>Action</th>
         </tr>
         </thead>
         <tbody>
@@ -18,7 +20,7 @@
           <td>{{stock.itemCode}}</td>
           <td>{{stock.stockGroupName}}</td>
           <td>{{stock.unitName}}</td>
-
+          <td><a (click)="editStock(stock.stockItemID)">Edit</a>  | <a (click)="deleteStock(stock.stockItemID)">Delete</a> </td>
         </tr>
         </tbody>
       </table>

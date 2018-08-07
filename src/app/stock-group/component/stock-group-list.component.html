@@ -3,6 +3,7 @@
 <section>
     <div class="Tabledata">
         <div class="table-responsive">
+            <button type="btn btn-primary">Add</button>
             <table class="table">
                 <thead>
                 <tr>
@@ -11,7 +12,7 @@
                     <th>Active Status</th>
                     <th>Company Id</th>
                     <th>User Id</th>
-
+                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -22,7 +23,7 @@
                         <td>{{stock.activeStatus}}</td>
                         <td>{{stock.company_ID}}</td>
                         <td>{{stock.userID}}</td>
-
+                        <td><a (click)="editStockGroup(stock.stockItemID)">Edit</a>  | <a (click)="deleteStockGroup(stock.stockItemID)">Delete</a> </td>
                     </tr>
                 </ng-container>
                 </tbody>
