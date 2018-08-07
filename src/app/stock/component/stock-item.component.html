@@ -16,7 +16,7 @@
         </thead>
         <tbody>
         <tr *ngFor="let stock of stockList; index as i;">
-          <td><a routerLink="/stocks/{{stock.stockItemID}}"> {{stock.itemName}}</a></td>
+          <td><a href="javascript:void(0);" (click)="getDetails(stock.stockItemID)"> {{stock.itemName}}</a></td>
           <td>{{stock.itemCode}}</td>
           <td>{{stock.stockGroupName}}</td>
           <td>{{stock.unitName}}</td>

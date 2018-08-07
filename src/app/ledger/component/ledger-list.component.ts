@@ -1,10 +1,10 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {LedgerResponse, Ledger} from "../models/ledger.model";
-import {LedgerService} from "../services/ledger.service";
-import {SharedLedgerService} from "../services/shared-ledger.service";
-import {Router} from "@angular/router";
-import {Subscription} from "rxjs/Rx";
+import {LedgerResponse, Ledger} from '../models/ledger.model';
+import {LedgerService} from '../services/ledger.service';
+import {SharedLedgerService} from '../services/shared-ledger.service';
+import {Router} from '@angular/router';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-unit-list',

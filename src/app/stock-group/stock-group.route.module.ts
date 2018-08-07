@@ -4,6 +4,7 @@ import {StockGroupListComponent} from './component/stock-group-list.component';
 
 export const routes: Routes = [
   { path: '', component: StockGroupListComponent},
+  { path: 'stock-groups', component: StockGroupListComponent},
   { path: 'stock-groups', component: StockGroupListComponent}
 ];
 

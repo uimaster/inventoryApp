@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
+import { Router } from '@angular/router';
 
 import { StockService } from '../services/stock.service';
 import { StockResponse } from '../models/stock.model';
@@ -14,9 +15,8 @@ export class StockItemComponent implements OnInit {
 
   stockListResponse: Observable<any>;
   stockListResponseFailed: Observable<boolean>;
-
   public stockList;
-  constructor( private stockService: StockService) { }
+  constructor( private stockService: StockService, private router: Router) { }
 
   ngOnInit() {
     this.getStockList();
@@ -24,10 +24,14 @@ export class StockItemComponent implements OnInit {
 
   getStockList() {
     this.stockService.getAllStocks().subscribe((res: StockResponse) => {
-      if (res && res.status == '200')  {
+      if (res && res.status === '200')  {
         this.stockList = res.data;
       }
     });
+  }
+
+  getDetails(id) {
+    this.router.navigate(['/stocks/stock-details', id]);
   }
 
 
