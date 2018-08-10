@@ -13,7 +13,9 @@ import {Subscription} from 'rxjs';
 })
 export class LedgerListComponent implements OnInit, OnDestroy {
 
+
     public ledgerList;
+    
     public ledgerDataSubscription: Subscription;
     constructor( private ledgerService: LedgerService, private sharedledgerservice:SharedLedgerService, private router : Router) { }
 
@@ -24,7 +26,20 @@ export class LedgerListComponent implements OnInit, OnDestroy {
     getLedgerList() {
         this.ledgerService.getAllLedgers().subscribe((res: LedgerResponse) => {
             if (res && res.status == '200')  {
-                this.ledgerList = res.data;
+
+               // const datal = Object.values(res.data);
+
+                // var datal = Object.keys(res.data)
+                // // iterate over them and generate the array
+                //     .map(function(k) {
+                //         // generate the array element
+                //         return [+k, res.data[k]];
+                //     });
+
+
+
+
+               this.ledgerList = res.data;
                 //console.log(this.unitList);
 
             }
@@ -33,14 +48,15 @@ export class LedgerListComponent implements OnInit, OnDestroy {
 
     setLedger(ledger:Ledger,ledgerId){
 
-        this.sharedledgerservice.setLedger(ledger);
-        this.router.navigate(['/ledger', ledgerId]);
+       // this.sharedledgerservice.setLedger(ledger);
+        this.router.navigate(['/ledgers/ledger', ledgerId]);
 
     }
 
     ngOnDestroy(){
         //this.sharedledgerservice.setLedger();
     }
+
 
 
 }

@@ -1,1 +1,35 @@
-<h1>Ledger</h1>
+<div>
+
+    <form [formGroup]="lForm" (ngSubmit)="saveLedger(lForm.value)">
+    <div class="form-group">
+    <input type="text" pInputText placeholder="Ledger name" formControlName="ledgerName">
+    </div>
+
+    <div class="form-group">
+        <input type="text"  placeholder="Ledger Group Id" formControlName="ledgerGroupID">
+    </div>
+
+        <div class="form-group">
+            <input type="text"  placeholder="Rate of Tax" formControlName="rateofTax">
+        </div>
+
+        <div class="form-group">
+            <input type="text"  placeholder="Calculated on" formControlName="calculatedOn">
+        </div>
+
+        <div class="form-group">
+            <input type="text"  placeholder="Tax type" formControlName="taxType">
+        </div>
+        <div class="form-group">
+            <input type="text"  placeholder="Company Id" formControlName="company_ID">
+        </div>
+
+        <div class="form-group">
+            <input type="text"  placeholder="User Id" formControlName="uSerID">
+        </div>
+
+        <button type="submit">Submit</button>
+
+    </form>
+
+</div>

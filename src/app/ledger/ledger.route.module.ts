@@ -1,10 +1,13 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import {LedgerListComponent} from './component/ledger-list.component';
+import {LedgerComponent} from "./component/ledger.component";
 
 export const routes: Routes = [
-  { path: '', component: LedgerListComponent},
-  { path: 'ledgers', component: LedgerListComponent}
+  { path: '', component: LedgerListComponent, pathMatch: 'full' },
+  { path: 'ledgers', component: LedgerListComponent},
+  { path: 'ledger/:id', component: LedgerComponent},
+  { path: '**', component: LedgerListComponent}
 ];
 
 @NgModule({
@@ -13,3 +16,4 @@ export const routes: Routes = [
 })
 
 export class LedgerRouteModule { }
+

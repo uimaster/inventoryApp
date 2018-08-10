@@ -13,6 +13,8 @@ import { PrimeNGModule } from './app.primeNg.module';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { OrderlistComponent } from './dump-components/orderlist/orderlist.component';
 import { FooterComponent } from './shared/footer/footer.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import {TokenInterceptor} from "./auth/services/token.interceptor";
 
 
 @NgModule({
@@ -34,6 +36,13 @@ import { FooterComponent } from './shared/footer/footer.component';
     BrowserModule,
     ChartsModule,
     PrimeNGModule
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
