@@ -30,7 +30,7 @@ export class StockGroupListComponent implements OnInit {
     }
 
     editStockGroup(stockGroupId){
-        this._router.navigate(['/stock-groups/stock-groups', stockGroupId]);
+        this._router.navigate(['/stock-groups/stock-group', stockGroupId]);
     }
     
     
