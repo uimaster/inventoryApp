@@ -59,7 +59,7 @@ export class TokenInterceptor implements HttpInterceptor {
           if (error.status === 401) {
 
             console.log('Unauthorized');
-
+            localStorage.setItem('isLogin', 'false');
             return auth.refreshToken()
 
               .flatMap((res) => {

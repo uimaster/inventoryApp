@@ -12,12 +12,9 @@ import {Subscription} from 'rxjs';
     styleUrls: ['./ledger-list.component.scss']
 })
 export class LedgerListComponent implements OnInit, OnDestroy {
-
-
-    public ledgerList;
-    
+    public ledgerList: any;
     public ledgerDataSubscription: Subscription;
-    constructor( private ledgerService: LedgerService, private sharedledgerservice:SharedLedgerService, private router : Router) { }
+    constructor( private ledgerService: LedgerService, private sharedledgerservice: SharedLedgerService, private router: Router) { }
 
     ngOnInit() {
         this.getLedgerList();
@@ -25,7 +22,7 @@ export class LedgerListComponent implements OnInit, OnDestroy {
 
     getLedgerList() {
         this.ledgerService.getAllLedgers().subscribe((res: LedgerResponse) => {
-            if (res && res.status == '200')  {
+            if (res && res.status === '200')  {
 
                // const datal = Object.values(res.data);
 
@@ -40,21 +37,21 @@ export class LedgerListComponent implements OnInit, OnDestroy {
 
 
                this.ledgerList = res.data;
-                //console.log(this.unitList);
+                // console.log(this.unitList);
 
             }
         });
     }
 
-    setLedger(ledger:Ledger,ledgerId){
+    setLedger(ledger: Ledger, ledgerId) {
 
        // this.sharedledgerservice.setLedger(ledger);
         this.router.navigate(['/ledgers/ledger', ledgerId]);
 
     }
 
-    ngOnDestroy(){
-        //this.sharedledgerservice.setLedger();
+    ngOnDestroy() {
+        // this.sharedledgerservice.setLedger();
     }
 
 

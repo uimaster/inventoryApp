@@ -6,7 +6,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 // import { PurchaseComponent } from './dump-components/purchase/purchase.component';
 
 export const routes: Routes = [
-    { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+    { path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: 'dashboard', component: DashboardComponent },
     { path: 'login', loadChildren: 'app/auth/auth.module#AuthModule' },
     { path: 'masters', loadChildren: 'app/masters/masters.module#MastersModule' }

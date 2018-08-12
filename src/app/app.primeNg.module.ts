@@ -11,6 +11,7 @@ import {PanelMenuModule} from 'primeng/panelmenu';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {DialogModule} from 'primeng/dialog';
 import {InputTextareaModule} from 'primeng/inputtextarea';
+import {PanelModule} from 'primeng/panel';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
     PanelMenuModule,
     RadioButtonModule,
     DialogModule,
-    InputTextareaModule
+    InputTextareaModule,
+    PanelModule
   ],
   exports: [
     SidebarModule,
@@ -37,7 +39,8 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
     PanelMenuModule,
     RadioButtonModule,
     DialogModule,
-    InputTextareaModule
+    InputTextareaModule,
+    PanelModule
   ]
 })
 
