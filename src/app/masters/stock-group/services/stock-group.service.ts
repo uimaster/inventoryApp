@@ -23,9 +23,10 @@ export class StockGroupService {
 
 
 
-    updateStockGroup(payload:StockGroup): Observable<any> {
+    updateStockGroup(payload: StockGroup): Observable<any> {
         // const params = new HttpParams().set('CompanyID', '1');
         return this.http.post(UPDATESTOCKGROUPLIST, payload);
+
 
     }
 
