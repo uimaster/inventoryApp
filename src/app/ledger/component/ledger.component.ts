@@ -4,7 +4,7 @@ import {LedgerResponse, Ledger} from "../models/ledger.model";
 import {LedgerService} from "../services/ledger.service";
 import {Subscription} from "rxjs/Subscription";
 import {SharedLedgerService} from "../services/shared-ledger.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {FormBuilder, Validators} from "@angular/forms";
 
 @Component({
@@ -17,7 +17,7 @@ export class LedgerComponent implements OnInit, OnDestroy {
     public ledgerList;
     public ledgerID;
     public ledgerDataSubscription: Subscription;
-    constructor( private ledgerService: LedgerService, private ledgerSharedService: SharedLedgerService,private _route: ActivatedRoute, private _formBuilder: FormBuilder) { }
+    constructor( private ledgerService: LedgerService, private ledgerSharedService: SharedLedgerService,private _route: ActivatedRoute, private _formBuilder: FormBuilder,private router : Router) { }
     public ledger;
     public lForm;
     ngOnInit() {
@@ -97,7 +97,12 @@ export class LedgerComponent implements OnInit, OnDestroy {
 
     saveLedger(form:Ledger){
 
-        this.ledgerService.updateLedger(form).subscribe()
+        this.ledgerService.updateLedger(form).subscribe((res:LedgerResponse)=>{
+            if(res.status == '200'){
+                alert("Updated");
+                this.router.navigate(['/ledgers'])
+            }
+        });
 
 
 

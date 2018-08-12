@@ -18,7 +18,7 @@
                 <tbody>
                 <ng-container *ngIf="stockGroupList">
                     <tr *ngFor="let stock of stockGroupList; index as i;">
-                        <td><a routerLink="/stock-groups/{{stock.stockGroup_ID}}"> {{stock.stockGroupName}}</a></td>
+                        <td><a > {{stock.stockGroupName}}</a></td>
                         <td>{{stock.parentName}}</td>
                         <td>{{stock.activeStatus}}</td>
                         <td>{{stock.company_ID}}</td>

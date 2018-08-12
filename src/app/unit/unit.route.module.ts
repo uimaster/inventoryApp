@@ -1,20 +1,14 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import {UnitListComponent} from './component/unit-list.component';
+import {UnitComponent} from "./component/unit.component";
 
 export const routes: Routes = [
   { path: '', component: UnitListComponent},
-  { path: 'units', component: UnitListComponent
-    // children: [
-    //   { path: '/:id',
-    //     component: StockDetailComponent,
-    //     data: {
-    //       shouldDetach: true, // Route will be resused. See CustomResuseStrategy.
-    //       title: null
-    //     }
-    //   }
-    // ]
-  }
+  { path: 'units', component: UnitListComponent},
+  { path: 'unit/:id', component: UnitComponent},
+  { path: '**', component: UnitListComponent}
+  
 ];
 
 @NgModule({

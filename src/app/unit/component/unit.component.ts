@@ -3,7 +3,7 @@ import {Observable} from 'rxjs/Observable';
 import {UnitResponse, Unit} from "../models/unit.model";
 import {UnitService} from "../services/unit.service";
 import {Subscription} from "rxjs/Subscription";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {FormBuilder, Validators} from "@angular/forms";
 
 @Component({
@@ -16,7 +16,7 @@ export class UnitComponent implements OnInit, OnDestroy {
     public unitList;
     public unitID;
     public unitDataSubscription: Subscription;
-    constructor( private unitService: UnitService, private _route: ActivatedRoute, private _formBuilder: FormBuilder) { }
+    constructor( private unitService: UnitService, private _route: ActivatedRoute, private _formBuilder: FormBuilder, private router : Router) { }
     public unit;
     public uForm;
     ngOnInit() {
@@ -84,7 +84,12 @@ export class UnitComponent implements OnInit, OnDestroy {
 
     saveUnit(form:Unit){
 
-        this.unitService.updateUnit(form).subscribe()
+        this.unitService.updateUnit(form).subscribe((res:UnitResponse)=>{
+           if(res.status == '200'){
+               alert("Updated");
+               this.router.navigate(['/units'])
+           }
+        });
 
 
 

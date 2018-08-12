@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {StockGroupService} from '../services/stock-group.service';
 import {StockGroupResponse} from '../models/stock-group.model';
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -12,7 +13,7 @@ import {StockGroupResponse} from '../models/stock-group.model';
 export class StockGroupListComponent implements OnInit {
 
     public stockGroupList;
-    constructor( private stockGroupService: StockGroupService ) { }
+    constructor( private stockGroupService: StockGroupService, private _router: Router) { }
 
     ngOnInit() {
         this.getStockGroupList();
@@ -28,6 +29,9 @@ export class StockGroupListComponent implements OnInit {
         });
     }
 
+    editStockGroup(stockGroupId){
+        this._router.navigate(['/stock-groups/stock-groups', stockGroupId]);
+    }
     
     
 

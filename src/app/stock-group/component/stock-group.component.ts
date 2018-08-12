@@ -1,7 +1,7 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Subscription} from "rxjs/Subscription";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {FormBuilder, Validators} from "@angular/forms";
 import {StockGroupService} from "../services/stock-group.service";
 import {StockGroup, StockGroupResponse} from "../models/stock-group.model";
@@ -18,7 +18,7 @@ export class StockGroupComponent implements OnInit, OnDestroy {
     public stockGroupDataSubscription: Subscription;
     public stockgroup;
     public stockGroupForm;
-    constructor( private stockGroupService: StockGroupService, private _route: ActivatedRoute, private _formBuilder: FormBuilder) { }
+    constructor( private stockGroupService: StockGroupService, private _route: ActivatedRoute, private _formBuilder: FormBuilder, private _router: Router) { }
 
     ngOnInit() {
         this.stockGroupFormC();
@@ -90,7 +90,12 @@ export class StockGroupComponent implements OnInit, OnDestroy {
 
     saveStockGroup(form:StockGroup){
 
-        this.stockGroupService.updateStockGroup(form).subscribe()
+        this.stockGroupService.updateStockGroup(form).subscribe((res:StockGroupResponse)=>{
+            if(res.status == '200'){
+                alert("Updated");
+                this._router.navigate(['/stock-groups'])
+            }
+        })
 
 
 

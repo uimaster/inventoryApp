@@ -4,8 +4,9 @@ import {UnitListComponent} from './component/unit-list.component';
 import { UnitRouteModule } from './unit.route.module';
 import {UnitService} from './services/unit.service';
 import {ReactiveFormsModule} from "@angular/forms";
+import {UnitComponent} from "./component/unit.component";
 @NgModule({
-  declarations: [ UnitListComponent ],
+  declarations: [ UnitListComponent , UnitComponent],
   imports: [
     UnitRouteModule,
     CommonModule,
