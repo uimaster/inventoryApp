@@ -3,7 +3,8 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 
-import {GETSTOCKGROUP_URL} from '../../shared/app.urls';
+import {GETSTOCKGROUP_URL, UPDATESTOCKGROUPLIST} from '../../shared/app.urls';
+import {StockGroup} from "../models/stock-group.model";
 
 
 @Injectable()
@@ -19,6 +20,20 @@ export class StockGroupService {
             })
         );
     }
+
+
+
+    updateStockGroup(payload:StockGroup): Observable<any> {
+        // const params = new HttpParams().set('CompanyID', '1');
+        return this.http.post(UPDATESTOCKGROUPLIST, payload);
+        // .map((res: UPDATEUNITLIST) => {
+        //     if (res) {
+        //         return res;
+        //     }
+        // })
+        // .catch((error) => Observable.throw('server Error.'));
+    }
+
 
 
 }

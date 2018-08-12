@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {UnitResponse} from '../models/unit.model';
 import {UnitService} from '../services/unit.service';
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -12,7 +13,7 @@ import {UnitService} from '../services/unit.service';
 export class UnitListComponent implements OnInit {
 
   public unitList;
-  constructor( private unitService: UnitService) { }
+  constructor( private unitService: UnitService, private router : Router) { }
 
   ngOnInit() {
     this.getUnitList();
@@ -26,6 +27,14 @@ export class UnitListComponent implements OnInit {
 
       }
     });
+  }
+
+
+  setUnit(unitId){
+
+    // this.sharedledgerservice.setLedger(ledger);
+    this.router.navigate(['/units/unit', unitId]);
+
   }
 
 

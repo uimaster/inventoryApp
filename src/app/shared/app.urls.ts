@@ -5,3 +5,5 @@ export const GETUNIT_URL = BASEURL + 'Units/GetUnitsList';
 export const GETSTOCKGROUP_URL = BASEURL + 'StockGroup/GetStockGroupList';
 export const GETLEDGERLIST = BASEURL + 'Ledger/GetLedgerList';
 export const UPDATELEDGERLIST = BASEURL + 'Ledger/UpdateLedgerDetails';
+export const UPDATEUNITLIST = BASEURL + 'Units/UpdateUnitDetails';
+export const UPDATESTOCKGROUPLIST = BASEURL + 'StockGroup/UpdateStockGroupDetails';

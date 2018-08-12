@@ -21,7 +21,7 @@
           <td><a routerLink="/unit/{{unit.unit_ID}}"> {{unit.unitName}}</a></td>
           <td>{{unit.company_ID}}</td>
           <td>{{unit.userID}}</td>
-          <td><a (click)="editUnit(unit.unit_ID)">Edit</a>  | <a (click)="deleteUnit(unit.unit_ID)">Delete</a> </td>
+          <td><a (click)="setUnit(unit.unit_ID)">Edit</a>  | <a (click)="deleteUnit(unit.unit_ID)">Delete</a> </td>
 
         </tr>
         </ng-container>

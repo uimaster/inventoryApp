@@ -1,0 +1,31 @@
+<div>
+
+    <form [formGroup]="stockGroupForm" (ngSubmit)="saveStockGroup(stockGroupForm.value)">
+        <div class="form-group">
+            <input type="text" pInputText placeholder="Stock group name" formControlName="stockGroupName">
+        </div>
+
+        <div class="form-group">
+            <input type="text"  placeholder="Parent Name" formControlName="parentName">
+        </div>
+
+
+
+        <div class="form-group">
+            <input type="text" pInputText placeholder="Active Status" formControlName="activeStatus">
+        </div>
+
+        <div class="form-group">
+            <input type="text"  placeholder="Company " formControlName="company_ID">
+        </div>
+
+
+        <div class="form-group">
+            <input type="text"  placeholder="User Id" formControlName="userID">
+        </div>
+
+        <button type="submit">Submit</button>
+
+    </form>
+
+</div>

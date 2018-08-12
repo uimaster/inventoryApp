@@ -1,0 +1,22 @@
+<div>
+
+    <form [formGroup]="uForm" (ngSubmit)="saveUnit(uForm.value)">
+        <div class="form-group">
+            <input type="text" pInputText placeholder="Unit name" formControlName="unitName">
+        </div>
+
+        <div class="form-group">
+            <input type="text"  placeholder="Company Id" formControlName="company_ID">
+        </div>
+
+
+
+        <div class="form-group">
+            <input type="text"  placeholder="User Id" formControlName="userID">
+        </div>
+
+        <button type="submit">Submit</button>
+
+    </form>
+
+</div>

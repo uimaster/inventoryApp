@@ -3,7 +3,8 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 
-import {GETUNIT_URL} from '../../shared/app.urls';
+import {GETUNIT_URL, UPDATEUNITLIST} from '../../shared/app.urls';
+import {Unit} from "../models/unit.model";
 
 
 @Injectable()
@@ -18,6 +19,18 @@ export class UnitService {
         return res;
       })
     );
+  }
+
+
+  updateUnit(payload:Unit): Observable<any> {
+    // const params = new HttpParams().set('CompanyID', '1');
+    return this.http.post(UPDATEUNITLIST, payload);
+    // .map((res: UPDATEUNITLIST) => {
+    //     if (res) {
+    //         return res;
+    //     }
+    // })
+    // .catch((error) => Observable.throw('server Error.'));
   }
 
 
