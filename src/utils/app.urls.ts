@@ -4,6 +4,7 @@ export const GETSTOCK_URL = BASEURL + 'Stockitem/GetStockItems';
 export const GETUNIT_URL = BASEURL + 'Units/GetUnitsList';
 export const GETSTOCKGROUP_URL = BASEURL + 'StockGroup/GetStockGroupList';
 export const GETLEDGERLIST = BASEURL + 'Ledger/GetLedgerList';
+export const REFRESHTOKEN_URL = BASEURL + 'jwtauth/TokenRefresh';
 export const UPDATELEDGERLIST = BASEURL + 'Ledger/UpdateLedgerDetails';
 export const UPDATEUNITLIST = BASEURL + 'Units/UpdateUnitDetails';
 export const UPDATESTOCKGROUPLIST = BASEURL + 'StockGroup/UpdateStockGroupDetails';

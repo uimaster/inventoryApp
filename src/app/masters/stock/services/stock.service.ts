@@ -3,7 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 
-import { GETSTOCK_URL } from '../../shared/app.urls';
+import { GETSTOCK_URL } from '../../../../utils/app.urls';
 
 
 @Injectable()

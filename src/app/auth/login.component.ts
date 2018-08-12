@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {LoginRequest, LoginResponse} from '../models/user.model';
+import {LoginRequest, LoginResponse} from './user.model';
 import { Observable } from 'rxjs/Observable';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from './auth.service';
 import {Router} from '@angular/router';
 
 @Component({
@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
   public submitted = false;
   errorMessage: string | null;
   userData: Observable<LoginResponse>;
+
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) { }
 
@@ -29,10 +30,11 @@ export class LoginComponent implements OnInit {
     // stop here if form is invalid
     if (this.loginForm.valid) {
       this.authService.logIn(formData).subscribe((res: LoginResponse) => {
-        if (res && res.status == '200') {
+        if (res && res.status === '200') {
             const token = res.data[0].bearerToken;
             localStorage.setItem('token', token);
-            this.router.navigate(['dashboard']);
+            localStorage.setItem('isLogin', JSON.parse('true'));
+            this.router.navigate(['/dashboard']);
         } else {
          alert(res.message);
         }

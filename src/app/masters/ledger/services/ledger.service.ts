@@ -3,8 +3,8 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 
-import {GETLEDGERLIST, UPDATELEDGERLIST} from '../../shared/app.urls';
-import {Ledger, LedgerResponse} from "../models/ledger.model";
+import {GETLEDGERLIST, UPDATELEDGERLIST} from '../../../../utils/app.urls';
+import {Ledger, LedgerResponse} from '../models/ledger.model';
 
 
 @Injectable()
@@ -22,7 +22,7 @@ export class LedgerService {
     }
 
 
-    updateLedger(payload:Ledger): Observable<any> {
+    updateLedger(payload: Ledger): Observable<any> {
        // const params = new HttpParams().set('CompanyID', '1');
         return this.http.post(UPDATELEDGERLIST, payload);
             // .map((res: LedgerResponse) => {
