@@ -1,0 +1,14 @@
+.dashboardlscol{
+  .dashboard-volumn{
+    min-height: 85px;
+    .dashboard-volumn-lst{
+      h3{ font-size: 18px;  color: #333; text-decoration: none}
+      img{ width: 55px;}
+    }
+    &.active{
+      background-color: #ff7373;
+      .dashboard-volumn-lst h3{color: #fff }
+      p{ color: #fff;}
+    }
+  }
+}

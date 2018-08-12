@@ -10,11 +10,12 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { PurchaseComponent } from './dump-components/purchase/purchase.component';
 import { HttpClientModule} from '@angular/common/http';
 import { PrimeNGModule } from './app.primeNg.module';
-import { NavbarComponent } from './shared/navbar/navbar.component';
 import { OrderlistComponent } from './dump-components/orderlist/orderlist.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import {TokenInterceptor} from "./auth/services/token.interceptor";
+import { TokenInterceptor } from './auth/token.interceptor';
+import { AuthService } from './auth/auth.service';
+import { SharedModule} from './shared/shared.module';
 
 
 @NgModule({
@@ -22,7 +23,6 @@ import {TokenInterceptor} from "./auth/services/token.interceptor";
     AppComponent,
     DashboardComponent,
     RestPasswordComponent,
-    NavbarComponent,
     OrderlistComponent,
     FooterComponent,
     PurchaseComponent
@@ -35,9 +35,11 @@ import {TokenInterceptor} from "./auth/services/token.interceptor";
     BrowserAnimationsModule,
     BrowserModule,
     ChartsModule,
-    PrimeNGModule
+    PrimeNGModule,
+    SharedModule
   ],
   providers: [
+    AuthService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

@@ -1,0 +1,28 @@
+
+<section>
+  <div class="Tabledata">
+    <div class="table-responsive">
+      <button type="btn btn-primary">Add</button>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Item Name</th>
+          <th>Item Code</th>
+          <th>Stock Group Name</th>
+          <th>Unit Name</th>
+          <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let stock of stockList; index as i;">
+          <td><a href="javascript:void(0);" (click)="getDetails(stock.stockItemID)"> {{stock.itemName}}</a></td>
+          <td>{{stock.itemCode}}</td>
+          <td>{{stock.stockGroupName}}</td>
+          <td>{{stock.unitName}}</td>
+          <td><a (click)="editStock(stock.stockItemID)">Edit</a>  | <a (click)="deleteStock(stock.stockItemID)">Delete</a> </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
