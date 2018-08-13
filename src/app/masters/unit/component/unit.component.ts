@@ -70,12 +70,19 @@ export class UnitComponent implements OnInit, OnDestroy {
     unitForm(){
         this.uForm = this._formBuilder.group({
             unit_ID: [0],
-            unitName: ['', Validators.required],
+            unitName: ['', [Validators.required, Validators.minLength(4)]],
             company_ID: ['', Validators.required],
             userID: ['', Validators.required]
 
         });
     }
+
+
+    get unitName() { return this.uForm.get('unitName'); }
+
+    get company_ID() { return this.uForm.get('company_ID'); }
+
+    get userID() { return this.uForm.get('userID'); }
 
     ngOnDestroy() {
         this.unitDataSubscription.unsubscribe();
@@ -87,7 +94,7 @@ export class UnitComponent implements OnInit, OnDestroy {
         this.unitService.updateUnit(form).subscribe((res:UnitResponse)=>{
            if(res.status == '200'){
                alert("Updated");
-               this.router.navigate(['/units'])
+               this.router.navigate(['/masters/units'])
            }
         });
 

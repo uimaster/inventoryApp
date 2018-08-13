@@ -74,7 +74,7 @@ export class StockGroupComponent implements OnInit, OnDestroy {
     stockGroupFormC(){
         this.stockGroupForm = this._formBuilder.group({
             stockGroup_ID: [0],
-            stockGroupName: ['', Validators.required],
+            stockGroupName: ['', [Validators.required, Validators.minLength(4)]],
             parentName: ['', Validators.required],
             activeStatus: ['', Validators.required],
             company_ID: ['', Validators.required],
@@ -82,6 +82,20 @@ export class StockGroupComponent implements OnInit, OnDestroy {
 
         });
     }
+
+
+    get stockGroupName() { return this.stockGroupForm.get('stockGroupName'); }
+
+    get parentName() { return this.stockGroupForm.get('parentName'); }
+
+    get activeStatus() { return this.stockGroupForm.get('activeStatus'); }
+
+
+    get company_ID() { return this.stockGroupForm.get('company_ID'); }
+
+
+    get userID() { return this.stockGroupForm.get('userID'); }
+
 
     ngOnDestroy() {
         this.stockGroupDataSubscription.unsubscribe();
@@ -93,7 +107,7 @@ export class StockGroupComponent implements OnInit, OnDestroy {
         this.stockGroupService.updateStockGroup(form).subscribe((res:StockGroupResponse)=>{
             if(res.status == '200'){
                 alert("Updated");
-                this._router.navigate(['/stock-groups'])
+                this._router.navigate(['/masters/stockGroups'])
             }
         })
 

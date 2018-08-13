@@ -29,11 +29,15 @@ export class UnitListComponent implements OnInit {
     });
   }
 
+  addUnit(){
+    this.router.navigate(['/masters/add-unit']);
+  }
+
 
   setUnit(unitId){
 
     // this.sharedledgerservice.setLedger(ledger);
-    this.router.navigate(['/units/unit', unitId]);
+    this.router.navigate(['/masters/unit', unitId]);
 
   }
 

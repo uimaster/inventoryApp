@@ -29,8 +29,12 @@ export class StockGroupListComponent implements OnInit {
         });
     }
 
+    addStockGroup(){
+        this._router.navigate(['/masters/add-stock-group']);
+    }
+
     editStockGroup(stockGroupId){
-        this._router.navigate(['/stock-groups/stock-groups', stockGroupId]);
+        this._router.navigate(['/masters/stock-group', stockGroupId]);
     }
     
     

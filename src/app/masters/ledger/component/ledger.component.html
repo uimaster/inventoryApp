@@ -3,29 +3,115 @@
     <form [formGroup]="lForm" (ngSubmit)="saveLedger(lForm.value)">
     <div class="form-group">
     <input type="text" pInputText placeholder="Ledger name" formControlName="ledgerName">
+
+        <div *ngIf="ledgerName.invalid && (ledgerName.dirty || ledgerName.touched)"
+             class="alert alert-danger">
+
+            <div *ngIf="ledgerName.errors.required">
+                Ledger name is required.
+            </div>
+            <div *ngIf="ledgerName.errors.minlength">
+               Ledger Name must be at least 4 characters long.
+            </div>
+
+
+        </div>
+
     </div>
 
     <div class="form-group">
         <input type="text"  placeholder="Ledger Group Id" formControlName="ledgerGroupID">
+
+        <div *ngIf="ledgerGroupID.invalid && (ledgerGroupID.dirty || ledgerGroupID.touched)"
+             class="alert alert-danger">
+
+            <div *ngIf="ledgerGroupID.errors.required">
+                Ledger Group is required.
+            </div>
+
+
+
+        </div>
+
     </div>
 
         <div class="form-group">
             <input type="text"  placeholder="Rate of Tax" formControlName="rateofTax">
+
+            <div *ngIf="rateofTax.invalid && (rateofTax.dirty || rateofTax.touched)"
+                 class="alert alert-danger">
+
+                <div *ngIf="rateofTax.errors.required">
+                   Rate of tax is required.
+                </div>
+
+
+
+            </div>
+
         </div>
 
         <div class="form-group">
             <input type="text"  placeholder="Calculated on" formControlName="calculatedOn">
+
+            <div *ngIf="calculatedOn.invalid && (calculatedOn.dirty || calculatedOn.touched)"
+                 class="alert alert-danger">
+
+                <div *ngIf="calculatedOn.errors.required">
+                    This field is required.
+                </div>
+
+
+
+            </div>
+
         </div>
 
         <div class="form-group">
             <input type="text"  placeholder="Tax type" formControlName="taxType">
+
+            <div *ngIf="taxType.invalid && (taxType.dirty || taxType.touched)"
+                 class="alert alert-danger">
+
+                <div *ngIf="taxType.errors.required">
+                    This field is required.
+                </div>
+
+
+
+            </div>
+
         </div>
         <div class="form-group">
             <input type="text"  placeholder="Company Id" formControlName="company_ID">
+
+            <div *ngIf="company_ID.invalid && (company_ID.dirty || company_ID.touched)"
+                 class="alert alert-danger">
+
+                <div *ngIf="company_ID.errors.required">
+                    This field is required.
+                </div>
+
+
+
+            </div>
+
         </div>
 
         <div class="form-group">
             <input type="text"  placeholder="User Id" formControlName="uSerID">
+
+            <div *ngIf="uSerID.invalid && (uSerID.dirty || uSerID.touched)"
+                 class="alert alert-danger">
+
+                <div *ngIf="uSerID.errors.required">
+                    This field is required.
+                </div>
+
+
+
+            </div>
+
         </div>
 
         <button type="submit">Submit</button>

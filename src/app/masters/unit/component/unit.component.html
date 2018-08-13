@@ -3,16 +3,53 @@
     <form [formGroup]="uForm" (ngSubmit)="saveUnit(uForm.value)">
         <div class="form-group">
             <input type="text" pInputText placeholder="Unit name" formControlName="unitName">
+
+            <div *ngIf="unitName.invalid && (unitName.dirty || unitName.touched)"
+                 class="alert alert-danger">
+
+                <div *ngIf="unitName.errors.required">
+                    Unit name is required.
+                </div>
+
+
+
+            </div>
+
         </div>
 
         <div class="form-group">
             <input type="text"  placeholder="Company Id" formControlName="company_ID">
+
+
+            <div *ngIf="company_ID.invalid && (company_ID.dirty || company_ID.touched)"
+                 class="alert alert-danger">
+
+                <div *ngIf="company_ID.errors.required">
+                    Company ID is required.
+                </div>
+
+
+
+            </div>
+
         </div>
 
 
 
         <div class="form-group">
             <input type="text"  placeholder="User Id" formControlName="userID">
+
+            <div *ngIf="userID.invalid && (userID.dirty || userID.touched)"
+                 class="alert alert-danger">
+
+                <div *ngIf="userID.errors.required">
+                    USer ID is required.
+                </div>
+
+
+
+            </div>
+
         </div>
 
         <button type="submit">Submit</button>

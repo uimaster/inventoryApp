@@ -79,7 +79,7 @@ export class LedgerComponent implements OnInit, OnDestroy {
     ledgerForm(){
         this.lForm = this._formBuilder.group({
             ledgerId: [0],
-            ledgerName: ['', Validators.required],
+            ledgerName: ['', [Validators.required, Validators.minLength(4)]],
             ledgerGroupID: ['', Validators.required],
             rateofTax: ['', Validators.required],
             calculatedOn: ['', Validators.required],
@@ -89,6 +89,25 @@ export class LedgerComponent implements OnInit, OnDestroy {
 
         });
     }
+
+
+    get ledgerName() { return this.lForm.get('ledgerName'); }
+
+    get ledgerGroupID() { return this.lForm.get('ledgerGroupID'); }
+
+    get rateofTax() { return this.lForm.get('rateofTax'); }
+
+
+    get calculatedOn() { return this.lForm.get('calculatedOn'); }
+
+
+    get taxType() { return this.lForm.get('taxType'); }
+
+    get company_ID() { return this.lForm.get('company_ID'); }
+
+    get uSerID() { return this.lForm.get('uSerID'); }
+
+
 
     ngOnDestroy() {
         //this.ledgerDataSubscription.unsubscribe();
@@ -100,7 +119,7 @@ export class LedgerComponent implements OnInit, OnDestroy {
         this.ledgerService.updateLedger(form).subscribe((res:LedgerResponse)=>{
             if(res.status == '200'){
                 alert("Updated");
-                this.router.navigate(['/ledgers'])
+                this.router.navigate(['/masters/ledgers'])
             }
         });
 

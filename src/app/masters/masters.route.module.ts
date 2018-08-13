@@ -7,6 +7,9 @@ import { CommonModule } from '@angular/common';
 import { MastersComponent } from './masters.component';
 import { StockItemComponent } from './stock/component/stock-item.component';
 import { StockGroupListComponent } from './stock-group/component/stock-group-list.component';
+import {LedgerComponent} from "./ledger/component/ledger.component";
+import {UnitComponent} from "./unit/component/unit.component";
+import {StockGroupComponent} from "./stock-group/component/stock-group.component";
 
 export const routes: Routes = [
   { path: '',  component: MastersComponent,
@@ -15,8 +18,16 @@ export const routes: Routes = [
         path: '', children: [
           { path: 'stockItems', component: StockItemComponent },
           { path: 'stockGroups', component: StockGroupListComponent },
+          { path: 'add-stock-group', component: StockGroupComponent},
+          { path: 'stock-group/:id', component: StockGroupComponent},
           { path: 'units', component: UnitListComponent},
+          { path: 'add-unit', component: UnitComponent},
+          { path: 'unit/:id', component: UnitComponent},
           { path: 'ledgers', component: LedgerListComponent},
+          { path: 'add-ledger', component: LedgerComponent},
+          { path: 'ledger/:id', component: LedgerComponent},
+          { path: 'stock-item/:id', component: LedgerComponent},
+
         ]
       }
     ]
