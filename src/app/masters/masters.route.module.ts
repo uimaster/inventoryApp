@@ -10,6 +10,7 @@ import { StockGroupListComponent } from './stock-group/component/stock-group-lis
 import {LedgerComponent} from "./ledger/component/ledger.component";
 import {UnitComponent} from "./unit/component/unit.component";
 import {StockGroupComponent} from "./stock-group/component/stock-group.component";
+import {StockDetailComponent} from "./stock/stock-details/stock-detail.component";
 
 export const routes: Routes = [
   { path: '',  component: MastersComponent,
@@ -17,6 +18,8 @@ export const routes: Routes = [
       {
         path: '', children: [
           { path: 'stockItems', component: StockItemComponent },
+          { path: 'add-stock-item', component: StockDetailComponent},
+          { path: 'stock-item/:id', component: StockDetailComponent},
           { path: 'stockGroups', component: StockGroupListComponent },
           { path: 'add-stock-group', component: StockGroupComponent},
           { path: 'stock-group/:id', component: StockGroupComponent},

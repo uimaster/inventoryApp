@@ -8,3 +8,4 @@ export const REFRESHTOKEN_URL = BASEURL + 'jwtauth/TokenRefresh';
 export const UPDATELEDGERLIST = BASEURL + 'Ledger/UpdateLedgerDetails';
 export const UPDATEUNITLIST = BASEURL + 'Units/UpdateUnitDetails';
 export const UPDATESTOCKGROUPLIST = BASEURL + 'StockGroup/UpdateStockGroupDetails';
+export const GETSTOCKITEM = BASEURL + 'Stockitem/GetStockItemDetails';

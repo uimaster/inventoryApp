@@ -34,5 +34,8 @@ export class StockItemComponent implements OnInit {
     this.router.navigate(['/stocks/stock-details', id]);
   }
 
+  editStock(stockItemID){
+      this.router.navigate(['/masters/stock-item', stockItemID]);
+  }
 
 }
