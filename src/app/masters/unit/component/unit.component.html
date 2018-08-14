@@ -1,59 +1,58 @@
-<div>
-
-    <form [formGroup]="uForm" (ngSubmit)="saveUnit(uForm.value)">
+<p-panel header="Unit Add/Edit Form" class="Tabledata">
+  <form [formGroup]="uForm" (ngSubmit)="saveUnit(uForm.value)" class="formData">
+    <div class="ui-g">
+      <div class="ui-g-6">
         <div class="form-group">
-            <input type="text" pInputText placeholder="Unit name" formControlName="unitName">
-
-            <div *ngIf="unitName.invalid && (unitName.dirty || unitName.touched)"
-                 class="alert alert-danger">
-
-                <div *ngIf="unitName.errors.required">
-                    Unit name is required.
-                </div>
-
-
-
+            <span class="ui-float-label">
+          <input type="text" formControlName="unitName" pInputText id="unitName">
+          <label for="unitName">Unit Name</label>
+          </span>
+          <div *ngIf="unitName.invalid && (unitName.dirty || unitName.touched)" class="alert alert-danger">
+            <div *ngIf="unitName.errors.required">
+              Unit name is required.
             </div>
-
+          </div>
         </div>
-
+      </div>
+      <div class="ui-g-6">
         <div class="form-group">
-            <input type="text"  placeholder="Company Id" formControlName="company_ID">
-
-
-            <div *ngIf="company_ID.invalid && (company_ID.dirty || company_ID.touched)"
-                 class="alert alert-danger">
-
-                <div *ngIf="company_ID.errors.required">
-                    Company ID is required.
-                </div>
-
-
-
+            <span class="ui-float-label">
+          <input type="text" formControlName="company_ID" pInputText id="company_ID">
+          <label for="company_ID">Company ID</label>
+          </span>
+          <div *ngIf="company_ID.invalid && (company_ID.dirty || company_ID.touched)" class="alert alert-danger">
+            <div *ngIf="company_ID.errors.required">
+              Company ID is required.
             </div>
-
+          </div>
         </div>
+      </div>
+    </div>
 
-
-
+    <div class="ui-g">
+      <div class="ui-g-6">
         <div class="form-group">
-            <input type="text"  placeholder="User Id" formControlName="userID">
-
-            <div *ngIf="userID.invalid && (userID.dirty || userID.touched)"
-                 class="alert alert-danger">
-
-                <div *ngIf="userID.errors.required">
-                    USer ID is required.
-                </div>
-
-
-
+            <span class="ui-float-label">
+          <input type="text" formControlName="userID" pInputText id="userID">
+          <label for="userID">User ID</label>
+          </span>
+          <div *ngIf="userID.invalid && (userID.dirty || userID.touched)" class="alert alert-danger">
+            <div *ngIf="userID.errors.required">
+              USer ID is required.
             </div>
-
+          </div>
         </div>
+      </div>
+      <div class="ui-g-6">
 
-        <button type="submit">Submit</button>
+      </div>
+    </div>
 
-    </form>
 
-</div>
+    <br/>
+    <p style="text-align: center">
+      <button pButton type="submit" label="Submit" class="ui-button-success" [disabled]="!uForm.valid" style="margin-right: 10px;"></button>
+      <button pButton type="button" label="Cancel" class="ui-button-secondary"></button>
+    </p>
+  </form>
+</p-panel>

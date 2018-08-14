@@ -1,97 +1,101 @@
-<div>
-
-    <form [formGroup]="stockGroupForm" (ngSubmit)="saveStockGroup(stockGroupForm.value)">
+<p-panel header="Stock Group Add/Edit Form" class="Tabledata">
+  <form [formGroup]="stockGroupForm" (ngSubmit)="saveStockGroup(stockGroupForm.value)" class="formData">
+    <div class="ui-g">
+      <div class="ui-g-6">
         <div class="form-group">
-            <input type="text" pInputText placeholder="Stock group name" formControlName="stockGroupName">
-
-            <div *ngIf="stockGroupName.invalid && (stockGroupName.dirty || stockGroupName.touched)"
-                 class="alert alert-danger">
-
-                <div *ngIf="stockGroupName.errors.required">
-                    Stock group name is required.
-                </div>
-                <div *ngIf="stockGroupName.errors.minlength">
-                    Name must be at least 4 characters long.
-                </div>
-
-
+          <span class="ui-float-label">
+            <input type="text" pInputText formControlName="stockGroupName" pInputText id="stockGroupName">
+            <label for="stockGroupName">Stock Group Name</label>
+          </span>
+          <div *ngIf="stockGroupName.invalid && (stockGroupName.dirty || stockGroupName.touched)" class="alert alert-danger">
+            <div *ngIf="stockGroupName.errors.required">
+              Stock group name is required.
             </div>
-
+            <div *ngIf="stockGroupName.errors.minlength">
+              Name must be at least 4 characters long.
+            </div>
+          </div>
         </div>
 
+      </div>
+      <div class="ui-g-6">
         <div class="form-group">
-            <input type="text"  placeholder="Parent Name" formControlName="parentName">
-
-            <div *ngIf="parentName.invalid && (parentName.dirty || parentName.touched)"
-                 class="alert alert-danger">
-
-                <div *ngIf="parentName.errors.required">
-                    Parent name is required.
-                </div>
-                <div *ngIf="parentName.errors.minlength">
-                   Parent Name must be at least 4 characters long.
-                </div>
-
-
+          <span class="ui-float-label">
+            <input type="text"  formControlName="parentName" pInputText id="parentName">
+            <label for="parentName">Parent Name</label>
+          </span>
+          <div *ngIf="parentName.invalid && (parentName.dirty || parentName.touched)" class="alert alert-danger">
+            <div *ngIf="parentName.errors.required">
+              Parent name is required.
             </div>
-
+            <div *ngIf="parentName.errors.minlength">
+              Parent Name must be at least 4 characters long.
+            </div>
+          </div>
         </div>
+      </div>
+    </div>
 
 
 
+
+
+    <div class="ui-g">
+      <div class="ui-g-6">
         <div class="form-group">
-            <input type="text" pInputText placeholder="Active Status" formControlName="activeStatus">
-
-            <div *ngIf="activeStatus.invalid && (activeStatus.dirty || activeStatus.touched)"
-                 class="alert alert-danger">
-
-                <div *ngIf="activeStatus.errors.required">
-                    Active status is required.
-                </div>
-
-
-
+          <span class="ui-float-label">
+            <input type="text" pInputText  formControlName="activeStatus" pInputText id="activeStatus">
+            <label for="activeStatus">Active Status</label>
+          </span>
+          <div *ngIf="activeStatus.invalid && (activeStatus.dirty || activeStatus.touched)" class="alert alert-danger">
+            <div *ngIf="activeStatus.errors.required">
+              Active status is required.
             </div>
-
+          </div>
         </div>
-
+      </div>
+      <div class="ui-g-6">
         <div class="form-group">
-
-            <input type="text"  placeholder="Company " formControlName="company_ID">
-
-            <div *ngIf="company_ID.invalid && (company_ID.dirty || company_ID.touched)"
-                 class="alert alert-danger">
-
-                <div *ngIf="company_ID.errors.required">
-                    Company is required.
-                </div>
-
-
-
+          <span class="ui-float-label">
+            <input type="text" formControlName="company_ID" pInputText id="company_ID">
+            <label for="company_ID">Company</label>
+          </span>
+          <div *ngIf="company_ID.invalid && (company_ID.dirty || company_ID.touched)" class="alert alert-danger">
+            <div *ngIf="company_ID.errors.required">
+              Company is required.
             </div>
-
+          </div>
         </div>
+      </div>
+    </div>
 
 
+
+
+
+    <div class="ui-g">
+      <div class="ui-g-6">
         <div class="form-group">
-            <input type="text"  placeholder="User Id" formControlName="userID">
-
-
-            <div *ngIf="userID.invalid && (userID.dirty || userID.touched)"
-                 class="alert alert-danger">
-
-                <div *ngIf="userID.errors.required">
-                    User is required.
-                </div>
-
-
-
+          <span class="ui-float-label">
+            <input type="text" formControlName="userID" pInputText id="userID">
+            <label for="userID">User Id</label>
+          </span>
+          <div *ngIf="userID.invalid && (userID.dirty || userID.touched)" class="alert alert-danger">
+            <div *ngIf="userID.errors.required">
+              User is required.
             </div>
-
+          </div>
         </div>
+      </div>
+      <div class="ui-g-6">
 
-        <button type="submit" [disabled]="!stockGroupForm.valid">Submit</button>
+      </div>
+    </div>
 
-    </form>
-
-</div>
+    <br/>
+    <p style="text-align: center">
+      <button pButton type="submit" [disabled]="!stockGroupForm.valid" label="Submit" class="ui-button-success" style="margin-right: 10px;"></button>
+      <button pButton type="button" label="Cancel" class="ui-button-secondary"></button>
+    </p>
+  </form>
+</p-panel>

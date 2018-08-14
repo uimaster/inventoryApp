@@ -1,11 +1,11 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {LedgerResponse, Ledger} from "../models/ledger.model";
-import {LedgerService} from "../services/ledger.service";
-import {Subscription} from "rxjs/Subscription";
-import {SharedLedgerService} from "../services/shared-ledger.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {FormBuilder, Validators} from "@angular/forms";
+import {LedgerResponse, Ledger} from '../models/ledger.model';
+import {LedgerService} from '../services/ledger.service';
+import {Subscription} from 'rxjs/Subscription';
+import {SharedLedgerService} from '../services/shared-ledger.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormBuilder, Validators} from '@angular/forms';
 
 @Component({
     selector: 'app-ledger',
@@ -17,7 +17,8 @@ export class LedgerComponent implements OnInit, OnDestroy {
     public ledgerList;
     public ledgerID;
     public ledgerDataSubscription: Subscription;
-    constructor( private ledgerService: LedgerService, private ledgerSharedService: SharedLedgerService,private _route: ActivatedRoute, private _formBuilder: FormBuilder,private router : Router) { }
+    constructor( private ledgerService: LedgerService, private ledgerSharedService: SharedLedgerService,private _route: ActivatedRoute,
+       private _formBuilder: FormBuilder,private router : Router) { }
     public ledger;
     public lForm;
     ngOnInit() {
@@ -37,8 +38,8 @@ export class LedgerComponent implements OnInit, OnDestroy {
             let arrValues = Object.values( dataV) ;
 
 
-            for(let i =0; i< arrValues.length;  i++){
-               if(dataV[i].ledger_ID == this.ledgerID){
+            for (let i = 0; i < arrValues.length;  i++) {
+               if(dataV[i].ledger_ID == this.ledgerID) {
                    this.ledger = dataV[i];
 
                }
@@ -69,7 +70,7 @@ export class LedgerComponent implements OnInit, OnDestroy {
 
 
 
-            //console.log(this.ledger);
+            // console.log(this.ledger);
 
         });
 
@@ -118,7 +119,7 @@ export class LedgerComponent implements OnInit, OnDestroy {
 
         this.ledgerService.updateLedger(form).subscribe((res:LedgerResponse)=>{
             if(res.status == '200'){
-                alert("Updated");
+                alert('Updated');
                 this.router.navigate(['/masters/ledgers'])
             }
         });
