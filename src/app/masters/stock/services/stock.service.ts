@@ -3,7 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 
-import { GETSTOCK_URL } from '../../../../utils/app.urls';
+import {GETSTOCK_URL, GETSTOCKITEM} from '../../../../utils/app.urls';
 
 
 @Injectable()
@@ -19,6 +19,17 @@ export class StockService {
       })
     );
   }
+
+
+  getStock(stockId:any): Observable<any> {
+    const params = new HttpParams().set('StockItemID',stockId);
+    return this.http.get(GETSTOCKITEM, {params}).pipe(
+        map(res => {
+          return res;
+        })
+    );
+  }
+
 
 
 }
