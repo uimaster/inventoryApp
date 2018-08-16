@@ -189,6 +189,7 @@ export class StockDetailComponent implements OnInit, OnDestroy {
       console.log(formData);
     } else {
       console.log('form is invalid');
+      return false;
     }
   }
 
