@@ -1,3 +1,4 @@
+import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -9,7 +10,8 @@ import { StockDetailComponent } from './stock-details/stock-detail.component';
   declarations: [ StockItemComponent, StockDetailComponent ],
   imports: [
     StockRouteModule,
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule
   ],
   providers: [ StockService ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

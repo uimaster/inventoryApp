@@ -19,9 +19,9 @@ import { UnitListComponent } from './unit/component/unit-list.component';
 import { StockService } from './stock/services/stock.service';
 import { StockGroupService } from './stock-group/services/stock-group.service';
 import { UnitService } from './unit/services/unit.service';
-import {CustomerListComponent} from "./customer/component/customer-list.component";
-import {CustomerService} from "./customer/services/customer.service";
-import {CustomerComponent} from "./customer/component/customer.component";
+import {CustomerListComponent} from './customer/component/customer-list.component';
+import {CustomerService} from './customer/services/customer.service';
+import {CustomerComponent} from './customer/component/customer.component';
 
 
 @NgModule({
