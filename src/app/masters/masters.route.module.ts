@@ -11,6 +11,7 @@ import {LedgerComponent} from "./ledger/component/ledger.component";
 import {UnitComponent} from "./unit/component/unit.component";
 import {StockGroupComponent} from "./stock-group/component/stock-group.component";
 import {StockDetailComponent} from "./stock/stock-details/stock-detail.component";
+import {CustomerListComponent} from "./customer/component/customer-list.component";
 
 export const routes: Routes = [
   { path: '',  component: MastersComponent,
@@ -29,7 +30,11 @@ export const routes: Routes = [
           { path: 'ledgers', component: LedgerListComponent},
           { path: 'add-ledger', component: LedgerComponent},
           { path: 'ledger/:id', component: LedgerComponent},
+          { path: 'customers', component: CustomerListComponent},
+          // { path: 'add-ledger', component: LedgerComponent},
+          // { path: 'ledger/:id', component: LedgerComponent},
           { path: 'stock-item/:id', component: LedgerComponent},
+
 
         ]
       }

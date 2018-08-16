@@ -9,3 +9,4 @@ export const UPDATELEDGERLIST = BASEURL + 'Ledger/UpdateLedgerDetails';
 export const UPDATEUNITLIST = BASEURL + 'Units/UpdateUnitDetails';
 export const UPDATESTOCKGROUPLIST = BASEURL + 'StockGroup/UpdateStockGroupDetails';
 export const GETSTOCKITEM = BASEURL + 'Stockitem/GetStockItemDetails';
+export const GETCUSTOMERLIST = BASEURL + 'Masters/GetCustomerList';

@@ -1,0 +1,26 @@
+import { Injectable } from '@angular/core';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {Observable} from 'rxjs/Observable';
+import { map } from 'rxjs/operators';
+
+import { GETCUSTOMERLIST} from '../../../../utils/app.urls';
+
+@Injectable()
+export class CustomerService {
+
+    constructor(private http: HttpClient) {}
+
+    getAllCustomers(): Observable<any> {
+        const params = new HttpParams().set('CompanyID', '1');
+        return this.http.get(GETCUSTOMERLIST, {params}).pipe(
+            map(res => {
+                return res;
+            })
+        );
+    }
+
+
+
+
+
+}
