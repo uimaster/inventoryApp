@@ -3,7 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 
-import { GETCUSTOMERLIST} from '../../../../utils/app.urls';
+import {GETCUSTOMERLIST, GETCUSTOMERDETAIL} from '../../../../utils/app.urls';
 
 @Injectable()
 export class CustomerService {
@@ -17,6 +17,18 @@ export class CustomerService {
                 return res;
             })
         );
+    }
+
+    getCustomerData(customerId): Observable<any> {
+
+        const params = new HttpParams().set('CustomerID', customerId);
+        return this.http.get(GETCUSTOMERDETAIL, {params}).pipe(
+            map(res => {
+                return res;
+            })
+        );
+
+
     }
 
 

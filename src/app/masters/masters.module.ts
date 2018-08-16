@@ -21,6 +21,7 @@ import { StockGroupService } from './stock-group/services/stock-group.service';
 import { UnitService } from './unit/services/unit.service';
 import {CustomerListComponent} from "./customer/component/customer-list.component";
 import {CustomerService} from "./customer/services/customer.service";
+import {CustomerComponent} from "./customer/component/customer.component";
 
 
 @NgModule({
@@ -32,7 +33,7 @@ import {CustomerService} from "./customer/services/customer.service";
     PrimeNGModule
   ],
   declarations: [MastersComponent, LedgerComponent, LedgerListComponent, StockDetailComponent, StockItemComponent,
-    StockGroupComponent, StockGroupListComponent, UnitComponent, UnitListComponent, CustomerListComponent
+    StockGroupComponent, StockGroupListComponent, UnitComponent, UnitListComponent, CustomerListComponent, CustomerComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [ LedgerService, SharedLedgerService, StockService, StockGroupService, UnitService, CustomerService]
