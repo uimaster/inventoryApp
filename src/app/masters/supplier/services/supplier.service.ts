@@ -3,7 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 
-import {GETSUPPLIERLIST} from '../../../../utils/app.urls';
+import {GETSUPPLIERLIST, GETSUPPLIERDETAIL} from '../../../../utils/app.urls';
 
 @Injectable()
 export class SupplierService {
@@ -17,19 +17,20 @@ export class SupplierService {
                 return res;
             })
         );
+        
     }
 
-    // getCustomerData(customerId): Observable<any> {
-    //
-    //     const params = new HttpParams().set('CustomerID', customerId);
-    //     return this.http.get(GETCUSTOMERDETAIL, {params}).pipe(
-    //         map(res => {
-    //             return res;
-    //         })
-    //     );
-    //
-    //
-    // }
+    getSupplierData(supplierID): Observable<any> {
+
+        const params = new HttpParams().set('SupplierID', supplierID);
+        return this.http.get(GETSUPPLIERDETAIL, {params}).pipe(
+            map(res => {
+                return res;
+            })
+        );
+
+
+    }
 
 
 

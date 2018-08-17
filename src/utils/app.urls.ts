@@ -12,3 +12,4 @@ export const GETSTOCKITEM = BASEURL + 'Stockitem/GetStockItemDetails';
 export const GETCUSTOMERLIST = BASEURL + 'Masters/GetCustomerList';
 export const GETCUSTOMERDETAIL = BASEURL + 'Masters/GetCustomerDetails';
 export const GETSUPPLIERLIST = BASEURL + 'Masters/GetSupplierList';
+export const GETSUPPLIERDETAIL= BASEURL + 'Masters/GetSupplierDetails';
