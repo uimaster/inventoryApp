@@ -24,37 +24,38 @@ export class CustomerComponent implements OnInit, OnDestroy {
         this.customerForm();
         this._route.params.subscribe((params) => {
             this.customerID = params.id;
-            this.getCustomerData();
+            this.getCustomerData(this.customerID);
         });
 
 
     }
 
-    getCustomerData() {
+    getCustomerData(customerId) {
         this.customerDataSubscription = this.customerService.getCustomerData(this.customerID).subscribe((res: CustomerResponse) => {
-            this.customer = res.data;
+            this.customer = res.data[0];
 
 
-            //
-            // if (this.customerID && this.customer) {
-            //
-            //     this.cForm.controls['ledgerName'].setValue(this.ledger['ledgerName']);
-            //
-            //     this.lForm.controls['ledgerGroupID'].setValue(this.ledger['ledgerGroupID']);
-            //
-            //     this.lForm.controls['rateofTax'].setValue(this.ledger['rateofTax']);
-            //
-            //     this.lForm.controls['calculatedOn'].setValue(this.ledger['calculatedOn']);
-            //
-            //     this.lForm.controls['taxType'].setValue(this.ledger['taxType']);
-            //
-            //     this.lForm.controls['company_ID'].setValue(this.ledger['company_ID']);
-            //
-            //     this.lForm.controls['uSerID'].setValue(this.ledger['uSerID']);
-            //
-            //     this.lForm.controls['ledgerId'].setValue(this.ledgerID);
-            //
-            // }
+
+            if (this.customerID && this.customer) {
+
+                this.cForm.controls['customerName'].setValue(this.customer['customerName']);
+
+                this.cForm.controls['uSerID'].setValue(this.customer['uSerID']);
+
+                this.cForm.controls['companyID'].setValue(this.customer['companyID']);
+
+                this.cForm.controls['contactperson'].setValue(this.customer['contactperson']);
+
+                
+                this.cForm.controls['contactMobile'].setValue(this.customer['contactMobile']);
+
+                this.cForm.controls['landLineNos'].setValue(this.customer['landLineNos']);
+
+                this.cForm.controls['companyID'].setValue(this.customer['companyID']);
+
+                this.cForm.controls['contactperson'].setValue(this.customer['contactperson']);
+
+            }
 
 
 
@@ -74,46 +75,68 @@ export class CustomerComponent implements OnInit, OnDestroy {
             contactperson: ['', Validators.required],
             contactMobile: ['', Validators.required],
             landLineNos: ['', Validators.required],
-            customerAddList:  this._formBuilder.group({
-                locationName: [''],
-                address1: [''],
-                address2: [''],
-                address3: [''],
-                state: [''],
-                gstincode: [''],
-                stateCode: ['']
-            }),
-
-            customerTerms:  this._formBuilder.group({
-                paymentTerms: [''],
-                currency: [''],
-                transporters: [''],
-                packing: [''],
-                freight: [''],
-                deliveryTerms: ['']
-            }),
+            customerTaxes:  this._formBuilder.array([this.createcustomerTaxes()]),
+            customerAddList:  this._formBuilder.array([this.createCustomerAddList()]),
+            customerTerms:  this._formBuilder.array([this.createCustomerTerms()]),
 
 
 
         });
     }
 
-    //
-    // get ledgerName() { return this.lForm.get('ledgerName'); }
-    //
-    // get ledgerGroupID() { return this.lForm.get('ledgerGroupID'); }
-    //
-    // get rateofTax() { return this.lForm.get('rateofTax'); }
-    //
-    //
-    // get calculatedOn() { return this.lForm.get('calculatedOn'); }
-    //
-    //
-    // get taxType() { return this.lForm.get('taxType'); }
-    //
-    // get company_ID() { return this.lForm.get('company_ID'); }
-    //
-    // get uSerID() { return this.lForm.get('uSerID'); }
+    get customerName() { return this.cForm.get('customerName'); }
+    get uSerID() { return this.cForm.get('uSerID'); }
+    get companyID() { return this.cForm.get('companyID'); }
+    get contactperson() { return this.cForm.get('contactperson'); }
+    get contactMobile() { return this.cForm.get('contactMobile'); }
+    get landLineNos() { return this.cForm.get('landLineNos'); }
+    get locationName() { return this.cForm.get(['customerAddList'], 0, ['locationName']); }
+    get address1() { return this.cForm.get(['customerAddList'], 0, ['address1']); }
+    get address2() { return this.cForm.get(['customerAddList'], 0, ['address2']); }
+    get address3() { return this.cForm.get(['customerAddList'], 0, ['address3']); }
+    get state() { return this.cForm.get(['customerAddList'], 0, ['state']); }
+    get gstincode() { return this.cForm.get(['customerAddList'], 0, ['gstincode']); }
+    get stateCode() { return this.cForm.get(['customerAddList'], 0, ['stateCode']); }
+
+    get paymentTerms() { return this.cForm.get(['customerTerms'], 0, ['paymentTerms']); }
+    get currency() { return this.cForm.get(['customerTerms'], 0, ['currency']); }
+    get transporters() { return this.cForm.get(['customerTerms'], 0, ['transporters']); }
+    get packing() { return this.cForm.get(['customerTerms'], 0, ['packing']); }
+    get freight() { return this.cForm.get(['customerTerms'], 0, ['freight']); }
+    get deliveryTerms() { return this.cForm.get(['customerTerms'], 0, ['deliveryTerms']); }
+
+    createcustomerTaxes() {
+        return this._formBuilder.group({
+            taxLedgerID: ['', Validators.required],
+            taxLedgerName: ['', Validators.required],
+            taxRate: ['', Validators.required],
+            calculatedOn: ['', Validators.required]
+        });
+    }
+
+
+    createCustomerAddList() {
+        return this._formBuilder.group({
+            locationName: [''],
+            address1: [''],
+            address2: [''],
+            address3: [''],
+            state: [''],
+            gstincode: [''],
+            stateCode: ['']
+        });
+    }
+
+    createCustomerTerms() {
+        return this._formBuilder.group({
+            paymentTerms: [''],
+            currency: [''],
+            transporters: [''],
+            packing: [''],
+            freight: [''],
+            deliveryTerms: ['']
+        });
+    }
 
 
 

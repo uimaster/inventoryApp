@@ -9,6 +9,7 @@ import {LedgerResponse} from '../../ledger/models/ledger.model';
 import {LedgerService} from '../../ledger/services/ledger.service';
 import {UnitService} from '../../unit/services/unit.service';
 import {UnitResponse} from '../../unit/models/unit.model';
+import {StockResponse} from "../models/stock.model";
 
 @Component({
   selector: 'app-stock-detail',
@@ -20,12 +21,16 @@ export class StockDetailComponent implements OnInit, OnDestroy {
 
   public stockItemId;
   public stockItemSubscription: Subscription;
+  public stockGroupDataSubscription: Subscription;
+
   public ledgerDataSubscription: Subscription;
   public unitDataSubscription: Subscription;
   public stock;
   public sForm;
   public ledgerData;
   public unitData;
+  public stockData;
+
 
   constructor( private stockService: StockService, private ledgerService: LedgerService, private unitService: UnitService,
      private _route: ActivatedRoute, private _formBuilder: FormBuilder, private router: Router) {
@@ -37,56 +42,49 @@ export class StockDetailComponent implements OnInit, OnDestroy {
     this._route.params.subscribe((params) => {
       this.stockItemId = params.id;
      // this.getLedgerData();
+        this.getStockData(this.stockItemId);
     });
 
       this.getLedgerData();
       this.getUnitData();
 
 
+
   }
 
-  getStockData() {
-    // this.stockItemSubscription = this.stockService.getAllLedgers().subscribe((res: StockDetailResponse) => {
-    //   let dataV = res.data;
-    //
-    //   let arrValues = Object.values( dataV) ;
-    //
-    //
-    //   for(let i =0; i< arrValues.length;  i++){
-    //     if(dataV[i].ledger_ID == this.ledgerID){
-    //       this.ledger = dataV[i];
-    //
-    //     }
-    //
-    //
-    //   }
-    //
-    //
-    //   if (this.ledgerID && this.ledger) {
-    //
-    //     this.lForm.controls['ledgerName'].setValue(this.ledger['ledgerName']);
-    //
-    //     this.lForm.controls['ledgerGroupID'].setValue(this.ledger['ledgerGroupID']);
-    //
-    //     this.lForm.controls['rateofTax'].setValue(this.ledger['rateofTax']);
-    //
-    //     this.lForm.controls['calculatedOn'].setValue(this.ledger['calculatedOn']);
-    //
-    //     this.lForm.controls['taxType'].setValue(this.ledger['taxType']);
-    //
-    //     this.lForm.controls['company_ID'].setValue(this.ledger['company_ID']);
-    //
-    //     this.lForm.controls['uSerID'].setValue(this.ledger['uSerID']);
-    //
-    //     this.lForm.controls['ledgerId'].setValue(this.ledgerID);
-    //
-    //   }
-    //
-    //
-    //
-    //   //console.log(this.ledger);
-    //
-    // });
+  getStockData(stockId) {
+
+
+
+    this.stockItemSubscription = this.stockService.getStock(stockId).subscribe((res: StockDetailResponse) => {
+      this.stock = res.data;
+
+
+      if (this.stockItemId && this.stock) {
+
+        this.sForm.controls['itemName'].setValue(this.stock['itemName']);
+
+        // this.lForm.controls['ledgerGroupID'].setValue(this.ledger['ledgerGroupID']);
+        //
+        // this.lForm.controls['rateofTax'].setValue(this.ledger['rateofTax']);
+        //
+        // this.lForm.controls['calculatedOn'].setValue(this.ledger['calculatedOn']);
+        //
+        // this.lForm.controls['taxType'].setValue(this.ledger['taxType']);
+        //
+        // this.lForm.controls['company_ID'].setValue(this.ledger['company_ID']);
+        //
+        // this.lForm.controls['uSerID'].setValue(this.ledger['uSerID']);
+        //
+        // this.lForm.controls['ledgerId'].setValue(this.ledgerID);
+
+      }
+
+
+
+      //console.log(this.ledger);
+
+    });
 
 
   }
@@ -162,12 +160,19 @@ export class StockDetailComponent implements OnInit, OnDestroy {
   get leadTime() { return this.sForm.get(['stockItemSuppliers'], 0, ['leadTime']); }
 
 
-    getLedgerData() {
-        this.ledgerDataSubscription = this.ledgerService.getAllLedgers().subscribe((res: LedgerResponse) => {
-            this.ledgerData = res.data;
+  getLedgerData() {
+      this.ledgerDataSubscription = this.ledgerService.getAllLedgers().subscribe((res: LedgerResponse) => {
+          this.ledgerData = res.data;
 
-        });
-    }
+      });
+  }
+
+  getStockGrupData(){
+
+    this.stockGroupDataSubscription = this.stockService.getAllStocks().subscribe((res:StockResponse) =>{
+        this.stockData = res.data;
+    });
+  }
 
 
     getUnitData() {

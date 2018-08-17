@@ -1,6 +1,6 @@
 <p-panel header="Customer List" class="Tabledata">
     <p-header>
-        <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addLedger()"></button>
+        <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addCustomer()"></button>
     </p-header>
     <div class="table-responsive">
         <table class="table">
@@ -26,8 +26,8 @@
                     <td>{{customer.customerGSTIN}}</td>
 
                     <td>
-                        <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="setLedger(ledger,ledger.ledger_ID)"></button>
-                        <button pButton type="button" label="Delete" class="ui-button-danger" (click)="deleteLedger(ledger.ledger_ID)"></button>
+                        <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="setCustomer(customer.customer_ID)"></button>
+                        <button pButton type="button" label="Delete" class="ui-button-danger" (click)="deleteCustomer(customer.customer_ID)"></button>
                     </td>
                 </tr>
             </ng-container>

@@ -29,18 +29,15 @@ export class CustomerListComponent implements OnInit, OnDestroy {
             }
         });
     }
+    
 
-    // setLedger(ledger: Ledger, ledgerId) {
-    //
-    //     // this.sharedledgerservice.setLedger(ledger);
-    //     this.router.navigate(['/masters/ledger', ledgerId]);
-    //
-    // }
-    //
-    // addLedger(){
-    //     this.router.navigate(['/masters/add-ledger']);
-    // }
+    setCustomer(customerId){
+        this.router.navigate(['/masters/customer', customerId]);
+    }
 
+    addCustomer(){
+        this.router.navigate(['/masters/add-customer']);
+    }
     ngOnDestroy() {
         this.customerListDataSubscription.unsubscribe();
     }

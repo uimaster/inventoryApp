@@ -11,3 +11,4 @@ export const UPDATESTOCKGROUPLIST = BASEURL + 'StockGroup/UpdateStockGroupDetail
 export const GETSTOCKITEM = BASEURL + 'Stockitem/GetStockItemDetails';
 export const GETCUSTOMERLIST = BASEURL + 'Masters/GetCustomerList';
 export const GETCUSTOMERDETAIL = BASEURL + 'Masters/GetCustomerDetails';
+export const GETSUPPLIERLIST = BASEURL + 'Masters/GetSupplierList';
