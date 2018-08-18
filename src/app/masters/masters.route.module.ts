@@ -14,6 +14,7 @@ import {StockDetailComponent} from "./stock/stock-details/stock-detail.component
 import {CustomerListComponent} from "./customer/component/customer-list.component";
 import {CustomerComponent} from "./customer/component/customer.component";
 import {SupplierListComponent} from "./supplier/component/supplier-list.component";
+import {SupplierComponent} from "./supplier/component/supplier.component";
 
 export const routes: Routes = [
   { path: '',  component: MastersComponent,
@@ -36,8 +37,8 @@ export const routes: Routes = [
           { path: 'add-customer', component: CustomerComponent},
           { path: 'customer/:id', component: CustomerComponent},
           { path: 'suppliers', component: SupplierListComponent},
-          { path: 'add-supplier', component: CustomerComponent},
-          { path: 'supplier/:id', component: CustomerComponent},
+          { path: 'add-supplier', component: SupplierComponent},
+          { path: 'supplier/:id', component: SupplierComponent}
 
         ]
       }

@@ -105,6 +105,13 @@ export class CustomerComponent implements OnInit, OnDestroy {
     get freight() { return this.cForm.get(['customerTerms'], 0, ['freight']); }
     get deliveryTerms() { return this.cForm.get(['customerTerms'], 0, ['deliveryTerms']); }
 
+
+    get taxLedgerID() { return this.cForm.get(['customerTaxes'], 0, ['taxLedgerID']); }
+    get taxLedgerName() { return this.cForm.get(['customerTaxes'], 0, ['taxLedgerName']); }
+    get taxRate() { return this.cForm.get(['customerTaxes'], 0, ['taxRate']); }
+    get calculatedOn() { return this.cForm.get(['customerTaxes'], 0, ['calculatedOn']); }
+
+
     createcustomerTaxes() {
         return this._formBuilder.group({
             taxLedgerID: ['', Validators.required],

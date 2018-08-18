@@ -3,7 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 
-import {GETSUPPLIERLIST, GETSUPPLIERDETAIL} from '../../../../utils/app.urls';
+import {GETSUPPLIERLIST, GETSUPPLIERDETAIL, UPDATESUPPLIER} from '../../../../utils/app.urls';
 
 @Injectable()
 export class SupplierService {
@@ -30,6 +30,11 @@ export class SupplierService {
         );
 
 
+    }
+
+
+    updateSupplier(payload: any): Observable<any> {
+        return this.http.post(UPDATESUPPLIER, payload);
     }
 
 

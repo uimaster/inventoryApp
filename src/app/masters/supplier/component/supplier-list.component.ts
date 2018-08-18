@@ -30,16 +30,16 @@ export class SupplierListComponent implements OnInit, OnDestroy {
         });
     }
 
-    // setLedger(ledger: Ledger, ledgerId) {
-    //
-    //     // this.sharedledgerservice.setLedger(ledger);
-    //     this.router.navigate(['/masters/ledger', ledgerId]);
-    //
-    // }
-    //
-    // addLedger(){
-    //     this.router.navigate(['/masters/add-ledger']);
-    // }
+    setSupplier(supplierID) {
+    
+        // this.sharedledgerservice.setLedger(ledger);
+        this.router.navigate(['/masters/supplier', supplierID]);
+    
+    }
+    
+    addLedger(){
+        this.router.navigate(['/masters/add-supplier']);
+    }
 
     ngOnDestroy() {
         this.supplierListDataSubscription.unsubscribe();

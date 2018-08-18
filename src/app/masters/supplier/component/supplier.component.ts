@@ -22,7 +22,7 @@ export class SupplierComponent implements OnInit, OnDestroy {
     public supplier;
     public suForm;
     ngOnInit() {
-        this.customerForm();
+        this.supplierForm();
         this._route.params.subscribe((params) => {
             this.supplierID = params.id;
             this.getSupplierData(this.supplierID);
@@ -37,30 +37,30 @@ export class SupplierComponent implements OnInit, OnDestroy {
 
 
 
-            // if (this.customerID && this.customer) {
-            //
-            //     this.cForm.controls['customerName'].setValue(this.customer['customerName']);
-            //
-            //     this.cForm.controls['uSerID'].setValue(this.customer['uSerID']);
-            //
-            //     this.cForm.controls['companyID'].setValue(this.customer['companyID']);
-            //
-            //     this.cForm.controls['contactperson'].setValue(this.customer['contactperson']);
-            //
-            //
-            //     this.cForm.controls['contactMobile'].setValue(this.customer['contactMobile']);
-            //
-            //     this.cForm.controls['landLineNos'].setValue(this.customer['landLineNos']);
-            //
-            //     this.cForm.controls['companyID'].setValue(this.customer['companyID']);
-            //
-            //     this.cForm.controls['contactperson'].setValue(this.customer['contactperson']);
-            //
-            // }
+            if (this.supplierID && this.supplier) {
+
+                this.suForm.controls['supplier_ID'].setValue(this.supplier['supplier_ID']);
+
+                this.suForm.controls['supplierName'].setValue(this.supplier['supplierName']);
+
+                this.suForm.controls['uSerID'].setValue(this.supplier['uSerID']);
+
+                this.suForm.controls['companyID'].setValue(this.supplier['companyID']);
+
+                this.suForm.controls['contactperson'].setValue(this.supplier['contactperson']);
+
+
+                this.suForm.controls['contactMobile'].setValue(this.supplier['contactMobile']);
+
+                this.suForm.controls['landLineNos'].setValue(this.supplier['landLineNos']);
 
 
 
-            // console.log(this.ledger);
+            }
+
+
+
+
 
         });
 
@@ -147,18 +147,20 @@ export class SupplierComponent implements OnInit, OnDestroy {
 
 
     ngOnDestroy() {
-        this.customerDataSubscription.unsubscribe();
+        this.supplierDataSubscription.unsubscribe();
     }
+
+
 
 
     saveSupplier(form:any){
 
-        // this.ledgerService.updateLedger(form).subscribe((res:LedgerResponse)=>{
-        //     if(res.status == '200'){
-        //         alert('Updated');
-        //         this.router.navigate(['/masters/ledgers'])
-        //     }
-        // });
+        this.supplierService.updateSupplier(form).subscribe((res:SupplierResponse)=>{
+            if(res.status == '200'){
+                alert('Updated');
+                this.router.navigate(['/masters/suppliers'])
+            }
+        });
 
 
 
