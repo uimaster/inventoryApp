@@ -2,7 +2,7 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder, Validators, FormArray} from '@angular/forms';
 import {SupplierService} from "../services/supplier.service";
 import {SupplierResponse} from "../models/supplier.model";
 
@@ -54,7 +54,31 @@ export class SupplierComponent implements OnInit, OnDestroy {
 
                 this.suForm.controls['landLineNos'].setValue(this.supplier['landLineNos']);
 
+                const controlArray = <FormArray> this.suForm.get('supplierTaxes');
+                controlArray.controls[0].get('taxLedgerID').setValue(this.supplier['supplierTaxes'][0].taxLedgerID);
+                controlArray.controls[0].get('taxLedgerName').setValue(this.supplier['supplierTaxes'][0].taxLedgerName);
+                controlArray.controls[0].get('taxRate').setValue(this.supplier['supplierTaxes'][0].taxRate);
+                controlArray.controls[0].get('calculatedOn').setValue(this.supplier['supplierTaxes'][0].calculatedOn);
 
+
+                const controlArrayAddress = <FormArray> this.suForm.get('supplierAddressList');
+                controlArrayAddress.controls[0].get('locationName').setValue(this.supplier['supplierAddressList'][0].locationName);
+                controlArrayAddress.controls[0].get('address1').setValue(this.supplier['supplierAddressList'][0].address1);
+                controlArrayAddress.controls[0].get('address2').setValue(this.supplier['supplierAddressList'][0].address2);
+                controlArrayAddress.controls[0].get('address3').setValue(this.supplier['supplierAddressList'][0].address3);
+
+                controlArrayAddress.controls[0].get('state').setValue(this.supplier['supplierAddressList'][0].state);
+                controlArrayAddress.controls[0].get('gstincode').setValue(this.supplier['supplierAddressList'][0].gstincode);
+                controlArrayAddress.controls[0].get('stateCode').setValue(this.supplier['supplierAddressList'][0].stateCode);
+
+
+                const controlArrayTerms = <FormArray> this.suForm.get('supplierTerms');
+                controlArrayTerms.controls[0].get('paymentTerms').setValue(this.supplier['supplierTerms'][0].paymentTerms);
+                controlArrayTerms.controls[0].get('currency').setValue(this.supplier['supplierTerms'][0].currency);
+                controlArrayTerms.controls[0].get('transporters').setValue(this.supplier['supplierTerms'][0].transporters);
+                controlArrayTerms.controls[0].get('packing').setValue(this.supplier['supplierTerms'][0].packing);
+                controlArrayTerms.controls[0].get('freight').setValue(this.supplier['supplierTerms'][0].freight);
+                controlArrayTerms.controls[0].get('deliveryTerms').setValue(this.supplier['supplierTerms'][0].deliveryTerms);
 
             }
 

@@ -37,7 +37,7 @@ export class SupplierListComponent implements OnInit, OnDestroy {
     
     }
     
-    addLedger(){
+    addSupplier(){
         this.router.navigate(['/masters/add-supplier']);
     }
 

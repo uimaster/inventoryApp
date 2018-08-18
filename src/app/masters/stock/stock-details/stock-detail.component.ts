@@ -2,7 +2,7 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder, Validators, FormArray} from '@angular/forms';
 import {StockService} from '../services/stock.service';
 import {StockDetailResponse} from '../models/stock-detail.model';
 import {LedgerResponse} from '../../ledger/models/ledger.model';
@@ -64,19 +64,55 @@ export class StockDetailComponent implements OnInit, OnDestroy {
 
         this.sForm.controls['itemName'].setValue(this.stock['itemName']);
 
-        // this.lForm.controls['ledgerGroupID'].setValue(this.ledger['ledgerGroupID']);
-        //
-        // this.lForm.controls['rateofTax'].setValue(this.ledger['rateofTax']);
-        //
-        // this.lForm.controls['calculatedOn'].setValue(this.ledger['calculatedOn']);
-        //
-        // this.lForm.controls['taxType'].setValue(this.ledger['taxType']);
-        //
-        // this.lForm.controls['company_ID'].setValue(this.ledger['company_ID']);
-        //
-        // this.lForm.controls['uSerID'].setValue(this.ledger['uSerID']);
-        //
-        // this.lForm.controls['ledgerId'].setValue(this.ledgerID);
+        this.sForm.controls['itemCode'].setValue(this.stock['itemCode']);
+
+        this.sForm.controls['stockGroup'].setValue(this.stock['stockGroup']);
+
+          this.sForm.controls['unit'].setValue(this.stock['unit']);
+
+          this.sForm.controls['minimum_Order_Level'].setValue(this.stock['minimum_Order_Level']);
+
+          this.sForm.controls['minimum_Order_Qty'].setValue(this.stock['minimum_Order_Qty']);
+
+
+          this.sForm.controls['bufferQty'].setValue(this.stock['bufferQty']);
+
+          this.sForm.controls['hsnCode'].setValue(this.stock['hsnCode']);
+
+          this.sForm.controls['taxrate'].setValue(this.stock['taxrate']);
+
+          this.sForm.controls['barcodeapplicable'].setValue(this.stock['barcodeapplicable']);
+
+          this.sForm.controls['barcodelength'].setValue(this.stock['barcodelength']);
+
+          this.sForm.controls['branchName'].setValue(this.stock['branchName']);
+
+          this.sForm.controls['activeStatus'].setValue(this.stock['activeStatus']);
+
+          this.sForm.controls['company_ID'].setValue(this.stock['company_ID']);
+
+          this.sForm.controls['userID'].setValue(this.stock['userID']);
+
+
+          const controlArray = <FormArray> this.sForm.get('stockItemOpeningBal');
+          controlArray.controls[0].get('stockItemOPID').setValue(this.stock['stockItemOpeningBal'][0].stockItemOPID);
+          controlArray.controls[0].get('stockitem_ID').setValue(this.stock['stockItemOpeningBal'][0].stockitem_ID);
+          controlArray.controls[0].get('location_ID').setValue(this.stock['stockItemOpeningBal'][0].location_ID);
+          controlArray.controls[0].get('locationName').setValue(this.stock['stockItemOpeningBal'][0].locationName);
+          controlArray.controls[0].get('qty').setValue(this.stock['stockItemOpeningBal'][0].qty);
+          controlArray.controls[0].get('rate').setValue(this.stock['stockItemOpeningBal'][0].rate);
+          controlArray.controls[0].get('amount').setValue(this.stock['stockItemOpeningBal'][0].amount);
+
+
+
+          const ControlStockItemSupplier = <FormArray> this.sForm.get('stockItemSuppliers');
+          ControlStockItemSupplier.controls[0].get('stokItemSupplierID').setValue(this.stock['stockItemSuppliers'][0].stokItemSupplierID);
+          ControlStockItemSupplier.controls[0].get('stockitem_ID').setValue(this.stock['stockItemSuppliers'][0].stockitem_ID);
+          ControlStockItemSupplier.controls[0].get('ledger_ID').setValue(this.stock['stockItemSuppliers'][0].ledger_ID);
+          ControlStockItemSupplier.controls[0].get('ledgerName').setValue(this.stock['stockItemSuppliers'][0].ledgerName);
+          ControlStockItemSupplier.controls[0].get('orderPercentage').setValue(this.stock['stockItemSuppliers'][0].orderPercentage);
+          ControlStockItemSupplier.controls[0].get('leadTime').setValue(this.stock['stockItemSuppliers'][0].leadTime);
+
 
       }
 

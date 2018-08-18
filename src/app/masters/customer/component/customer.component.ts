@@ -2,7 +2,7 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder, Validators, FormArray} from '@angular/forms';
 import {CustomerService} from "../services/customer.service";
 import {CustomerResponse} from "../models/customer.model";
 
@@ -54,6 +54,34 @@ export class CustomerComponent implements OnInit, OnDestroy {
                 this.cForm.controls['companyID'].setValue(this.customer['companyID']);
 
                 this.cForm.controls['contactperson'].setValue(this.customer['contactperson']);
+
+
+                const controlArray = <FormArray> this.suForm.get('customerTaxes');
+                controlArray.controls[0].get('taxLedgerID').setValue(this.customer['customerTaxes'][0].taxLedgerID);
+                controlArray.controls[0].get('taxLedgerName').setValue(this.customer['customerTaxes'][0].taxLedgerName);
+                controlArray.controls[0].get('taxRate').setValue(this.customer['customerTaxes'][0].taxRate);
+                controlArray.controls[0].get('calculatedOn').setValue(this.customer['customerTaxes'][0].calculatedOn);
+
+
+                const controlArrayAddress = <FormArray> this.suForm.get('customerAddList');
+                controlArrayAddress.controls[0].get('locationName').setValue(this.customer['customerAddList'][0].locationName);
+                controlArrayAddress.controls[0].get('address1').setValue(this.customer['customerAddList'][0].address1);
+                controlArrayAddress.controls[0].get('address2').setValue(this.customer['customerAddList'][0].address2);
+                controlArrayAddress.controls[0].get('address3').setValue(this.customer['customerAddList'][0].address3);
+                controlArrayAddress.controls[0].get('state').setValue(this.customer['customerAddList'][0].state);
+                controlArrayAddress.controls[0].get('gstincode').setValue(this.customer['customerAddList'][0].gstincode);
+                controlArrayAddress.controls[0].get('stateCode').setValue(this.customer['customerAddList'][0].stateCode);
+
+
+                const controlArrayTerms = <FormArray> this.suForm.get('customerTerms');
+                controlArrayTerms.controls[0].get('paymentTerms').setValue(this.customer['customerTerms'][0].paymentTerms);
+                controlArrayTerms.controls[0].get('currency').setValue(this.customer['customerTerms'][0].currency);
+                controlArrayTerms.controls[0].get('transporters').setValue(this.customer['customerTerms'][0].transporters);
+                controlArrayTerms.controls[0].get('packing').setValue(this.customer['customerTerms'][0].packing);
+                controlArrayTerms.controls[0].get('freight').setValue(this.customer['customerTerms'][0].freight);
+                controlArrayTerms.controls[0].get('deliveryTerms').setValue(this.customer['customerTerms'][0].deliveryTerms);
+
+
 
             }
 
@@ -154,12 +182,12 @@ export class CustomerComponent implements OnInit, OnDestroy {
 
     saveCustomer(form:any){
 
-        // this.ledgerService.updateLedger(form).subscribe((res:LedgerResponse)=>{
-        //     if(res.status == '200'){
-        //         alert('Updated');
-        //         this.router.navigate(['/masters/ledgers'])
-        //     }
-        // });
+        this.customerService.updateCustomer(form).subscribe((res:CustomerResponse)=>{
+            if(res.status == '200'){
+                alert('Updated');
+                this.router.navigate(['/masters/customers'])
+            }
+        });
 
 
 

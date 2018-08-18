@@ -3,7 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 
-import {GETCUSTOMERLIST, GETCUSTOMERDETAIL} from '../../../../utils/app.urls';
+import {GETCUSTOMERLIST, GETCUSTOMERDETAIL, UPDATECUSTOMER} from '../../../../utils/app.urls';
 
 @Injectable()
 export class CustomerService {
@@ -29,6 +29,11 @@ export class CustomerService {
         );
 
 
+    }
+
+
+    updateCustomer(payload: any): Observable<any> {
+        return this.http.post(UPDATECUSTOMER, payload);
     }
 
 
