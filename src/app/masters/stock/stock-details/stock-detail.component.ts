@@ -57,7 +57,9 @@ export class StockDetailComponent implements OnInit, OnDestroy {
 
 
     this.stockItemSubscription = this.stockService.getStock(stockId).subscribe((res: StockDetailResponse) => {
-      this.stock = res.data;
+      this.stock = res.data[0];
+
+        console.log(this.stock);
 
 
       if (this.stockItemId && this.stock) {
@@ -66,9 +68,13 @@ export class StockDetailComponent implements OnInit, OnDestroy {
 
         this.sForm.controls['itemCode'].setValue(this.stock['itemCode']);
 
-        this.sForm.controls['stockGroup'].setValue(this.stock['stockGroup']);
+        this.sForm.controls['stockGroup_ID'].setValue(this.stock['stockGroup_ID']);
 
-          this.sForm.controls['unit'].setValue(this.stock['unit']);
+          this.sForm.controls['stockGroupName'].setValue(this.stock['stockGroupName']);
+
+          this.sForm.controls['unit_ID'].setValue(this.stock['unit_ID']);
+
+          this.sForm.controls['unitName'].setValue(this.stock['unitName']);
 
           this.sForm.controls['minimum_Order_Level'].setValue(this.stock['minimum_Order_Level']);
 
@@ -92,6 +98,11 @@ export class StockDetailComponent implements OnInit, OnDestroy {
           this.sForm.controls['company_ID'].setValue(this.stock['company_ID']);
 
           this.sForm.controls['userID'].setValue(this.stock['userID']);
+
+          this.sForm.controls['unit_ID'].setValue(this.stock['unit_ID']);
+
+          this.sForm.controls['unitName'].setValue(this.stock['unitName']);
+
 
 
           const controlArray = <FormArray> this.sForm.get('stockItemOpeningBal');
@@ -130,8 +141,10 @@ export class StockDetailComponent implements OnInit, OnDestroy {
       stockItemID: [0],
       itemName: ['', [Validators.required, Validators.minLength(4)]],
       itemCode: ['', Validators.required],
-      stockGroup: ['', Validators.required],
-      unit: ['', Validators.required],
+      stockGroup_ID: ['', Validators.required],
+      stockGroupName: ['', Validators.required],
+        unit_ID: ['', Validators.required],
+        unitName: ['', Validators.required],
       minimum_Order_Level: ['', Validators.required],
       minimum_Order_Qty: ['', Validators.required],
       bufferQty: ['', Validators.required],
@@ -173,8 +186,10 @@ export class StockDetailComponent implements OnInit, OnDestroy {
 
   get itemName() { return this.sForm.get('itemName'); }
   get itemCode() { return this.sForm.get('itemCode'); }
-  get stockGroup() { return this.sForm.get('stockGroup'); }
-  get unit() { return this.sForm.get('unit'); }
+  get stockGroup_ID() { return this.sForm.get('stockGroup_ID'); }
+  get stockGroupName() { return this.sForm.get('stockGroupName'); }
+    get unit_ID() { return this.sForm.get('unit_ID'); }
+    get unitName() { return this.sForm.get('unitName'); }
   get minimum_Order_Level() { return this.sForm.get('minimum_Order_Level'); }
   get minimum_Order_Qty() { return this.sForm.get('minimum_Order_Qty'); }
   get bufferQty() { return this.sForm.get('bufferQty'); }
@@ -191,7 +206,9 @@ export class StockDetailComponent implements OnInit, OnDestroy {
   get rate() { return this.sForm.get(['stockItemOpeningBal'], 0, ['rate']); }
   get amount() { return this.sForm.get(['stockItemOpeningBal'], 0, ['amount']); }
 
-  get ledgerName() { return this.sForm.get(['stockItemSuppliers'], 0, ['ledgerName']); }
+    get ledger_ID() { return this.sForm.get(['stockItemSuppliers'], 0, ['ledger_ID']); }
+
+    get ledgerName() { return this.sForm.get(['stockItemSuppliers'], 0, ['ledgerName']); }
   get orderPercentage() { return this.sForm.get(['stockItemSuppliers'], 0, ['orderPercentage']); }
   get leadTime() { return this.sForm.get(['stockItemSuppliers'], 0, ['leadTime']); }
 
@@ -227,9 +244,14 @@ export class StockDetailComponent implements OnInit, OnDestroy {
 
   saveStockItem(formData) {
     if (this.sForm.valid) {
-      console.log(formData);
+      this.stockService.updateStock(formData).subscribe((res:StockResponse)=>{
+            if(res.status == '200'){
+                alert('Updated');
+                this.router.navigate(['/masters/stockItems'])
+            }
+        });
     } else {
-      console.log('form is invalid');
+      
       return false;
     }
   }
