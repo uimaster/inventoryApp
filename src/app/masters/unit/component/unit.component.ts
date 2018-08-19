@@ -60,7 +60,7 @@ export class UnitComponent implements OnInit, OnDestroy {
 
 
 
-            //console.log(this.ledger);
+            // console.log(this.ledger);
 
         });
 
@@ -71,8 +71,8 @@ export class UnitComponent implements OnInit, OnDestroy {
         this.uForm = this._formBuilder.group({
             unit_ID: [0],
             unitName: ['', [Validators.required, Validators.minLength(4)]],
-            company_ID: ['', Validators.required],
-            userID: ['', Validators.required]
+            company_ID: [0],
+            userID: [0]
 
         });
     }

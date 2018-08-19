@@ -18,7 +18,7 @@ export class LedgerComponent implements OnInit, OnDestroy {
     public ledgerID;
     public ledgerDataSubscription: Subscription;
     constructor( private ledgerService: LedgerService, private ledgerSharedService: SharedLedgerService,private _route: ActivatedRoute,
-       private _formBuilder: FormBuilder,private router : Router) { }
+       private _formBuilder: FormBuilder, private router: Router) { }
     public ledger;
     public lForm;
     ngOnInit() {
@@ -81,12 +81,12 @@ export class LedgerComponent implements OnInit, OnDestroy {
         this.lForm = this._formBuilder.group({
             ledgerId: [0],
             ledgerName: ['', [Validators.required, Validators.minLength(4)]],
-            ledgerGroupID: ['', Validators.required],
+            ledgerGroupID: [0],
             rateofTax: ['', Validators.required],
             calculatedOn: ['', Validators.required],
             taxType: ['', Validators.required],
-            company_ID: ['', Validators.required],
-            uSerID: ['', Validators.required]
+            company_ID: [0],
+            uSerID: [0]
 
         });
     }
@@ -111,14 +111,14 @@ export class LedgerComponent implements OnInit, OnDestroy {
 
 
     ngOnDestroy() {
-        //this.ledgerDataSubscription.unsubscribe();
+        // this.ledgerDataSubscription.unsubscribe();
     }
 
 
-    saveLedger(form:Ledger){
+    saveLedger(form: Ledger) {
 
-        this.ledgerService.updateLedger(form).subscribe((res:LedgerResponse)=>{
-            if(res.status == '200'){
+        this.ledgerService.updateLedger(form).subscribe((res: LedgerResponse) => {
+            if(res.status == '200') {
                 alert('Updated');
                 this.router.navigate(['/masters/ledgers'])
             }

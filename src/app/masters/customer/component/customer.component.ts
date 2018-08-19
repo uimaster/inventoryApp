@@ -46,7 +46,7 @@ export class CustomerComponent implements OnInit, OnDestroy {
 
                 this.cForm.controls['contactperson'].setValue(this.customer['contactperson']);
 
-                
+
                 this.cForm.controls['contactMobile'].setValue(this.customer['contactMobile']);
 
                 this.cForm.controls['landLineNos'].setValue(this.customer['landLineNos']);
@@ -56,14 +56,14 @@ export class CustomerComponent implements OnInit, OnDestroy {
                 this.cForm.controls['contactperson'].setValue(this.customer['contactperson']);
 
 
-                const controlArray = <FormArray> this.suForm.get('customerTaxes');
+                const controlArray = <FormArray> this.cForm.get('customerTaxes');
                 controlArray.controls[0].get('taxLedgerID').setValue(this.customer['customerTaxes'][0].taxLedgerID);
                 controlArray.controls[0].get('taxLedgerName').setValue(this.customer['customerTaxes'][0].taxLedgerName);
                 controlArray.controls[0].get('taxRate').setValue(this.customer['customerTaxes'][0].taxRate);
                 controlArray.controls[0].get('calculatedOn').setValue(this.customer['customerTaxes'][0].calculatedOn);
 
 
-                const controlArrayAddress = <FormArray> this.suForm.get('customerAddList');
+                const controlArrayAddress = <FormArray> this.cForm.get('customerAddList');
                 controlArrayAddress.controls[0].get('locationName').setValue(this.customer['customerAddList'][0].locationName);
                 controlArrayAddress.controls[0].get('address1').setValue(this.customer['customerAddList'][0].address1);
                 controlArrayAddress.controls[0].get('address2').setValue(this.customer['customerAddList'][0].address2);
@@ -73,7 +73,7 @@ export class CustomerComponent implements OnInit, OnDestroy {
                 controlArrayAddress.controls[0].get('stateCode').setValue(this.customer['customerAddList'][0].stateCode);
 
 
-                const controlArrayTerms = <FormArray> this.suForm.get('customerTerms');
+                const controlArrayTerms = <FormArray> this.cForm.get('customerTerms');
                 controlArrayTerms.controls[0].get('paymentTerms').setValue(this.customer['customerTerms'][0].paymentTerms);
                 controlArrayTerms.controls[0].get('currency').setValue(this.customer['customerTerms'][0].currency);
                 controlArrayTerms.controls[0].get('transporters').setValue(this.customer['customerTerms'][0].transporters);
