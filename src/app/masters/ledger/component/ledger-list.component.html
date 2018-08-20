@@ -9,10 +9,7 @@
           <th>Ledger Name</th>
           <th>Ledger Group ID</th>
           <th>Rate of Tax</th>
-          <th>Calculated On</th>
           <th>Tax Type</th>
-          <th>Company Id</th>
-          <th>User Id</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -24,13 +21,10 @@
             </td>
             <td>{{ledger.ledgerGroupID}}</td>
             <td>{{ledger.rateofTax}}</td>
-            <td>{{ledger.calculatedOn}}</td>
             <td>{{ledger.taxType}}</td>
-            <td>{{ledger.company_ID}}</td>
-            <td>{{ledger.uSerID}}</td>
             <td>
               <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="setLedger(ledger,ledger.ledger_ID)"></button>
-              <button pButton type="button" label="Delete" class="ui-button-danger" (click)="deleteLedger(ledger.ledger_ID)"></button>
+              <button pButton type="button" label="Delete" class="ui-button-danger"></button>
             </td>
           </tr>
         </ng-container>

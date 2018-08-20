@@ -6,12 +6,11 @@
         <table class="table">
             <thead>
             <tr>
-                <th>Supplier Name</th>
-                <th>Supplier Address</th>
-                <th>State</th>
-                <th>Contact No</th>
-                <th>GSTIN</th>
-                <th>Actions</th>
+                <th width="20%">Name</th>
+                <th width="25%">Supplier Address</th>
+                <th width="15%">Contact No</th>
+                <th width="15%">GSTIN</th>
+                <th width="25%">Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -21,13 +20,11 @@
                         <a (click)="setSupplier(supplier.supplier_ID)"> {{supplier.supplierName}}</a>
                     </td>
                     <td>{{supplier.supplierAddress}}</td>
-                    <td>{{supplier.state}}</td>
                     <td>{{supplier.contactNos}}</td>
                     <td>{{supplier.gstin}}</td>
-
                     <td>
                         <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="setSupplier(supplier.supplier_ID)"></button>
-                        <button pButton type="button" label="Delete" class="ui-button-danger" (click)="deleteSupplier(supplier.supplier_ID)"></button>
+                        <button pButton type="button" label="Delete" class="ui-button-danger"></button>
                     </td>
                 </tr>
             </ng-container>

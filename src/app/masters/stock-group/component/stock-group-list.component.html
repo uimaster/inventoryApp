@@ -6,11 +6,9 @@
     <table class="table">
       <thead>
         <tr>
-          <th>Stock Group Name</th>
-          <th>Parent Name</th>
-          <th>Active Status</th>
-          <th>Company Id</th>
-          <th>User Id</th>
+          <th>Name</th>
+          <th>Name</th>
+          <th>Status</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -22,11 +20,9 @@
             </td>
             <td>{{stock.parentName}}</td>
             <td>{{stock.activeStatus}}</td>
-            <td>{{stock.company_ID}}</td>
-            <td>{{stock.userID}}</td>
             <td>
               <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="editStockGroup(stock.stockGroup_ID)"></button>
-              <button pButton type="button" label="Delete" class="ui-button-danger" (click)="deleteStockGroup(stock.stockItemID)"></button>
+              <button pButton type="button" label="Delete" class="ui-button-danger"></button>
             </td>
           </tr>
         </ng-container>

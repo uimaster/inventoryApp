@@ -7,14 +7,14 @@ import { CommonModule } from '@angular/common';
 import { MastersComponent } from './masters.component';
 import { StockItemComponent } from './stock/component/stock-item.component';
 import { StockGroupListComponent } from './stock-group/component/stock-group-list.component';
-import {LedgerComponent} from "./ledger/component/ledger.component";
-import {UnitComponent} from "./unit/component/unit.component";
-import {StockGroupComponent} from "./stock-group/component/stock-group.component";
-import {StockDetailComponent} from "./stock/stock-details/stock-detail.component";
-import {CustomerListComponent} from "./customer/component/customer-list.component";
-import {CustomerComponent} from "./customer/component/customer.component";
-import {SupplierListComponent} from "./supplier/component/supplier-list.component";
-import {SupplierComponent} from "./supplier/component/supplier.component";
+import {LedgerComponent} from './ledger/component/ledger.component';
+import {UnitComponent} from './unit/component/unit.component';
+import {StockGroupComponent} from './stock-group/component/stock-group.component';
+import {StockDetailComponent} from './stock/stock-details/stock-detail.component';
+import {CustomerListComponent} from './customer/component/customer-list.component';
+import {CustomerComponent} from './customer/component/customer.component';
+import {SupplierListComponent} from './supplier/component/supplier-list.component';
+import {SupplierComponent} from './supplier/component/supplier.component';
 
 export const routes: Routes = [
   { path: '',  component: MastersComponent,

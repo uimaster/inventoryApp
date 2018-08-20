@@ -35,8 +35,12 @@ export class LoginComponent implements OnInit {
       this.authService.logIn(formData).subscribe((res: LoginResponse) => {
         if (res && res.status === '200') {
             const token = res.data[0].bearerToken;
+            const userID = res.data[0].userID;
+            const companyID = res.data[0].company_ID;
             localStorage.setItem('token', token);
             localStorage.setItem('isLogin', JSON.parse('true'));
+            localStorage.setItem('companyID', companyID);
+            localStorage.setItem('userID', userID);
             this.router.navigate(['/dashboard']);
         } else {
          alert(res.message);
