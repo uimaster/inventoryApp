@@ -4,8 +4,6 @@ import {Observable} from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 
 import {GETSTOCK_URL, GETSTOCKITEM, UPDATESTOCK} from '../../../../utils/app.urls';
-import {Ledger} from "../../ledger/models/ledger.model";
-
 
 @Injectable()
 export class StockService {
@@ -32,7 +30,7 @@ export class StockService {
   }
 
 
-    updateStock(payload: Ledger): Observable<any> {
+    updateStock(payload: any): Observable<any> {
         // const params = new HttpParams().set('CompanyID', '1');
         return this.http.post(UPDATESTOCK, payload);
         // .map((res: LedgerResponse) => {
