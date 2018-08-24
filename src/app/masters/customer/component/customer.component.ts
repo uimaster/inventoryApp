@@ -3,8 +3,8 @@ import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, Validators, FormArray} from '@angular/forms';
-import {CustomerService} from "../services/customer.service";
-import {CustomerResponse} from "../models/customer.model";
+import {CustomerService} from '../services/customer.service';
+import {CustomerResponse} from '../models/customer.model';
 
 @Component({
     selector: 'app-customer',
@@ -16,8 +16,16 @@ export class CustomerComponent implements OnInit, OnDestroy {
     public customerList;
     public customerID;
     public customerDataSubscription: Subscription;
-    constructor(private customerService: CustomerService, private _route: ActivatedRoute,
-                 private _formBuilder: FormBuilder,private router : Router) { }
+    showError = false;
+    showSuccess = false;
+    companyId = localStorage.getItem('companyID');
+    userId = localStorage.getItem('userID');
+    constructor(
+      private customerService: CustomerService,
+      private _route: ActivatedRoute,
+      private _formBuilder: FormBuilder,
+      private router: Router
+    ) { }
     public customer;
     public cForm;
     ngOnInit() {
@@ -39,23 +47,11 @@ export class CustomerComponent implements OnInit, OnDestroy {
             if (this.customerID && this.customer) {
 
                 this.cForm.controls['customerName'].setValue(this.customer['customerName']);
-
-                this.cForm.controls['uSerID'].setValue(this.customer['uSerID']);
-
-                this.cForm.controls['companyID'].setValue(this.customer['companyID']);
-
                 this.cForm.controls['contactperson'].setValue(this.customer['contactperson']);
-
-
                 this.cForm.controls['contactMobile'].setValue(this.customer['contactMobile']);
-
                 this.cForm.controls['landLineNos'].setValue(this.customer['landLineNos']);
-
-                this.cForm.controls['companyID'].setValue(this.customer['companyID']);
-
                 this.cForm.controls['contactperson'].setValue(this.customer['contactperson']);
-
-
+                this.cForm.controls['customer_ID'].setValue(this.customer['customer_ID']);
                 const controlArray = <FormArray> this.cForm.get('customerTaxes');
                 controlArray.controls[0].get('taxLedgerID').setValue(this.customer['customerTaxes'][0].taxLedgerID);
                 controlArray.controls[0].get('taxLedgerName').setValue(this.customer['customerTaxes'][0].taxLedgerName);
@@ -94,12 +90,12 @@ export class CustomerComponent implements OnInit, OnDestroy {
 
     }
 
-    customerForm(){
+    customerForm() {
         this.cForm = this._formBuilder.group({
             customer_ID: [0],
             customerName: ['', [Validators.required, Validators.minLength(4)]],
-            uSerID: ['', Validators.required],
-            companyID: ['', Validators.required],
+            uSerID: [this.userId],
+            companyID: [this.companyId],
             contactperson: ['', Validators.required],
             contactMobile: ['', Validators.required],
             landLineNos: ['', Validators.required],
@@ -113,8 +109,6 @@ export class CustomerComponent implements OnInit, OnDestroy {
     }
 
     get customerName() { return this.cForm.get('customerName'); }
-    get uSerID() { return this.cForm.get('uSerID'); }
-    get companyID() { return this.cForm.get('companyID'); }
     get contactperson() { return this.cForm.get('contactperson'); }
     get contactMobile() { return this.cForm.get('contactMobile'); }
     get landLineNos() { return this.cForm.get('landLineNos'); }
@@ -180,12 +174,16 @@ export class CustomerComponent implements OnInit, OnDestroy {
     }
 
 
-    saveCustomer(form:any){
+    saveCustomer (form: any) {
 
-        this.customerService.updateCustomer(form).subscribe((res:CustomerResponse)=>{
-            if(res.status == '200'){
-                alert('Updated');
-                this.router.navigate(['/masters/customers'])
+        this.customerService.updateCustomer(form).subscribe((res: CustomerResponse) => {
+            if (res.status === '200') {
+                this.showSuccess = true;
+                setTimeout(() => {
+                  this.router.navigate(['/masters/customers']);
+                }, 3000);
+            } else {
+              this.showError = true;
             }
         });
 

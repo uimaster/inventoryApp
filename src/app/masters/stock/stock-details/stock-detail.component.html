@@ -1,5 +1,8 @@
 <p-panel header="StockItem Add/Edit Form" class="Tabledata">
+
   <form [formGroup] = "sForm" (ngSubmit)="saveStockItem(sForm.value)" class="formData">
+      <div class="message error" *ngIf="showError">Updatation/creation failed .</div>
+      <div class="message success" *ngIf="showSuccess">You have Updated/created successfully.</div>
     <div class="ui-g">
       <div class="ui-g-6">
         <div class="form-group">
@@ -190,7 +193,7 @@
         <div class="form-group">
           <span class="ui-float-label">
             <input type="text" formControlName="barcodelength" pInputText id="barcodelength" />
-            <label for="taxrate">Bar code Lhengt</label>
+            <label for="taxrate">Bar code Length</label>
           </span>
 
           <div *ngIf="barcodelength.invalid && (barcodelength.dirty || barcodelength.touched)" class="alert alert-danger">
@@ -225,36 +228,6 @@
 
           <div *ngIf="activeStatus.invalid && (activeStatus.dirty || activeStatus.touched)" class="alert alert-danger">
             <div *ngIf="activeStatus.errors.required">
-              This field is required.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="ui-g-6">
-        <div class="form-group">
-          <span class="ui-float-label">
-            <input type="text" formControlName="company_ID" pInputText id="company_ID" />
-            <label for="taxrate">Company ID</label>
-          </span>
-
-          <div *ngIf="company_ID.invalid && (company_ID.dirty || company_ID.touched)" class="alert alert-danger">
-            <div *ngIf="company_ID.errors.required">
-              This field is required.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="ui-g-6">
-        <div class="form-group">
-          <span class="ui-float-label">
-            <input type="text" formControlName="userID" pInputText id="userID" />
-            <label for="taxrate">Company ID</label>
-          </span>
-
-          <div *ngIf="userID.invalid && (userID.dirty || userID.touched)" class="alert alert-danger">
-            <div *ngIf="userID.errors.required">
               This field is required.
             </div>
           </div>

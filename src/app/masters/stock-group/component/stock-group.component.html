@@ -1,5 +1,8 @@
 <p-panel header="Stock Group Add/Edit Form" class="Tabledata">
   <form [formGroup]="stockGroupForm" (ngSubmit)="saveStockGroup(stockGroupForm.value)" class="formData">
+      <div class="message error" *ngIf="showError">Updatation/creation failed .</div>
+      <div class="message success" *ngIf="showSuccess">You have Updated/created successfully.</div>
+
     <div class="ui-g">
       <div class="ui-g-6">
         <div class="form-group">
@@ -34,13 +37,7 @@
           </div>
         </div>
       </div>
-    </div>
 
-
-
-
-
-    <div class="ui-g">
       <div class="ui-g-6">
         <div class="form-group">
           <span class="ui-float-label">
@@ -54,44 +51,7 @@
           </div>
         </div>
       </div>
-      <div class="ui-g-6">
-        <div class="form-group">
-          <span class="ui-float-label">
-            <input type="text" formControlName="company_ID" pInputText id="company_ID">
-            <label for="company_ID">Company</label>
-          </span>
-          <div *ngIf="company_ID.invalid && (company_ID.dirty || company_ID.touched)" class="alert alert-danger">
-            <div *ngIf="company_ID.errors.required">
-              Company is required.
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
-
-
-
-
-
-    <div class="ui-g">
-      <div class="ui-g-6">
-        <div class="form-group">
-          <span class="ui-float-label">
-            <input type="text" formControlName="userID" pInputText id="userID">
-            <label for="userID">User Id</label>
-          </span>
-          <div *ngIf="userID.invalid && (userID.dirty || userID.touched)" class="alert alert-danger">
-            <div *ngIf="userID.errors.required">
-              User is required.
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="ui-g-6">
-
-      </div>
-    </div>
-
     <br/>
     <p style="text-align: center">
       <button pButton type="submit" [disabled]="!stockGroupForm.valid" label="Submit" class="ui-button-success" style="margin-right: 10px;"></button>

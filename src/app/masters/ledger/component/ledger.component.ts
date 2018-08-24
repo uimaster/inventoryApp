@@ -15,16 +15,27 @@ import {FormBuilder, Validators} from '@angular/forms';
 export class LedgerComponent implements OnInit, OnDestroy {
 
     public ledgerList;
-    public ledgerID;
+    public ledger_ID;
     public ledgerDataSubscription: Subscription;
-    constructor( private ledgerService: LedgerService, private ledgerSharedService: SharedLedgerService,private _route: ActivatedRoute,
-       private _formBuilder: FormBuilder, private router: Router) { }
     public ledger;
     public lForm;
+    companyId = localStorage.getItem('companyID');
+    userId = localStorage.getItem('userID');
+    showError = false;
+    showSuccess = false;
+    constructor(
+      private ledgerService: LedgerService,
+      private ledgerSharedService: SharedLedgerService,
+      private _route: ActivatedRoute,
+      private _formBuilder: FormBuilder,
+      private router: Router
+    ) { }
+
+
     ngOnInit() {
         this.ledgerForm();
         this._route.params.subscribe((params) => {
-            this.ledgerID = params.id;
+            this.ledger_ID = params.id;
             this.getLedgerData();
         });
 
@@ -36,36 +47,22 @@ export class LedgerComponent implements OnInit, OnDestroy {
             let dataV = res.data;
 
             let arrValues = Object.values( dataV) ;
-
-
             for (let i = 0; i < arrValues.length;  i++) {
-               if(dataV[i].ledger_ID == this.ledgerID) {
+               if(dataV[i].ledger_ID == this.ledger_ID) {
                    this.ledger = dataV[i];
-
                }
-
-
            }
 
 
-            if (this.ledgerID && this.ledger) {
-
+            if (this.ledger_ID && this.ledger) {
                 this.lForm.controls['ledgerName'].setValue(this.ledger['ledgerName']);
-
                 this.lForm.controls['ledgerGroupID'].setValue(this.ledger['ledgerGroupID']);
-
                 this.lForm.controls['rateofTax'].setValue(this.ledger['rateofTax']);
-
                 this.lForm.controls['calculatedOn'].setValue(this.ledger['calculatedOn']);
-
                 this.lForm.controls['taxType'].setValue(this.ledger['taxType']);
-
                 this.lForm.controls['company_ID'].setValue(this.ledger['company_ID']);
-
                 this.lForm.controls['uSerID'].setValue(this.ledger['uSerID']);
-
-                this.lForm.controls['ledgerId'].setValue(this.ledgerID);
-
+                this.lForm.controls['ledger_ID'].setValue(this.ledger_ID);
             }
 
 
@@ -77,16 +74,16 @@ export class LedgerComponent implements OnInit, OnDestroy {
 
     }
 
-    ledgerForm(){
+    ledgerForm() {
         this.lForm = this._formBuilder.group({
-            ledgerId: [0],
+            ledger_ID: [0],
             ledgerName: ['', [Validators.required, Validators.minLength(4)]],
             ledgerGroupID: [0],
             rateofTax: ['', Validators.required],
             calculatedOn: ['', Validators.required],
             taxType: ['', Validators.required],
-            company_ID: [0],
-            uSerID: [0]
+            company_ID: [this.companyId],
+            uSerID: [this.userId]
 
         });
     }
@@ -116,16 +113,16 @@ export class LedgerComponent implements OnInit, OnDestroy {
 
 
     saveLedger(form: Ledger) {
-
         this.ledgerService.updateLedger(form).subscribe((res: LedgerResponse) => {
-            if(res.status == '200') {
-                alert('Updated');
-                this.router.navigate(['/masters/ledgers'])
+            if(res.status === '200') {
+                this.showSuccess = true;
+                setTimeout(() => {
+                  this.router.navigate(['/masters/ledgers']);
+                }, 3000);
+            } else {
+              this.showError = true;
             }
         });
-
-
-
     }
 
 }

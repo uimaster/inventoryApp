@@ -1,5 +1,8 @@
 <p-panel header="Supplier Add/Edit Form" class="Tabledata">
     <form [formGroup] = "suForm" (ngSubmit)="saveSupplier(suForm.value)" class="formData">
+        <div class="message error" *ngIf="showError">Updatation/creation failed .</div>
+        <div class="message success" *ngIf="showSuccess">You have Updated/created successfully.</div>
+
         <div class="ui-g">
             <div class="ui-g-6">
                 <div class="form-group">
@@ -17,35 +20,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="ui-g-6">
-                <div class="form-group">
-                  <span class="ui-float-label">
-                    <input type="text" formControlName="uSerID" pInputText id="uSerID">
-                    <label for="uSerID">User ID</label>
-                  </span>
+              </div>
 
-                    <div *ngIf="uSerID.invalid && (uSerID.dirty || uSerID.touched)" class="alert alert-danger">
-                        <div *ngIf="uSerID.errors.required">
-                            User ID is required.
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="ui-g-6">
-                <div class="form-group">
-                      <span class="ui-float-label">
-                        <input type="text" formControlName="companyID" pInputText id="companyID">
-                        <label for="companyID">Company ID</label>
-                      </span>
-                    <div *ngIf="companyID.invalid && (companyID.dirty || companyID.touched)" class="alert alert-danger">
-                        <div *ngIf="companyID.errors.required">
-                            Company ID is required.
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="ui-g-6">
                 <div class="form-group">
                   <span class="ui-float-label">

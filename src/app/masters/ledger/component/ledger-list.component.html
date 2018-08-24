@@ -6,8 +6,8 @@
     <table class="table">
       <thead>
         <tr>
-          <th>Ledger Name</th>
-          <th>Ledger Group ID</th>
+          <th>Name</th>
+          <th>Group</th>
           <th>Rate of Tax</th>
           <th>Tax Type</th>
           <th>Actions</th>
@@ -19,7 +19,7 @@
             <td>
               <a (click)="setLedger(ledger,ledger.ledger_ID)"> {{ledger.ledgerName}}</a>
             </td>
-            <td>{{ledger.ledgerGroupID}}</td>
+            <td>{{ledger.ledgerGroupName}}</td>
             <td>{{ledger.rateofTax}}</td>
             <td>{{ledger.taxType}}</td>
             <td>

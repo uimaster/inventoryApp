@@ -7,10 +7,11 @@
             <thead>
             <tr>
                 <th width="20%">Name</th>
-                <th width="25%">Supplier Address</th>
+                <th width="20%">Supplier Address</th>
                 <th width="15%">Contact No</th>
-                <th width="15%">GSTIN</th>
-                <th width="25%">Actions</th>
+                <th width="10%">GSTIN</th>
+                <th width="15%">Email</th>
+                <th width="20%">Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -22,6 +23,7 @@
                     <td>{{supplier.supplierAddress}}</td>
                     <td>{{supplier.contactNos}}</td>
                     <td>{{supplier.gstin}}</td>
+                    <td>{{supplier.eMailID}}</td>
                     <td>
                         <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="setSupplier(supplier.supplier_ID)"></button>
                         <button pButton type="button" label="Delete" class="ui-button-danger"></button>

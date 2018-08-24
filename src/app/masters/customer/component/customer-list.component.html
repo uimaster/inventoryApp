@@ -10,6 +10,7 @@
                 <th>Address</th>
                 <th>Contact No</th>
                 <th>Customer GSTIN</th>
+                <th>Email</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -22,6 +23,7 @@
                     <td>{{customer.customerAddress}}</td>
                     <td>{{customer.contactNos}}</td>
                     <td>{{customer.customerGSTIN}}</td>
+                    <td>{{customer.eMailID}}</td>
                     <td>
                         <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="setCustomer(customer.customer_ID)"></button>
                         <button pButton type="button" label="Delete" class="ui-button-danger" (click)="deleteCustomer(customer.customer_ID)"></button>

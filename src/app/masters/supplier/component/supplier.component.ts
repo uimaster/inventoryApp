@@ -3,8 +3,8 @@ import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, Validators, FormArray} from '@angular/forms';
-import {SupplierService} from "../services/supplier.service";
-import {SupplierResponse} from "../models/supplier.model";
+import {SupplierService} from '../services/supplier.service';
+import {SupplierResponse} from '../models/supplier.model';
 
 
 @Component({
@@ -17,10 +17,19 @@ export class SupplierComponent implements OnInit, OnDestroy {
     public supplierList;
     public supplierID;
     public supplierDataSubscription: Subscription;
-    constructor(private supplierService: SupplierService, private _route: ActivatedRoute,
-                private _formBuilder: FormBuilder,private router : Router) { }
     public supplier;
     public suForm;
+    showError = false;
+    showSuccess = false;
+    companyId = JSON.parse(localStorage.getItem('companyID'));
+    userId = JSON.parse(localStorage.getItem('userID'));
+
+    constructor(
+      private supplierService: SupplierService,
+      private _route: ActivatedRoute,
+      private _formBuilder: FormBuilder,
+      private router: Router
+    ) { }
     ngOnInit() {
         this.supplierForm();
         this._route.params.subscribe((params) => {
@@ -35,43 +44,27 @@ export class SupplierComponent implements OnInit, OnDestroy {
         this.supplierDataSubscription = this.supplierService.getSupplierData(this.supplierID).subscribe((res: SupplierResponse) => {
             this.supplier = res.data[0];
 
-
-
             if (this.supplierID && this.supplier) {
-
                 this.suForm.controls['supplier_ID'].setValue(this.supplier['supplier_ID']);
-
                 this.suForm.controls['supplierName'].setValue(this.supplier['supplierName']);
-
                 this.suForm.controls['uSerID'].setValue(this.supplier['uSerID']);
-
                 this.suForm.controls['companyID'].setValue(this.supplier['companyID']);
-
                 this.suForm.controls['contactperson'].setValue(this.supplier['contactperson']);
-
-
                 this.suForm.controls['contactMobile'].setValue(this.supplier['contactMobile']);
-
                 this.suForm.controls['landLineNos'].setValue(this.supplier['landLineNos']);
-
                 const controlArray = <FormArray> this.suForm.get('supplierTaxes');
                 controlArray.controls[0].get('taxLedgerID').setValue(this.supplier['supplierTaxes'][0].taxLedgerID);
                 controlArray.controls[0].get('taxLedgerName').setValue(this.supplier['supplierTaxes'][0].taxLedgerName);
                 controlArray.controls[0].get('taxRate').setValue(this.supplier['supplierTaxes'][0].taxRate);
                 controlArray.controls[0].get('calculatedOn').setValue(this.supplier['supplierTaxes'][0].calculatedOn);
-
-
                 const controlArrayAddress = <FormArray> this.suForm.get('supplierAddressList');
                 controlArrayAddress.controls[0].get('locationName').setValue(this.supplier['supplierAddressList'][0].locationName);
                 controlArrayAddress.controls[0].get('address1').setValue(this.supplier['supplierAddressList'][0].address1);
                 controlArrayAddress.controls[0].get('address2').setValue(this.supplier['supplierAddressList'][0].address2);
                 controlArrayAddress.controls[0].get('address3').setValue(this.supplier['supplierAddressList'][0].address3);
-
                 controlArrayAddress.controls[0].get('state').setValue(this.supplier['supplierAddressList'][0].state);
                 controlArrayAddress.controls[0].get('gstincode').setValue(this.supplier['supplierAddressList'][0].gstincode);
                 controlArrayAddress.controls[0].get('stateCode').setValue(this.supplier['supplierAddressList'][0].stateCode);
-
-
                 const controlArrayTerms = <FormArray> this.suForm.get('supplierTerms');
                 controlArrayTerms.controls[0].get('paymentTerms').setValue(this.supplier['supplierTerms'][0].paymentTerms);
                 controlArrayTerms.controls[0].get('currency').setValue(this.supplier['supplierTerms'][0].currency);
@@ -79,7 +72,6 @@ export class SupplierComponent implements OnInit, OnDestroy {
                 controlArrayTerms.controls[0].get('packing').setValue(this.supplier['supplierTerms'][0].packing);
                 controlArrayTerms.controls[0].get('freight').setValue(this.supplier['supplierTerms'][0].freight);
                 controlArrayTerms.controls[0].get('deliveryTerms').setValue(this.supplier['supplierTerms'][0].deliveryTerms);
-
             }
 
 
@@ -95,8 +87,8 @@ export class SupplierComponent implements OnInit, OnDestroy {
         this.suForm = this._formBuilder.group({
             supplier_ID: [0],
             supplierName: ['', [Validators.required, Validators.minLength(4)]],
-            uSerID: ['', Validators.required],
-            companyID: ['', Validators.required],
+            uSerID: [this.userId],
+            companyID: [this.companyId],
             contactperson: [null, Validators.required],
             contactMobile: [null, Validators.required],
             landLineNos: [null, Validators.required],
@@ -108,8 +100,6 @@ export class SupplierComponent implements OnInit, OnDestroy {
     }
 
     get supplierName() { return this.suForm.get('supplierName'); }
-    get uSerID() { return this.suForm.get('uSerID'); }
-    get companyID() { return this.suForm.get('companyID'); }
     get contactperson() { return this.suForm.get('contactperson'); }
     get contactMobile() { return this.suForm.get('contactMobile'); }
     get landLineNos() { return this.suForm.get('landLineNos'); }
@@ -177,17 +167,18 @@ export class SupplierComponent implements OnInit, OnDestroy {
 
 
 
-    saveSupplier(form:any){
+    saveSupplier(form: any) {
 
-        this.supplierService.updateSupplier(form).subscribe((res:SupplierResponse)=>{
-            if(res.status == '200'){
-                alert('Updated');
-                this.router.navigate(['/masters/suppliers'])
+        this.supplierService.updateSupplier(form).subscribe((res: SupplierResponse) => {
+            if (res.status === '200') {
+              this.showSuccess = true;
+              setTimeout(() => {
+                  this.router.navigate(['/masters/suppliers']);
+              }, 3000);
+            } else {
+              this.showError = true;
             }
         });
-
-
-
     }
 
 }

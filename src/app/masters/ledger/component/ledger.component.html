@@ -1,5 +1,9 @@
 <p-panel header="Ledgers Add/Edit Form" class="Tabledata">
   <form [formGroup]="lForm" (ngSubmit)="saveLedger(lForm.value)" class="formData">
+
+    <div class="message error" *ngIf="showError">Updatation/creation failed .</div>
+    <div class="message success" *ngIf="showSuccess">You have Updated/created successfully.</div>
+
     <div class="ui-g">
       <div class="ui-g-6">
         <div class="form-group">
@@ -18,26 +22,8 @@
           </div>
         </div>
       </div>
-      <!-- <div class="ui-g-6">
-        <div class="form-group">
-          <span class="ui-float-label">
-            <input type="text" formControlName="ledgerGroupID" pInputText id="ledgerGroupID">
-            <label for="ledgerGroupID">Ledger Group Id</label>
-          </span>
-
-          <div *ngIf="ledgerGroupID.invalid && (ledgerGroupID.dirty || ledgerGroupID.touched)" class="alert alert-danger">
-            <div *ngIf="ledgerGroupID.errors.required">
-              Ledger Group is required.
-            </div>
-          </div>
-        </div>
-      </div> -->
 
 
-
-    </div>
-
-    <div class="ui-g">
       <div class="ui-g-6">
         <div class="form-group">
           <span class="ui-float-label">
@@ -64,13 +50,7 @@
           </div>
         </div>
       </div>
-    </div>
 
-
-
-
-
-    <div class="ui-g">
       <div class="ui-g-6">
         <div class="form-group">
           <span class="ui-float-label">
@@ -85,43 +65,7 @@
           </div>
         </div>
       </div>
-      <div class="ui-g-6">
-        <div class="form-group">
-          <span class="ui-float-label">
-            <input type="text" formControlName="company_ID" pInputText id="company_ID" />
-            <label for="company_ID">Company Id</label>
-          </span>
 
-          <div *ngIf="company_ID.invalid && (company_ID.dirty || company_ID.touched)" class="alert alert-danger">
-            <div *ngIf="company_ID.errors.required">
-              This field is required.
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-
-
-    <div class="ui-g">
-      <div class="ui-g-6">
-        <div class="form-group">
-          <span class="ui-float-label">
-            <input type="text" formControlName="uSerID" pInputText id="uSerID" />
-            <label for="uSerID">User Id</label>
-          </span>
-
-          <div *ngIf="uSerID.invalid && (uSerID.dirty || uSerID.touched)" class="alert alert-danger">
-            <div *ngIf="uSerID.errors.required">
-              This field is required.
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="ui-g-6">
-
-      </div>
     </div>
 
     <br/>
