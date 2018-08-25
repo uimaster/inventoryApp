@@ -1,32 +1,38 @@
 
-<section>
-    <div class="Tabledata">
-        <div class="table-responsive">
-            <button type="btn btn-primary">Add</button>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Stock Group Name</th>
-                    <th>Parent Name</th>
-                    <th>Active Status</th>
-                    <th>Company Id</th>
-                    <th>User Id</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <ng-container *ngIf="stockGroupList">
-                    <tr *ngFor="let stock of stockGroupList; index as i;">
-                        <td> {{stock.stockGroupName}}</td>
-                        <td>{{stock.parentName}}</td>
-                        <td>{{stock.activeStatus}}</td>
-                        <td>{{stock.company_ID}}</td>
-                        <td>{{stock.userID}}</td>
-                        <td><a (click)="editStockGroup(stock.stockGroup_ID)">Edit</a>  | <a (click)="deleteStockGroup(stock.stockItemID)">Delete</a> </td>
-                    </tr>
-                </ng-container>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</section>
+<p-panel header="Stock Group List" class="Tabledata">
+  <p-header>
+    <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success"></button>
+  </p-header>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Stock Group Name</th>
+          <th>Parent Name</th>
+          <th>Active Status</th>
+          <th>Company Id</th>
+          <th>User Id</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="stockGroupList">
+          <tr *ngFor="let stock of stockGroupList; index as i;">
+            <td>
+              <a> {{stock.stockGroupName}}</a>
+            </td>
+            <td>{{stock.parentName}}</td>
+            <td>{{stock.activeStatus}}</td>
+            <td>{{stock.company_ID}}</td>
+            <td>{{stock.userID}}</td>
+            <td>
+              <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="editStockGroup(stock.stockItemID)"></button>
+              <button pButton type="button" label="Delete" class="ui-button-danger" (click)="deleteStockGroup(stock.stockItemID)"></button>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</p-panel>
+

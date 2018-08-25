@@ -1,31 +1,30 @@
-
-<section>
-  <div class="Tabledata">
-
-
-    <div class="table-responsive">
-      <button type="btn btn-primary">Add</button>
-      <table class="table">
-        <thead>
+<p-panel header="Unit List" class="Tabledata">
+  <p-header>
+    <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success"></button>
+  </p-header>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
         <tr>
           <th>Unit Namee</th>
           <th>Company ID</th>
           <th>userID</th>
           <th>Action</th>
         </tr>
-        </thead>
-        <tbody>
+      </thead>
+      <tbody>
         <ng-container *ngIf="unitList">
-        <tr *ngFor="let unit of unitList; index as i;">
-          <td> {{unit.unitName}}</td>
-          <td>{{unit.company_ID}}</td>
-          <td>{{unit.userID}}</td>
-          <td><a (click)="setUnit(unit.unit_ID)">Edit</a>  | <a (click)="deleteUnit(unit.unit_ID)">Delete</a> </td>
-
-        </tr>
+          <tr *ngFor="let unit of unitList; index as i;">
+            <td> {{unit.unitName}}</td>
+            <td>{{unit.company_ID}}</td>
+            <td>{{unit.userID}}</td>
+            <td>
+              <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="setUnit(unit.unit_ID)"></button>
+              <button pButton type="button" label="Delete" class="ui-button-danger" (click)="deleteUnit(unit.unit_ID)"></button>
+            </td>
+          </tr>
         </ng-container>
-        </tbody>
-      </table>
-    </div>
+      </tbody>
+    </table>
   </div>
-</section>
+</p-panel>

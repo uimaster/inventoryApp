@@ -415,10 +415,10 @@ a, input {
 .ui-sidebar{
   padding: 0;
 }
-.ui-widget-content {
-  background-color: #000;
-  border: 0;
-}
+// .ui-widget-content {
+//   background-color: #000;
+//   border: 0;
+// }
 .ui-sidebar .ui-sidebar-close {
   color: #fff;
   font-size: 35px;
@@ -894,5 +894,10 @@ a, input {
     width: 700px;
     margin: 0 auto;
   }
+}
+
+.ui-panel{
+  margin-bottom: 20px;
+  .ui-panel-content{ padding: 0;}
 }
 

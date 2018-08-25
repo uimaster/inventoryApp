@@ -1,38 +1,40 @@
-
-<section>
-    <div class="Tabledata">
-
-        <div class="table-responsive">
-            <button type="btn btn-primary">Add</button>
-
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Ledger Name</th>
-                    <th>Ledger Group ID</th>
-                    <th>Rate of Tax</th>
-                    <th>Calculated On</th>
-                    <th>Tax Type</th>
-                    <th>Company Id</th>
-                    <th>User Id</th>
-                    <th>Edit</th>
-                </tr>
-                </thead>
-                <tbody>
-                <ng-container *ngIf="ledgerList">
-                    <tr *ngFor="let ledger of ledgerList; index as i;">
-                        <td><a (click)="setLedger(ledger,ledger.ledger_ID)"> {{ledger.ledgerName}}</a></td>
-                        <td>{{ledger.ledgerGroupID}}</td>
-                        <td>{{ledger.rateofTax}}</td>
-                        <td>{{ledger.calculatedOn}}</td>
-                        <td>{{ledger.taxType}}</td>
-                        <td>{{ledger.company_ID}}</td>
-                        <td>{{ledger.uSerID}}</td>
-                        <td><a (click)="setLedger(ledger,ledger.ledger_ID)">Edit</a>  | <a (click)="deleteLedger(ledger.ledger_ID)">Delete</a> </td>
-                    </tr>
-                </ng-container>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</section>
+<p-panel header="Ledgers List" class="Tabledata">
+  <p-header>
+    <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success"></button>
+  </p-header>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Ledger Name</th>
+          <th>Ledger Group ID</th>
+          <th>Rate of Tax</th>
+          <th>Calculated On</th>
+          <th>Tax Type</th>
+          <th>Company Id</th>
+          <th>User Id</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="ledgerList">
+          <tr *ngFor="let ledger of ledgerList; index as i;">
+            <td>
+              <a (click)="setLedger(ledger,ledger.ledger_ID)"> {{ledger.ledgerName}}</a>
+            </td>
+            <td>{{ledger.ledgerGroupID}}</td>
+            <td>{{ledger.rateofTax}}</td>
+            <td>{{ledger.calculatedOn}}</td>
+            <td>{{ledger.taxType}}</td>
+            <td>{{ledger.company_ID}}</td>
+            <td>{{ledger.uSerID}}</td>
+            <td>
+              <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="setLedger(ledger,ledger.ledger_ID)"></button>
+              <button pButton type="button" label="Delete" class="ui-button-danger" (click)="deleteLedger(ledger.ledger_ID)"></button>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</p-panel>

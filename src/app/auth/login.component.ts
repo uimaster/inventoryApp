@@ -14,12 +14,15 @@ export class LoginComponent implements OnInit {
   public submitted = false;
   errorMessage: string | null;
   userData: Observable<LoginResponse>;
-
+  loggedIn = JSON.parse(localStorage.getItem('isLogin'));
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
     this.createForm();
+    if (this.loggedIn) {
+      this.router.navigate(['/dashboard']);
+    }
   }
 
   get f() { return this.loginForm.controls; }
