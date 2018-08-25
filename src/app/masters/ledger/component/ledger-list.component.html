@@ -1,18 +1,15 @@
 <p-panel header="Ledgers List" class="Tabledata">
   <p-header>
-    <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success"></button>
+    <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addLedger()"></button>
   </p-header>
   <div class="table-responsive">
     <table class="table">
       <thead>
         <tr>
-          <th>Ledger Name</th>
-          <th>Ledger Group ID</th>
+          <th>Name</th>
+          <th>Group</th>
           <th>Rate of Tax</th>
-          <th>Calculated On</th>
           <th>Tax Type</th>
-          <th>Company Id</th>
-          <th>User Id</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -22,15 +19,12 @@
             <td>
               <a (click)="setLedger(ledger,ledger.ledger_ID)"> {{ledger.ledgerName}}</a>
             </td>
-            <td>{{ledger.ledgerGroupID}}</td>
+            <td>{{ledger.ledgerGroupName}}</td>
             <td>{{ledger.rateofTax}}</td>
-            <td>{{ledger.calculatedOn}}</td>
             <td>{{ledger.taxType}}</td>
-            <td>{{ledger.company_ID}}</td>
-            <td>{{ledger.uSerID}}</td>
             <td>
               <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="setLedger(ledger,ledger.ledger_ID)"></button>
-              <button pButton type="button" label="Delete" class="ui-button-danger" (click)="deleteLedger(ledger.ledger_ID)"></button>
+              <button pButton type="button" label="Delete" class="ui-button-danger"></button>
             </td>
           </tr>
         </ng-container>

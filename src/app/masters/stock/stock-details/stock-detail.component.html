@@ -1,1 +1,374 @@
-<h1>Stock Details page:</h1>
+<p-panel header="StockItem Add/Edit Form" class="Tabledata">
+
+  <form [formGroup] = "sForm" (ngSubmit)="saveStockItem(sForm.value)" class="formData">
+      <div class="message error" *ngIf="showError">Updatation/creation failed .</div>
+      <div class="message success" *ngIf="showSuccess">You have Updated/created successfully.</div>
+    <div class="ui-g">
+      <div class="ui-g-6">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <input type="text" formControlName="itemName" pInputText id="itemName">
+            <label for="itemName">Item name</label>
+          </span>
+
+          <div *ngIf="itemName.invalid && (itemName.dirty || itemName.touched)" class="alert alert-danger">
+            <div *ngIf="itemName.errors.required">
+              Item name is required.
+            </div>
+            <div *ngIf="itemName.errors.minlength">
+              Item Name must be at least 4 characters long.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ui-g-6">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <input type="text" formControlName="itemCode" pInputText id="itemCode">
+            <label for="itemCode">Item Code</label>
+          </span>
+
+          <div *ngIf="itemCode.invalid && (itemCode.dirty || itemCode.touched)" class="alert alert-danger">
+            <div *ngIf="itemCode.errors.required">
+              Item Code is required.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-g-6">
+        <div class="form-group">
+          <span class="ui-float-label">
+
+            <input type="text" formControlName="stockGroup_ID" pInputText id="stockGroup_ID">
+            <label for="stockGroup_ID">Stock Group ID</label>
+          </span>
+          <div *ngIf="stockGroup_ID.invalid && (stockGroup_ID.dirty || stockGroup_ID.touched)" class="alert alert-danger">
+            <div *ngIf="stockGroup_ID.errors.required">
+              Stock Group ID is required.
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+        <div class="ui-g-6">
+            <div class="form-group">
+          <span class="ui-float-label">
+
+            <input type="text" formControlName="stockGroupName" pInputText id="stockGroupName">
+            <label for="stockGroup_ID">Stock Group Name</label>
+          </span>
+                <div *ngIf="stockGroupName.invalid && (stockGroupName.dirty || stockGroupName.touched)" class="alert alert-danger">
+                    <div *ngIf="stockGroupName.errors.required">
+                        Stock Group Name is required.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+      <div class="ui-g-6">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <input type="text" formControlName="unit_ID" pInputText id="unit_ID">
+            <label for="unit_ID">Unit ID</label>
+          </span>
+          <div *ngIf="unit_ID.invalid && (unit_ID.dirty || unit_ID.touched)" class="alert alert-danger">
+            <div *ngIf="unit_ID.errors.required">
+              This field is required.
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+        <div class="ui-g-6">
+            <div class="form-group">
+          <span class="ui-float-label">
+            <input type="text" formControlName="unitName" pInputText id="unitName">
+            <label for="unitName">Unit Name</label>
+          </span>
+                <div *ngIf="unitName.invalid && (unitName.dirty || unitName.touched)" class="alert alert-danger">
+                    <div *ngIf="unitName.errors.required">
+                        This field is required.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+      <div class="ui-g-6">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <input type="text" formControlName="minimum_Order_Level" pInputText id="minimum_Order_Level" />
+            <label for="minimum_Order_Level">Minimum Order Level</label>
+          </span>
+
+          <div *ngIf="minimum_Order_Level.invalid && (minimum_Order_Level.dirty || minimum_Order_Level.touched)" class="alert alert-danger">
+            <div *ngIf="minimum_Order_Level.errors.required">
+              This field is required.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ui-g-6">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <input type="text" formControlName="minimum_Order_Qty" pInputText id="minimum_Order_Qty" />
+            <label for="minimum_Order_Qty">Minimum Order Quantity</label>
+          </span>
+
+          <div *ngIf="minimum_Order_Qty.invalid && (minimum_Order_Qty.dirty || minimum_Order_Qty.touched)" class="alert alert-danger">
+            <div *ngIf="minimum_Order_Qty.errors.required">
+              This field is required.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-g-6">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <input type="text" formControlName="bufferQty" pInputText id="bufferQty" />
+            <label for="bufferQty">Buffer Quantity</label>
+          </span>
+
+          <div *ngIf="bufferQty.invalid && (bufferQty.dirty || bufferQty.touched)" class="alert alert-danger">
+            <div *ngIf="bufferQty.errors.required">
+              This field is required.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-g-6">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <input type="text" formControlName="hsnCode" pInputText id="hsnCode" />
+            <label for="hsnCode">HSN code</label>
+          </span>
+
+          <div *ngIf="hsnCode.invalid && (hsnCode.dirty || hsnCode.touched)" class="alert alert-danger">
+            <div *ngIf="hsnCode.errors.required">
+              This field is required.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-g-6">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <input type="text" formControlName="taxrate" pInputText id="taxrate" />
+            <label for="taxrate">Tax rate</label>
+          </span>
+
+          <div *ngIf="taxrate.invalid && (taxrate.dirty || taxrate.touched)" class="alert alert-danger">
+            <div *ngIf="taxrate.errors.required">
+              This field is required.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-g-6">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <input type="text" formControlName="barcodeapplicable" pInputText id="barcodeapplicable" />
+            <label for="taxrate">Bar code Applicable</label>
+          </span>
+
+          <div *ngIf="barcodeapplicable.invalid && (barcodeapplicable.dirty || barcodeapplicable.touched)" class="alert alert-danger">
+            <div *ngIf="barcodeapplicable.errors.required">
+              This field is required.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-g-6">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <input type="text" formControlName="barcodelength" pInputText id="barcodelength" />
+            <label for="taxrate">Bar code Length</label>
+          </span>
+
+          <div *ngIf="barcodelength.invalid && (barcodelength.dirty || barcodelength.touched)" class="alert alert-danger">
+            <div *ngIf="barcodelength.errors.required">
+              This field is required.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-g-6">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <input type="text" formControlName="branchName" pInputText id="branchName" />
+            <label for="taxrate">Branch Name</label>
+          </span>
+
+          <div *ngIf="branchName.invalid && (branchName.dirty || branchName.touched)" class="alert alert-danger">
+            <div *ngIf="branchName.errors.required">
+              This field is required.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-g-6">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <input type="text" formControlName="activeStatus" pInputText id="activeStatus" />
+            <label for="taxrate">Active Status</label>
+          </span>
+
+          <div *ngIf="activeStatus.invalid && (activeStatus.dirty || activeStatus.touched)" class="alert alert-danger">
+            <div *ngIf="activeStatus.errors.required">
+              This field is required.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <fieldset formArrayName="stockItemOpeningBal">
+      <legend>Stock Item Opening Balance</legend>
+      <div *ngFor="let ctrl of sForm.get('stockItemOpeningBal').controls; let i = index;">
+        <div [formGroupName]="i">
+          <div class="ui-g">
+            <div class="ui-g-6">
+              <div class="form-group">
+                <span class="ui-float-label">
+                  <input type="text" formControlName="locationName" pInputText id="locationName">
+                  <label for="locationName">Location Name</label>
+                </span>
+
+                <div *ngIf="locationName.invalid && (locationName.dirty || locationName.touched)" class="alert alert-danger">
+                  <div *ngIf="locationName.errors.required">
+                    Location Name is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ui-g-6">
+              <div class="form-group">
+                <span class="ui-float-label">
+                  <input type="text" formControlName="qty" pInputText id="qty">
+                  <label for="qty">Quantity</label>
+                </span>
+
+                <div *ngIf="qty.invalid && (qty.dirty || qty.touched)" class="alert alert-danger">
+                  <div *ngIf="qty.errors.required">
+                    Quantity is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ui-g-6">
+              <div class="form-group">
+                <span class="ui-float-label">
+                  <input type="text" formControlName="rate" pInputText id="rate">
+                  <label for="rate">Rate</label>
+                </span>
+
+                <div *ngIf="rate.invalid && (rate.dirty || rate.touched)" class="alert alert-danger">
+                  <div *ngIf="rate.errors.required">
+                    Rate is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ui-g-6">
+              <div class="form-group">
+                <span class="ui-float-label">
+                  <input type="text" formControlName="amount" pInputText id="amount">
+                  <label for="amount">Amount</label>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </fieldset>
+    <br/>
+    <fieldset formArrayName="stockItemSuppliers">
+        <legend>Stock Item Suppliers</legend>
+        <div *ngFor="let ctrl of sForm.get('stockItemSuppliers').controls; let i = index;">
+          <div [formGroupName]="i">
+            <div class="ui-g">
+              <div class="ui-g-6">
+                <div class="form-group">
+                  <span class="ui-float-label">
+                    <input type="text" formControlName="ledgerName" pInputText id="ledgerName">
+                    <label for="ledgerName">Ledger Name</label>
+                  </span>
+
+                  <div *ngIf="ledgerName.invalid && (ledgerName.dirty || ledgerName.touched)" class="alert alert-danger">
+                    <div *ngIf="ledgerName.errors.required">
+                      Ledger Name is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+                <div class="ui-g-6">
+                    <div class="form-group">
+                  <span class="ui-float-label">
+                    <input type="text" formControlName="ledger_ID" pInputText id="ledger_ID">
+                    <label for="ledger_ID">Ledger Id</label>
+                  </span>
+
+                        <div *ngIf="ledger_ID.invalid && (ledger_ID.dirty || ledger_ID.touched)" class="alert alert-danger">
+                            <div *ngIf="ledger_ID.errors.required">
+                                Ledger Id is required.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+              <div class="ui-g-6">
+                <div class="form-group">
+                  <span class="ui-float-label">
+                    <input type="text" formControlName="orderPercentage" pInputText id="orderPercentage">
+                    <label for="orderPercentage">Order Percentage</label>
+                  </span>
+
+                  <div *ngIf="orderPercentage.invalid && (orderPercentage.dirty || orderPercentage.touched)" class="alert alert-danger">
+                    <div *ngIf="orderPercentage.errors.required">
+                        Order Percentage is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="ui-g-6">
+                <div class="form-group">
+                  <span class="ui-float-label">
+                    <input type="text" formControlName="leadTime" pInputText id="leadTime">
+                    <label for="leadTime">LeadTime</label>
+                  </span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </fieldset>
+
+
+
+
+
+    <br/>
+    <p style="text-align: center">
+      <button pButton type="submit" label="Submit" class="ui-button-success" [disabled]="!sForm.valid" style="margin-right: 10px;"></button>
+      <button pButton type="button" label="Cancel" class="ui-button-secondary"></button>
+    </p>
+  </form>
+</p-panel>

@@ -1,35 +1,77 @@
-<div>
+<p-panel header="Ledgers Add/Edit Form" class="Tabledata">
+  <form [formGroup]="lForm" (ngSubmit)="saveLedger(lForm.value)" class="formData">
 
-    <form [formGroup]="lForm" (ngSubmit)="saveLedger(lForm.value)">
-    <div class="form-group">
-    <input type="text" pInputText placeholder="Ledger name" formControlName="ledgerName">
+    <div class="message error" *ngIf="showError">Updatation/creation failed .</div>
+    <div class="message success" *ngIf="showSuccess">You have Updated/created successfully.</div>
+
+    <div class="ui-g">
+      <div class="ui-g-6">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <input type="text" formControlName="ledgerName" pInputText id="ledgerName">
+            <label for="ledgerName">Ledger name</label>
+          </span>
+
+          <div *ngIf="ledgerName.invalid && (ledgerName.dirty || ledgerName.touched)" class="alert alert-danger">
+            <div *ngIf="ledgerName.errors.required">
+              Ledger name is required.
+            </div>
+            <div *ngIf="ledgerName.errors.minlength">
+              Ledger Name must be at least 4 characters long.
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="ui-g-6">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <input type="text" formControlName="rateofTax" pInputText id="rateofTax">
+            <label for="rateofTax">Tax Rate</label>
+          </span>
+          <div *ngIf="rateofTax.invalid && (rateofTax.dirty || rateofTax.touched)" class="alert alert-danger">
+            <div *ngIf="rateofTax.errors.required">
+              Rate of tax is required.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ui-g-6">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <input type="text" formControlName="calculatedOn" pInputText id="calculatedOn">
+            <label for="calculatedOn">Calculated on</label>
+          </span>
+          <div *ngIf="calculatedOn.invalid && (calculatedOn.dirty || calculatedOn.touched)" class="alert alert-danger">
+            <div *ngIf="calculatedOn.errors.required">
+              This field is required.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-g-6">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <input type="text" formControlName="taxType" pInputText id="taxType" />
+            <label for="taxType">Tax type</label>
+          </span>
+
+          <div *ngIf="taxType.invalid && (taxType.dirty || taxType.touched)" class="alert alert-danger">
+            <div *ngIf="taxType.errors.required">
+              This field is required.
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
-    <div class="form-group">
-        <input type="text"  placeholder="Ledger Group Id" formControlName="ledgerGroupID">
-    </div>
-
-        <div class="form-group">
-            <input type="text"  placeholder="Rate of Tax" formControlName="rateofTax">
-        </div>
-
-        <div class="form-group">
-            <input type="text"  placeholder="Calculated on" formControlName="calculatedOn">
-        </div>
-
-        <div class="form-group">
-            <input type="text"  placeholder="Tax type" formControlName="taxType">
-        </div>
-        <div class="form-group">
-            <input type="text"  placeholder="Company Id" formControlName="company_ID">
-        </div>
-
-        <div class="form-group">
-            <input type="text"  placeholder="User Id" formControlName="uSerID">
-        </div>
-
-        <button type="submit">Submit</button>
-
-    </form>
-
-</div>
+    <br/>
+    <p style="text-align: center">
+      <button pButton type="submit" label="Submit" class="ui-button-success" [disabled]="!lForm.valid" style="margin-right: 10px;"></button>
+      <button pButton type="button" label="Cancel" class="ui-button-secondary"></button>
+    </p>
+  </form>
+</p-panel>

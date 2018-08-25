@@ -1,6 +1,6 @@
 <p-panel header="Stock Items" class="Tabledata">
   <p-header>
-    <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success"></button>
+    <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addStockItem(0)"></button>
   </p-header>
 
   <div class="table-responsive">
@@ -9,7 +9,7 @@
         <tr>
           <th>Item Name</th>
           <th>Item Code</th>
-          <th>Stock Group Name</th>
+          <th>Group Name</th>
           <th>Unit Name</th>
           <th>Action</th>
         </tr>
@@ -17,7 +17,7 @@
       <tbody>
         <tr *ngFor="let stock of stockList; index as i;">
           <td>
-            <a href="javascript:void(0);" (click)="getDetails(stock.stockItemID)"> {{stock.itemName}}</a>
+            {{stock.itemName}}
           </td>
           <td>{{stock.itemCode}}</td>
           <td>{{stock.stockGroupName}}</td>

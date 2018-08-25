@@ -46,13 +46,18 @@ export class LedgerListComponent implements OnInit, OnDestroy {
     setLedger(ledger: Ledger, ledgerId) {
 
        // this.sharedledgerservice.setLedger(ledger);
-        this.router.navigate(['/ledgers/ledger', ledgerId]);
+        this.router.navigate(['/masters/ledger', ledgerId]);
 
+    }
+
+    addLedger(){
+        this.router.navigate(['/masters/add-ledger']);
     }
 
     ngOnDestroy() {
         // this.sharedledgerservice.setLedger();
     }
+
 
 
 

@@ -1,0 +1,36 @@
+<p-panel header="Customer List" class="Tabledata">
+    <p-header>
+        <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addCustomer()"></button>
+    </p-header>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Contact No</th>
+                <th>Customer GSTIN</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container *ngIf="customerList">
+                <tr *ngFor="let customer of customerList; index as i;">
+                    <td>
+                        <a (click)="setCustomer(customer.customer_ID)"> {{customer.customerName}}</a>
+                    </td>
+                    <td>{{customer.customerAddress}}</td>
+                    <td>{{customer.contactNos}}</td>
+                    <td>{{customer.customerGSTIN}}</td>
+                    <td>{{customer.eMailID}}</td>
+                    <td>
+                        <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="setCustomer(customer.customer_ID)"></button>
+                        <button pButton type="button" label="Delete" class="ui-button-danger" (click)="deleteCustomer(customer.customer_ID)"></button>
+                    </td>
+                </tr>
+            </ng-container>
+            </tbody>
+        </table>
+    </div>
+</p-panel>

@@ -41,11 +41,9 @@ export class AuthService {
     });
     return this.http.post(REFRESHTOKEN_URL, payload)
       .map((res: LoginResponse) => {
-        if (res.message !== 'Bad Request') {
-          console.log('success refreshToken:', res.data);
+        if (res.message !== 'BAD REQUEST  ') {
           return res;
         } else {
-          console.log('faild refreshToken:', res);
           this.router.navigate(['/login']);
         }
 
