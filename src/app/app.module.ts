@@ -7,10 +7,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { RestPasswordComponent } from './dump-components/reset-password/rest-password.component';
 import { AppRouteModule } from './app.route.module';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { PurchaseComponent } from './dump-components/purchase/purchase.component';
 import { HttpClientModule} from '@angular/common/http';
 import { PrimeNGModule } from './app.primeNg.module';
-import { OrderlistComponent } from './dump-components/orderlist/orderlist.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './auth/token.interceptor';
@@ -23,9 +21,7 @@ import { SharedModule} from './shared/shared.module';
     AppComponent,
     DashboardComponent,
     RestPasswordComponent,
-    OrderlistComponent,
-    FooterComponent,
-    PurchaseComponent
+    FooterComponent
   ],
   imports: [
     FormsModule,
