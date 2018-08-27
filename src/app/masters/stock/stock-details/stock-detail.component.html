@@ -36,20 +36,20 @@
         </div>
       </div>
 
-      <div class="ui-g-6">
-        <div class="form-group">
-          <span class="ui-float-label">
+      <!--<div class="ui-g-6">-->
+        <!--<div class="form-group">-->
+          <!--<span class="ui-float-label">-->
 
-            <input type="text" formControlName="stockGroup_ID" pInputText id="stockGroup_ID">
-            <label for="stockGroup_ID">Stock Group ID</label>
-          </span>
-          <div *ngIf="stockGroup_ID.invalid && (stockGroup_ID.dirty || stockGroup_ID.touched)" class="alert alert-danger">
-            <div *ngIf="stockGroup_ID.errors.required">
-              Stock Group ID is required.
-            </div>
-          </div>
-        </div>
-      </div>
+            <!--<input type="text" formControlName="stockGroup_ID" pInputText id="stockGroup_ID">-->
+            <!--<label for="stockGroup_ID">Stock Group ID</label>-->
+          <!--</span>-->
+          <!--<div *ngIf="stockGroup_ID.invalid && (stockGroup_ID.dirty || stockGroup_ID.touched)" class="alert alert-danger">-->
+            <!--<div *ngIf="stockGroup_ID.errors.required">-->
+              <!--Stock Group ID is required.-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
 
 
         <div class="ui-g-6">
@@ -57,7 +57,7 @@
           <span class="ui-float-label">
 
             <input type="text" formControlName="stockGroupName" pInputText id="stockGroupName">
-            <label for="stockGroup_ID">Stock Group Name</label>
+            <label for="stockGroupName">Stock Group Name</label>
           </span>
                 <div *ngIf="stockGroupName.invalid && (stockGroupName.dirty || stockGroupName.touched)" class="alert alert-danger">
                     <div *ngIf="stockGroupName.errors.required">
@@ -68,19 +68,19 @@
         </div>
 
 
-      <div class="ui-g-6">
-        <div class="form-group">
-          <span class="ui-float-label">
-            <input type="text" formControlName="unit_ID" pInputText id="unit_ID">
-            <label for="unit_ID">Unit ID</label>
-          </span>
-          <div *ngIf="unit_ID.invalid && (unit_ID.dirty || unit_ID.touched)" class="alert alert-danger">
-            <div *ngIf="unit_ID.errors.required">
-              This field is required.
-            </div>
-          </div>
-        </div>
-      </div>
+      <!--<div class="ui-g-6">-->
+        <!--<div class="form-group">-->
+          <!--<span class="ui-float-label">-->
+            <!--<input type="text" formControlName="unit_ID" pInputText id="unit_ID">-->
+            <!--<label for="unit_ID">Unit ID</label>-->
+          <!--</span>-->
+          <!--<div *ngIf="unit_ID.invalid && (unit_ID.dirty || unit_ID.touched)" class="alert alert-danger">-->
+            <!--<div *ngIf="unit_ID.errors.required">-->
+              <!--This field is required.-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
 
 
         <div class="ui-g-6">
@@ -177,7 +177,9 @@
       <div class="ui-g-6">
         <div class="form-group">
           <span class="ui-float-label">
-            <input type="text" formControlName="barcodeapplicable" pInputText id="barcodeapplicable" />
+
+            <p-dropdown [options]="barCodeApplicable" formControlName="barcodeapplicable"  optionLabel="name" [showClear]="true"></p-dropdown>
+
             <label for="taxrate">Bar code Applicable</label>
           </span>
 
@@ -316,20 +318,20 @@
                 </div>
               </div>
 
-                <div class="ui-g-6">
-                    <div class="form-group">
-                  <span class="ui-float-label">
-                    <input type="text" formControlName="ledger_ID" pInputText id="ledger_ID">
-                    <label for="ledger_ID">Ledger Id</label>
-                  </span>
+                <!--<div class="ui-g-6">-->
+                    <!--<div class="form-group">-->
+                  <!--<span class="ui-float-label">-->
+                    <!--<input type="text" formControlName="ledger_ID" pInputText id="ledger_ID">-->
+                    <!--<label for="ledger_ID">Ledger Id</label>-->
+                  <!--</span>-->
 
-                        <div *ngIf="ledger_ID.invalid && (ledger_ID.dirty || ledger_ID.touched)" class="alert alert-danger">
-                            <div *ngIf="ledger_ID.errors.required">
-                                Ledger Id is required.
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                        <!--<div *ngIf="ledger_ID.invalid && (ledger_ID.dirty || ledger_ID.touched)" class="alert alert-danger">-->
+                            <!--<div *ngIf="ledger_ID.errors.required">-->
+                                <!--Ledger Id is required.-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
 
 
               <div class="ui-g-6">

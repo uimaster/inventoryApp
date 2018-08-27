@@ -19,6 +19,7 @@ export class LedgerComponent implements OnInit, OnDestroy {
     public ledgerDataSubscription: Subscription;
     public ledger;
     public lForm;
+    private calculatedOn:any;
     companyId = localStorage.getItem('companyID');
     userId = localStorage.getItem('userID');
     showError = false;
@@ -33,6 +34,7 @@ export class LedgerComponent implements OnInit, OnDestroy {
 
 
     ngOnInit() {
+        this.getCalculatedIn();
         this.ledgerForm();
         this._route.params.subscribe((params) => {
             this.ledger_ID = params.id;
@@ -122,6 +124,18 @@ export class LedgerComponent implements OnInit, OnDestroy {
             } else {
               this.showError = true;
             }
+        });
+    }
+
+    getCalculatedIn(){
+        this.ledgerService.getCalculatedOnList().subscribe((res:any)=>{
+
+            if(res.status === '200') {
+
+                this.calculatedOn = res.data;
+
+            }
+
         });
     }
 

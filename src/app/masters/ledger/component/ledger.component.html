@@ -40,7 +40,8 @@
       <div class="ui-g-6">
         <div class="form-group">
           <span class="ui-float-label">
-            <input type="text" formControlName="calculatedOn" pInputText id="calculatedOn">
+            <p-dropdown [options]="calculatedOn" formControlName="calculatedOn"  optionLabel="calculatedon" [showClear]="true" id="calculatedOn"></p-dropdown>
+            <!--<input type="text" formControlName="calculatedOn" pInputText id="calculatedOn">-->
             <label for="calculatedOn">Calculated on</label>
           </span>
           <div *ngIf="calculatedOn.invalid && (calculatedOn.dirty || calculatedOn.touched)" class="alert alert-danger">

@@ -3,7 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 
-import {GETLEDGERLIST, UPDATELEDGERLIST} from '../../../../utils/app.urls';
+import {GETLEDGERLIST, UPDATELEDGERLIST, CALCULATEDON} from '../../../../utils/app.urls';
 import {Ledger, LedgerResponse} from '../models/ledger.model';
 
 
@@ -20,6 +20,17 @@ export class LedgerService {
             })
         );
     }
+
+
+    getCalculatedOnList(): Observable<any> {
+
+        return this.http.get(CALCULATEDON).pipe(
+            map(res => {
+                return res;
+            })
+        );
+    }
+
 
 
     updateLedger(payload: Ledger): Observable<any> {

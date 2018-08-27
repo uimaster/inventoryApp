@@ -28,6 +28,8 @@ export class StockDetailComponent implements OnInit, OnDestroy {
   public ledgerData;
   public unitData;
   public stockData;
+  public barCodeApplicable: any;
+
   showError = false;
   showSuccess = false;
   companyId = localStorage.getItem('companyID');
@@ -41,6 +43,11 @@ export class StockDetailComponent implements OnInit, OnDestroy {
     private router: Router
   ) {
     this.stockForm();
+    this.barCodeApplicable = [
+      {name: 'True', code: 1},
+      {name: 'False', code: 0}
+    ];
+
   }
 
   ngOnInit() {
