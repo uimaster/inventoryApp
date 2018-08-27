@@ -55,8 +55,10 @@
       <div class="ui-g-6">
         <div class="form-group">
           <span class="ui-float-label">
-            <input type="text" formControlName="taxType" pInputText id="taxType" />
-            <label for="taxType">Tax type</label>
+
+             <p-dropdown [options]="taxTypeList" formControlName="taxType"  id="taxType" placeholder="Tax Type"></p-dropdown>
+            <!--<input type="text" formControlName="taxType" pInputText id="taxType" />-->
+            <!--<label for="taxType">Tax type</label>-->
           </span>
 
           <div *ngIf="taxType.invalid && (taxType.dirty || taxType.touched)" class="alert alert-danger">

@@ -6,6 +6,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {SharedLedgerService} from '../services/shared-ledger.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, Validators} from '@angular/forms';
+import {returnLabel} from "../../../generic_function";
 
 @Component({
     selector: 'app-ledger',
@@ -20,6 +21,7 @@ export class LedgerComponent implements OnInit, OnDestroy {
     public ledger;
     public lForm;
     private calculatedOnList:any = [];
+    private taxTypeList:any = [];
     companyId = localStorage.getItem('companyID');
     userId = localStorage.getItem('userID');
     showError = false;
@@ -35,6 +37,7 @@ export class LedgerComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.getCalculatedIn();
+        this.getTaxType();
         this.ledgerForm();
         this._route.params.subscribe((params) => {
             this.ledger_ID = params.id;
@@ -132,18 +135,36 @@ export class LedgerComponent implements OnInit, OnDestroy {
 
             if(res.status === '200') {
 
-               // this.calculatedOnList = res.data;
+               this.calculatedOnList = returnLabel(res.data);
 
-                for(let i = 0; i< res.data.length; i++) {
-                    //the property after data[i]. needs to match the exact name that is on your JSON file... So, name is a different property than Name
-                    this.calculatedOnList.push({label: res.data[i].calculatedon, value: res.data[i].calcid});
-                }
 
             }
 
-            console.log(this.calculatedOnList);
+
 
         });
+    }
+
+    getTaxType(){
+        this.ledgerService.getTaxtype().subscribe((res:any)=>{
+
+
+            if(res.status === '200') {
+
+                let data = res.data;
+                for(let i = 0; i< data.length; i++) {
+                    //the property after data[i]. needs to match the exact name that is on your JSON file... So, name is a different property than Name
+                    this.taxTypeList.push({label: data[i].taxtype, value: data[i].taxTypeID});
+                }
+
+
+               // this.taxTypeList = returnLabel(res.data);
+
+
+            }
+
+        });
+        
     }
 
 }

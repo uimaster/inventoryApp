@@ -17,3 +17,4 @@ export const UPDATESUPPLIER= BASEURL + 'Masters/UpdateSupplierDetails';
 export const UPDATECUSTOMER =  BASEURL + 'Masters/UpdateCustomerDetails';
 export const UPDATESTOCK =  BASEURL + 'Stockitem/UpdateStockItemDetails';
 export const CALCULATEDON =  BASEURL + 'Masters/GetCalculatedOnList';
+export const TAXTYPE =  BASEURL + 'Masters/GetTaxTypeList';
