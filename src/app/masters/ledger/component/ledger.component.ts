@@ -19,7 +19,7 @@ export class LedgerComponent implements OnInit, OnDestroy {
     public ledgerDataSubscription: Subscription;
     public ledger;
     public lForm;
-    private calculatedOn:any;
+    private calculatedOnList:any = [];
     companyId = localStorage.getItem('companyID');
     userId = localStorage.getItem('userID');
     showError = false;
@@ -132,9 +132,16 @@ export class LedgerComponent implements OnInit, OnDestroy {
 
             if(res.status === '200') {
 
-                this.calculatedOn = res.data;
+               // this.calculatedOnList = res.data;
+
+                for(let i = 0; i< res.data.length; i++) {
+                    //the property after data[i]. needs to match the exact name that is on your JSON file... So, name is a different property than Name
+                    this.calculatedOnList.push({label: res.data[i].calculatedon, value: res.data[i].calcid});
+                }
 
             }
+
+            console.log(this.calculatedOnList);
 
         });
     }
