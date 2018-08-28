@@ -24,8 +24,12 @@
       <div class="ui-g-6">
         <div class="form-group">
           <span class="ui-float-label">
-            <input type="text"  formControlName="parentName" pInputText id="parentName">
-            <label for="parentName">Parent Name</label>
+
+              <p-dropdown [options]="stockGroupLists" formControlName="parentName"    placeholder="Parent Name"></p-dropdown>
+
+            <!--<label for="taxrate">Bar code Applicable</label>-->
+            <!--<input type="text"  formControlName="parentName" pInputText id="parentName">-->
+            <!--<label for="parentName">Parent Name</label>-->
           </span>
           <div *ngIf="parentName.invalid && (parentName.dirty || parentName.touched)" class="alert alert-danger">
             <div *ngIf="parentName.errors.required">

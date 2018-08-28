@@ -22,6 +22,8 @@ export class StockGroupComponent implements OnInit, OnDestroy {
     userId = localStorage.getItem('userID');
     showError = false;
     showSuccess = false;
+    public stockGroupLists:any = [];
+
     constructor (
       private stockGroupService: StockGroupService,
       private _route: ActivatedRoute,
@@ -30,6 +32,7 @@ export class StockGroupComponent implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit() {
+        this.getStockGroupData();
         this.stockGroupFormC();
         this._route.params.subscribe((params) => {
             this.stockGroupId = params.id;
@@ -119,6 +122,26 @@ export class StockGroupComponent implements OnInit, OnDestroy {
         });
 
 
+
+    }
+
+
+    getStockGroupData(){
+
+        this.stockGroupService.getAllStockGroups().subscribe((res: any) => {
+            if (res && res.status === '200')  {
+
+                let data = res.data;
+                for(let i = 0; i< data.length; i++) {
+                    //the property after data[i]. needs to match the exact name that is on your JSON file... So, name is a different property than Name
+                    this.stockGroupLists.push({label: data[i].stockGroupName, value: data[i].stockGroup_ID});
+                }
+
+               // this.stockGroupList = res.data;
+                // console.log(this.unitList);
+
+            }
+        });
 
     }
 

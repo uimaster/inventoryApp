@@ -10,6 +10,7 @@ import { LedgerService } from '../../ledger/services/ledger.service';
 import { UnitService } from '../../unit/services/unit.service';
 import { UnitResponse } from '../../unit/models/unit.model';
 import { StockResponse } from '../models/stock.model';
+import {StockGroupService} from "../../stock-group/services/stock-group.service";
 
 @Component({
   selector: 'app-stock-detail',
@@ -29,6 +30,8 @@ export class StockDetailComponent implements OnInit, OnDestroy {
   public unitData;
   public stockData;
   public barCodeApplicable: any;
+  public stockGroupList:any = [];
+  public unitDataList:any = [];
 
   showError = false;
   showSuccess = false;
@@ -40,12 +43,13 @@ export class StockDetailComponent implements OnInit, OnDestroy {
     private unitService: UnitService,
     private _route: ActivatedRoute,
     private _formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private stockGroupService: StockGroupService
   ) {
     this.stockForm();
     this.barCodeApplicable = [
-      {name: 'True', code: 1},
-      {name: 'False', code: 0}
+      {label: 'True', code: 1},
+      {label: 'False', code: 0}
     ];
 
   }
@@ -59,6 +63,7 @@ export class StockDetailComponent implements OnInit, OnDestroy {
 
     this.getLedgerData();
     this.getUnitData();
+      this.getStockGroupList();
   }
 
   getStockData(stockId) {
@@ -75,9 +80,9 @@ export class StockDetailComponent implements OnInit, OnDestroy {
           this.sForm.controls['stockGroup_ID'].setValue(
             this.stock['stockGroup_ID']
           );
-          this.sForm.controls['stockGroupName'].setValue(
-            this.stock['stockGroupName']
-          );
+          // this.sForm.controls['stockGroupName'].setValue(
+          //   this.stock['stockGroup_ID']
+          // );
           this.sForm.controls['unit_ID'].setValue(this.stock['unit_ID']);
           this.sForm.controls['unitName'].setValue(this.stock['unitName']);
           this.sForm.controls['minimum_Order_Level'].setValue(
@@ -159,7 +164,7 @@ export class StockDetailComponent implements OnInit, OnDestroy {
       itemName: ['', [Validators.required, Validators.minLength(4)]],
       itemCode: ['', Validators.required],
       stockGroup_ID: ['', Validators.required],
-      stockGroupName: ['', Validators.required],
+      // stockGroupName: ['', Validators.required],
       unit_ID: ['', Validators.required],
       unitName: ['', Validators.required],
       minimum_Order_Level: ['', Validators.required],
@@ -296,8 +301,15 @@ export class StockDetailComponent implements OnInit, OnDestroy {
   getUnitData() {
     this.unitDataSubscription = this.unitService
       .getAllUnits()
-      .subscribe((res: UnitResponse) => {
+      .subscribe((res: any) => {
         this.unitData = res.data;
+
+          let data = res.data;
+          for(let i = 0; i< data.length; i++) {
+              //the property after data[i]. needs to match the exact name that is on your JSON file... So, name is a different property than Name
+              this.unitDataList.push({label: data[i].unitName, value: data[i].unit_ID});
+          }
+
       });
   }
 
@@ -325,4 +337,27 @@ export class StockDetailComponent implements OnInit, OnDestroy {
       return false;
     }
   }
+
+  public getStockGroupList(){
+      this.stockGroupService.getAllStockGroups().subscribe((res:any)=>{
+
+          if(res.status === '200') {
+
+              let data = res.data;
+              for(let i = 0; i< data.length; i++) {
+                  //the property after data[i]. needs to match the exact name that is on your JSON file... So, name is a different property than Name
+                  this.stockGroupList.push({label: data[i].stockGroupName, value: data[i].stockGroup_ID});
+              }
+
+
+
+
+          }
+
+      });
+
+  }
+
+
+
 }

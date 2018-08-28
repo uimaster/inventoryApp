@@ -56,11 +56,14 @@
             <div class="form-group">
           <span class="ui-float-label">
 
-            <input type="text" formControlName="stockGroupName" pInputText id="stockGroupName">
-            <label for="stockGroupName">Stock Group Name</label>
+
+            <p-dropdown [options]="stockGroupList" formControlName="stockGroup_ID"  id="stockGroup_ID" placeholder="Stock Group Name"></p-dropdown>
+
+            <!--<input type="text" formControlName="stockGroupName" pInputText id="stockGroupName">-->
+            <!--<label for="stockGroupName">Stock Group Name</label>-->
           </span>
-                <div *ngIf="stockGroupName.invalid && (stockGroupName.dirty || stockGroupName.touched)" class="alert alert-danger">
-                    <div *ngIf="stockGroupName.errors.required">
+                <div *ngIf="stockGroup_ID.invalid && (stockGroup_ID.dirty || stockGroup_ID.touched)" class="alert alert-danger">
+                    <div *ngIf="stockGroup_ID.errors.required">
                         Stock Group Name is required.
                     </div>
                 </div>
@@ -68,34 +71,38 @@
         </div>
 
 
-      <!--<div class="ui-g-6">-->
-        <!--<div class="form-group">-->
-          <!--<span class="ui-float-label">-->
-            <!--<input type="text" formControlName="unit_ID" pInputText id="unit_ID">-->
-            <!--<label for="unit_ID">Unit ID</label>-->
-          <!--</span>-->
-          <!--<div *ngIf="unit_ID.invalid && (unit_ID.dirty || unit_ID.touched)" class="alert alert-danger">-->
-            <!--<div *ngIf="unit_ID.errors.required">-->
-              <!--This field is required.-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
-
-
-        <div class="ui-g-6">
-            <div class="form-group">
+      <div class="ui-g-6">
+        <div class="form-group">
           <span class="ui-float-label">
-            <input type="text" formControlName="unitName" pInputText id="unitName">
-            <label for="unitName">Unit Name</label>
+
+          <p-dropdown [options]="unitDataList" formControlName="unit_ID"  id="unit_ID" placeholder="Unit Name"></p-dropdown>
+
+
+              <!--<input type="text" formControlName="unit_ID" pInputText id="unit_ID">-->
+            <!--<label for="unit_ID">Unit ID</label>-->
           </span>
-                <div *ngIf="unitName.invalid && (unitName.dirty || unitName.touched)" class="alert alert-danger">
-                    <div *ngIf="unitName.errors.required">
-                        This field is required.
-                    </div>
-                </div>
+          <div *ngIf="unit_ID.invalid && (unit_ID.dirty || unit_ID.touched)" class="alert alert-danger">
+            <div *ngIf="unit_ID.errors.required">
+              This field is required.
             </div>
+          </div>
         </div>
+      </div>
+
+
+        <!--<div class="ui-g-6">-->
+            <!--<div class="form-group">-->
+          <!--<span class="ui-float-label">-->
+            <!--<input type="text" formControlName="unitName" pInputText id="unitName">-->
+            <!--<label for="unitName">Unit Name</label>-->
+          <!--</span>-->
+                <!--<div *ngIf="unitName.invalid && (unitName.dirty || unitName.touched)" class="alert alert-danger">-->
+                    <!--<div *ngIf="unitName.errors.required">-->
+                        <!--This field is required.-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
 
 
 
