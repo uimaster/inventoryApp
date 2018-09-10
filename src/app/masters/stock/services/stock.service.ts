@@ -20,7 +20,7 @@ export class StockService {
   }
 
 
-  getStock(stockId:any): Observable<any> {
+  getStock(stockId: any): Observable<any> {
     const params = new HttpParams().set('StockItemID',stockId);
     return this.http.get(GETSTOCKITEM, {params}).pipe(
         map(res => {

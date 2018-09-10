@@ -12,9 +12,14 @@ export const GETSTOCKITEM = BASEURL + 'Stockitem/GetStockItemDetails';
 export const GETCUSTOMERLIST = BASEURL + 'Masters/GetCustomerList';
 export const GETCUSTOMERDETAIL = BASEURL + 'Masters/GetCustomerDetails';
 export const GETSUPPLIERLIST = BASEURL + 'Masters/GetSupplierList';
-export const GETSUPPLIERDETAIL= BASEURL + 'Masters/GetSupplierDetails';
-export const UPDATESUPPLIER= BASEURL + 'Masters/UpdateSupplierDetails';
+export const GETSUPPLIERDETAIL = BASEURL + 'Masters/GetSupplierDetails';
+export const UPDATESUPPLIER = BASEURL + 'Masters/UpdateSupplierDetails';
 export const UPDATECUSTOMER =  BASEURL + 'Masters/UpdateCustomerDetails';
 export const UPDATESTOCK =  BASEURL + 'Stockitem/UpdateStockItemDetails';
 export const CALCULATEDON =  BASEURL + 'Masters/GetCalculatedOnList';
 export const TAXTYPE =  BASEURL + 'Masters/GetTaxTypeList';
+
+// Transaction urls //
+
+export const GETTRANSACTION = BASEURL + 'Transactions/GetTransactionsList';
+export const POSTTRANSACTION = BASEURL + 'Transactions/UpdateTransaction';

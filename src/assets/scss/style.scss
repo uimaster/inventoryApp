@@ -969,6 +969,10 @@ input {
       width: 100%!important;
       .ui-dropdown-trigger{ width: 2.5em;}
     }
+    .ui-calendar{
+      width:100%; padding-right: 28px;
+    }
+    .ui-datepicker{ width: 20em;}
   }
   .ui-float-label>label {
     left: 1em;

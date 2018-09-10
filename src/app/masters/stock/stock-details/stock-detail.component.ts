@@ -30,8 +30,8 @@ export class StockDetailComponent implements OnInit, OnDestroy {
   public unitData;
   public stockData;
   public barCodeApplicable: any;
-  public stockGroupList:any = [];
-  public unitDataList:any = [];
+  public stockGroupList = [];
+  public unitDataList = [];
 
   showError = false;
   showSuccess = false;

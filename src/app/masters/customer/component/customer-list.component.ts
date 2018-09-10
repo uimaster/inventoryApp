@@ -2,8 +2,8 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Router} from '@angular/router';
 import {Subscription} from 'rxjs';
-import {CustomerService} from "../services/customer.service";
-import {CustomerResponse} from "../models/customer.model";
+import {CustomerService} from '../services/customer.service';
+import {CustomerResponse} from '../models/customer.model';
 
 @Component({
     selector: 'app-customer-list',
@@ -13,7 +13,7 @@ import {CustomerResponse} from "../models/customer.model";
 export class CustomerListComponent implements OnInit, OnDestroy {
     public customerList: any;
     public customerListDataSubscription: Subscription;
-    constructor(private customerService:CustomerService, private router: Router) { }
+    constructor(private customerService: CustomerService, private router: Router) { }
 
     ngOnInit() {
         this.getCustomerList();
@@ -29,7 +29,7 @@ export class CustomerListComponent implements OnInit, OnDestroy {
             }
         });
     }
-    
+
 
     setCustomer(customerId){
         this.router.navigate(['/masters/customer', customerId]);

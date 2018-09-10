@@ -1,0 +1,184 @@
+<p-panel header="Purchase Order Add/Edit Form" class="Tabledata">
+  <form [formGroup]="purchaseOrderForm" (submit)="SavePurchaseOrder(purchaseOrderForm.value)" class="formData">
+
+    <div class="ui-g-6">
+      <div class="form-group">
+        <span class="ui-float-label">
+          <input type="text" formControlName="transactionID" pInputText id="transactionID">
+          <label for="transactionID">Transaction ID</label>
+        </span>
+      </div>
+    </div>
+    <div class="ui-g-6">
+      <div class="form-group">
+        <span class="ui-float-label">
+          <!-- <input type="text" formControlName="transactionDate" pInputText id="transactionDate"> -->
+          <p-calendar [(ngModel)]="date3" [showIcon]="true" formControlName="transactionDate"></p-calendar>
+          <label for="transactionDate">Transaction Date</label>
+        </span>
+      </div>
+    </div>
+    <div class="ui-g-6">
+      <div class="form-group">
+        <span class="ui-float-label">
+          <input type="text" formControlName="transactionNo" pInputText id="transactionNo">
+          <label for="transactionNo">Transaction No.</label>
+        </span>
+      </div>
+    </div>
+    <div class="ui-g-6">
+      <div class="form-group">
+        <span class="ui-float-label">
+          <input type="text" formControlName="ledgerID" pInputText id="ledgerID">
+          <label for="ledgerID">Ledger ID</label>
+        </span>
+      </div>
+    </div>
+    <div class="ui-g-6">
+      <div class="form-group">
+        <span class="ui-float-label">
+          <input type="text" formControlName="transaction_Amount" pInputText id="transaction_Amount">
+          <label for="transaction_Amount">Total Amount</label>
+        </span>
+      </div>
+    </div>
+    <div class="ui-g-6">
+      <div class="form-group">
+        <span class="ui-float-label">
+          <input type="text" formControlName="transaction_PendingAmount" pInputText id="transaction_PendingAmount">
+          <label for="transaction_PendingAmount">Total Amount Due</label>
+        </span>
+      </div>
+    </div>
+    <div class="ui-g-6">
+      <div class="form-group">
+        <span class="ui-float-label">
+          <input type="text" formControlName="currencyID" pInputText id="currencyID">
+          <label for="currencyID">Currency</label>
+        </span>
+      </div>
+    </div>
+    <div class="ui-g-6">
+      <div class="form-group">
+        <span class="ui-float-label">
+          <!-- <input type="text" formControlName="transactionDueDate" pInputText id="transactionDueDate"> -->
+          <p-calendar [(ngModel)]="date4" [showIcon]="true" formControlName="transactionDueDate"></p-calendar>
+          <label for="transactionDueDate">Transaction Due Date</label>
+        </span>
+      </div>
+    </div>
+
+    <fieldset formArrayName="transItemDetails">
+      <legend>
+        Item Details
+      </legend>
+        <div >
+          <table width="100%" class="fieldTable">
+            <thead>
+              <th width="15%">StockItem ID</th>
+              <th width="15%">Tran. Additional Desc.</th>
+              <th width="15%">Location ID</th>
+              <th width="15%">Item Qty</th>
+              <th width="15%">Item Rate</th>
+              <th width="15%">Item Amount</th>
+              <th width="10%" style="text-align:center">Actions</th>
+            </thead>
+            <tbody>
+              <tr  *ngFor="let ctrl of purchaseOrderForm.get('transItemDetails').controls; let i = index;" [formGroupName]="i">
+                <td><input type="text" formControlName="stockitemID" pInputText></td>
+                <td><input type="text" formControlName="transactionItem_AdditionalDesciption" pInputText ></td>
+                <td><input type="text" formControlName="locationID" pInputText></td>
+                <td><input type="text" formControlName="itemQty" pInputText></td>
+                <td><input type="text" formControlName="itemRate" pInputText></td>
+                <td><input type="text" formControlName="itemAmount" pInputText></td>
+                <td style="text-align:center">
+                  <button pButton type="button" icon="fa fa-plus" class="ui-button-success" (click)="addItemDetails()"></button>
+                  <button pButton type="button" icon="fa fa-trash-o" class="ui-button-danger" (click)="deleteItemDetails(i)"></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    </fieldset>
+    <br/>
+    <fieldset formArrayName="transLedgerDetails">
+      <legend>
+        Ledger Details
+      </legend>
+        <div >
+          <table width="100%" class="fieldTable">
+            <thead>
+              <th width="15%">Tax Ledger Name</th>
+              <th width="15%">Tax Rate</th>
+              <th width="15%">Amount</th>
+              <th width="10%" style="text-align:center" >Actions</th>
+            </thead>
+            <tbody>
+              <tr  *ngFor="let ctrl of purchaseOrderForm.get('transLedgerDetails').controls; let i = index;" [formGroupName]="i">
+                <td><input type="text" formControlName="ledgerID" pInputText></td>
+                <td><input type="text" formControlName="taxRate" pInputText ></td>
+                <td><input type="text" formControlName="ledgerAmount" pInputText></td>
+
+                <td align="center">
+                  <button pButton type="button" icon="fa fa-plus" class="ui-button-success" (click)="addItemLedger()"></button>
+                  <button pButton type="button" icon="fa fa-trash-o" class="ui-button-danger" (click)="deleteItemLedger(i)"></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    </fieldset>
+    <br/>
+    <fieldset formArrayName="transPOTerms">
+      <legend>
+        PO Terms
+      </legend>
+        <div >
+          <table width="100%" class="fieldTable">
+            <thead>
+              <th width="14.28%">
+                Due Date
+              </th>
+              <th width="14.28%">
+                Transporter
+              </th>
+              <th width="14.28%">
+                Supplier Ref
+              </th>
+              <th width="14.28%">
+                Delivery Terms
+              </th>
+              <th width="14.28%">
+                Payment Terms
+              </th>
+              <th width="14.28%">
+                Packing Terms
+              </th>
+              <th width="14.28%">
+                Freight Terms
+              </th>
+            </thead>
+            <tbody>
+              <tr  *ngFor="let ctrl of purchaseOrderForm.get('transPOTerms').controls; let i = index;" [formGroupName]="i">
+                <td>
+                  <p-calendar [(ngModel)]="date5" [showIcon]="true" formControlName="TransactionDueDate"></p-calendar>
+                </td>
+                <td><input type="text" formControlName="TransactionTransporter" pInputText ></td>
+                <td><input type="text" formControlName="TransctionSupplierRef" pInputText></td>
+                <td><input type="text" formControlName="TransactionDeilveryTerms" pInputText></td>
+                <td><input type="text" formControlName="TransactionPaymentTerms" pInputText></td>
+                <td><input type="text" formControlName="TransactionPackingTerms" pInputText></td>
+                <td><input type="text" formControlName="TransactionFreightTerms" pInputText></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    </fieldset>
+    <br/>
+    <p style="text-align: center">
+      <button pButton type="submit" label="Submit" class="ui-button-success" [disabled]="!purchaseOrderForm.valid"
+      style="margin-right: 10px;"></button>
+      <button pButton type="button" label="Cancel" class="ui-button-secondary"></button>
+    </p>
+  </form>
+</p-panel>

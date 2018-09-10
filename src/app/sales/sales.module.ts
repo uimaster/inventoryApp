@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SalesComponent } from './sales.component';
 import { SalesRouteModule } from './sales.route.module';
 import { SharedModule } from './../shared/shared.module';
+import { CreateComponent } from './create/create.component';
 
 @NgModule({
   imports: [
@@ -10,6 +11,6 @@ import { SharedModule } from './../shared/shared.module';
     SalesRouteModule,
     SharedModule
   ],
-  declarations: [ SalesComponent]
+  declarations: [ SalesComponent, CreateComponent]
 })
 export class SalesModule { }
