@@ -1,3 +1,4 @@
+
 export const BASEURL = 'http://apietrax.iflotech.in/api/';
 export const LOGIN_URL = BASEURL + 'jwtauth/Token';
 export const GETSTOCK_URL = BASEURL + 'Stockitem/GetStockItems';
@@ -22,4 +23,5 @@ export const TAXTYPE =  BASEURL + 'Masters/GetTaxTypeList';
 // Transaction urls //
 
 export const GETTRANSACTION = BASEURL + 'Transactions/GetTransactionsList';
+export const GETTRANSACTIONDETAILS = BASEURL + 'Transactions/GetTransactionDetails';
 export const POSTTRANSACTION = BASEURL + 'Transactions/UpdateTransaction';

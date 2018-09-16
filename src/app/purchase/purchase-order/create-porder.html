@@ -1,6 +1,8 @@
 <p-panel header="Purchase Order Add/Edit Form" class="Tabledata">
   <form [formGroup]="purchaseOrderForm" (submit)="SavePurchaseOrder(purchaseOrderForm.value)" class="formData">
-
+    <div class="message error" *ngIf="showError">Updatation/creation failed .</div>
+    <div class="message success" *ngIf="showSuccess">You have Updated/created successfully.</div>
+    
     <div class="ui-g-6">
       <div class="form-group">
         <span class="ui-float-label">
@@ -136,31 +138,31 @@
         <div >
           <table width="100%" class="fieldTable">
             <thead>
-              <th width="14.28%">
+              <th width="22%">
                 Due Date
               </th>
-              <th width="14.28%">
+              <th width="13%">
                 Transporter
               </th>
-              <th width="14.28%">
+              <th width="13%">
                 Supplier Ref
               </th>
-              <th width="14.28%">
+              <th width="13%">
                 Delivery Terms
               </th>
-              <th width="14.28%">
+              <th width="13%">
                 Payment Terms
               </th>
-              <th width="14.28%">
+              <th width="13%">
                 Packing Terms
               </th>
-              <th width="14.28%">
+              <th width="13%">
                 Freight Terms
               </th>
             </thead>
             <tbody>
               <tr  *ngFor="let ctrl of purchaseOrderForm.get('transPOTerms').controls; let i = index;" [formGroupName]="i">
-                <td>
+                <td style="text-align: left">
                   <p-calendar [(ngModel)]="date5" [showIcon]="true" formControlName="TransactionDueDate"></p-calendar>
                 </td>
                 <td><input type="text" formControlName="TransactionTransporter" pInputText ></td>

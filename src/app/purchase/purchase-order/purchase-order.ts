@@ -20,13 +20,20 @@ export class PurchaseOrderComponent implements OnInit {
     this.purchaseService.getPurchaseList().subscribe ( res => {
       if (res) {
         if (res.status === '200') {
-          this.purchaseList = res.Data;
+          this.purchaseList = res.data;
+          console.log('purchaseList:', this.purchaseList);
         }
       }
     });
   }
 
   addPOrder() {
+    this.router.navigate(['/purchase/addPOrder']);
+    localStorage.setItem('transactionID', '0');
+  }
+
+  getPurchaseDetails(id) {
+    localStorage.setItem('transactionID', id);
     this.router.navigate(['/purchase/addPOrder']);
   }
 
