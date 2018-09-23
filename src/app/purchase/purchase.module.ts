@@ -8,6 +8,7 @@ import { PurchaseService } from './purchase.service';
 import { CreatePOrderComponent } from './purchase-order/create-porder';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PrimeNGModule } from '../app.primeNg.module';
+import { POAuthListComponent } from './po-authentication/po-auth.component';
 
 @NgModule({
   imports: [
@@ -17,7 +18,7 @@ import { PrimeNGModule } from '../app.primeNg.module';
     ReactiveFormsModule,
     PrimeNGModule
   ],
-  declarations: [ PurchaseComponent, PurchaseOrderComponent, CreatePOrderComponent],
+  declarations: [ PurchaseComponent, PurchaseOrderComponent, CreatePOrderComponent, POAuthListComponent],
   providers: [ PurchaseService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

@@ -292,7 +292,7 @@ export class CreatePOrderComponent implements OnInit {
     if (this.purchaseOrderForm.valid) {
       this.poService.addPurchaseOrder(formData).subscribe (
         res => {
-          if (res && res.status === 200) {
+          if (res && res.status === '200') {
             this.successMsg = res.message;
             this.showSuccess = true;
           } else {

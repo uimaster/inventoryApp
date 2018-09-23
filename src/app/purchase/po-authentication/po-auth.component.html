@@ -1,0 +1,39 @@
+<p-panel header="PO Authentication" class="Tabledata">
+  <p-header>
+      <button pButton type="button" style="float:right" label="Authrize" class="ui-button-success" (click)="DoAutherize()"></button>
+      <button pButton type="button" style="float:right; margin-right: 10px;" label="Unauthrize" class="ui-button-success" (click)="DoUnAutherize()"></button>
+  </p-header>
+  <div *ngIf="POAuthList" class="table-responsive">
+      <table class="table">
+          <thead>
+          <tr>
+              <th width="10%"><p-checkbox name="groupname" value="val2"></p-checkbox> Select All</th>
+              <th width="15%">Doc Date</th>
+              <th width="15%">Doc No.</th>
+              <th width="15%">Ledger Name</th>
+              <th width="15%">Due Date</th>
+              <th width="15%">Amount</th>
+              <th width="15%">Status</th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container *ngIf="POAuthList">
+              <tr *ngFor="let item of POAuthList; index as i;">
+                  <td><p-checkbox name="groupname" value="val2"></p-checkbox></td>
+                  <td>{{item.transactionDate}}</td>
+                  <td>{{item.transactionNo}}</td>
+                  <td>{{item.ledgerName}}</td>
+                  <td>{{item.transactionDueDate}}</td>
+                  <td>{{item.transaction_Amount}}</td>
+                  <td>{{item.authStatus}}</td>
+              </tr>
+          </ng-container>
+          </tbody>
+      </table>
+  </div>
+  <div  *ngIf="!POAuthList" style="text-align: center">
+    <br/>
+    No Records available !
+    <br/><br/>
+  </div>
+</p-panel>

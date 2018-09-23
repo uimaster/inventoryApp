@@ -1,8 +1,8 @@
 <p-panel header="Purchase Order Add/Edit Form" class="Tabledata">
   <form [formGroup]="purchaseOrderForm" (submit)="SavePurchaseOrder(purchaseOrderForm.value)" class="formData">
-    <div class="message error" *ngIf="showError">Updatation/creation failed .</div>
-    <div class="message success" *ngIf="showSuccess">You have Updated/created successfully.</div>
-    
+    <div class="message error" *ngIf="showError">{{errorMsg}}</div>
+    <div class="message success" *ngIf="showSuccess">{{successMsg}}</div>
+
     <div class="ui-g-6">
       <div class="form-group">
         <span class="ui-float-label">

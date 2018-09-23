@@ -21,7 +21,7 @@ export const CALCULATEDON =  BASEURL + 'Masters/GetCalculatedOnList';
 export const TAXTYPE =  BASEURL + 'Masters/GetTaxTypeList';
 
 // Transaction urls //
-
 export const GETTRANSACTION = BASEURL + 'Transactions/GetTransactionsList';
 export const GETTRANSACTIONDETAILS = BASEURL + 'Transactions/GetTransactionDetails';
 export const POSTTRANSACTION = BASEURL + 'Transactions/UpdateTransaction';
+export const GETPOAUTHLIST = BASEURL + 'Transactions/getPOAuthList';
