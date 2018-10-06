@@ -3,14 +3,24 @@
     <div class="message error" *ngIf="showError">{{errorMsg}}</div>
     <div class="message success" *ngIf="showSuccess">{{successMsg}}</div>
 
-    <div class="ui-g-6">
+    <!-- <div class="ui-g-6">
       <div class="form-group">
         <span class="ui-float-label">
           <input type="text" formControlName="transactionID" pInputText id="transactionID">
           <label for="transactionID">Transaction ID</label>
         </span>
       </div>
+    </div> -->
+
+    <div class="ui-g-6">
+      <div class="form-group">
+        <span class="ui-float-label">
+          <input type="text" formControlName="transactionNo" pInputText id="transactionNo">
+          <label for="transactionNo">Transaction No.</label>
+        </span>
+      </div>
     </div>
+
     <div class="ui-g-6">
       <div class="form-group">
         <span class="ui-float-label">
@@ -20,22 +30,15 @@
         </span>
       </div>
     </div>
-    <div class="ui-g-6">
-      <div class="form-group">
-        <span class="ui-float-label">
-          <input type="text" formControlName="transactionNo" pInputText id="transactionNo">
-          <label for="transactionNo">Transaction No.</label>
-        </span>
-      </div>
-    </div>
-    <div class="ui-g-6">
+
+    <!-- <div class="ui-g-6">
       <div class="form-group">
         <span class="ui-float-label">
           <input type="text" formControlName="ledgerID" pInputText id="ledgerID">
           <label for="ledgerID">Ledger ID</label>
         </span>
       </div>
-    </div>
+    </div> -->
     <div class="ui-g-6">
       <div class="form-group">
         <span class="ui-float-label">
@@ -55,8 +58,9 @@
     <div class="ui-g-6">
       <div class="form-group">
         <span class="ui-float-label">
-          <input type="text" formControlName="currencyID" pInputText id="currencyID">
-          <label for="currencyID">Currency</label>
+          <p-dropdown [options]="currencyList" formControlName="currencyID"  id="currencyID" optionLabel="currencyName"  placeholder="Currency"></p-dropdown>
+          <!-- <input type="text" formControlName="currencyID" pInputText id="currencyID"> -->
+          <!-- <label for="currencyID">Currency</label> -->
         </span>
       </div>
     </div>
@@ -77,19 +81,40 @@
         <div >
           <table width="100%" class="fieldTable">
             <thead>
-              <th width="15%">StockItem ID</th>
-              <th width="15%">Tran. Additional Desc.</th>
+              <th width="15%">StockItem</th>
+              <th width="15%">Additional Desc.</th>
               <th width="15%">Location ID</th>
-              <th width="15%">Item Qty</th>
-              <th width="15%">Item Rate</th>
-              <th width="15%">Item Amount</th>
+              <th width="15%">Qty</th>
+              <th width="15%">Rate</th>
+              <th width="15%">Amount</th>
               <th width="10%" style="text-align:center">Actions</th>
             </thead>
             <tbody>
               <tr  *ngFor="let ctrl of purchaseOrderForm.get('transItemDetails').controls; let i = index;" [formGroupName]="i">
-                <td><input type="text" formControlName="stockitemID" pInputText></td>
-                <td><input type="text" formControlName="transactionItem_AdditionalDesciption" pInputText ></td>
-                <td><input type="text" formControlName="locationID" pInputText></td>
+                <td class="specialDropdown">
+                  <p-dropdown [options]="itemMasterList" formControlName="stockitemID"  placeholder="Stock Item"  optionLabel="itemName">
+
+                      <!--<ng-template let-itemMasterList pTemplate="itemMasterList">
+                          <div class="ui-helper-clearfix">
+                              <div >{{itemMasterList.itemName}}</div>
+                              <div >{{itemMasterList.itemCode}}</div>
+                          </div>
+                      </ng-template>
+                       <ng-template let-itemMasterList pTemplate="item">
+                          <span>{{item.itemName}}</span>
+                          <span>{{item.itemCode}}</span>
+                      </ng-template> -->
+                  </p-dropdown>
+                </td>
+                <!--<td>
+                    <p-dropdown [options]="itemMasterList" formControlName="transactionItem_AdditionalDesciption" optionLabel="itemName"  placeholder="Stock Item Desc."></p-dropdown>
+                  </td>-->
+                <td>
+                  <textarea [rows]="2" [cols]="30" pInputTextarea  formControlName="transactionItem_AdditionalDesciption" placeholder="Additional Desc."></textarea>
+                </td>
+                <td>
+                  <p-dropdown [options]="locationList" formControlName="locationID" optionLabel="locationName"  placeholder="Location Name"></p-dropdown>
+                </td>
                 <td><input type="text" formControlName="itemQty" pInputText></td>
                 <td><input type="text" formControlName="itemRate" pInputText></td>
                 <td><input type="text" formControlName="itemAmount" pInputText></td>
@@ -117,7 +142,10 @@
             </thead>
             <tbody>
               <tr  *ngFor="let ctrl of purchaseOrderForm.get('transLedgerDetails').controls; let i = index;" [formGroupName]="i">
-                <td><input type="text" formControlName="ledgerID" pInputText></td>
+                <td style="text-align: left;">
+                  <!-- <input type="text" formControlName="ledgerID" pInputText> -->
+                  <p-dropdown [options]="ledgerList" formControlName="ledgerID" optionLabel="ledgerName"  placeholder="Tax Ledger Name"></p-dropdown>
+                </td>
                 <td><input type="text" formControlName="taxRate" pInputText ></td>
                 <td><input type="text" formControlName="ledgerAmount" pInputText></td>
 
@@ -163,14 +191,14 @@
             <tbody>
               <tr  *ngFor="let ctrl of purchaseOrderForm.get('transPOTerms').controls; let i = index;" [formGroupName]="i">
                 <td style="text-align: left">
-                  <p-calendar [(ngModel)]="date5" [showIcon]="true" formControlName="TransactionDueDate"></p-calendar>
+                  <p-calendar [(ngModel)]="date5" [showIcon]="true" formControlName="transactionDueDate"></p-calendar>
                 </td>
-                <td><input type="text" formControlName="TransactionTransporter" pInputText ></td>
-                <td><input type="text" formControlName="TransctionSupplierRef" pInputText></td>
-                <td><input type="text" formControlName="TransactionDeilveryTerms" pInputText></td>
-                <td><input type="text" formControlName="TransactionPaymentTerms" pInputText></td>
-                <td><input type="text" formControlName="TransactionPackingTerms" pInputText></td>
-                <td><input type="text" formControlName="TransactionFreightTerms" pInputText></td>
+                <td><input type="text" formControlName="transactionTransporter" pInputText ></td>
+                <td><input type="text" formControlName="transctionSupplierRef" pInputText></td>
+                <td><input type="text" formControlName="transactionDeilveryTerms" pInputText></td>
+                <td><input type="text" formControlName="transactionPaymentTerms" pInputText></td>
+                <td><input type="text" formControlName="transactionPackingTerms" pInputText></td>
+                <td><input type="text" formControlName="transactionFreightTerms" pInputText></td>
               </tr>
             </tbody>
           </table>

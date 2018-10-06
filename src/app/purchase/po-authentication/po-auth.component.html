@@ -1,13 +1,13 @@
+
 <p-panel header="PO Authentication" class="Tabledata">
   <p-header>
-      <button pButton type="button" style="float:right" label="Authrize" class="ui-button-success" (click)="DoAutherize()"></button>
-      <button pButton type="button" style="float:right; margin-right: 10px;" label="Unauthrize" class="ui-button-success" (click)="DoUnAutherize()"></button>
+      <button pButton type="button" style="float:right" label="Authrise" class="ui-button-success" (click)="DoAutherize()"></button>
   </p-header>
   <div *ngIf="POAuthList" class="table-responsive">
       <table class="table">
           <thead>
           <tr>
-              <th width="10%"><p-checkbox name="groupname" value="val2"></p-checkbox> Select All</th>
+              <th width="10%"><p-checkbox name="groupname" value="" ></p-checkbox> Select All</th>
               <th width="15%">Doc Date</th>
               <th width="15%">Doc No.</th>
               <th width="15%">Ledger Name</th>
@@ -19,7 +19,13 @@
           <tbody>
           <ng-container *ngIf="POAuthList">
               <tr *ngFor="let item of POAuthList; index as i;">
-                  <td><p-checkbox name="groupname" value="val2"></p-checkbox></td>
+                  <td style="border-right: 1px solid #ccc;" *ngIf="item.transactionAuthStatusID == 4">
+                    <button pButton type="button" label="Unauthrise" class="ui-button-rounded ui-button-info smallBtn" (click)="showDialog(item)">
+                    </button>
+                  </td>
+                  <td style="border-right: 1px solid #ccc;" *ngIf="item.transactionAuthStatusID == 1">
+                      <p-checkbox name="groupname" value="val2" (onChange)="createFormData(item, $event)" ></p-checkbox>
+                  </td>
                   <td>{{item.transactionDate}}</td>
                   <td>{{item.transactionNo}}</td>
                   <td>{{item.ledgerName}}</td>
@@ -36,4 +42,17 @@
     No Records available !
     <br/><br/>
   </div>
+
 </p-panel>
+
+
+<p-dialog header="PO Unauthentication Dialog" [(visible)]="display" [width]="350" >
+
+  <form [formGroup]="unauthenticationForm">
+      <textarea placeholder="Reasons for Unauthentication." pInputTextarea formControlName = "AuthRemarks" ></textarea>
+      <p-footer style="text-align: right; display: block; ">
+        <button type="button" pButton icon="pi pi-close" (click)="display=false" label="No" class="ui-button-secondary"></button>
+        <button type="button" pButton icon="pi pi-check" label="OK" (click)="DoUnAutherize(); display=false"></button>
+      </p-footer>
+  </form>
+</p-dialog>

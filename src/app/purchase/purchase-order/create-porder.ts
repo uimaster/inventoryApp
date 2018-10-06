@@ -1,6 +1,9 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { PurchaseService } from '../purchase.service';
+import { StockService } from '../../masters/stock/services/stock.service';
+import { LedgerService } from '../../masters/ledger/services/ledger.service';
 
 @Component({
   selector: 'app-purchase',
@@ -10,29 +13,43 @@ import { PurchaseService } from '../purchase.service';
 
 export class CreatePOrderComponent implements OnInit {
   public purchaseOrderForm: any;
-  showError =  false;
-  showSuccess = false;
-  successMsg = '';
-  errorMsg = '';
-  companyId = localStorage.getItem('companyID');
-  userId = localStorage.getItem('userID');
-  transactionId = localStorage.getItem('transactionID');
-  detailsData = {} ;
-  ItemData = [];
-  ledgerData = [];
-  POData = [];
+  public showError =  false;
+  public showSuccess = false;
+  public successMsg = '';
+  public errorMsg = '';
+  public companyId = localStorage.getItem('companyID');
+  public userId = localStorage.getItem('userID');
+  public transactionId = localStorage.getItem('transactionID');
+  public detailsData = {} ;
+  public ItemData = [];
+  public ledgerData = [];
+  public POData = [];
+  public currencyList = [];
+  public itemMasterList = [];
+  public locationList = [];
+  public ledgerList = [];
+
+  date3 = new Date();
+  date5 = new Date();
   constructor(
     private fb: FormBuilder,
-    private poService: PurchaseService
+    private poService: PurchaseService,
+    private stockService: StockService,
+    private ledgerService: LedgerService,
+    private router: Router
   )  {this.createPurchaseOrder(); }
 
   ngOnInit() {
     this.getPurchaseDetails(this.transactionId);
+    this.getCurrency();
+    this.getItemMasterList();
+    this.getLocation();
+    this.getLedgers();
   }
   createPurchaseOrder() {
     this.purchaseOrderForm = this.fb.group ({
       transactionID: [0],
-      transactionDate: [''],
+      transactionDate: [],
       transactionNo: [''],
       transactionTypeId: [1],
       transactionSeriesID: [1],
@@ -86,7 +103,7 @@ export class CreatePOrderComponent implements OnInit {
     return this.fb.group({
       transactionID: [0],
       stockitemID: [1],
-      transactionItem_AdditionalDesciption: [0],
+      transactionItem_AdditionalDesciption: [''],
       locationID: [1],
       itemQty: [0],
       itemReceived_Qty: [0],
@@ -108,7 +125,7 @@ export class CreatePOrderComponent implements OnInit {
       this.fb.group({
         transactionID: [1],
         stockitemID: [1],
-        transactionItem_AdditionalDesciption: [0],
+        transactionItem_AdditionalDesciption: [],
         locationID: [1],
         itemQty: [0],
         itemReceived_Qty: [0],
@@ -182,40 +199,46 @@ export class CreatePOrderComponent implements OnInit {
 
   createPOTerms() {
     return this.fb.group({
-      TransactionDueDate : [''],
-      TransactionTransporter : [''],
-      TransctionSupplierRef : [''],
-      TransactionDeilveryTerms : [''],
-      TransactionPaymentTerms : [''],
-      TransactionPackingTerms : [''],
-      TransactionFreightTerms : [''],
+      transactionDueDate : [''],
+      transactionTransporter : [''],
+      transctionSupplierRef : [''],
+      transactionDeilveryTerms : [''],
+      transactionPaymentTerms : [''],
+      transactionPackingTerms : [''],
+      transactionFreightTerms : [''],
     });
   }
+  get transactionTransporter() {
+    return this.purchaseOrderForm.get(['transPOTerms'], 0, ['transactionTransporter']);
+  }
+  get transctionSupplierRef() {
+    return this.purchaseOrderForm.get(['transPOTerms'], 0, ['transctionSupplierRef']);
+  }
+  get transactionDeilveryTerms() {
+    return this.purchaseOrderForm.get(['transPOTerms'], 0, ['transactionDeilveryTerms']);
+  }
+  get transactionPaymentTerms() {
+    return this.purchaseOrderForm.get(['transPOTerms'], 0, ['transactionPaymentTerms']);
+  }
+  get transactionPackingTerms() {
+    return this.purchaseOrderForm.get(['transPOTerms'], 0, ['transactionPackingTerms']);
+  }
+  get transactionFreightTerms() {
+    return this.purchaseOrderForm.get(['transPOTerms'], 0, ['transactionFreightTerms']);
+  }
 
-  get TransactionDueDate() {
-    return this.purchaseOrderForm.get(['transPOTerms'], 0, ['TransactionDueDate']);
-  }
-  get TransactionTransporter() {
-    return this.purchaseOrderForm.get(['transPOTerms'], 0, ['TransactionTransporter']);
-  }
-  get TransctionSupplierRef() {
-    return this.purchaseOrderForm.get(['transPOTerms'], 0, ['TransctionSupplierRef']);
-  }
-  get TransactionDeilveryTerms() {
-    return this.purchaseOrderForm.get(['transPOTerms'], 0, ['TransactionDeilveryTerms']);
-  }
-  get TransactionPaymentTerms() {
-    return this.purchaseOrderForm.get(['transPOTerms'], 0, ['TransactionPaymentTerms']);
-  }
-  get TransactionPackingTerms() {
-    return this.purchaseOrderForm.get(['transPOTerms'], 0, ['TransactionPackingTerms']);
-  }
-  get TransactionFreightTerms() {
-    return this.purchaseOrderForm.get(['transPOTerms'], 0, ['TransactionFreightTerms']);
+  convertToDateFormat(Datestr) {
+    if (Datestr != '') {
+      // Datestr='03/08/2016'
+      var datedata = Datestr.split('/');
+      var formatedDateString =
+        datedata[2] + '-' + datedata[1] + '-' + datedata[0] + 'T00:00:00.000Z';
+      return formatedDateString;
+    }
   }
 
   getPurchaseDetails(id) {
-    if(id > 0){
+    if(id > 0) {
     this.poService.getPurchaseDetails(id).subscribe( res => {
       if (res) {
         if (res.status === '200') {
@@ -260,6 +283,19 @@ export class CreatePOrderComponent implements OnInit {
             controlArray.controls[0].get('transactionItemSerialNo').setValue(this.ItemData[0].transactionItemSerialNo);
             controlArray.controls[0].get('locationID').setValue(this.ItemData[0].locationID);
           }
+          if (this.detailsData[0].transPOTerms.length > 0) {
+            debugger;
+            this.POData = this.detailsData[0].transPOTerms;
+            const controlArray = <FormArray>this.purchaseOrderForm.get('transPOTerms');
+            controlArray.controls[0].get('transactionDeilveryTerms').setValue(this.POData[0].transactionDeilveryTerms);
+            controlArray.controls[0].get('transactionTransporter').setValue(this.POData[0].transactionTransporter);
+            controlArray.controls[0].get('transctionSupplierRef').setValue(this.POData[0].transctionSupplierRef);
+            controlArray.controls[0].get('transactionPackingTerms').setValue(this.POData[0].transactionPackingTerms);
+            controlArray.controls[0].get('transactionPaymentTerms').setValue(this.POData[0].transactionPaymentTerms);
+            controlArray.controls[0].get('transactionFreightTerms').setValue(this.POData[0].transactionFreightTerms);
+            // var dueDate = this.convertToDateFormat(this.POData[0].transactionDueDate);
+            // controlArray.controls[0].get('transactionDueDate').setValue(dueDate);
+          }
           if (this.detailsData[0].transLedgerDetails.length > 0) {
             this.ledgerData = this.detailsData[0].transLedgerDetails;
             const controlArray = <FormArray>this.purchaseOrderForm.get('transLedgerDetails');
@@ -269,22 +305,11 @@ export class CreatePOrderComponent implements OnInit {
             controlArray.controls[0].get('taxRate').setValue(this.ledgerData[0].taxRate);
             controlArray.controls[0].get('ledgerAmount').setValue(this.ledgerData[0].ledgerAmount);
           }
-          if (this.detailsData[0].transPOTerms.length > 0) {
-            this.POData = this.detailsData[0].transPOTerms;
-            const controlArray = <FormArray>this.purchaseOrderForm.get('transPOTerms');
 
-            controlArray.controls[0].get('TransactionDueDate').setValue(this.POData[0].TransactionDueDate);
-            controlArray.controls[0].get('TransactionTransporter').setValue(this.POData[0].TransactionTransporter);
-            controlArray.controls[0].get('TransctionSupplierRef').setValue(this.POData[0].TransctionSupplierRef);
-            controlArray.controls[0].get('TransactionDeilveryTerms').setValue(this.POData[0].TransactionDeilveryTerms);
-            controlArray.controls[0].get('TransactionPackingTerms').setValue(this.POData[0].TransactionPackingTerms);
-            controlArray.controls[0].get('TransactionPaymentTerms').setValue(this.POData[0].TransactionPaymentTerms);
-            controlArray.controls[0].get('TransactionFreightTerms').setValue(this.POData[0].TransactionFreightTerms);
-          }
         }
       }
     });
-    }  
+    }
   }
 
 
@@ -295,13 +320,50 @@ export class CreatePOrderComponent implements OnInit {
           if (res && res.status === '200') {
             this.successMsg = res.message;
             this.showSuccess = true;
+            setTimeout(() => {
+              this.router.navigate(['/purchaseOrder']);
+            }, 3000);
           } else {
             this.errorMsg = res.message;
             this.showError = true;
+            setTimeout(() => {
+              this.router.navigate(['/purchaseOrder']);
+            }, 3000);
           }
         }
       );
     }
   }
 
+  getCurrency() {
+    this.poService.getCurrency().subscribe( res => {
+      if (res && res.status === '200') {
+        this.currencyList = res.data;
+      }
+    });
+  }
+
+  getItemMasterList() {
+    this.stockService.getAllStocks().subscribe( res => {
+      if (res && res.status === '200') {
+        this.itemMasterList = res.data;
+      }
+    });
+  }
+
+  getLocation() {
+    this.stockService.getLocation().subscribe( res => {
+      if (res && res.status === '200') {
+        this.locationList = res.data;
+      }
+    });
+  }
+
+  getLedgers() {
+    this.ledgerService.getAllLedgers().subscribe( res => {
+      if (res && res.status === '200') {
+        this.ledgerList = res.data;
+      }
+    });
+  }
 }

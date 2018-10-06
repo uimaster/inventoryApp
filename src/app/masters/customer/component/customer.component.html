@@ -74,7 +74,7 @@
       <div *ngFor="let ctrl of cForm.get('customerTaxes').controls; let i = index;">
         <div [formGroupName]="i">
           <div class="ui-g">
-            <div class="ui-g-6">
+            <!-- <div class="ui-g-6">
               <div class="form-group">
                 <span class="ui-float-label">
                   <input type="text" formControlName="taxLedgerID" pInputText id="taxLedgerID">
@@ -87,12 +87,13 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="ui-g-6">
+            </div> -->
+            <div class="ui-g-4">
               <div class="form-group">
                 <span class="ui-float-label">
-                  <input type="text" formControlName="taxLedgerName" pInputText id="taxLedgerName">
-                  <label for="taxLedgerName">Tax Ledger Name</label>
+                  <p-dropdown [options]="ledgerList" formControlName="taxLedgerName"  id="taxLedgerName" optionLabel="ledgerName"  placeholder="Tax Ledger Name"></p-dropdown>
+                  <!-- <input type="text" formControlName="taxLedgerName" pInputText id="taxLedgerName">
+                  <label for="taxLedgerName">Tax Ledger Name</label> -->
                 </span>
 
                 <div *ngIf="taxLedgerName.invalid && (taxLedgerName.dirty || taxLedgerName.touched)" class="alert alert-danger">
@@ -102,7 +103,7 @@
                 </div>
               </div>
             </div>
-            <div class="ui-g-6">
+            <div class="ui-g-4">
               <div class="form-group">
                 <span class="ui-float-label">
                   <input type="text" formControlName="taxRate" pInputText id="taxRate">
@@ -116,7 +117,7 @@
                 </div>
               </div>
             </div>
-            <div class="ui-g-6">
+            <div class="ui-g-4">
               <div class="form-group">
                 <span class="ui-float-label">
                   <input type="text" formControlName="calculatedOn" pInputText id="calculatedOn">
@@ -146,11 +147,12 @@
       <div *ngFor="let ctrl of cForm.get('customerAddList').controls; let i = index;">
         <div [formGroupName]="i">
           <div class="ui-g">
-            <div class="ui-g-6">
+            <div class="ui-g-4">
               <div class="form-group">
                 <span class="ui-float-label">
-                  <input type="text" formControlName="locationName" pInputText id="locationName">
-                  <label for="locationName">Location Name</label>
+                  <p-dropdown [options]="locationList" formControlName="locationName"  id="locationName" optionLabel="locationName"  placeholder="Location Name"></p-dropdown>
+                  <!-- <input type="text" formControlName="locationName" pInputText id="locationName">
+                  <label for="locationName">Location Name</label> -->
                 </span>
 
                 <div *ngIf="locationName.invalid && (locationName.dirty || locationName.touched)" class="alert alert-danger">
@@ -160,45 +162,7 @@
                 </div>
               </div>
             </div>
-            <div class="ui-g-6">
-              <div class="form-group">
-                <span class="ui-float-label">
-                  <input type="text" formControlName="address1" pInputText id="address1">
-                  <label for="address1">Address1</label>
-                </span>
-
-                <div *ngIf="address1.invalid && (address1.dirty || address1.touched)" class="alert alert-danger">
-                  <div *ngIf="address1.errors.required">
-                    Address1 is required.
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="ui-g-6">
-              <div class="form-group">
-                <span class="ui-float-label">
-                  <input type="text" formControlName="address2" pInputText id="address2">
-                  <label for="address2">Address2</label>
-                </span>
-
-                <!--<div *ngIf="rate.invalid && (rate.dirty || rate.touched)" class="alert alert-danger">-->
-                <!--<div *ngIf="rate.errors.required">-->
-                <!--Rate is required.-->
-                <!--</div>-->
-                <!--</div>-->
-              </div>
-            </div>
-            <div class="ui-g-6">
-              <div class="form-group">
-                <span class="ui-float-label">
-                  <input type="text" formControlName="address3" pInputText id="address3">
-                  <label for="address3">Address3</label>
-                </span>
-              </div>
-            </div>
-
-
-            <div class="ui-g-6">
+            <div class="ui-g-4">
               <div class="form-group">
                 <span class="ui-float-label">
                   <input type="text" formControlName="state" pInputText id="state">
@@ -213,7 +177,7 @@
               </div>
             </div>
 
-            <div class="ui-g-6">
+            <div class="ui-g-4">
               <div class="form-group">
                 <span class="ui-float-label">
                   <input type="text" formControlName="gstincode" pInputText id="gstincode">
@@ -228,21 +192,59 @@
               </div>
             </div>
 
-            <div class="ui-g-6">
-              <div class="form-group">
-                <span class="ui-float-label">
-                  <input type="text" formControlName="stateCode" pInputText id="stateCode">
-                  <label for="stateCode">State Code</label>
-                </span>
 
-                <div *ngIf="stateCode.invalid && (stateCode.dirty || stateCode.touched)" class="alert alert-danger">
-                  <div *ngIf="stateCode.errors.required">
-                    State Code is required.
+
+            <div class="ui-g-4">
+                <div class="form-group">
+                  <span class="ui-float-label">
+                    <textarea [rows]="2" [cols]="30" pInputTextarea formControlName="address1" id="address1"></textarea>
+                    <label for="address1">Address1</label>
+                  </span>
+
+                  <div *ngIf="address1.invalid && (address1.dirty || address1.touched)" class="alert alert-danger">
+                    <div *ngIf="address1.errors.required">
+                      Address1 is required.
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+              <div class="ui-g-4">
+                <div class="form-group">
+                  <span class="ui-float-label">
+                    <textarea [rows]="2" [cols]="30" pInputTextarea formControlName="address2" id="address2"></textarea>
+                    <label for="address2">Address2</label>
+                  </span>
 
+                  <!--<div *ngIf="rate.invalid && (rate.dirty || rate.touched)" class="alert alert-danger">-->
+                  <!--<div *ngIf="rate.errors.required">-->
+                  <!--Rate is required.-->
+                  <!--</div>-->
+                  <!--</div>-->
+                </div>
+              </div>
+              <div class="ui-g-4">
+                <div class="form-group">
+                  <span class="ui-float-label">
+                    <textarea [rows]="2" [cols]="30" pInputTextarea formControlName="address3" id="address3"></textarea>
+                    <label for="address3">Address3</label>
+                  </span>
+                </div>
+              </div>
+
+              <div class="ui-g-4">
+                  <div class="form-group">
+                    <span class="ui-float-label">
+                      <input type="text" formControlName="stateCode" pInputText id="stateCode">
+                      <label for="stateCode">State Code</label>
+                    </span>
+
+                    <div *ngIf="stateCode.invalid && (stateCode.dirty || stateCode.touched)" class="alert alert-danger">
+                      <div *ngIf="stateCode.errors.required">
+                        State Code is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
 
 
@@ -257,7 +259,7 @@
       <div *ngFor="let ctrl of cForm.get('customerTerms').controls; let i = index;">
         <div [formGroupName]="i">
           <div class="ui-g">
-            <div class="ui-g-6">
+            <div class="ui-g-4">
               <div class="form-group">
                 <span class="ui-float-label">
                   <input type="text" formControlName="paymentTerms" pInputText id="paymentTerms">
@@ -271,11 +273,12 @@
                 </div>
               </div>
             </div>
-            <div class="ui-g-6">
+            <div class="ui-g-4">
               <div class="form-group">
                 <span class="ui-float-label">
-                  <input type="text" formControlName="currency" pInputText id="currency">
-                  <label for="currency">Currency</label>
+                  <p-dropdown [options]="currencyList" formControlName="currency"  id="currency" optionLabel="currencyName"  placeholder="Currency"></p-dropdown>
+                  <!-- <input type="text" formControlName="currency" pInputText id="currency">
+                  <label for="currency">Currency</label> -->
                 </span>
 
                 <div *ngIf="currency.invalid && (currency.dirty || currency.touched)" class="alert alert-danger">
@@ -285,7 +288,7 @@
                 </div>
               </div>
             </div>
-            <div class="ui-g-6">
+            <div class="ui-g-4">
               <div class="form-group">
                 <span class="ui-float-label">
                   <input type="text" formControlName="transporters" pInputText id="transporters">
@@ -304,7 +307,7 @@
 
 
 
-            <div class="ui-g-6">
+            <div class="ui-g-4">
               <div class="form-group">
                 <span class="ui-float-label">
                   <input type="text" formControlName="packing" pInputText id="packing">
@@ -323,7 +326,7 @@
 
 
 
-            <div class="ui-g-6">
+            <div class="ui-g-4">
               <div class="form-group">
                 <span class="ui-float-label">
                   <input type="text" formControlName="freight" pInputText id="freight">
@@ -341,7 +344,7 @@
             </div>
 
 
-            <div class="ui-g-6">
+            <div class="ui-g-4">
               <div class="form-group">
                 <span class="ui-float-label">
                   <input type="text" formControlName="deliveryTerms" pInputText id="deliveryTerms">

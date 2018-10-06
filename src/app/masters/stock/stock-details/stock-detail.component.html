@@ -185,7 +185,7 @@
         <div class="form-group">
           <span class="ui-float-label">
 
-            <p-dropdown [options]="barCodeApplicable" formControlName="barcodeapplicable"  optionLabel="name" [showClear]="true"></p-dropdown>
+            <p-dropdown [options]="barCodeApplicable" formControlName="barcodeapplicable"  optionLabel="label" [showClear]="true"></p-dropdown>
 
             <label for="taxrate">Bar code Applicable</label>
           </span>
@@ -252,15 +252,14 @@
             <div class="ui-g-6">
               <div class="form-group">
                 <span class="ui-float-label">
-                  <input type="text" formControlName="locationName" pInputText id="locationName">
-                  <label for="locationName">Location Name</label>
+                  <p-dropdown [options]="locationList" formControlName="locationName"  id="locationName" optionLabel="locationName"  placeholder="Location Name"></p-dropdown>
                 </span>
 
-                <div *ngIf="locationName.invalid && (locationName.dirty || locationName.touched)" class="alert alert-danger">
+                <!-- <div *ngIf="locationName.invalid && (locationName.dirty || locationName.touched)" class="alert alert-danger">
                   <div *ngIf="locationName.errors.required">
                     Location Name is required.
                   </div>
-                </div>
+                </div> -->
               </div>
             </div>
             <div class="ui-g-6">
@@ -310,11 +309,12 @@
         <div *ngFor="let ctrl of sForm.get('stockItemSuppliers').controls; let i = index;">
           <div [formGroupName]="i">
             <div class="ui-g">
-              <div class="ui-g-6">
+              <div class="ui-g-4">
                 <div class="form-group">
                   <span class="ui-float-label">
-                    <input type="text" formControlName="ledgerName" pInputText id="ledgerName">
-                    <label for="ledgerName">Ledger Name</label>
+                    <p-dropdown [options]="supplierlist" formControlName="ledgerName"  id="ledgerName" optionLabel="supplierName"  placeholder="Ledger Name"></p-dropdown>
+                    <!-- <input type="text" formControlName="ledgerName" pInputText id="ledgerName">
+                    <label for="ledgerName">Ledger Name</label> -->
                   </span>
 
                   <div *ngIf="ledgerName.invalid && (ledgerName.dirty || ledgerName.touched)" class="alert alert-danger">
@@ -341,7 +341,7 @@
                 <!--</div>-->
 
 
-              <div class="ui-g-6">
+              <div class="ui-g-4">
                 <div class="form-group">
                   <span class="ui-float-label">
                     <input type="text" formControlName="orderPercentage" pInputText id="orderPercentage">
@@ -355,7 +355,7 @@
                   </div>
                 </div>
               </div>
-              <div class="ui-g-6">
+              <div class="ui-g-4">
                 <div class="form-group">
                   <span class="ui-float-label">
                     <input type="text" formControlName="leadTime" pInputText id="leadTime">

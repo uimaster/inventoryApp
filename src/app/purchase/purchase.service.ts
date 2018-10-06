@@ -54,4 +54,20 @@ export class PurchaseService {
       .catch((error) => Observable.throw(error.json() || 'Server error'));
   }
 
+  pOAuthrize(payload: any): Observable<any> {
+    return this.http.post(urls.POSTPOAUTHLIST, payload).map ((res: any) => {
+      return res;
+    })
+    .catch((error) => Observable.throw(error.json() || 'Server Error'));
+  }
+
+  getCurrency(): Observable<any> {
+    const params = new HttpParams().set('CompanyID', '1');
+    return this.http.get(urls.CURRENCYLISTURL, {params})
+    .map((res: any) => {
+        return res;
+    })
+    .catch((error) => Observable.throw('server Error.'));
+  }
+
 }

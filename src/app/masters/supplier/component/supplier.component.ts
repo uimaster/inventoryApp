@@ -5,6 +5,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, Validators, FormArray} from '@angular/forms';
 import {SupplierService} from '../services/supplier.service';
 import {SupplierResponse} from '../models/supplier.model';
+import { LedgerService } from '../../ledger/services/ledger.service';
+import { StockService } from '../../stock/services/stock.service';
 
 
 @Component({
@@ -16,9 +18,12 @@ export class SupplierComponent implements OnInit, OnDestroy {
 
     public supplierList;
     public supplierID;
+    public locationList = [];
+    public currencyList = [];
     public supplierDataSubscription: Subscription;
     public supplier;
     public suForm;
+    ledgerList = [];
     showError = false;
     showSuccess = false;
     companyId = JSON.parse(localStorage.getItem('companyID'));
@@ -28,16 +33,19 @@ export class SupplierComponent implements OnInit, OnDestroy {
       private supplierService: SupplierService,
       private _route: ActivatedRoute,
       private _formBuilder: FormBuilder,
-      private router: Router
+      private router: Router,
+      private ledgerService: LedgerService,
+      private stockService: StockService
     ) { }
     ngOnInit() {
-        this.supplierForm();
-        this._route.params.subscribe((params) => {
-            this.supplierID = params.id;
-            this.getSupplierData(this.supplierID);
-        });
-
-
+      this.supplierForm();
+      this._route.params.subscribe((params) => {
+          this.supplierID = params.id;
+          this.getSupplierData(this.supplierID);
+      });
+      this.getLedgers();
+      this.getLocation();
+      this.getCurrency();
     }
 
     getSupplierData(supplierID) {
@@ -83,7 +91,7 @@ export class SupplierComponent implements OnInit, OnDestroy {
 
     }
 
-    supplierForm(){
+    supplierForm() {
         this.suForm = this._formBuilder.group({
             supplier_ID: [0],
             supplierName: ['', [Validators.required, Validators.minLength(4)]],
@@ -124,51 +132,43 @@ export class SupplierComponent implements OnInit, OnDestroy {
     get taxRate() { return this.suForm.get(['supplierTaxes'], 0, ['taxRate']); }
     get calculatedOn() { return this.suForm.get(['supplierTaxes'], 0, ['calculatedOn']); }
 
-
     createSupplierTaxes() {
         return this._formBuilder.group({
-            taxLedgerID: ['', Validators.required],
-            taxLedgerName: ['', Validators.required],
-            taxRate: ['', Validators.required],
-            calculatedOn: ['NA', Validators.required]
+            taxLedgerID: [''],
+            taxLedgerName: [''],
+            taxRate: [''],
+            calculatedOn: ['NA']
         });
     }
 
-
     createSupplierAddressList() {
         return this._formBuilder.group({
-            locationName: ['', Validators.required],
-            address1: ['', Validators.required],
+            locationName: [''],
+            address1: [''],
             address2: [''],
             address3: [''],
-            state: ['', Validators.required],
-            gstincode: ['', Validators.required],
-            stateCode: ['', Validators.required]
+            state: [''],
+            gstincode: [''],
+            stateCode: ['']
         });
     }
 
     createSupplierTerms() {
         return this._formBuilder.group({
-            paymentTerms: ['', Validators.required],
-            currency: ['', Validators.required],
-            transporters: ['', Validators.required],
+            paymentTerms: [''],
+            currency: [''],
+            transporters: [''],
             packing: ['NA'],
             freight: [''],
             deliveryTerms: ['']
         });
     }
 
-
-
     ngOnDestroy() {
         this.supplierDataSubscription.unsubscribe();
     }
 
-
-
-
     saveSupplier(form: any) {
-
         this.supplierService.updateSupplier(form).subscribe((res: SupplierResponse) => {
             if (res.status === '200') {
               this.showSuccess = true;
@@ -179,6 +179,30 @@ export class SupplierComponent implements OnInit, OnDestroy {
               this.showError = true;
             }
         });
+    }
+
+    getLedgers() {
+      this.ledgerService.getAllLedgers().subscribe( res => {
+        if (res && res.status === '200') {
+          this.ledgerList = res.data;
+        }
+      });
+    }
+
+    getLocation() {
+      this.stockService.getLocation().subscribe( res => {
+        if (res && res.status === '200') {
+          this.locationList = res.data;
+        }
+      });
+    }
+
+    getCurrency() {
+      this.stockService.getCurrency().subscribe( res => {
+        if (res && res.status === '200') {
+          this.currencyList = res.data;
+        }
+      });
     }
 
 }

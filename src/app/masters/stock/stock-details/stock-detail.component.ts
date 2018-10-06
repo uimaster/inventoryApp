@@ -10,7 +10,8 @@ import { LedgerService } from '../../ledger/services/ledger.service';
 import { UnitService } from '../../unit/services/unit.service';
 import { UnitResponse } from '../../unit/models/unit.model';
 import { StockResponse } from '../models/stock.model';
-import {StockGroupService} from "../../stock-group/services/stock-group.service";
+import {StockGroupService} from '../../stock-group/services/stock-group.service';
+import { SupplierService } from '../../supplier/services/supplier.service';
 
 @Component({
   selector: 'app-stock-detail',
@@ -32,6 +33,9 @@ export class StockDetailComponent implements OnInit, OnDestroy {
   public barCodeApplicable: any;
   public stockGroupList = [];
   public unitDataList = [];
+  public locationList = [];
+  public currencyList = [];
+  public supplierlist = [];
 
   showError = false;
   showSuccess = false;
@@ -44,7 +48,8 @@ export class StockDetailComponent implements OnInit, OnDestroy {
     private _route: ActivatedRoute,
     private _formBuilder: FormBuilder,
     private router: Router,
-    private stockGroupService: StockGroupService
+    private stockGroupService: StockGroupService,
+    private supplierService: SupplierService
   ) {
     this.stockForm();
     this.barCodeApplicable = [
@@ -63,7 +68,9 @@ export class StockDetailComponent implements OnInit, OnDestroy {
 
     this.getLedgerData();
     this.getUnitData();
-      this.getStockGroupList();
+    this.getStockGroupList();
+    this.getLocation();
+    this.getSupplier();
   }
 
   getStockData(stockId) {
@@ -192,9 +199,9 @@ export class StockDetailComponent implements OnInit, OnDestroy {
       stockItemOPID: [''],
       stockitem_ID: [''],
       location_ID: [''],
-      locationName: ['', Validators.required],
-      qty: ['', Validators.required],
-      rate: ['', Validators.required],
+      locationName: [''],
+      qty: [''],
+      rate: [''],
       amount: ['']
     });
   }
@@ -204,8 +211,8 @@ export class StockDetailComponent implements OnInit, OnDestroy {
       stokItemSupplierID: [0],
       stockitem_ID: [0],
       ledger_ID: [0],
-      ledgerName: ['', Validators.required],
-      orderPercentage: ['', Validators.required],
+      ledgerName: [''],
+      orderPercentage: [''],
       leadTime: ['']
     });
   }
@@ -305,9 +312,8 @@ export class StockDetailComponent implements OnInit, OnDestroy {
         this.unitData = res.data;
 
           let data = res.data;
-          for(let i = 0; i< data.length; i++) {
-              //the property after data[i]. needs to match the exact name that is on your JSON file... So, name is a different property than Name
-              this.unitDataList.push({label: data[i].unitName, value: data[i].unit_ID});
+          for (let i = 0; i < data.length; i++) {
+            this.unitDataList.push({label: data[i].unitName, value: data[i].unit_ID});
           }
 
       });
@@ -338,26 +344,31 @@ export class StockDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-  public getStockGroupList(){
-      this.stockGroupService.getAllStockGroups().subscribe((res:any)=>{
-
-          if(res.status === '200') {
-
-              let data = res.data;
-              for(let i = 0; i< data.length; i++) {
-                  //the property after data[i]. needs to match the exact name that is on your JSON file... So, name is a different property than Name
-                  this.stockGroupList.push({label: data[i].stockGroupName, value: data[i].stockGroup_ID});
-              }
-
-
-
-
+  public getStockGroupList() {
+    this.stockGroupService.getAllStockGroups().subscribe((res: any) => {
+      if (res.status === '200') {
+          let data = res.data;
+          for (let i = 0; i < data.length; i++) {
+            this.stockGroupList.push({label: data[i].stockGroupName, value: data[i].stockGroup_ID});
           }
-
-      });
-
+      }
+    });
   }
 
+  getLocation() {
+    this.stockService.getLocation().subscribe( res => {
+      if (res && res.status === '200') {
+        this.locationList = res.data;
+      }
+    });
+  }
 
+  getSupplier() {
+    this.supplierService.getAllSuppliers().subscribe((res: any) => {
+      if (res && res.status === '200') {
+        this.supplierlist = res.data;
+      }
+    });
+  }
 
 }

@@ -401,7 +401,7 @@ input {
         text-align: center;
         padding: 10px 5px;
         color: #6f6e6e;
-        vertical-align: middle;
+        vertical-align: top;
       }
     }
   }
@@ -1027,3 +1027,19 @@ fieldset {
     background-color: #b7d8b7;
   }
 }
+
+.smallBtn{
+  .ui-button-text-only .ui-button-text{
+    font-size: 13px; padding: 3px 6px;
+  }
+}
+
+.ui-dropdown{
+  .ui-dropdown-label{ text-align: left}
+}
+
+// .specialDropdown {
+//   .ui-dropdown-item-empty, .ui-dropdown-label-empty{
+//     text-indent: inherit;
+//   }
+// }

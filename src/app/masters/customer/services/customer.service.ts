@@ -11,29 +11,26 @@ export class CustomerService {
     constructor(private http: HttpClient) {}
 
     getAllCustomers(): Observable<any> {
-        const params = new HttpParams().set('CompanyID', '1');
-        return this.http.get(GETCUSTOMERLIST, {params}).pipe(
-            map(res => {
-                return res;
-            })
-        );
+      const params = new HttpParams().set('CompanyID', '1');
+      return this.http.get(GETCUSTOMERLIST, {params}).pipe(
+          map(res => {
+              return res;
+          })
+      );
     }
 
     getCustomerData(customerId): Observable<any> {
-
-        const params = new HttpParams().set('CustomerID', customerId);
-        return this.http.get(GETCUSTOMERDETAIL, {params}).pipe(
-            map(res => {
-                return res;
-            })
-        );
-
-
+      const params = new HttpParams().set('CustomerID', customerId);
+      return this.http.get(GETCUSTOMERDETAIL, {params}).pipe(
+          map(res => {
+              return res;
+          })
+      );
     }
 
 
     updateCustomer(payload: any): Observable<any> {
-        return this.http.post(UPDATECUSTOMER, payload);
+      return this.http.post(UPDATECUSTOMER, payload);
     }
 
 

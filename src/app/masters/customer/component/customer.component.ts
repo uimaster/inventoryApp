@@ -5,6 +5,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, Validators, FormArray} from '@angular/forms';
 import {CustomerService} from '../services/customer.service';
 import {CustomerResponse} from '../models/customer.model';
+import { LedgerService } from '../../ledger/services/ledger.service';
+import { StockService } from '../../stock/services/stock.service';
 
 @Component({
     selector: 'app-customer',
@@ -15,6 +17,9 @@ export class CustomerComponent implements OnInit, OnDestroy {
 
     public customerList;
     public customerID;
+    public ledgerList = [];
+    public locationList = [];
+    public currencyList = [];
     public customerDataSubscription: Subscription;
     showError = false;
     showSuccess = false;
@@ -24,18 +29,21 @@ export class CustomerComponent implements OnInit, OnDestroy {
       private customerService: CustomerService,
       private _route: ActivatedRoute,
       private _formBuilder: FormBuilder,
-      private router: Router
+      private router: Router,
+      private ledgerService: LedgerService,
+      private stockService: StockService
     ) { }
     public customer;
     public cForm;
     ngOnInit() {
-        this.customerForm();
-        this._route.params.subscribe((params) => {
-            this.customerID = params.id;
-            this.getCustomerData(this.customerID);
-        });
-
-
+      this.customerForm();
+      this._route.params.subscribe((params) => {
+          this.customerID = params.id;
+          this.getCustomerData(this.customerID);
+      });
+      this.getLedgers();
+      this.getLocation();
+      this.getCurrency();
     }
 
     getCustomerData(customerId) {
@@ -175,7 +183,6 @@ export class CustomerComponent implements OnInit, OnDestroy {
 
 
     saveCustomer (form: any) {
-
         this.customerService.updateCustomer(form).subscribe((res: CustomerResponse) => {
             if (res.status === '200') {
                 this.showSuccess = true;
@@ -186,9 +193,30 @@ export class CustomerComponent implements OnInit, OnDestroy {
               this.showError = true;
             }
         });
+    }
 
+    getLedgers() {
+      this.ledgerService.getAllLedgers().subscribe( res => {
+        if (res && res.status === '200') {
+          this.ledgerList = res.data;
+        }
+      });
+    }
 
+    getLocation() {
+      this.stockService.getLocation().subscribe( res => {
+        if (res && res.status === '200') {
+          this.locationList = res.data;
+        }
+      });
+    }
 
+    getCurrency() {
+      this.stockService.getCurrency().subscribe( res => {
+        if (res && res.status === '200') {
+          this.currencyList = res.data;
+        }
+      });
     }
 
 }
