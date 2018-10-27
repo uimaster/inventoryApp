@@ -1,0 +1,40 @@
+
+<p-panel header="Stock Issue Note" class="Tabledata">
+  <p-header>
+      <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addPOrder()"></button>
+  </p-header>
+  <div *ngIf="stockIssueList" class="table-responsive">
+      <table class="table">
+          <thead>
+          <tr>
+              <th>Doc Date</th>
+              <th>Doc No </th>
+              <th>Issue Location</th>
+              <th>Store Request No.</th>
+              <th>Value</th>
+              <th>Action</th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container *ngIf="stockIssueList">
+              <tr *ngFor="let item of stockIssueList; index as i;">
+                  <td>{{item.transactionDate}}</td>
+                  <td>{{item.transactionNo}}</td>
+                  <td>{{item.locationName}}</td>
+                  <td>{{item.transactionLinkDocNo}}</td>
+                  <td>{{item.transaction_Amount}}</td>
+                  <td>
+                      <button pButton type="button" style="margin-right: 5px;" icon="fa fa-pencil" class="ui-button-success" (click)="getPurchaseDetails(item.transactionID)" ></button>
+                      <button pButton type="button" icon="fa fa-trash-o" class="ui-button-danger"></button>
+                  </td>
+              </tr>
+          </ng-container>
+          </tbody>
+      </table>
+  </div>
+  <div  *ngIf="!stockIssueList || stockIssueList.length < 1" style="text-align: center">
+    <br/>
+    No Records available !
+    <br/><br/>
+  </div>
+</p-panel>

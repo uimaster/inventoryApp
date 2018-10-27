@@ -35,12 +35,13 @@ export class POAuthListComponent implements OnInit {
 
   DoAutherize() {
     this.authrizeForm = this.fb.group(this.formData);
-    console.log(this.authrizeForm.value);
     this.purchaseService.pOAuthrize([this.authrizeForm.value]).subscribe ( res => {
       if (res && res.status === 200) {
         alert(res.message);
+        this.getPOAuthList();
       } else {
         alert(res.message);
+        this.getPOAuthList();
       }
     });
   }
@@ -49,15 +50,15 @@ export class POAuthListComponent implements OnInit {
     if (event === true) {
       // this.formData.push({
       //   transactionID: data.transactionID,
-      //   TransactionAuthStatusID: data.transactionAuthStatusID,
+      //   TransactionAuthStatusID: 4,
       //   AuthRemarks: '',
       //   UserID: 1
       // });
-      var checkedData = { transactionID: [data.transactionID], TransactionAuthStatusID: [data.transactionAuthStatusID],
-        AuthRemarks: [''], UserID: [1]};
-      this.formData = checkedData ;
+
+      const checkedData = { transactionID: data.transactionID, TransactionAuthStatusID: 4, AuthRemarks: '', UserID: 1};
+
+      this.formData = checkedData;
     }
-    console.log(this.formData);
   }
 
   getPOAuthList() {
@@ -65,7 +66,6 @@ export class POAuthListComponent implements OnInit {
       if (res) {
         if (res.status === '200') {
           this.POAuthList = res.data;
-          console.log('purchaseList:', this.POAuthList);
         }
       }
     });
@@ -80,21 +80,22 @@ export class POAuthListComponent implements OnInit {
   createUnauthoriseForm () {
     this.unauthenticationForm = this.fb.group({
       transactionID: new FormControl(''),
-      TransactionAuthStatusID: new FormControl(''),
-      AuthRemarks: new FormControl(''),
+      TransactionAuthStatusID: new FormControl(1),
+      AuthRemarks: new FormControl('', Validators.required),
       UserID: new FormControl(1)
     });
   }
 
   DoUnAutherize() {
-    this.unauthenticationForm.control['transactionID'].setValue(this.unauthenticationData.transactionID);
-    this.unauthenticationForm.control['TransactionAuthStatusID'].setValue(this.unauthenticationData.transactionAuthStatusID);
-
+    this.unauthenticationForm.controls['transactionID'].setValue(this.unauthenticationData.transactionID);
     this.purchaseService.pOAuthrize(JSON.stringify([this.unauthenticationForm.value])).subscribe ( res => {
       if (res && res.status === 200) {
         alert(res.message);
+        this.getPOAuthList();
+        this.unauthenticationForm.controls['AuthRemarks'].setValue('');
       } else {
         alert(res.message);
+        this.getPOAuthList();
       }
     });
   }
