@@ -1,7 +1,7 @@
 
 <p-panel header="Good Receipt Note" class="Tabledata">
   <p-header>
-      <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addPOrder()"></button>
+      <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addNote()"></button>
   </p-header>
   <div *ngIf="grnList" class="table-responsive">
       <table class="table">
@@ -24,7 +24,7 @@
                   <td>{{item.transactionLinkDocNo}}</td>
                   <td>{{item.transactionDueDate}}</td>
                   <td>
-                      <button pButton type="button" style="margin-right: 5px;" icon="fa fa-pencil" class="ui-button-success" (click)="getPurchaseDetails(item.transactionID)" ></button>
+                      <button pButton type="button" style="margin-right: 5px;" icon="fa fa-pencil" class="ui-button-success" (click)="editNote(item.transactionID)" ></button>
                       <button pButton type="button" icon="fa fa-trash-o" class="ui-button-danger"></button>
                   </td>
               </tr>

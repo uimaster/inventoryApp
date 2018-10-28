@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TransactionSerivices } from '../../transactionsShared/transaction.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-gnr',
@@ -8,10 +9,18 @@ import { TransactionSerivices } from '../../transactionsShared/transaction.servi
 })
 export class GnrComponent implements OnInit {
   grnList = [];
-  constructor( private transactionSerivices: TransactionSerivices ) { }
+  constructor( private transactionSerivices: TransactionSerivices, private router: Router ) { }
 
   ngOnInit() {
     this.getTransactionList();
+    localStorage.setItem('transItemDetails', 'true');
+    localStorage.setItem('transLedgerDetails', 'true');
+    localStorage.setItem('transPOTerms', 'true');
+    localStorage.setItem('transBoxDetails', 'false');
+    localStorage.setItem('transBatchDetails', 'false');
+    localStorage.setItem('transGRNTerms', 'true');
+    localStorage.setItem('transInvoiceTerms', 'false');
+    localStorage.setItem('transWorkCompletionDetails', 'false');
   }
 
   getTransactionList() {
@@ -23,5 +32,15 @@ export class GnrComponent implements OnInit {
         }
       }
     });
+  }
+
+  addNote() {
+    this.router.navigate(['/stores/addEditStore']);
+    localStorage.setItem('transactionID', '0');
+  }
+
+  editNote(id) {
+    localStorage.setItem('transactionID', id);
+    this.router.navigate(['/stores/addEditStore']);
   }
 }

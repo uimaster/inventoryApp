@@ -10,6 +10,7 @@ import { StockRejectNoteComponent } from './stock-reject-note/stock-reject-note.
 import { DelieveryChallanComponent } from './delievery-challan/delievery-challan.component';
 import { ReturnableChallanComponent } from './returnable-challan/returnable-challan.component';
 import { PhysicalStockComponent } from './physical-stock/physical-stock.component';
+import { CreateEditStoreComponent } from './create/create.component';
 
 export const routes: Routes = [
   { path: '',  component: StoreComponent,
@@ -17,6 +18,7 @@ export const routes: Routes = [
       {
         path: '', children: [
           { path: 'grn', component: GnrComponent },
+          { path: 'addEditStore', component: CreateEditStoreComponent },
           { path: 'jobwork', component: JobWorkComponent },
           { path: 'stockRequest', component: StockRequestComponent },
           { path: 'stockNote', component: StockNoteComponent },

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { StoreComponent } from './store.component';
 import { SharedModule } from './../shared/shared.module';
 import { StoresRouteModule } from './stores.route.module';
-import { CreateComponent } from './create/create.component';
+import { CreateEditStoreComponent } from './create/create.component';
 import { GnrComponent } from './gnr/gnr.component';
 import { JobWorkComponent } from './job-work/job-work.component';
 import { StockRequestComponent } from './stock-request/stock-request.component';
@@ -13,16 +13,18 @@ import { DelieveryChallanComponent } from './delievery-challan/delievery-challan
 import { ReturnableChallanComponent } from './returnable-challan/returnable-challan.component';
 import { PhysicalStockComponent } from './physical-stock/physical-stock.component';
 import { TransactionSerivices } from '../transactionsShared/transaction.service';
+import { TransactionCommonModule } from '../transactionsShared/transaction.module';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
-    StoresRouteModule
+    StoresRouteModule,
+    TransactionCommonModule
   ],
   declarations: [
     StoreComponent,
-    CreateComponent,
+    CreateEditStoreComponent,
     GnrComponent,
     JobWorkComponent,
     StockRequestComponent,
