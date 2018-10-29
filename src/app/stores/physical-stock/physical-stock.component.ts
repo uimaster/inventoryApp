@@ -16,7 +16,7 @@ export class PhysicalStockComponent implements OnInit {
     this.getTransactionList();
 
     localStorage.setItem('transItemDetails', 'true');
-    localStorage.setItem('transLedgerDetails', 'false');
+    localStorage.setItem('transLedgerDetails', 'true');
     localStorage.setItem('transPOTerms', 'false');
     localStorage.setItem('transBoxDetails', 'false');
     localStorage.setItem('transBatchDetails', 'false');

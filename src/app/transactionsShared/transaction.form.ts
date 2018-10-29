@@ -35,14 +35,14 @@ export class TransactionFormComponent implements OnInit {
   public GRNTermsData = [];
   public invoiceTermData = [];
   public workCompletionData = [];
-  transItemDetails: boolean;
-  transLedgerDetails: boolean;
-  transPOTerms: boolean;
-  transBoxDetails: boolean;
-  transBatchDetails: boolean;
-  transGRNTerms: boolean;
-  transInvoiceTerms: boolean;
-  transWorkCompletionDetails: boolean;
+  transItemDetails = true;
+  transLedgerDetails = true;
+  transPOTerms = true;
+  transBoxDetails = true;
+  transBatchDetails = true;
+  transGRNTerms = true;
+  transInvoiceTerms = true;
+  transWorkCompletionDetails = true;
 
   date3 = new Date();
   date5 = new Date();
@@ -54,16 +54,10 @@ export class TransactionFormComponent implements OnInit {
     private stockService: StockService,
     private ledgerService: LedgerService,
     private trasactionService: TransactionSerivices,
-    private router: Router
-  )  {this.createTransactionForm(); }
+    private router: Router,
+  ) {}
 
   ngOnInit() {
-    this.getTrasactionDetails(this.transactionId);
-    this.getCurrency();
-    this.getItemMasterList();
-    this.getLocation();
-    this.getLedgers();
-
     this.transItemDetails = JSON.parse(localStorage.getItem('transItemDetails'));
     this.transLedgerDetails = JSON.parse(localStorage.getItem('transLedgerDetails'));
     this.transPOTerms = JSON.parse(localStorage.getItem('transPOTerms'));
@@ -72,6 +66,13 @@ export class TransactionFormComponent implements OnInit {
     this.transGRNTerms = JSON.parse(localStorage.getItem('transGRNTerms'));
     this.transInvoiceTerms = JSON.parse(localStorage.getItem('transInvoiceTerms'));
     this.transWorkCompletionDetails = JSON.parse(localStorage.getItem('transWorkCompletionDetails'));
+
+    this.getTrasactionDetails(this.transactionId);
+    this.getCurrency();
+    this.getItemMasterList();
+    this.getLocation();
+    this.getLedgers();
+    this.createTransactionForm();
   }
   createTransactionForm() {
     this.transactionForm = this.fb.group ({
@@ -103,15 +104,19 @@ export class TransactionFormComponent implements OnInit {
   }
 
   createBoxDetails() {
-    return this.fb.group({
-      stockitemID: [1],
-      itemQty: [0],
-      itemRate: [0],
-      itemAmount: [0],
-      transactionBoxSerialNo: [0],
-      boxPosition: [0],
-      SCHREF: [0]
-    });
+    if (this.transBoxDetails) {
+        return this.fb.group({
+        stockitemID: [1],
+        itemQty: [0],
+        itemRate: [0],
+        itemAmount: [0],
+        transactionBoxSerialNo: [0],
+        boxPosition: [0],
+        SCHREF: [0]
+      });
+    } else {
+      return this.fb.group([]);
+    }
   }
 
   get transactionBoxSerialNo() {
@@ -125,10 +130,14 @@ export class TransactionFormComponent implements OnInit {
   }
 
   createBatchDetails() {
-    return this.fb.group({
-      batchNo: [0],
-      batchID: [0]
-    });
+    if (this.transBatchDetails) {
+      return this.fb.group({
+        batchNo: [0],
+        batchID: [0]
+      });
+    } else {
+      return this.fb.group([]);
+    }
   }
 
   get batchNo() {
@@ -139,15 +148,19 @@ export class TransactionFormComponent implements OnInit {
   }
 
   createGRNTerms() {
-    return this.fb.group({
-      inwardNo: [1],
-      inwardDate: [0],
-      transporter : [0],
-      dcNo: [0],
-      dcDate: [0],
-      invoiceNo: [0],
-      invoiceDate: [0]
-    });
+    if (this.transGRNTerms) {
+      return this.fb.group({
+        inwardNo: [1],
+        inwardDate: [0],
+        transporter : [0],
+        dcNo: [0],
+        dcDate: [0],
+        invoiceNo: [0],
+        invoiceDate: [0]
+      });
+    } else {
+      return this.fb.group([]);
+    }
   }
   get inwardNo() {
     return this.transactionForm.get(['transGRNTerms'], 0, ['inwardNo']);
@@ -172,14 +185,18 @@ export class TransactionFormComponent implements OnInit {
   }
 
   createInvoiceTerms() {
-    return this.fb.group({
-      transporterLedgerID: [1],
-      transporterLRNO: [0],
-      transporterLRDate: [0],
-      transporterGSTIN: [0],
-      GSTEwayBillNo: [0],
-      GSTEWayBillDate: [0]
-    });
+    if (this.transInvoiceTerms) {
+      return this.fb.group({
+        transporterLedgerID: [1],
+        transporterLRNO: [0],
+        transporterLRDate: [0],
+        transporterGSTIN: [0],
+        GSTEwayBillNo: [0],
+        GSTEWayBillDate: [0]
+      });
+    } else {
+      return this.fb.group([]);
+    }
   }
   get transporterLedgerID() {
     return this.transactionForm.get(['transInvoiceTerms'], 0, ['transporterLedgerID']);
@@ -201,15 +218,19 @@ export class TransactionFormComponent implements OnInit {
   }
 
   createWorkCompletionDetails() {
-    return this.fb.group({
-      jobCompletionDate: [1],
-      departmentName: [0],
-      transctionJobWorkRemarks: [0],
-      location: [0],
-      billAmount: [0],
-      materialAmount: [0],
-      labourAmount: [0]
-    });
+    if (this.transWorkCompletionDetails) {
+      return this.fb.group({
+        jobCompletionDate: [1],
+        departmentName: [0],
+        transctionJobWorkRemarks: [0],
+        location: [0],
+        billAmount: [0],
+        materialAmount: [0],
+        labourAmount: [0]
+      });
+    } else {
+      return this.fb.group([]);
+    }
   }
   get jobCompletionDate() {
     return this.transactionForm.get(['transWorkCompletionDetails'], 0, ['jobCompletionDate']);
@@ -259,23 +280,27 @@ export class TransactionFormComponent implements OnInit {
     return this.transactionForm.get('transactionDueDate');
   }
   createItemDetails() {
-    return this.fb.group({
-      transactionID: [0],
-      stockitemID: [1],
-      transactionItem_AdditionalDesciption: [''],
-      locationID: [1],
-      itemQty: [0],
-      itemReceived_Qty: [0],
-      itemChallan_Qty: [0],
-      itemPending_Qty: [0],
-      itemRate: [0],
-      itemAmount: [0],
-      itemStops: [0],
-      itemLength: [0],
-      itemBatchApplicable: [0],
-      packingBoxStockItemID: [0],
-      transactionItemSerialNo: [0]
-    });
+    if (this.transItemDetails) {
+      return this.fb.group({
+        transactionID: [0],
+        stockitemID: [1],
+        transactionItem_AdditionalDesciption: [''],
+        locationID: [1],
+        itemQty: [0],
+        itemReceived_Qty: [0],
+        itemChallan_Qty: [0],
+        itemPending_Qty: [0],
+        itemRate: [0],
+        itemAmount: [0],
+        itemStops: [0],
+        itemLength: [0],
+        itemBatchApplicable: [0],
+        packingBoxStockItemID: [0],
+        transactionItemSerialNo: [0]
+      });
+    } else {
+      return this.fb.group([]);
+    }
   }
 
   addItemDetails() {
@@ -325,12 +350,16 @@ export class TransactionFormComponent implements OnInit {
   }
 
   createLedgerDetails() {
-    return this.fb.group ({
-      transactionID: [0],
-      ledgerID: [1],
-      taxRate: [1],
-      ledgerAmount: [0]
-    });
+    if (this.transLedgerDetails) {
+      return this.fb.group ({
+        transactionID: [0],
+        ledgerID: [1],
+        taxRate: [1],
+        ledgerAmount: [0]
+      });
+    } else {
+      return this.fb.group([]);
+    }
   }
 
   addItemLedger() {
@@ -357,15 +386,19 @@ export class TransactionFormComponent implements OnInit {
   }
 
   createPOTerms() {
-    return this.fb.group({
-      transactionDueDate : [''],
-      transactionTransporter : [''],
-      transctionSupplierRef : [''],
-      transactionDeilveryTerms : [''],
-      transactionPaymentTerms : [''],
-      transactionPackingTerms : [''],
-      transactionFreightTerms : [''],
-    });
+    if (this.transPOTerms) {
+      return this.fb.group({
+        transactionDueDate : [''],
+        transactionTransporter : [''],
+        transctionSupplierRef : [''],
+        transactionDeilveryTerms : [''],
+        transactionPaymentTerms : [''],
+        transactionPackingTerms : [''],
+        transactionFreightTerms : [''],
+      });
+    } else {
+      return this.fb.group([]);
+    }
   }
   get transactionTransporter() {
     return this.transactionForm.get(['transPOTerms'], 0, ['transactionTransporter']);
@@ -421,7 +454,7 @@ export class TransactionFormComponent implements OnInit {
             this.transactionForm.controls['transactionDueDate'].setValue(this.detailsData[0].transactionDueDate);
           }
 
-          if (this.detailsData[0].transItemDetails.length > 0) {
+          if (this.detailsData[0].transItemDetails.length > 0 && this.transItemDetails) {
             this.ItemData = this.detailsData[0].transItemDetails;
             const controlArray = <FormArray>this.transactionForm.get('transItemDetails');
 
@@ -442,7 +475,7 @@ export class TransactionFormComponent implements OnInit {
             controlArray.controls[0].get('transactionItemSerialNo').setValue(this.ItemData[0].transactionItemSerialNo);
             controlArray.controls[0].get('locationID').setValue(this.ItemData[0].locationID);
           }
-          if (this.detailsData[0].transPOTerms.length > 0) {
+          if (this.detailsData[0].transPOTerms.length > 0 && this.transPOTerms) {
             this.POData = this.detailsData[0].transPOTerms;
             const controlArray = <FormArray>this.transactionForm.get('transPOTerms');
             controlArray.controls[0].get('transactionDeilveryTerms').setValue(this.POData[0].transactionDeilveryTerms);
@@ -454,7 +487,7 @@ export class TransactionFormComponent implements OnInit {
             // var dueDate = this.convertToDateFormat(this.POData[0].transactionDueDate);
             // controlArray.controls[0].get('transactionDueDate').setValue(dueDate);
           }
-          if (this.detailsData[0].transLedgerDetails.length > 0) {
+          if (this.detailsData[0].transLedgerDetails.length > 0 && this.transLedgerDetails) {
             this.ledgerData = this.detailsData[0].transLedgerDetails;
             const controlArray = <FormArray>this.transactionForm.get('transLedgerDetails');
 
@@ -467,7 +500,7 @@ export class TransactionFormComponent implements OnInit {
 
 
 
-          if (this.detailsData[0].transBoxDetails.length > 0) {
+          if (this.detailsData[0].transBoxDetails.length > 0 && this.transBoxDetails) {
             this.boxDetailData = this.detailsData[0].transBoxDetails;
             const controlArray = <FormArray>this.transactionForm.get('transBoxDetails');
 
@@ -480,7 +513,7 @@ export class TransactionFormComponent implements OnInit {
             controlArray.controls[0].get('SCHREF').setValue(this.boxDetailData[0].SCHREF);
           }
 
-          if (this.detailsData[0].transBatchDetails.length > 0) {
+          if (this.detailsData[0].transBatchDetails.length > 0 && this.transBatchDetails) {
             this.batchDetailData = this.detailsData[0].transBatchDetails;
             const controlArray = <FormArray>this.transactionForm.get('transBatchDetails');
 
@@ -488,7 +521,7 @@ export class TransactionFormComponent implements OnInit {
             controlArray.controls[0].get('batchID').setValue(this.batchDetailData[0].batchID);
           }
 
-          if (this.detailsData[0].transGRNTerms.length > 0) {
+          if (this.detailsData[0].transGRNTerms.length > 0 && this.transGRNTerms) {
             this.GRNTermsData = this.detailsData[0].transGRNTerms;
             const controlArray = <FormArray>this.transactionForm.get('transGRNTerms');
 
@@ -501,7 +534,7 @@ export class TransactionFormComponent implements OnInit {
             controlArray.controls[0].get('inwardDate').setValue(this.GRNTermsData[0].inwardDate);
           }
 
-          if (this.detailsData[0].transInvoiceTerms.length > 0) {
+          if (this.detailsData[0].transInvoiceTerms.length > 0 && this.transInvoiceTerms) {
             this.invoiceTermData = this.detailsData[0].transInvoiceTerms;
             const controlArray = <FormArray>this.transactionForm.get('transInvoiceTerms');
 
@@ -513,7 +546,7 @@ export class TransactionFormComponent implements OnInit {
             controlArray.controls[0].get('GSTEWayBillDate').setValue(this.invoiceTermData[0].GSTEWayBillDate);
           }
 
-          if (this.detailsData[0].transWorkCompletionDetails.length > 0) {
+          if (this.detailsData[0].transWorkCompletionDetails.length > 0 && this.transWorkCompletionDetails) {
             this.workCompletionData = this.detailsData[0].transWorkCompletionDetails;
             const controlArray = <FormArray>this.transactionForm.get('transWorkCompletionDetails');
 
@@ -540,15 +573,15 @@ export class TransactionFormComponent implements OnInit {
           if (res && res.status === '200') {
             this.successMsg = res.message;
             this.showSuccess = true;
-            setTimeout(() => {
-              this.router.navigate(['/purchaseOrder']);
-            }, 3000);
+            // setTimeout(() => {
+            //   this.router.navigate(['/purchaseOrder']);
+            // }, 3000);
           } else {
             this.errorMsg = res.message;
             this.showError = true;
-            setTimeout(() => {
-              this.router.navigate(['/purchaseOrder']);
-            }, 3000);
+            // setTimeout(() => {
+            //   this.router.navigate(['/purchaseOrder']);
+            // }, 3000);
           }
         }
       );
@@ -559,6 +592,7 @@ export class TransactionFormComponent implements OnInit {
     this.poService.getCurrency().subscribe( res => {
       if (res && res.status === '200') {
         this.currencyList = res.data;
+        console.log(this.currencyList);
       }
     });
   }
