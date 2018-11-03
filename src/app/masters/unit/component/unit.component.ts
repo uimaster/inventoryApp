@@ -63,7 +63,7 @@ export class UnitComponent implements OnInit, OnDestroy {
     unitForm() {
         this.uForm = this._formBuilder.group({
             unit_ID: [0],
-            unitName: ['', [Validators.required, Validators.minLength(4)]],
+            unitName: ['', [Validators.required, Validators.minLength(2)]],
             company_ID: [this.companyId],
             userID: [this.userId]
         });

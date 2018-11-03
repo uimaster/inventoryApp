@@ -60,6 +60,7 @@ export class CustomerComponent implements OnInit, OnDestroy {
                 this.cForm.controls['landLineNos'].setValue(this.customer['landLineNos']);
                 this.cForm.controls['contactperson'].setValue(this.customer['contactperson']);
                 this.cForm.controls['customer_ID'].setValue(this.customer['customer_ID']);
+                this.cForm.controls['EmailID'].setValue(this.customer['EmailID']);
                 const controlArray = <FormArray> this.cForm.get('customerTaxes');
                 controlArray.controls[0].get('taxLedgerID').setValue(this.customer['customerTaxes'][0].taxLedgerID);
                 controlArray.controls[0].get('taxLedgerName').setValue(this.customer['customerTaxes'][0].taxLedgerName);
@@ -84,14 +85,7 @@ export class CustomerComponent implements OnInit, OnDestroy {
                 controlArrayTerms.controls[0].get('packing').setValue(this.customer['customerTerms'][0].packing);
                 controlArrayTerms.controls[0].get('freight').setValue(this.customer['customerTerms'][0].freight);
                 controlArrayTerms.controls[0].get('deliveryTerms').setValue(this.customer['customerTerms'][0].deliveryTerms);
-
-
-
             }
-
-
-
-            // console.log(this.ledger);
 
         });
 
@@ -104,6 +98,7 @@ export class CustomerComponent implements OnInit, OnDestroy {
             customerName: ['', [Validators.required, Validators.minLength(4)]],
             uSerID: [this.userId],
             companyID: [this.companyId],
+            EmailID: ['', Validators.required],
             contactperson: ['', Validators.required],
             contactMobile: ['', Validators.required],
             landLineNos: ['', Validators.required],
@@ -120,6 +115,7 @@ export class CustomerComponent implements OnInit, OnDestroy {
     get contactperson() { return this.cForm.get('contactperson'); }
     get contactMobile() { return this.cForm.get('contactMobile'); }
     get landLineNos() { return this.cForm.get('landLineNos'); }
+    get EmailID() { return this.cForm.get('EmailID'); }
     get locationName() { return this.cForm.get(['customerAddList'], 0, ['locationName']); }
     get address1() { return this.cForm.get(['customerAddList'], 0, ['address1']); }
     get address2() { return this.cForm.get(['customerAddList'], 0, ['address2']); }
@@ -144,11 +140,28 @@ export class CustomerComponent implements OnInit, OnDestroy {
 
     createcustomerTaxes() {
         return this._formBuilder.group({
-            taxLedgerID: ['', Validators.required],
-            taxLedgerName: ['', Validators.required],
-            taxRate: ['', Validators.required],
-            calculatedOn: ['', Validators.required]
+            taxLedgerID: [''],
+            taxLedgerName: [''],
+            taxRate: [''],
+            calculatedOn: ['']
         });
+    }
+
+    addTaxes() {
+      const stockItemArray = <FormArray>this.cForm.get('customerTaxes');
+      stockItemArray.push(
+        this._formBuilder.group({
+          taxLedgerID: [''],
+            taxLedgerName: [''],
+            taxRate: [''],
+            calculatedOn: ['']
+        })
+      );
+    }
+
+    removeTaxes(index) {
+      const stockItemArray = <FormArray>this.cForm.get('customerTaxes');
+      stockItemArray.removeAt(index);
     }
 
 
@@ -162,6 +175,27 @@ export class CustomerComponent implements OnInit, OnDestroy {
             gstincode: [''],
             stateCode: ['']
         });
+    }
+
+
+    addAddress() {
+      const stockItemArray = <FormArray>this.cForm.get('customerAddList');
+      stockItemArray.push(
+        this._formBuilder.group({
+          locationName: [''],
+          address1: [''],
+          address2: [''],
+          address3: [''],
+          state: [''],
+          gstincode: [''],
+          stateCode: ['']
+        })
+      );
+    }
+
+    removeAddress(index) {
+      const stockItemArray = <FormArray>this.cForm.get('customerAddList');
+      stockItemArray.removeAt(index);
     }
 
     createCustomerTerms() {
@@ -198,7 +232,13 @@ export class CustomerComponent implements OnInit, OnDestroy {
     getLedgers() {
       this.ledgerService.getAllLedgers().subscribe( res => {
         if (res && res.status === '200') {
-          this.ledgerList = res.data;
+          // this.ledgerList = res.data;
+          let data = res.data;
+          for (let key in data) {
+            if (data.hasOwnProperty(key)) {
+                this.ledgerList.push({label: data[key].ledgerName, value: data[key].ledgerName});
+            }
+          }
         }
       });
     }
@@ -206,7 +246,14 @@ export class CustomerComponent implements OnInit, OnDestroy {
     getLocation() {
       this.stockService.getLocation().subscribe( res => {
         if (res && res.status === '200') {
-          this.locationList = res.data;
+          // this.locationList = res.data;
+
+          let data = res.data;
+          for (let key in data) {
+            if (data.hasOwnProperty(key)) {
+                this.locationList.push({label: data[key].locationName, value: data[key].locationName});
+            }
+          }
         }
       });
     }

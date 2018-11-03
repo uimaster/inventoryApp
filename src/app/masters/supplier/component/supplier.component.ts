@@ -57,15 +57,19 @@ export class SupplierComponent implements OnInit, OnDestroy {
                 this.suForm.controls['supplierName'].setValue(this.supplier['supplierName']);
                 this.suForm.controls['uSerID'].setValue(this.supplier['uSerID']);
                 this.suForm.controls['companyID'].setValue(this.supplier['companyID']);
+                this.suForm.controls['EmailID'].setValue(this.supplier['EmailID']);
                 this.suForm.controls['contactperson'].setValue(this.supplier['contactperson']);
                 this.suForm.controls['contactMobile'].setValue(this.supplier['contactMobile']);
                 this.suForm.controls['landLineNos'].setValue(this.supplier['landLineNos']);
                 const controlArray = <FormArray> this.suForm.get('supplierTaxes');
-                controlArray.controls[0].get('taxLedgerID').setValue(this.supplier['supplierTaxes'][0].taxLedgerID);
-                controlArray.controls[0].get('taxLedgerName').setValue(this.supplier['supplierTaxes'][0].taxLedgerName);
-                controlArray.controls[0].get('taxRate').setValue(this.supplier['supplierTaxes'][0].taxRate);
-                controlArray.controls[0].get('calculatedOn').setValue(this.supplier['supplierTaxes'][0].calculatedOn);
+                if (controlArray.length > 0) {
+                 controlArray.controls[0].get('taxLedgerID').setValue(this.supplier['supplierTaxes'][0].taxLedgerID);
+                  controlArray.controls[0].get('taxLedgerName').setValue(this.supplier['supplierTaxes'][0].taxLedgerName);
+                  controlArray.controls[0].get('taxRate').setValue(this.supplier['supplierTaxes'][0].taxRate);
+                  controlArray.controls[0].get('calculatedOn').setValue(this.supplier['supplierTaxes'][0].calculatedOn);
+                }
                 const controlArrayAddress = <FormArray> this.suForm.get('supplierAddressList');
+                if (controlArrayAddress.length > 0) {
                 controlArrayAddress.controls[0].get('locationName').setValue(this.supplier['supplierAddressList'][0].locationName);
                 controlArrayAddress.controls[0].get('address1').setValue(this.supplier['supplierAddressList'][0].address1);
                 controlArrayAddress.controls[0].get('address2').setValue(this.supplier['supplierAddressList'][0].address2);
@@ -73,13 +77,17 @@ export class SupplierComponent implements OnInit, OnDestroy {
                 controlArrayAddress.controls[0].get('state').setValue(this.supplier['supplierAddressList'][0].state);
                 controlArrayAddress.controls[0].get('gstincode').setValue(this.supplier['supplierAddressList'][0].gstincode);
                 controlArrayAddress.controls[0].get('stateCode').setValue(this.supplier['supplierAddressList'][0].stateCode);
+                }
+
                 const controlArrayTerms = <FormArray> this.suForm.get('supplierTerms');
+                if (controlArrayTerms.length > 0) {
                 controlArrayTerms.controls[0].get('paymentTerms').setValue(this.supplier['supplierTerms'][0].paymentTerms);
                 controlArrayTerms.controls[0].get('currency').setValue(this.supplier['supplierTerms'][0].currency);
                 controlArrayTerms.controls[0].get('transporters').setValue(this.supplier['supplierTerms'][0].transporters);
                 controlArrayTerms.controls[0].get('packing').setValue(this.supplier['supplierTerms'][0].packing);
                 controlArrayTerms.controls[0].get('freight').setValue(this.supplier['supplierTerms'][0].freight);
                 controlArrayTerms.controls[0].get('deliveryTerms').setValue(this.supplier['supplierTerms'][0].deliveryTerms);
+                }
             }
 
 
@@ -100,6 +108,7 @@ export class SupplierComponent implements OnInit, OnDestroy {
             contactperson: [null, Validators.required],
             contactMobile: [null, Validators.required],
             landLineNos: [null, Validators.required],
+            EmailID: [null, Validators.required],
             supplierTaxes:  this._formBuilder.array([this.createSupplierTaxes()]),
             supplierAddressList:  this._formBuilder.array([this.createSupplierAddressList()]),
             supplierTerms:  this._formBuilder.array([this.createSupplierTerms()]),
@@ -111,6 +120,7 @@ export class SupplierComponent implements OnInit, OnDestroy {
     get contactperson() { return this.suForm.get('contactperson'); }
     get contactMobile() { return this.suForm.get('contactMobile'); }
     get landLineNos() { return this.suForm.get('landLineNos'); }
+    get EmailID() { return this.suForm.get('EmailID'); }
     get locationName() { return this.suForm.get(['supplierAddressList'], 0, ['locationName']); }
     get address1() { return this.suForm.get(['supplierAddressList'], 0, ['address1']); }
     get address2() { return this.suForm.get(['supplierAddressList'], 0, ['address2']); }
@@ -141,6 +151,25 @@ export class SupplierComponent implements OnInit, OnDestroy {
         });
     }
 
+    addTaxes() {
+      const stockItemArray = <FormArray>this.suForm.get('supplierTaxes');
+      stockItemArray.push(
+        this._formBuilder.group({
+          taxLedgerID: [''],
+          taxLedgerName: [''],
+          taxRate: [''],
+          calculatedOn: ['NA']
+        })
+      );
+    }
+
+    removeTaxes(index) {
+      const stockItemArray = <FormArray>this.suForm.get('supplierTaxes');
+      stockItemArray.removeAt(index);
+    }
+
+
+
     createSupplierAddressList() {
         return this._formBuilder.group({
             locationName: [''],
@@ -151,6 +180,26 @@ export class SupplierComponent implements OnInit, OnDestroy {
             gstincode: [''],
             stateCode: ['']
         });
+    }
+
+    addAddress() {
+      const stockItemArray = <FormArray>this.suForm.get('supplierAddressList');
+      stockItemArray.push(
+        this._formBuilder.group({
+          locationName: [''],
+            address1: [''],
+            address2: [''],
+            address3: [''],
+            state: [''],
+            gstincode: [''],
+            stateCode: ['']
+        })
+      );
+    }
+
+    removeAddress(index) {
+      const stockItemArray = <FormArray>this.suForm.get('supplierAddressList');
+      stockItemArray.removeAt(index);
     }
 
     createSupplierTerms() {
@@ -184,7 +233,13 @@ export class SupplierComponent implements OnInit, OnDestroy {
     getLedgers() {
       this.ledgerService.getAllLedgers().subscribe( res => {
         if (res && res.status === '200') {
-          this.ledgerList = res.data;
+         // this.ledgerList = res.data;
+          let data = res.data;
+          for (let key in data) {
+            if (data.hasOwnProperty(key)) {
+                this.ledgerList.push({label: data[key].ledgerName, value: data[key].ledgerName});
+            }
+          }
         }
       });
     }
@@ -192,7 +247,13 @@ export class SupplierComponent implements OnInit, OnDestroy {
     getLocation() {
       this.stockService.getLocation().subscribe( res => {
         if (res && res.status === '200') {
-          this.locationList = res.data;
+         // this.locationList = res.data;
+          let data = res.data;
+          for (let key in data) {
+            if (data.hasOwnProperty(key)) {
+                this.locationList.push({label: data[key].locationName, value: data[key].locationName});
+            }
+          }
         }
       });
     }
@@ -200,7 +261,14 @@ export class SupplierComponent implements OnInit, OnDestroy {
     getCurrency() {
       this.stockService.getCurrency().subscribe( res => {
         if (res && res.status === '200') {
-          this.currencyList = res.data;
+          // this.currencyList = res.data;
+
+          let data = res.data;
+          for (let key in data) {
+            if (data.hasOwnProperty(key)) {
+                this.currencyList.push({label: data[key].currencyName, value: data[key].currencyID});
+            }
+          }
         }
       });
     }

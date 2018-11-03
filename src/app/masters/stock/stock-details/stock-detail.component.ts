@@ -12,6 +12,7 @@ import { UnitResponse } from '../../unit/models/unit.model';
 import { StockResponse } from '../models/stock.model';
 import {StockGroupService} from '../../stock-group/services/stock-group.service';
 import { SupplierService } from '../../supplier/services/supplier.service';
+import { TouchSequence } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-stock-detail',
@@ -27,7 +28,7 @@ export class StockDetailComponent implements OnInit, OnDestroy {
   public unitDataSubscription: Subscription;
   public stock;
   public sForm;
-  public ledgerData;
+  public ledgerData = [];
   public unitData;
   public stockData;
   public barCodeApplicable: any;
@@ -37,10 +38,15 @@ export class StockDetailComponent implements OnInit, OnDestroy {
   public currencyList = [];
   public supplierlist = [];
 
+  errorMsg = '';
+  successMsg = '';
+
   showError = false;
   showSuccess = false;
   companyId = localStorage.getItem('companyID');
   userId = localStorage.getItem('userID');
+  ledgerModel = {};
+  locationModel = {};
   constructor(
     private stockService: StockService,
     private ledgerService: LedgerService,
@@ -169,20 +175,20 @@ export class StockDetailComponent implements OnInit, OnDestroy {
     this.sForm = this._formBuilder.group({
       stockItemID: [0],
       itemName: ['', [Validators.required, Validators.minLength(4)]],
-      itemCode: ['', Validators.required],
-      stockGroup_ID: ['', Validators.required],
+      itemCode: [''],
+      stockGroup_ID: [''],
       // stockGroupName: ['', Validators.required],
-      unit_ID: ['', Validators.required],
-      unitName: ['', Validators.required],
-      minimum_Order_Level: ['', Validators.required],
-      minimum_Order_Qty: ['', Validators.required],
-      bufferQty: ['', Validators.required],
-      hsnCode: ['', Validators.required],
-      taxrate: ['', Validators.required],
-      barcodeapplicable: ['', Validators.required],
-      barcodelength: ['', Validators.required],
-      branchName: ['', Validators.required],
-      activeStatus: ['', Validators.required],
+      unit_ID: [''],
+      unitName: [''],
+      minimum_Order_Level: [''],
+      minimum_Order_Qty: [''],
+      bufferQty: [''],
+      hsnCode: [''],
+      taxrate: [''],
+      barcodeapplicable: [''],
+      barcodelength: [''],
+      branchName: [''],
+      activeStatus: [''],
       company_ID: [this.companyId || 0],
       userID: [this.userId || 0],
       stockItemOpeningBal: this._formBuilder.array([
@@ -206,6 +212,27 @@ export class StockDetailComponent implements OnInit, OnDestroy {
     });
   }
 
+
+  addOpeningBalance() {
+    const stockItemArray = <FormArray>this.sForm.get('stockItemOpeningBal');
+    stockItemArray.push(
+      this._formBuilder.group({
+        stockItemOPID: [''],
+        stockitem_ID: [''],
+        location_ID: [''],
+        locationName: [''],
+        qty: [''],
+        rate: [''],
+        amount: ['']
+      })
+    );
+  }
+
+  removeOpeningBalance(index) {
+    const stockItemArray = <FormArray>this.sForm.get('stockItemOpeningBal');
+    stockItemArray.removeAt(index);
+  }
+
   createStockItemSupplier() {
     return this._formBuilder.group({
       stokItemSupplierID: [0],
@@ -215,6 +242,34 @@ export class StockDetailComponent implements OnInit, OnDestroy {
       orderPercentage: [''],
       leadTime: ['']
     });
+  }
+
+  // selectLocationName() {
+  //   const stockItemSuppliers = <FormArray>this.sForm.get('stockItemOpeningBal');
+  //   stockItemSuppliers.controls[0].get('locationName').setValue(this.locationModel.locationName);
+  // }
+  // selectLedgerName() {
+  //   const stockItemSuppliers = <FormArray>this.sForm.get('stockItemSuppliers');
+  //   stockItemSuppliers.controls[0].get('ledgerName').setValue(this.ledgerModel.supplierName);
+  // }
+
+  addSupplier() {
+    const stockItemArray = <FormArray>this.sForm.get('stockItemSuppliers');
+    stockItemArray.push(
+      this._formBuilder.group({
+        stokItemSupplierID: [0],
+        stockitem_ID: [0],
+        ledger_ID: [0],
+        ledgerName: [''],
+        orderPercentage: [''],
+        leadTime: ['']
+      })
+    );
+  }
+
+  removeSupplier(index) {
+    const stockItemArray = <FormArray>this.sForm.get('stockItemSuppliers');
+    stockItemArray.removeAt(index);
   }
 
   get itemName() {
@@ -293,7 +348,13 @@ export class StockDetailComponent implements OnInit, OnDestroy {
     this.ledgerDataSubscription = this.ledgerService
       .getAllLedgers()
       .subscribe((res: LedgerResponse) => {
-        this.ledgerData = res.data;
+        let data = res.data;
+
+        for (let key in data) {
+          if (data.hasOwnProperty(key)) {
+              this.ledgerData.push({label: data[key].ledgerName, value: data[key].ledger_ID});
+          }
+        }
       });
   }
 
@@ -332,10 +393,12 @@ export class StockDetailComponent implements OnInit, OnDestroy {
         .subscribe((res: StockResponse) => {
           if (res.status === '200') {
             this.showSuccess = true;
+            this.successMsg = res.message;
             setTimeout(() => {
               this.router.navigate(['/masters/stockItems']);
             }, 3000);
           } else {
+            this.errorMsg = res.message;
             this.showError = true;
           }
         });
@@ -358,7 +421,14 @@ export class StockDetailComponent implements OnInit, OnDestroy {
   getLocation() {
     this.stockService.getLocation().subscribe( res => {
       if (res && res.status === '200') {
-        this.locationList = res.data;
+        // this.locationList = res.data;
+
+        let data = res.data;
+        for (let key in data) {
+          if (data.hasOwnProperty(key)) {
+              this.locationList.push({label: data[key].locationName, value: data[key].locationID});
+          }
+        }
       }
     });
   }
@@ -366,7 +436,13 @@ export class StockDetailComponent implements OnInit, OnDestroy {
   getSupplier() {
     this.supplierService.getAllSuppliers().subscribe((res: any) => {
       if (res && res.status === '200') {
-        this.supplierlist = res.data;
+        // this.supplierlist = res.data;
+        let data = res.data;
+        for (let key in data) {
+          if (data.hasOwnProperty(key)) {
+              this.supplierlist.push({label: data[key].supplierName, value: data[key].supplier_ID});
+          }
+        }
       }
     });
   }

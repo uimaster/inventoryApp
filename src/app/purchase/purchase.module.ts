@@ -11,6 +11,7 @@ import { PrimeNGModule } from '../app.primeNg.module';
 import { POAuthListComponent } from './po-authentication/po-auth.component';
 import { StockService } from '../masters/stock/services/stock.service';
 import { LedgerService } from '../masters/ledger/services/ledger.service';
+import { SupplierService } from '../masters/supplier/services/supplier.service';
 
 @NgModule({
   imports: [
@@ -22,7 +23,7 @@ import { LedgerService } from '../masters/ledger/services/ledger.service';
     FormsModule
   ],
   declarations: [ PurchaseComponent, PurchaseOrderComponent, CreatePOrderComponent, POAuthListComponent],
-  providers: [ PurchaseService, StockService, LedgerService],
+  providers: [ PurchaseService, StockService, LedgerService, SupplierService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PurchaseModule { }

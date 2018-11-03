@@ -5,6 +5,7 @@ import { PurchaseService } from '../purchase/purchase.service';
 import { StockService } from '../masters/stock/services/stock.service';
 import { LedgerService } from '../masters/ledger/services/ledger.service';
 import { TransactionSerivices } from './transaction.service';
+import { SupplierService } from '../masters/supplier/services/supplier.service';
 
 @Component({
   selector: 'app-transaction-form',
@@ -35,6 +36,7 @@ export class TransactionFormComponent implements OnInit {
   public GRNTermsData = [];
   public invoiceTermData = [];
   public workCompletionData = [];
+  public supplierList = [];
   transItemDetails = true;
   transLedgerDetails = true;
   transPOTerms = true;
@@ -54,6 +56,7 @@ export class TransactionFormComponent implements OnInit {
     private stockService: StockService,
     private ledgerService: LedgerService,
     private trasactionService: TransactionSerivices,
+    private supplierService: SupplierService,
     private router: Router,
   ) {}
 
@@ -73,6 +76,7 @@ export class TransactionFormComponent implements OnInit {
     this.getLocation();
     this.getLedgers();
     this.createTransactionForm();
+    this.getSupplier();
   }
   createTransactionForm() {
     this.transactionForm = this.fb.group ({
@@ -591,16 +595,45 @@ export class TransactionFormComponent implements OnInit {
   getCurrency() {
     this.poService.getCurrency().subscribe( res => {
       if (res && res.status === '200') {
-        this.currencyList = res.data;
-        console.log(this.currencyList);
+        // this.currencyList = res.data;
+
+        let data = res.data;
+        for (let key in data) {
+          if (data.hasOwnProperty(key)) {
+              this.currencyList.push({label: data[key].currencyName, value: data[key].currencyID});
+          }
+        }
       }
     });
+  }
+
+  getSupplier() {
+    this.supplierService.getAllSuppliers().subscribe( res => {
+      if (res && res.status === '200') {
+        // this.currencyList = res.data;
+
+        let data = res.data;
+        for (let key in data) {
+          if (data.hasOwnProperty(key)) {
+            this.supplierList.push({label: data[key].supplierName, value: data[key].supplier_ID});
+          }
+        }
+      }
+    });
+
+
   }
 
   getItemMasterList() {
     this.stockService.getAllStocks().subscribe( res => {
       if (res && res.status === '200') {
-        this.itemMasterList = res.data;
+        // this.itemMasterList = res.data;
+        let data = res.data;
+        for (let key in data) {
+          if (data.hasOwnProperty(key)) {
+              this.itemMasterList.push({label: data[key].itemName + ', ' + data[key].itemCode, value: data[key].stockItemID});
+          }
+        }
       }
     });
   }
@@ -608,7 +641,14 @@ export class TransactionFormComponent implements OnInit {
   getLocation() {
     this.stockService.getLocation().subscribe( res => {
       if (res && res.status === '200') {
-        this.locationList = res.data;
+        // this.locationList = res.data;
+
+        let data = res.data;
+        for (let key in data) {
+          if (data.hasOwnProperty(key)) {
+              this.locationList.push({label: data[key].locationName, value: data[key].locationID});
+          }
+        }
       }
     });
   }
@@ -616,7 +656,14 @@ export class TransactionFormComponent implements OnInit {
   getLedgers() {
     this.ledgerService.getAllLedgers().subscribe( res => {
       if (res && res.status === '200') {
-        this.ledgerList = res.data;
+        // this.ledgerList = res.data;
+
+        let data = res.data;
+        for (let key in data) {
+          if (data.hasOwnProperty(key)) {
+              this.ledgerList.push({label: data[key].ledgerName, value: data[key].ledger_ID});
+          }
+        }
       }
     });
   }

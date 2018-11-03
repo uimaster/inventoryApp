@@ -15,7 +15,7 @@ export class StockNoteComponent implements OnInit {
     this.getTransactionList();
 
     localStorage.setItem('transItemDetails', 'true');
-    localStorage.setItem('transLedgerDetails', 'true');
+    localStorage.setItem('transLedgerDetails', 'false');
     localStorage.setItem('transPOTerms', 'false');
     localStorage.setItem('transBoxDetails', 'false');
     localStorage.setItem('transBatchDetails', 'false');

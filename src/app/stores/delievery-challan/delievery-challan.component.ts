@@ -15,13 +15,13 @@ export class DelieveryChallanComponent implements OnInit {
   ngOnInit() {
     this.getTransactionList();
     localStorage.setItem('transItemDetails', 'true');
-    localStorage.setItem('transLedgerDetails', 'true');
+    localStorage.setItem('transLedgerDetails', 'false');
     localStorage.setItem('transPOTerms', 'false');
     localStorage.setItem('transBoxDetails', 'false');
     localStorage.setItem('transBatchDetails', 'false');
     localStorage.setItem('transGRNTerms', 'false');
     localStorage.setItem('transInvoiceTerms', 'false');
-    localStorage.setItem('transWorkCompletionDetails', 'true');
+    localStorage.setItem('transWorkCompletionDetails', 'false');
   }
 
   getTransactionList() {

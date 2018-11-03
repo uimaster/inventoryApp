@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { PurchaseService } from '../purchase.service';
 import { StockService } from '../../masters/stock/services/stock.service';
 import { LedgerService } from '../../masters/ledger/services/ledger.service';
+import { SupplierService } from '../../masters/supplier/services/supplier.service';
 
 @Component({
   selector: 'app-purchase',
@@ -28,6 +29,7 @@ export class CreatePOrderComponent implements OnInit {
   public itemMasterList = [];
   public locationList = [];
   public ledgerList = [];
+  public supplierList = [];
 
   date3 = new Date();
   date5 = new Date();
@@ -36,7 +38,8 @@ export class CreatePOrderComponent implements OnInit {
     private poService: PurchaseService,
     private stockService: StockService,
     private ledgerService: LedgerService,
-    private router: Router
+    private router: Router,
+    private supplierService: SupplierService
   )  {this.createPurchaseOrder(); }
 
   ngOnInit() {
@@ -45,6 +48,7 @@ export class CreatePOrderComponent implements OnInit {
     this.getItemMasterList();
     this.getLocation();
     this.getLedgers();
+    this.getSupplier();
   }
   createPurchaseOrder() {
     this.purchaseOrderForm = this.fb.group ({
@@ -284,7 +288,6 @@ export class CreatePOrderComponent implements OnInit {
             controlArray.controls[0].get('locationID').setValue(this.ItemData[0].locationID);
           }
           if (this.detailsData[0].transPOTerms.length > 0) {
-            debugger;
             this.POData = this.detailsData[0].transPOTerms;
             const controlArray = <FormArray>this.purchaseOrderForm.get('transPOTerms');
             controlArray.controls[0].get('transactionDeilveryTerms').setValue(this.POData[0].transactionDeilveryTerms);
@@ -321,13 +324,13 @@ export class CreatePOrderComponent implements OnInit {
             this.successMsg = res.message;
             this.showSuccess = true;
             setTimeout(() => {
-              this.router.navigate(['/purchaseOrder']);
+              this.router.navigate(['/purchase/purchaseOrder']);
             }, 3000);
           } else {
             this.errorMsg = res.message;
             this.showError = true;
             setTimeout(() => {
-              this.router.navigate(['/purchaseOrder']);
+              this.router.navigate(['/purchase/purchaseOrder']);
             }, 3000);
           }
         }
@@ -338,15 +341,45 @@ export class CreatePOrderComponent implements OnInit {
   getCurrency() {
     this.poService.getCurrency().subscribe( res => {
       if (res && res.status === '200') {
-        this.currencyList = res.data;
+        // this.currencyList = res.data;
+
+        let data = res.data;
+        for (let key in data) {
+          if (data.hasOwnProperty(key)) {
+              this.currencyList.push({label: data[key].currencyName, value: data[key].currencyID});
+          }
+        }
       }
     });
+  }
+
+  getSupplier() {
+    this.supplierService.getAllSuppliers().subscribe( res => {
+      if (res && res.status === '200') {
+        // this.currencyList = res.data;
+
+        let data = res.data;
+        for (let key in data) {
+          if (data.hasOwnProperty(key)) {
+            this.supplierList.push({label: data[key].supplierName, value: data[key].supplier_ID});
+          }
+        }
+      }
+    });
+
+
   }
 
   getItemMasterList() {
     this.stockService.getAllStocks().subscribe( res => {
       if (res && res.status === '200') {
-        this.itemMasterList = res.data;
+        // this.itemMasterList = res.data;
+        let data = res.data;
+        for (let key in data) {
+          if (data.hasOwnProperty(key)) {
+              this.itemMasterList.push({label: data[key].itemName + ', ' + data[key].itemCode, value: data[key].stockItemID});
+          }
+        }
       }
     });
   }
@@ -354,7 +387,14 @@ export class CreatePOrderComponent implements OnInit {
   getLocation() {
     this.stockService.getLocation().subscribe( res => {
       if (res && res.status === '200') {
-        this.locationList = res.data;
+        // this.locationList = res.data;
+
+        let data = res.data;
+        for (let key in data) {
+          if (data.hasOwnProperty(key)) {
+              this.locationList.push({label: data[key].locationName, value: data[key].locationID});
+          }
+        }
       }
     });
   }
@@ -362,7 +402,14 @@ export class CreatePOrderComponent implements OnInit {
   getLedgers() {
     this.ledgerService.getAllLedgers().subscribe( res => {
       if (res && res.status === '200') {
-        this.ledgerList = res.data;
+        // this.ledgerList = res.data;
+
+        let data = res.data;
+        for (let key in data) {
+          if (data.hasOwnProperty(key)) {
+              this.ledgerList.push({label: data[key].ledgerName, value: data[key].ledger_ID});
+          }
+        }
       }
     });
   }

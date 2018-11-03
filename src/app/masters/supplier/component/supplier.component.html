@@ -4,7 +4,7 @@
         <div class="message success" *ngIf="showSuccess">You have Updated/created successfully.</div>
 
         <div class="ui-g">
-            <div class="ui-g-6">
+            <div class="ui-g-4">
                 <div class="form-group">
                   <span class="ui-float-label">
                     <input type="text" formControlName="supplierName" pInputText id="supplierName">
@@ -22,7 +22,7 @@
                 </div>
               </div>
 
-            <div class="ui-g-6">
+            <div class="ui-g-4">
                 <div class="form-group">
                   <span class="ui-float-label">
                     <input type="text" formControlName="contactperson" pInputText id="contactperson">
@@ -36,7 +36,21 @@
                 </div>
             </div>
 
-            <div class="ui-g-6">
+            <div class="ui-g-4">
+                <div class="form-group">
+                  <span class="ui-float-label">
+                    <input type="text" formControlName="EmailID" pInputText id="EmailID">
+                    <label for="EmailID">Email Id</label>
+                  </span>
+                    <div *ngIf="EmailID.invalid && (EmailID.dirty || EmailID.touched)" class="alert alert-danger">
+                        <div *ngIf="EmailID.errors.required">
+                            This field is required.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui-g-4">
                 <div class="form-group">
                   <span class="ui-float-label">
                     <input type="text" formControlName="contactMobile" pInputText id="contactMobile" />
@@ -50,7 +64,7 @@
                     </div>
                 </div>
             </div>
-            <div class="ui-g-6">
+            <div class="ui-g-4">
                 <div class="form-group">
                   <span class="ui-float-label">
                     <input type="text" formControlName="landLineNos" pInputText id="landLineNos" />
@@ -74,33 +88,11 @@
             <div *ngFor="let ctrl of suForm.get('supplierTaxes').controls; let i = index;">
                 <div [formGroupName]="i">
                     <div class="ui-g">
-                        <!-- <div class="ui-g-6">
-                            <div class="form-group">
-                                <span class="ui-float-label">
-                                  <input type="text" formControlName="taxLedgerID" pInputText id="taxLedgerID">
-                                  <label for="taxLedgerID">Tax Ledger ID</label>
-                                </span>
-
-                                <div *ngIf="taxLedgerID.invalid && (taxLedgerID.dirty || taxLedgerID.touched)" class="alert alert-danger">
-                                    <div *ngIf="taxLedgerID.errors.required">
-                                        Tax Ledger ID is required.
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
                         <div class="ui-g-4">
                             <div class="form-group">
                                 <span class="ui-float-label">
-                                  <p-dropdown [options]="ledgerList" formControlName="taxLedgerName"  id="taxLedgerName" optionLabel="ledgerName"  placeholder="Tax Ledger Name"></p-dropdown>
-                                  <!-- <input type="text" formControlName="taxLedgerName" pInputText id="taxLedgerName">
-                                  <label for="taxLedgerName">Tax Ledger Name</label> -->
+                                  <p-dropdown [options]="ledgerList" formControlName="taxLedgerName"  placeholder="Tax Ledger Name"></p-dropdown>
                                 </span>
-
-                                <div *ngIf="taxLedgerName.invalid && (taxLedgerName.dirty || taxLedgerName.touched)" class="alert alert-danger">
-                                    <div *ngIf="taxLedgerName.errors.required">
-                                        Tax Ledger Name is required.
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <div class="ui-g-4">
@@ -109,29 +101,20 @@
                                   <input type="text" formControlName="taxRate" pInputText id="taxRate">
                                   <label for="taxRate">Tax Rate</label>
                                 </span>
-
-                                <div *ngIf="taxRate.invalid && (taxRate.dirty || taxRate.touched)" class="alert alert-danger">
-                                    <div *ngIf="taxRate.errors.required">
-                                        Tax Rate is required.
-                                    </div>
-                                </div>
                             </div>
                         </div>
-                        <div class="ui-g-4">
+                        <div class="ui-g-3">
                             <div class="form-group">
                                 <span class="ui-float-label">
                                   <input type="text" formControlName="calculatedOn" pInputText id="calculatedOn">
                                   <label for="calculatedOn">Calculated On</label>
                                 </span>
-
-                                <div *ngIf="calculatedOn.invalid && (calculatedOn.dirty || calculatedOn.touched)" class="alert alert-danger">
-                                    <div *ngIf="calculatedOn.errors.required">
-                                        Calculated On is required.
-                                    </div>
-                                </div>
                             </div>
                         </div>
-
+                        <div class="ui-g-1">
+                          <button pButton type="button" style="margin-right: 5px;" icon="fa fa-plus" class="ui-button-success" (click)="addTaxes()"></button>
+                          <button pButton type="button" icon="fa fa-trash-o" class="ui-button-danger" [disabled]="i<1" (click)="removeTaxes(i)"></button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -147,101 +130,73 @@
             <div *ngFor="let ctrl of suForm.get('supplierAddressList').controls; let i = index;">
                 <div [formGroupName]="i">
                     <div class="ui-g">
-                        <div class="ui-g-4">
+                        <div class="ui-g-3">
                             <div class="form-group">
                                 <span class="ui-float-label">
-                                  <p-dropdown [options]="locationList" formControlName="locationName"  id="locationName" optionLabel="locationName"  placeholder="Location Name"></p-dropdown>
-                                  <!-- <input type="text" formControlName="locationName" pInputText id="locationName">
-                                  <label for="locationName">Location Name</label> -->
-                                </span>
+                                  <p-dropdown [options]="locationList" formControlName="locationName" placeholder="Location Name"></p-dropdown>
 
-                                <div *ngIf="locationName.invalid && (locationName.dirty || locationName.touched)" class="alert alert-danger">
-                                    <div *ngIf="locationName.errors.required">
-                                        Location Name is required.
-                                    </div>
-                                </div>
+                                </span>
                             </div>
                         </div>
 
-                        <div class="ui-g-4">
+                        <div class="ui-g-3">
                             <div class="form-group">
                                 <span class="ui-float-label">
                                   <input type="text" formControlName="state" pInputText id="state">
                                   <label for="state">State</label>
                                 </span>
-
-                                <div *ngIf="state.invalid && (state.dirty || state.touched)" class="alert alert-danger">
-                                    <div *ngIf="state.errors.required">
-                                        State is required.
-                                    </div>
-                                </div>
                             </div>
                         </div>
 
-                        <div class="ui-g-4">
+                        <div class="ui-g-3">
                             <div class="form-group">
                                 <span class="ui-float-label">
                                   <input type="text" formControlName="gstincode" pInputText id="gstincode">
                                   <label for="gstincode">GstinCode</label>
                                 </span>
+                            </div>
+                        </div>
 
-                                <div *ngIf="gstincode.invalid && (gstincode.dirty || gstincode.touched)" class="alert alert-danger">
-                                    <div *ngIf="gstincode.errors.required">
-                                        Gstin Code is required.
-                                    </div>
-                                </div>
+                        <div class="ui-g-3">
+                            <div class="form-group">
+                                <span class="ui-float-label">
+                                  <input type="text" formControlName="stateCode" pInputText id="stateCode">
+                                  <label for="stateCode">State Code</label>
+                                </span>
                             </div>
                         </div>
 
                         <div class="ui-g-4">
                             <div class="form-group">
                                 <span class="ui-float-label">
-                                  <!-- <input type="text" formControlName="address1" pInputText id="address1"> -->
                                   <textarea [rows]="2" [cols]="30" pInputTextarea formControlName="address1" id="address1"></textarea>
                                   <label for="address1">Address1</label>
                                 </span>
-
-                                <div *ngIf="address1.invalid && (address1.dirty || address1.touched)" class="alert alert-danger">
-                                    <div *ngIf="address1.errors.required">
-                                        Address1 is required.
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <div class="ui-g-4">
                             <div class="form-group">
                                 <span class="ui-float-label">
-                                  <!-- <input type="text" formControlName="address2" pInputText id="address2"> -->
                                   <textarea [rows]="2" [cols]="30" pInputTextarea formControlName="address2" id="address2"></textarea>
                                   <label for="address2">Address2</label>
                                 </span>
 
                             </div>
                         </div>
-                        <div class="ui-g-4">
+                        <div class="ui-g-3">
                             <div class="form-group">
                             <span class="ui-float-label">
-                              <!-- <input type="text" formControlName="address3" pInputText id="address3"> -->
                               <textarea [rows]="2" [cols]="30" pInputTextarea formControlName="address3" id="address3"></textarea>
                               <label for="address3">Address3</label>
                             </span>
                             </div>
                         </div>
 
-                        <div class="ui-g-4">
-                            <div class="form-group">
-                                <span class="ui-float-label">
-                                  <input type="text" formControlName="stateCode" pInputText id="stateCode">
-                                  <label for="stateCode">State Code</label>
-                                </span>
 
-                                <div *ngIf="stateCode.invalid && (stateCode.dirty || stateCode.touched)" class="alert alert-danger">
-                                    <div *ngIf="stateCode.errors.required">
-                                        State Code is required.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="ui-g-1">
+                            <button pButton type="button" style="margin-right: 5px;" icon="fa fa-plus" class="ui-button-success" (click)="addAddress()"></button>
+                            <button pButton type="button" icon="fa fa-trash-o" class="ui-button-danger" [disabled]="i<1" (click)="removeAddress(i)"></button>
+                          </div>
                     </div>
                 </div>
             </div>
@@ -272,7 +227,7 @@
                               <span class="ui-float-label">
                                 <!-- <input type="text" formControlName="currency" pInputText id="currency">
                                 <label for="currency">Currency</label> -->
-                                <p-dropdown [options]="currencyList" formControlName="currency"  id="currency" optionLabel="currencyName"  placeholder="Currency"></p-dropdown>
+                                <p-dropdown [options]="currencyList" formControlName="currency"  placeholder="Currency"></p-dropdown>
                               </span>
 
                                 <div *ngIf="currency.invalid && (currency.dirty || currency.touched)" class="alert alert-danger">
