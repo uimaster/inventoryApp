@@ -3,59 +3,71 @@
   <div class="message error" *ngIf="showError">{{errorMsg}}</div>
   <div class="message success" *ngIf="showSuccess">{{successMsg}}</div>
 
-  <div class="ui-g-3">
-    <div class="form-group">
-      <span class="ui-float-label">
-        <input type="text" formControlName="transactionNo" pInputText id="transactionNo">
-        <label for="transactionNo">Transaction No.</label>
-      </span>
-    </div>
-  </div>
+  <div class="ui-g">
+    <div class="ui-g-9">
 
-  <div class="ui-g-3">
-    <div class="form-group">
-      <span class="ui-float-label">
-        <p-calendar [(ngModel)]="date3" [showIcon]="true" formControlName="transactionDate"></p-calendar>
-        <label for="transactionDate">Transaction Date</label>
-      </span>
-    </div>
-  </div>
-  <div class="ui-g-3">
-    <div class="form-group">
-      <span class="ui-float-label">
-        <input type="text" formControlName="transaction_Amount" pInputText id="transaction_Amount">
-        <label for="transaction_Amount">Total Amount</label>
-      </span>
-    </div>
-  </div>
-  <div class="ui-g-3">
-      <div class="form-group">
-        <span class="ui-float-label">
-          <p-dropdown [options]="supplierList" formControlName="ledgerID"  placeholder="Supplier" [style]="{'width':'95%'}"></p-dropdown>
-        </span>
+      <div class="ui-g-6">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <input type="text" formControlName="transactionNo" pInputText id="transactionNo">
+            <label for="transactionNo">Transaction No.</label>
+          </span>
+        </div>
       </div>
+
+      <div class="ui-g-6">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <p-calendar [(ngModel)]="date3" [showIcon]="true" formControlName="transactionDate"></p-calendar>
+            <label for="transactionDate">Transaction Date</label>
+          </span>
+        </div>
+      </div>
+      <div class="ui-g-6">
+          <div class="form-group">
+            <span class="ui-float-label">
+              <p-dropdown [options]="supplierList" formControlName="ledgerID"  placeholder="Supplier" [style]="{'width':'95%'}"></p-dropdown>
+            </span>
+          </div>
+        </div>
+
+      <div class="ui-g-6">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <input type="text" formControlName="transaction_PendingAmount" pInputText id="transaction_PendingAmount">
+            <label for="transaction_PendingAmount">Total Amount Due</label>
+          </span>
+        </div>
+      </div>
+      <div class="ui-g-6" *ngIf="showCurrency">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <p-dropdown [options]="currencyList" formControlName="currencyID"  placeholder="Currency"></p-dropdown>
+          </span>
+        </div>
+      </div>
+      <!-- <div class="ui-g-4">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <p-calendar [(ngModel)]="date4" [showIcon]="true" formControlName="transactionDueDate"></p-calendar>
+            <label for="transactionDueDate">Transaction Due Date</label>
+          </span>
+        </div>
+      </div> -->
     </div>
-  <div class="ui-g-4">
-    <div class="form-group">
-      <span class="ui-float-label">
-        <input type="text" formControlName="transaction_PendingAmount" pInputText id="transaction_PendingAmount">
-        <label for="transaction_PendingAmount">Total Amount Due</label>
-      </span>
-    </div>
-  </div>
-  <div class="ui-g-4">
-    <div class="form-group">
-      <span class="ui-float-label">
-        <p-dropdown [options]="currencyList" formControlName="currencyID"  placeholder="Currency"></p-dropdown>
-      </span>
-    </div>
-  </div>
-  <div class="ui-g-4">
-    <div class="form-group">
-      <span class="ui-float-label">
-        <p-calendar [(ngModel)]="date4" [showIcon]="true" formControlName="transactionDueDate"></p-calendar>
-        <label for="transactionDueDate">Transaction Due Date</label>
-      </span>
+    <div class="ui-g-3">
+        <div style="border: 3px solid #ddd; width: 100%; min-height: 115px; text-align: center; line-height: 115px;">
+          <h4 style="vertical-align: middle; display: inline-block;">
+            Total Amount: <br/>
+            <span style="font-size:42px;">{{totalAmount}}</span>
+          </h4>
+        </div>
+        <!-- <div class="form-group">
+          <span class="ui-float-label">
+            <input type="text" formControlName="transaction_Amount" pInputText id="transaction_Amount">
+            <label for="transaction_Amount">Total Amount</label>
+          </span>
+        </div> -->
     </div>
   </div>
 
@@ -88,7 +100,7 @@
               </td>
               <td><input type="text" formControlName="itemQty" pInputText></td>
               <td><input type="text" formControlName="itemRate" pInputText></td>
-              <td><input type="text" formControlName="itemAmount" pInputText></td>
+              <td><input type="text" formControlName="itemAmount" [(ngModel)]="totalAmount" pInputText></td>
               <td style="text-align:center">
                 <button pButton type="button" icon="fa fa-plus" class="ui-button-success" (click)="addItemDetails()"></button>
                 <button pButton type="button" icon="fa fa-trash-o" class="ui-button-danger" [disabled]="i < 1" (click)="deleteItemDetails(i)"></button>

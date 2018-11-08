@@ -23,6 +23,8 @@ export class ReturnableChallanComponent implements OnInit {
     localStorage.setItem('transGRNTerms', 'false');
     localStorage.setItem('transInvoiceTerms', 'false');
     localStorage.setItem('transWorkCompletionDetails', 'false');
+    localStorage.setItem('showCurrency', 'false');
+    localStorage.setItem('FormHeader', 'Returnable Challan Edit/Create Form');
   }
 
   getTransactionList() {

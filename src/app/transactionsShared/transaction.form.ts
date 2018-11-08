@@ -45,6 +45,8 @@ export class TransactionFormComponent implements OnInit {
   transGRNTerms = true;
   transInvoiceTerms = true;
   transWorkCompletionDetails = true;
+  showCurrency = true;
+  totalAmount = 0;
 
   date3 = new Date();
   date5 = new Date();
@@ -69,6 +71,7 @@ export class TransactionFormComponent implements OnInit {
     this.transGRNTerms = JSON.parse(localStorage.getItem('transGRNTerms'));
     this.transInvoiceTerms = JSON.parse(localStorage.getItem('transInvoiceTerms'));
     this.transWorkCompletionDetails = JSON.parse(localStorage.getItem('transWorkCompletionDetails'));
+    this.showCurrency = JSON.parse(localStorage.getItem('showCurrency'));
 
     this.getTrasactionDetails(this.transactionId);
     this.getCurrency();
@@ -631,7 +634,7 @@ export class TransactionFormComponent implements OnInit {
         let data = res.data;
         for (let key in data) {
           if (data.hasOwnProperty(key)) {
-              this.itemMasterList.push({label: data[key].itemName + ', ' + data[key].itemCode, value: data[key].stockItemID});
+              this.itemMasterList.push({label: data[key].itemCode + ', ' + data[key].itemName, value: data[key].stockItemID});
           }
         }
       }

@@ -6,8 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./create.component.scss']
 })
 export class CreateEditStoreComponent implements OnInit {
-
-  constructor() { }
+  FormHeader = 'Edit/Create Form';
+  constructor() {
+    this.FormHeader = localStorage.getItem('FormHeader');
+  }
 
   ngOnInit() {
   }

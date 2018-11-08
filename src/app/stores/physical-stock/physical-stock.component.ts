@@ -23,6 +23,8 @@ export class PhysicalStockComponent implements OnInit {
     localStorage.setItem('transGRNTerms', 'false');
     localStorage.setItem('transInvoiceTerms', 'false');
     localStorage.setItem('transWorkCompletionDetails', 'false');
+    localStorage.setItem('showCurrency', 'false');
+    localStorage.setItem('FormHeader', 'Physical Stock RM Edit/Create Form');
   }
 
   getTransactionList() {

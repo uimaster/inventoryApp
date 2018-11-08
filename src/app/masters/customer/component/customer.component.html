@@ -134,7 +134,9 @@
             <div class="ui-g-3">
               <div class="form-group">
                 <span class="ui-float-label">
-                  <p-dropdown [options]="locationList" formControlName="locationName"   placeholder="Location Name"></p-dropdown>
+                  <!-- <p-dropdown [options]="locationList" formControlName="locationName"   placeholder="Location Name"></p-dropdown> -->
+                  <input type="text" formControlName="locationName" pInputText id="locationName">
+                  <label for="locationName">Location Name</label>
                 </span>
               </div>
             </div>

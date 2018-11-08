@@ -22,6 +22,8 @@ export class DelieveryChallanComponent implements OnInit {
     localStorage.setItem('transGRNTerms', 'false');
     localStorage.setItem('transInvoiceTerms', 'false');
     localStorage.setItem('transWorkCompletionDetails', 'false');
+    localStorage.setItem('showCurrency', 'false');
+    localStorage.setItem('FormHeader', 'Good Receipt Note Edit/Create Form');
   }
 
   getTransactionList() {

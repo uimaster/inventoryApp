@@ -21,6 +21,8 @@ export class GnrComponent implements OnInit {
     localStorage.setItem('transGRNTerms', 'true');
     localStorage.setItem('transInvoiceTerms', 'false');
     localStorage.setItem('transWorkCompletionDetails', 'false');
+    localStorage.setItem('showCurrency', 'false');
+    localStorage.setItem('FormHeader', 'Good Receipt Note Edit/Create Form');
   }
 
   getTransactionList() {

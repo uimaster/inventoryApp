@@ -1,5 +1,9 @@
 <p-panel header="Purchase Order Add/Edit Form" class="Tabledata">
-  <form [formGroup]="purchaseOrderForm" (submit)="SavePurchaseOrder(purchaseOrderForm.value)" class="formData">
+  <br/>
+  <app-transaction-form></app-transaction-form>
+  <br/>
+
+  <!-- <form [formGroup]="purchaseOrderForm" (submit)="SavePurchaseOrder(purchaseOrderForm.value)" class="formData">
     <div class="message error" *ngIf="showError">{{errorMsg}}</div>
     <div class="message success" *ngIf="showSuccess">{{successMsg}}</div>
     <div class="ui-g-3">
@@ -179,5 +183,5 @@
       style="margin-right: 10px;"></button>
       <button pButton type="button" label="Cancel" class="ui-button-secondary"></button>
     </p>
-  </form>
+  </form> -->
 </p-panel>
