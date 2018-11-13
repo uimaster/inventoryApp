@@ -9,6 +9,7 @@ import { SalesInvoicePrintComponent } from './sales-invoice-print/sales-invoice-
 import { SalesOrderVerificationComponent } from './sales-order-verification/sales-order-verification.component';
 import { SalesOrderAcceptanceComponent } from './sales-order-acceptance/sales-order-acceptance.component';
 import { SalesInvoiceGenerationComponent } from './sales-invoice-generation/sales-invoice-generation.component';
+import { CreateEditSalesComponent } from './create/create.component';
 
 export const routes: Routes = [
   { path: '',  component: SalesComponent,
@@ -21,7 +22,8 @@ export const routes: Routes = [
           { path: 'salesInvoicePrint', component: SalesInvoicePrintComponent },
           { path: 'salesOrderVerify', component: SalesOrderVerificationComponent },
           { path: 'salesOrderAccept', component: SalesOrderAcceptanceComponent },
-          { path: 'salesInvoiceGenerate', component: SalesInvoiceGenerationComponent }
+          { path: 'salesInvoiceGenerate', component: SalesInvoiceGenerationComponent },
+          { path: 'addEditsales', component: CreateEditSalesComponent },
         ]
       }
     ]

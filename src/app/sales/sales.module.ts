@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SalesComponent } from './sales.component';
 import { SalesRouteModule } from './sales.route.module';
 import { SharedModule } from './../shared/shared.module';
-import { CreateComponent } from './create/create.component';
+import { CreateEditSalesComponent } from './create/create.component';
 import { SalesOrderComponent } from './sales-order/sales-order.component';
 import { PackingListComponent } from './packing-list/packing-list.component';
 import { SalesInvoiceComponent } from './sales-invoice/sales-invoice.component';
@@ -22,7 +22,7 @@ import { TransactionCommonModule } from '../transactionsShared/transaction.modul
   ],
   declarations: [
     SalesComponent,
-    CreateComponent,
+    CreateEditSalesComponent,
     SalesOrderComponent,
     PackingListComponent,
     SalesInvoiceComponent,

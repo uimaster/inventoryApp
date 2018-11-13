@@ -437,13 +437,14 @@ export class TransactionFormComponent implements OnInit {
   }
 
   getTrasactionDetails(id) {
-    if(id > 0) {
+    debugger;
+    if (id > 0) {
     this.trasactionService.getTransactionDetails(id).subscribe( res => {
       if (res) {
         if (res.status === '200') {
           this.detailsData = res.data;
           console.log('purchaseDetails:', this.detailsData);
-          if (this.detailsData[0].length > 0) {
+          // if (this.detailsData[0].length > 0) {
             this.transactionForm.controls['transactionID'].setValue(this.detailsData[0].transactionID);
             this.transactionForm.controls['transactionDate'].setValue(this.detailsData[0].transactionDate);
             this.transactionForm.controls['transactionNo'].setValue(this.detailsData[0].transactionNo);
@@ -459,7 +460,7 @@ export class TransactionFormComponent implements OnInit {
             this.transactionForm.controls['transaction_PendingAmount'].setValue(this.detailsData[0].transaction_PendingAmount);
             this.transactionForm.controls['currencyID'].setValue(this.detailsData[0].currencyID);
             this.transactionForm.controls['transactionDueDate'].setValue(this.detailsData[0].transactionDueDate);
-          }
+         // }
 
           if (this.detailsData[0].transItemDetails.length > 0 && this.transItemDetails) {
             this.ItemData = this.detailsData[0].transItemDetails;

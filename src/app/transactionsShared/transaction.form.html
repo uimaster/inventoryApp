@@ -9,7 +9,7 @@
       <div class="ui-g-6">
         <div class="form-group">
           <span class="ui-float-label">
-            <input type="text" formControlName="transactionNo" pInputText id="transactionNo">
+            <input type="text" formControlName="transactionNo" pInputText id="transactionNo" disabled>
             <label for="transactionNo">Transaction No.</label>
           </span>
         </div>
@@ -31,14 +31,14 @@
           </div>
         </div>
 
-      <div class="ui-g-6">
+      <!-- <div class="ui-g-6">
         <div class="form-group">
           <span class="ui-float-label">
             <input type="text" formControlName="transaction_PendingAmount" pInputText id="transaction_PendingAmount">
             <label for="transaction_PendingAmount">Total Amount Due</label>
           </span>
         </div>
-      </div>
+      </div> -->
       <div class="ui-g-6" *ngIf="showCurrency">
         <div class="form-group">
           <span class="ui-float-label">
