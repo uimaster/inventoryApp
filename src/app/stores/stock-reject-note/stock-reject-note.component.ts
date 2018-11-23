@@ -23,6 +23,9 @@ export class StockRejectNoteComponent implements OnInit {
     localStorage.setItem('transInvoiceTerms', 'false');
     localStorage.setItem('transWorkCompletionDetails', 'false');
     localStorage.setItem('showCurrency', 'false');
+    localStorage.setItem('showLedger', 'false');
+    localStorage.setItem('showSupplier', 'true');
+    localStorage.setItem('transactionTypeId', '6');
     localStorage.setItem('FormHeader', 'Stock Rejection Note Edit/Create Form');
   }
 

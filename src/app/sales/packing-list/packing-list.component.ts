@@ -25,6 +25,9 @@ export class PackingListComponent implements OnInit {
     localStorage.setItem('transInvoiceTerms', 'false');
     localStorage.setItem('transWorkCompletionDetails', 'false');
     localStorage.setItem('showCurrency', 'false');
+    localStorage.setItem('showLedger', 'true');
+    localStorage.setItem('showSupplier', 'false');
+    localStorage.setItem('transactionTypeId', '11');
     localStorage.setItem('FormHeader', 'Packing List Edit/Create Form');
   }
 

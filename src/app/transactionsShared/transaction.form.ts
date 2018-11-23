@@ -52,6 +52,10 @@ export class TransactionFormComponent implements OnInit {
   date5 = new Date();
   date4 = new Date();
 
+  showSupplier: false;
+  showLedger: true;
+  transactionTypeId: number;
+
   constructor(
     private fb: FormBuilder,
     private poService: PurchaseService,
@@ -73,6 +77,10 @@ export class TransactionFormComponent implements OnInit {
     this.transWorkCompletionDetails = JSON.parse(localStorage.getItem('transWorkCompletionDetails'));
     this.showCurrency = JSON.parse(localStorage.getItem('showCurrency'));
 
+    this.showLedger = JSON.parse(localStorage.getItem('showLedger'));
+    this.showSupplier = JSON.parse(localStorage.getItem('showSupplier'));
+    this.transactionTypeId = JSON.parse(localStorage.getItem('transactionTypeId'));
+
     this.getTrasactionDetails(this.transactionId);
     this.getCurrency();
     this.getItemMasterList();
@@ -86,8 +94,8 @@ export class TransactionFormComponent implements OnInit {
       transactionID: [0],
       transactionDate: [],
       transactionNo: [''],
-      transactionTypeId: [1],
-      transactionSeriesID: [1],
+      transactionTypeId: [this.transactionTypeId],
+      transactionSeriesID: [this.transactionTypeId],
       ledgerID: [1],
       transactionLinkID: [0],
       transactionLinkRef: [''],
@@ -437,15 +445,15 @@ export class TransactionFormComponent implements OnInit {
   }
 
   getTrasactionDetails(id) {
-    debugger;
     if (id > 0) {
     this.trasactionService.getTransactionDetails(id).subscribe( res => {
       if (res) {
         if (res.status === '200') {
           this.detailsData = res.data;
-          console.log('purchaseDetails:', this.detailsData);
+          // console.log('purchaseDetails:', this.detailsData);
           // if (this.detailsData[0].length > 0) {
             this.transactionForm.controls['transactionID'].setValue(this.detailsData[0].transactionID);
+            console.log('sdfdsf', this.transactionForm.controls['transactionID'].value);
             this.transactionForm.controls['transactionDate'].setValue(this.detailsData[0].transactionDate);
             this.transactionForm.controls['transactionNo'].setValue(this.detailsData[0].transactionNo);
             this.transactionForm.controls['transactionTypeId'].setValue(this.detailsData[0].transactionTypeId);

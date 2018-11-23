@@ -31,3 +31,7 @@ export const GETTRANSACTIONDETAILS = BASEURL + 'Transactions/GetTransactionDetai
 export const POSTTRANSACTION = BASEURL + 'Transactions/UpdateTransaction';
 export const GETPOAUTHLIST = BASEURL + 'Transactions/getPOAuthList';
 export const POSTPOAUTHLIST = BASEURL + 'Transactions/UpdatePOAuthStatus';
+export const GETSALESORDERVERIFICATIONLIST = BASEURL + 'Transactions/GetSalesOrderDueForVerificationList';
+export const GETSALESGENERATIONLIST = BASEURL + 'Transactions/GetSalesOrderDueForInvoiceList';
+export const POSTSALESORDERVERIFICATION =  BASEURL + 'Transactions/PostSalesOrderVerification';
+export const POSTINVOICEGENERATION =  BASEURL + 'Transactions/PostSalesInvoiceGeneration';

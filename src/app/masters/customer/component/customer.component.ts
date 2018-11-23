@@ -37,10 +37,13 @@ export class CustomerComponent implements OnInit, OnDestroy {
     public cForm;
     ngOnInit() {
       this.customerForm();
-      this._route.params.subscribe((params) => {
+      setTimeout(() => {
+        this._route.params.subscribe((params) => {
           this.customerID = params.id;
           this.getCustomerData(this.customerID);
-      });
+        });
+      }, 1000);
+
       this.getLedgers();
       this.getLocation();
       this.getCurrency();

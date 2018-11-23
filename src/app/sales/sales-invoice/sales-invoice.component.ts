@@ -25,6 +25,9 @@ export class SalesInvoiceComponent implements OnInit {
     localStorage.setItem('transInvoiceTerms', 'true');
     localStorage.setItem('transWorkCompletionDetails', 'false');
     localStorage.setItem('showCurrency', 'false');
+    localStorage.setItem('showLedger', 'true');
+    localStorage.setItem('showSupplier', 'false');
+    localStorage.setItem('transactionTypeId', '12');
     localStorage.setItem('FormHeader', 'Sales Invoice Edit/Create Form');
   }
 

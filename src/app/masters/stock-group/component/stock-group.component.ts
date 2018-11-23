@@ -23,7 +23,7 @@ export class StockGroupComponent implements OnInit, OnDestroy {
     showError = false;
     showSuccess = false;
     public stockGroupLists = [];
-    public activeStatusArr = [{label: 'False', value: 'false'}, {label: 'True', value: 'true'}];
+    public activeStatusArr = [{label: 'False', value: 'False'}, {label: 'True', value: 'True'}];
 
     constructor (
       private stockGroupService: StockGroupService,
@@ -35,10 +35,13 @@ export class StockGroupComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.getStockGroupData();
         this.stockGroupFormC();
-        this._route.params.subscribe((params) => {
+        setTimeout(() => {
+          this._route.params.subscribe((params) => {
             this.stockGroupId = params.id;
             this.getStockData();
-        });
+          });
+        }, 1000);
+
 
 
     }

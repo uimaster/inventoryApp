@@ -25,6 +25,9 @@ export class SalesOrderComponent implements OnInit {
     localStorage.setItem('transInvoiceTerms', 'false');
     localStorage.setItem('transWorkCompletionDetails', 'false');
     localStorage.setItem('showCurrency', 'false');
+    localStorage.setItem('showLedger', 'true');
+    localStorage.setItem('showSupplier', 'false');
+    localStorage.setItem('transactionTypeId', '10');
     localStorage.setItem('FormHeader', 'Sales Order Edit/Create Form');
   }
 

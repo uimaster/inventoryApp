@@ -12,6 +12,7 @@ import { SalesOrderVerificationComponent } from './sales-order-verification/sale
 import { SalesOrderAcceptanceComponent } from './sales-order-acceptance/sales-order-acceptance.component';
 import { SalesInvoiceGenerationComponent } from './sales-invoice-generation/sales-invoice-generation.component';
 import { TransactionCommonModule } from '../transactionsShared/transaction.module';
+import { SalesService } from './sales.service';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { TransactionCommonModule } from '../transactionsShared/transaction.modul
     SalesOrderVerificationComponent,
     SalesOrderAcceptanceComponent,
     SalesInvoiceGenerationComponent
-  ]
+  ],
+  providers: [ SalesService]
 })
 export class SalesModule { }

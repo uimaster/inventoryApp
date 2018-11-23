@@ -24,6 +24,9 @@ export class ReturnableChallanComponent implements OnInit {
     localStorage.setItem('transInvoiceTerms', 'false');
     localStorage.setItem('transWorkCompletionDetails', 'false');
     localStorage.setItem('showCurrency', 'false');
+    localStorage.setItem('showLedger', 'false');
+    localStorage.setItem('showSupplier', 'true');
+    localStorage.setItem('transactionTypeId', '7');
     localStorage.setItem('FormHeader', 'Returnable Challan Edit/Create Form');
   }
 

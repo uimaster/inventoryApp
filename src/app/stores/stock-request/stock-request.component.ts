@@ -23,6 +23,9 @@ export class StockRequestComponent implements OnInit {
     localStorage.setItem('transInvoiceTerms', 'false');
     localStorage.setItem('transWorkCompletionDetails', 'false');
     localStorage.setItem('showCurrency', 'false');
+    localStorage.setItem('showLedger', 'false');
+    localStorage.setItem('showSupplier', 'true');
+    localStorage.setItem('transactionTypeId', '15');
     localStorage.setItem('FormHeader', 'Stock Issue Request Edit/Create Form');
   }
 

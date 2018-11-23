@@ -5,9 +5,12 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss']
 })
-export class CreateComponent implements OnInit {
+export class CreateProdComponent implements OnInit {
 
-  constructor() { }
+  FormHeader = 'Edit/Create Form';
+  constructor() {
+    this.FormHeader = localStorage.getItem('FormHeader');
+  }
 
   ngOnInit() {
   }

@@ -20,8 +20,8 @@ export class LedgerComponent implements OnInit, OnDestroy {
     public ledgerDataSubscription: Subscription;
     public ledger;
     public lForm;
-    private calculatedOnList:any = [];
-    private taxTypeList:any = [];
+    private calculatedOnList: any = [];
+    private taxTypeList: any = [];
     companyId = localStorage.getItem('companyID');
     userId = localStorage.getItem('userID');
     showError = false;
@@ -39,10 +39,13 @@ export class LedgerComponent implements OnInit, OnDestroy {
         this.getCalculatedIn();
         this.getTaxType();
         this.ledgerForm();
-        this._route.params.subscribe((params) => {
+        setTimeout(() => {
+          this._route.params.subscribe((params) => {
             this.ledger_ID = params.id;
             this.getLedgerData();
-        });
+          });
+        }, 1000);
+
 
 
     }
@@ -95,21 +98,12 @@ export class LedgerComponent implements OnInit, OnDestroy {
 
 
     get ledgerName() { return this.lForm.get('ledgerName'); }
-
     get ledgerGroupID() { return this.lForm.get('ledgerGroupID'); }
-
     get rateofTax() { return this.lForm.get('rateofTax'); }
-
-
     get calculatedOn() { return this.lForm.get('calculatedOn'); }
-
-
     get taxType() { return this.lForm.get('taxType'); }
-
     get company_ID() { return this.lForm.get('company_ID'); }
-
     get uSerID() { return this.lForm.get('uSerID'); }
-
 
 
     ngOnDestroy() {
@@ -119,7 +113,7 @@ export class LedgerComponent implements OnInit, OnDestroy {
 
     saveLedger(form: Ledger) {
         this.ledgerService.updateLedger(form).subscribe((res: LedgerResponse) => {
-            if(res.status === '200') {
+            if (res.status === '200') {
                 this.showSuccess = true;
                 setTimeout(() => {
                   this.router.navigate(['/masters/ledgers']);
@@ -130,41 +124,26 @@ export class LedgerComponent implements OnInit, OnDestroy {
         });
     }
 
-    getCalculatedIn(){
-        this.ledgerService.getCalculatedOnList().subscribe((res:any)=>{
-
-            if(res.status === '200') {
-
+    getCalculatedIn() {
+        this.ledgerService.getCalculatedOnList().subscribe(res => {
+            if (res.status === '200') {
                this.calculatedOnList = returnLabel(res.data);
-
-
             }
-
-
-
         });
     }
 
-    getTaxType(){
-        this.ledgerService.getTaxtype().subscribe((res:any)=>{
-
-
-            if(res.status === '200') {
-
+    getTaxType() {
+        this.ledgerService.getTaxtype().subscribe(res => {
+            if (res.status === '200') {
                 let data = res.data;
-                for(let i = 0; i< data.length; i++) {
-                    //the property after data[i]. needs to match the exact name that is on your JSON file... So, name is a different property than Name
+                for (let i = 0; i <  data.length; i++) {
+                    // the property after data[i]. needs to match the exact name that is on your JSON file... So,
+                    // name is a different property than Name
                     this.taxTypeList.push({label: data[i].taxtype, value: data[i].taxTypeID});
                 }
-
-
                // this.taxTypeList = returnLabel(res.data);
-
-
             }
-
         });
-        
     }
 
 }

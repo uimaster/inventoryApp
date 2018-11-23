@@ -23,13 +23,22 @@
           </span>
         </div>
       </div>
-      <div class="ui-g-6">
-          <div class="form-group">
-            <span class="ui-float-label">
-              <p-dropdown [options]="supplierList" formControlName="ledgerID"  placeholder="Supplier" [style]="{'width':'95%'}"></p-dropdown>
-            </span>
-          </div>
+      <!-- <div class="ui-g-6" *ngIf="showSupplier">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <p-dropdown [options]="supplierList" formControlName="supplierID"  placeholder="Supplier" [style]="{'width':'95%'}"></p-dropdown>
+          </span>
         </div>
+      </div> -->
+
+      <!-- <div class="ui-g-6" *ngIf="showLedger"> -->
+      <div class="ui-g-6">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <p-dropdown [options]="ledgerList" formControlName="ledgerID"  placeholder="Customer" [style]="{'width':'95%'}"></p-dropdown>
+          </span>
+        </div>
+      </div>
 
       <!-- <div class="ui-g-6">
         <div class="form-group">

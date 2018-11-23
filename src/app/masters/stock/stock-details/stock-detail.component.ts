@@ -66,11 +66,14 @@ export class StockDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this._route.params.subscribe(params => {
-      this.stockItemId = params.id;
-      // this.getLedgerData();
-      this.getStockData(this.stockItemId);
-    });
+    setTimeout(() => {
+      this._route.params.subscribe(params => {
+        this.stockItemId = params.id;
+        // this.getLedgerData();
+        this.getStockData(this.stockItemId);
+      });
+    }, 2000);
+
 
     this.getLedgerData();
     this.getUnitData();
