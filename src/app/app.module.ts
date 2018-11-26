@@ -4,7 +4,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ChartsModule } from 'ng2-charts';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { RestPasswordComponent } from './dump-components/reset-password/rest-password.component';
+// import { RestPasswordComponent } from './dump-components/reset-password/rest-password.component';
 import { AppRouteModule } from './app.route.module';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule} from '@angular/common/http';
@@ -21,7 +21,7 @@ import { SharedModule} from './shared/shared.module';
   declarations: [
     AppComponent,
     DashboardComponent,
-    RestPasswordComponent,
+    // RestPasswordComponent,
     FooterComponent
   ],
   imports: [

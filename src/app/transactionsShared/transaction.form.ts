@@ -679,4 +679,24 @@ export class TransactionFormComponent implements OnInit {
       }
     });
   }
+
+
+
+  // GET TOTAL AMOUNT //
+  getAmount() {
+    const itemfrmArray = <FormArray>this.transactionForm.get('transItemDetails');
+    let itemRate = itemfrmArray.controls[0].get('itemRate').value;
+    let itemQnt = itemfrmArray.controls[0].get('itemQty').value;
+    let itemAmount = itemRate * itemQnt;
+    itemfrmArray.controls[0].get('itemAmount').setValue(itemAmount);
+
+
+    const ledgerfrmArray = <FormArray>this.transactionForm.get('transLedgerDetails');
+    let taxRate = ledgerfrmArray.controls[0].get('taxRate').value;
+    let onePercnt = itemAmount / 100;
+    let ledgerAmnt = taxRate * onePercnt;
+    ledgerfrmArray.controls[0].get('ledgerAmount').setValue(ledgerAmnt);
+    this.totalAmount = itemAmount + ledgerAmnt;
+    // console.log('onePercnt:', onePercnt + '<br/>' + 'totalAmount:', this.totalAmount );
+  }
 }

@@ -70,7 +70,7 @@ export class LedgerComponent implements OnInit, OnDestroy {
                 this.lForm.controls['taxType'].setValue(this.ledger['taxType']);
                 this.lForm.controls['company_ID'].setValue(this.ledger['company_ID']);
                 this.lForm.controls['uSerID'].setValue(this.ledger['uSerID']);
-                this.lForm.controls['ledger_ID'].setValue(this.ledger_ID);
+                this.lForm.controls['ledger_ID'].setValue(JSON.parse(this.ledger_ID));
             }
 
 
@@ -87,7 +87,7 @@ export class LedgerComponent implements OnInit, OnDestroy {
             ledger_ID: [0],
             ledgerName: ['', [Validators.required, Validators.minLength(4)]],
             ledgerGroupID: [0],
-            rateofTax: ['', Validators.required],
+            rateofTax: [0, Validators.required],
             calculatedOn: ['', Validators.required],
             taxType: ['', Validators.required],
             company_ID: [this.companyId],
