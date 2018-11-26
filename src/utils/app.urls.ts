@@ -35,3 +35,4 @@ export const GETSALESORDERVERIFICATIONLIST = BASEURL + 'Transactions/GetSalesOrd
 export const GETSALESGENERATIONLIST = BASEURL + 'Transactions/GetSalesOrderDueForInvoiceList';
 export const POSTSALESORDERVERIFICATION =  BASEURL + 'Transactions/PostSalesOrderVerification';
 export const POSTINVOICEGENERATION =  BASEURL + 'Transactions/PostSalesInvoiceGeneration';
+export const GETTAXTYPE = BASEURL + 'Ledger/GetTaxLedgerList';

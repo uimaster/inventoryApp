@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { PurchaseService } from '../purchase/purchase.service';
 import { StockService } from '../masters/stock/services/stock.service';
@@ -55,6 +55,8 @@ export class TransactionFormComponent implements OnInit {
   showSupplier: false;
   showLedger: true;
   transactionTypeId: number;
+  gstTaxList = [];
+  // @ViewChild('taxSelect') taxSelect: ElementRef;
 
   constructor(
     private fb: FormBuilder,
@@ -88,6 +90,7 @@ export class TransactionFormComponent implements OnInit {
     this.getLedgers();
     this.createTransactionForm();
     this.getSupplier();
+    this.getGstRate();
   }
   createTransactionForm() {
     this.transactionForm = this.fb.group ({
@@ -339,11 +342,13 @@ export class TransactionFormComponent implements OnInit {
         transactionItemSerialNo: [0]
       })
     );
+    console.log(stockItemArray);
   }
 
   deleteItemDetails(index) {
     const stockItemArray = <FormArray>this.transactionForm.get('transItemDetails');
     stockItemArray.removeAt(index);
+    this.getAmount();
   }
 
 
@@ -665,6 +670,21 @@ export class TransactionFormComponent implements OnInit {
     });
   }
 
+  getGstRate() {
+    this.trasactionService.getTaxType().subscribe( res => {
+      if (res && res.status === '200') {
+        // this.ledgerList = res.data;
+
+        let data = res.data;
+        for (let key in data) {
+          if (data.hasOwnProperty(key)) {
+              this.gstTaxList.push({label: data[key].ledgerName, value: data[key].ledger_ID, rateofTax: data[key].rateofTax });
+          }
+        }
+      }
+    });
+  }
+
   getLedgers() {
     this.ledgerService.getAllLedgers().subscribe( res => {
       if (res && res.status === '200') {
@@ -680,23 +700,33 @@ export class TransactionFormComponent implements OnInit {
     });
   }
 
+  getTaxRate(data) {
+    const ledgerfrmArray = <FormArray>this.transactionForm.get('transLedgerDetails');
+    ledgerfrmArray.controls[0].get('taxRate').setValue(data.selectedOption.rateofTax);
+    this.getAmount();
+  }
 
 
   // GET TOTAL AMOUNT //
   getAmount() {
     const itemfrmArray = <FormArray>this.transactionForm.get('transItemDetails');
-    let itemRate = itemfrmArray.controls[0].get('itemRate').value;
-    let itemQnt = itemfrmArray.controls[0].get('itemQty').value;
-    let itemAmount = itemRate * itemQnt;
-    itemfrmArray.controls[0].get('itemAmount').setValue(itemAmount);
+    var itemTotalAmount = 0;
+
+    for (let i = 0; i < itemfrmArray.length; i++) {
+    const itemRate = itemfrmArray.controls[i].get('itemRate').value;
+    const itemQnt = itemfrmArray.controls[i].get('itemQty').value;
+    const itemAmount = itemRate * itemQnt;
+    itemfrmArray.controls[i].get('itemAmount').setValue(itemAmount);
+    itemTotalAmount = itemTotalAmount + itemAmount;
+    console.log(itemTotalAmount);
+    }
 
 
     const ledgerfrmArray = <FormArray>this.transactionForm.get('transLedgerDetails');
-    let taxRate = ledgerfrmArray.controls[0].get('taxRate').value;
-    let onePercnt = itemAmount / 100;
-    let ledgerAmnt = taxRate * onePercnt;
+    const taxRate = ledgerfrmArray.controls[0].get('taxRate').value;
+    const onePercnt = itemTotalAmount / 100;
+    const ledgerAmnt = taxRate * onePercnt;
     ledgerfrmArray.controls[0].get('ledgerAmount').setValue(ledgerAmnt);
-    this.totalAmount = itemAmount + ledgerAmnt;
-    // console.log('onePercnt:', onePercnt + '<br/>' + 'totalAmount:', this.totalAmount );
+    this.totalAmount = itemTotalAmount + ledgerAmnt;
   }
 }

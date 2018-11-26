@@ -57,4 +57,14 @@ export class TransactionSerivices {
     .catch((error) => Observable.throw('server Error.'));
   }
 
+  // GET CURRENCY LIST //
+  getTaxType(): Observable<any> {
+    const params = new HttpParams().set('CompanyID', '1');
+    return this.http.get(urls.GETTAXTYPE, {params})
+    .map((res: any) => {
+        return res;
+    })
+    .catch((error) => Observable.throw('server Error.'));
+  }
+
 }
