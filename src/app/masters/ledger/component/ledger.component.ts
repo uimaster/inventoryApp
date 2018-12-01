@@ -71,6 +71,7 @@ export class LedgerComponent implements OnInit, OnDestroy {
                 this.lForm.controls['company_ID'].setValue(this.ledger['company_ID']);
                 this.lForm.controls['uSerID'].setValue(this.ledger['uSerID']);
                 this.lForm.controls['ledger_ID'].setValue(JSON.parse(this.ledger_ID));
+                this.lForm.controls['gstRate'].setValue(this.ledger['gstRate']);
             }
 
 
@@ -91,7 +92,8 @@ export class LedgerComponent implements OnInit, OnDestroy {
             calculatedOn: ['', Validators.required],
             taxType: ['', Validators.required],
             company_ID: [this.companyId],
-            uSerID: [this.userId]
+            uSerID: [this.userId],
+            gstRate: [0]
 
         });
     }
@@ -104,6 +106,8 @@ export class LedgerComponent implements OnInit, OnDestroy {
     get taxType() { return this.lForm.get('taxType'); }
     get company_ID() { return this.lForm.get('company_ID'); }
     get uSerID() { return this.lForm.get('uSerID'); }
+    get gstRate() { return this.lForm.get('gstRate'); }
+
 
 
     ngOnDestroy() {

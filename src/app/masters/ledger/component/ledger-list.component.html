@@ -9,7 +9,7 @@
           <th>Name</th>
           <th>Group</th>
           <th>Rate of Tax</th>
-          <th>Tax Type</th>
+          <th>GST Rate</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -21,7 +21,7 @@
             </td>
             <td>{{ledger.ledgerGroupName}}</td>
             <td>{{ledger.rateofTax}}</td>
-            <td>{{ledger.taxType}}</td>
+            <td>{{ledger.gstRate}}</td>
             <td>
               <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="setLedger(ledger,ledger.ledger_ID)"></button>
               <button pButton type="button" label="Delete" class="ui-button-danger"></button>

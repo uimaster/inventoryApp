@@ -67,4 +67,24 @@ export class TransactionSerivices {
     .catch((error) => Observable.throw('server Error.'));
   }
 
+   // GET getPendingPOList LIST //
+   getPendingPOList(): Observable<any> {
+    const params = new HttpParams().set('CompanyID', '1');
+    return this.http.get(urls.GETPENDINGPOLIST, {params})
+    .map((res: any) => {
+        return res;
+    })
+    .catch((error) => Observable.throw('server Error.'));
+  }
+
+   // GET getPendingSalesOrderList LIST //
+   getPendingSalesOrderList(): Observable<any> {
+    const params = new HttpParams().set('CompanyID', '1');
+    return this.http.get(urls.GETPENDINGSALESORDERLIST, {params})
+    .map((res: any) => {
+        return res;
+    })
+    .catch((error) => Observable.throw('server Error.'));
+  }
+
 }

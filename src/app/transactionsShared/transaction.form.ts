@@ -30,6 +30,8 @@ export class TransactionFormComponent implements OnInit {
   public itemMasterList = [];
   public locationList = [];
   public ledgerList = [];
+  public salesOrderPendingList = [];
+  public POpendingList = [];
 
   public boxDetailData = [];
   public batchDetailData = [];
@@ -83,19 +85,24 @@ export class TransactionFormComponent implements OnInit {
     this.showSupplier = JSON.parse(localStorage.getItem('showSupplier'));
     this.transactionTypeId = JSON.parse(localStorage.getItem('transactionTypeId'));
 
-    this.getTrasactionDetails(this.transactionId);
-    this.getCurrency();
-    this.getItemMasterList();
-    this.getLocation();
-    this.getLedgers();
-    this.createTransactionForm();
-    this.getSupplier();
-    this.getGstRate();
+    // setTimeout(() => {
+      this.getCurrency();
+      this.getItemMasterList();
+      this.getLocation();
+      this.getLedgers();
+      this.createTransactionForm();
+      this.getSupplier();
+      this.getGstRate();
+      this.getPendingSalesOrderList();
+      this.getPOPendingList();
+      this.getTrasactionDetails(this.transactionId);
+    // }, 0);
+
   }
   createTransactionForm() {
     this.transactionForm = this.fb.group ({
       transactionID: [0],
-      transactionDate: [],
+      transactionDate: [0],
       transactionNo: [''],
       transactionTypeId: [this.transactionTypeId],
       transactionSeriesID: [this.transactionTypeId],
@@ -146,6 +153,7 @@ export class TransactionFormComponent implements OnInit {
   get SCHREF() {
     return this.transactionForm.get(['transBoxDetails'], 0, ['SCHREF']);
   }
+
 
   createBatchDetails() {
     if (this.transBatchDetails) {
@@ -297,6 +305,11 @@ export class TransactionFormComponent implements OnInit {
   get transactionDueDate() {
     return this.transactionForm.get('transactionDueDate');
   }
+
+  get transactionLinkID() {
+    return this.transactionForm.get('transactionLinkID');
+  }
+
   createItemDetails() {
     if (this.transItemDetails) {
       return this.fb.group({
@@ -452,14 +465,13 @@ export class TransactionFormComponent implements OnInit {
   getTrasactionDetails(id) {
     if (id > 0) {
     this.trasactionService.getTransactionDetails(id).subscribe( res => {
-      if (res) {
+
         if (res.status === '200') {
           this.detailsData = res.data;
-          // console.log('purchaseDetails:', this.detailsData);
+          console.log('purchaseDetails:', this.detailsData[0].transactionID);
           // if (this.detailsData[0].length > 0) {
             this.transactionForm.controls['transactionID'].setValue(this.detailsData[0].transactionID);
-            console.log('sdfdsf', this.transactionForm.controls['transactionID'].value);
-            this.transactionForm.controls['transactionDate'].setValue(this.detailsData[0].transactionDate);
+            this.transactionForm.controls['transactionDate'].setValue(new Date(this.detailsData[0].transactionDate));
             this.transactionForm.controls['transactionNo'].setValue(this.detailsData[0].transactionNo);
             this.transactionForm.controls['transactionTypeId'].setValue(this.detailsData[0].transactionTypeId);
             this.transactionForm.controls['transactionSeriesID'].setValue(this.detailsData[0].transactionSeriesID);
@@ -473,6 +485,8 @@ export class TransactionFormComponent implements OnInit {
             this.transactionForm.controls['transaction_PendingAmount'].setValue(this.detailsData[0].transaction_PendingAmount);
             this.transactionForm.controls['currencyID'].setValue(this.detailsData[0].currencyID);
             this.transactionForm.controls['transactionDueDate'].setValue(this.detailsData[0].transactionDueDate);
+            this.totalAmount = this.detailsData[0].transaction_Amount;
+            console.log(this.totalAmount);
          // }
 
           if (this.detailsData[0].transItemDetails.length > 0 && this.transItemDetails) {
@@ -581,7 +595,7 @@ export class TransactionFormComponent implements OnInit {
           }
 
         }
-      }
+
     });
     }
   }
@@ -700,11 +714,42 @@ export class TransactionFormComponent implements OnInit {
     });
   }
 
+  getPOPendingList() {
+    this.trasactionService.getPendingPOList().subscribe( res => {
+      if (res && res.status === '200') {
+        // this.ledgerList = res.data;
+
+        let data = res.data;
+        for (let key in data) {
+          if (data.hasOwnProperty(key)) {
+              this.POpendingList.push({label: data[key].ledgerName, value: data[key].ledger_ID});
+          }
+        }
+      }
+    });
+  }
+
+  getPendingSalesOrderList() {
+    this.trasactionService.getPendingSalesOrderList().subscribe( res => {
+      if (res && res.status === '200') {
+        // this.ledgerList = res.data;
+
+        let data = res.data;
+        for (let key in data) {
+          if (data.hasOwnProperty(key)) {
+              this.salesOrderPendingList.push({label: data[key].ledgerName, value: data[key].ledger_ID});
+          }
+        }
+      }
+    });
+  }
+
   getTaxRate(data) {
     const ledgerfrmArray = <FormArray>this.transactionForm.get('transLedgerDetails');
     ledgerfrmArray.controls[0].get('taxRate').setValue(data.selectedOption.rateofTax);
     this.getAmount();
   }
+
 
 
   // GET TOTAL AMOUNT //

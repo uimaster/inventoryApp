@@ -69,6 +69,22 @@
         </div>
       </div>
 
+      <div class="ui-g-6">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <input type="text" formControlName="gstRate" pInputText id="gstRate" />
+            <label for="gstRate">GST Rate</label>
+          </span>
+          <div *ngIf="gstRate.invalid && (gstRate.dirty || gstRate.touched)" class="alert alert-danger">
+            <div *ngIf="gstRate.errors.required">
+              This field is required.
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
     </div>
 
     <br/>

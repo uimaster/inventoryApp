@@ -53,8 +53,6 @@ export class CustomerComponent implements OnInit, OnDestroy {
         this.customerDataSubscription = this.customerService.getCustomerData(this.customerID).subscribe((res: CustomerResponse) => {
             this.customer = res.data[0];
 
-
-
             if (this.customerID && this.customer) {
 
                 this.cForm.controls['customerName'].setValue(this.customer['customerName']);
@@ -70,7 +68,6 @@ export class CustomerComponent implements OnInit, OnDestroy {
                 controlArray.controls[0].get('taxRate').setValue(this.customer['customerTaxes'][0].taxRate);
                 controlArray.controls[0].get('calculatedOn').setValue(this.customer['customerTaxes'][0].calculatedOn);
 
-
                 const controlArrayAddress = <FormArray> this.cForm.get('customerAddList');
                 controlArrayAddress.controls[0].get('locationName').setValue(this.customer['customerAddList'][0].locationName);
                 controlArrayAddress.controls[0].get('address1').setValue(this.customer['customerAddList'][0].address1);
@@ -80,7 +77,6 @@ export class CustomerComponent implements OnInit, OnDestroy {
                 controlArrayAddress.controls[0].get('gstincode').setValue(this.customer['customerAddList'][0].gstincode);
                 controlArrayAddress.controls[0].get('stateCode').setValue(this.customer['customerAddList'][0].stateCode);
 
-
                 const controlArrayTerms = <FormArray> this.cForm.get('customerTerms');
                 controlArrayTerms.controls[0].get('paymentTerms').setValue(this.customer['customerTerms'][0].paymentTerms);
                 controlArrayTerms.controls[0].get('currency').setValue(this.customer['customerTerms'][0].currency);
@@ -89,29 +85,23 @@ export class CustomerComponent implements OnInit, OnDestroy {
                 controlArrayTerms.controls[0].get('freight').setValue(this.customer['customerTerms'][0].freight);
                 controlArrayTerms.controls[0].get('deliveryTerms').setValue(this.customer['customerTerms'][0].deliveryTerms);
             }
-
         });
-
-
     }
 
     customerForm() {
-        this.cForm = this._formBuilder.group({
-            customer_ID: [0],
-            customerName: ['', [Validators.required, Validators.minLength(4)]],
-            uSerID: [this.userId],
-            companyID: [this.companyId],
-            EmailID: ['', Validators.required],
-            contactperson: ['', Validators.required],
-            contactMobile: ['', Validators.required],
-            landLineNos: ['', Validators.required],
-            customerTaxes:  this._formBuilder.array([this.createcustomerTaxes()]),
-            customerAddList:  this._formBuilder.array([this.createCustomerAddList()]),
-            customerTerms:  this._formBuilder.array([this.createCustomerTerms()]),
-
-
-
-        });
+      this.cForm = this._formBuilder.group({
+          customer_ID: [0],
+          customerName: ['', [Validators.required, Validators.minLength(4)]],
+          uSerID: [this.userId],
+          companyID: [this.companyId],
+          EmailID: ['', Validators.required],
+          contactperson: ['', Validators.required],
+          contactMobile: ['', Validators.required],
+          landLineNos: ['', Validators.required],
+          customerTaxes:  this._formBuilder.array([this.createcustomerTaxes()]),
+          customerAddList:  this._formBuilder.array([this.createCustomerAddList()]),
+          customerTerms:  this._formBuilder.array([this.createCustomerTerms()]),
+      });
     }
 
     get customerName() { return this.cForm.get('customerName'); }
@@ -233,7 +223,7 @@ export class CustomerComponent implements OnInit, OnDestroy {
     }
 
     getLedgers() {
-      this.ledgerService.getAllLedgers().subscribe( res => {
+      this.customerService.getTaxType().subscribe( res => {
         if (res && res.status === '200') {
           // this.ledgerList = res.data;
           let data = res.data;

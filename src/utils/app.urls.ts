@@ -1,6 +1,8 @@
 
-export const BASEURL = 'http://apietrax.iflotech.in/api/'; // Dev base url
+// export const BASEURL = 'http://apietrax.iflotech.in/api/'; // Dev base url
 // export const BASEURL = 'http://192.168.1.20:90/api/'; // Live base url
+export const BASEURL = 'http://192.168.1.60:90/api/'; // Live base url
+
 
 // Masters urls //
 export const LOGIN_URL = BASEURL + 'jwtauth/Token';
@@ -36,3 +38,5 @@ export const GETSALESGENERATIONLIST = BASEURL + 'Transactions/GetSalesOrderDueFo
 export const POSTSALESORDERVERIFICATION =  BASEURL + 'Transactions/PostSalesOrderVerification';
 export const POSTINVOICEGENERATION =  BASEURL + 'Transactions/PostSalesInvoiceGeneration';
 export const GETTAXTYPE = BASEURL + 'Ledger/GetTaxLedgerList';
+export const GETPENDINGPOLIST = BASEURL + 'Transactions/getPendingPOList';
+export const GETPENDINGSALESORDERLIST = BASEURL + 'Transactions/GetPendingSalesOrderList';
