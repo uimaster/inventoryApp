@@ -98,7 +98,7 @@
                         <div class="ui-g-4">
                             <div class="form-group">
                                 <span class="ui-float-label">
-                                  <input type="text" formControlName="taxRate" pInputText id="taxRate">
+                                  <input type="number" formControlName="taxRate" pInputText id="taxRate">
                                   <label for="taxRate">Tax Rate</label>
                                 </span>
                             </div>
@@ -161,7 +161,7 @@
                         <div class="ui-g-3">
                             <div class="form-group">
                                 <span class="ui-float-label">
-                                  <input type="text" formControlName="stateCode" pInputText id="stateCode">
+                                  <input type="number" formControlName="stateCode" pInputText id="stateCode">
                                   <label for="stateCode">State Code</label>
                                 </span>
                             </div>
@@ -226,9 +226,7 @@
                         <div class="ui-g-4">
                             <div class="form-group">
                               <span class="ui-float-label">
-                                <!-- <input type="text" formControlName="currency" pInputText id="currency">
-                                <label for="currency">Currency</label> -->
-                                <p-dropdown [options]="currencyList" formControlName="currency"  placeholder="Currency"></p-dropdown>
+                                  <p-dropdown [options]="currencyList" formControlName="currency"></p-dropdown>
                               </span>
 
                                 <div *ngIf="currency.invalid && (currency.dirty || currency.touched)" class="alert alert-danger">

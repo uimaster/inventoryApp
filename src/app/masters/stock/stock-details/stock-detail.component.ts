@@ -93,6 +93,7 @@ export class StockDetailComponent implements OnInit, OnDestroy {
         if (this.stockItemId && this.stock) {
           this.sForm.controls['itemName'].setValue(this.stock['itemName']);
           this.sForm.controls['itemCode'].setValue(this.stock['itemCode']);
+          this.sForm.controls['stockItemID'].setValue(this.stock['stockItemID']);
           this.sForm.controls['stockGroup_ID'].setValue(
             this.stock['stockGroup_ID']
           );
@@ -429,7 +430,7 @@ export class StockDetailComponent implements OnInit, OnDestroy {
         let data = res.data;
         for (let key in data) {
           if (data.hasOwnProperty(key)) {
-              this.locationList.push({label: data[key].locationName, value: data[key].locationID});
+              this.locationList.push({label: data[key].locationName, value: data[key].locationName});
           }
         }
       }
@@ -443,7 +444,7 @@ export class StockDetailComponent implements OnInit, OnDestroy {
         let data = res.data;
         for (let key in data) {
           if (data.hasOwnProperty(key)) {
-              this.supplierlist.push({label: data[key].supplierName, value: data[key].supplier_ID});
+              this.supplierlist.push({label: data[key].supplierName, value: data[key].supplierName});
           }
         }
       }

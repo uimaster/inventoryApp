@@ -29,6 +29,7 @@ export class SalesInvoiceComponent implements OnInit {
     localStorage.setItem('showSupplier', 'false');
     localStorage.setItem('transactionTypeId', '12');
     localStorage.setItem('FormHeader', 'Sales Invoice Edit/Create Form');
+    localStorage.setItem('transationLinkRef', 'true');
   }
 
   getSalesOrderList() {
@@ -40,11 +41,17 @@ export class SalesInvoiceComponent implements OnInit {
   }
 
   addSalesInvoice() {
+    let backUrl = this.router.url;
+    localStorage.setItem('rollBackUrl', backUrl);
+
     this.router.navigate(['/sales/addEditsales']);
     localStorage.setItem('transactionID', '0');
   }
 
   editSalesInvoice(id) {
+    let backUrl = this.router.url;
+    localStorage.setItem('rollBackUrl', backUrl);
+
     localStorage.setItem('transactionID', id);
     this.router.navigate(['/sales/addEditsales']);
   }

@@ -29,6 +29,7 @@ export class PackingListComponent implements OnInit {
     localStorage.setItem('showSupplier', 'false');
     localStorage.setItem('transactionTypeId', '11');
     localStorage.setItem('FormHeader', 'Packing List Edit/Create Form');
+    localStorage.setItem('transationLinkRef', 'true');
   }
 
   getSalesOrderList() {
@@ -40,11 +41,16 @@ export class PackingListComponent implements OnInit {
   }
 
   addPackingList() {
+    let backUrl = this.router.url;
+    localStorage.setItem('rollBackUrl', backUrl);
+
     this.router.navigate(['/sales/addEditsales']);
     localStorage.setItem('transactionID', '0');
   }
 
   editPackingList(id) {
+    let backUrl = this.router.url;
+    localStorage.setItem('rollBackUrl', backUrl);
     localStorage.setItem('transactionID', id);
     this.router.navigate(['/sales/addEditsales']);
   }

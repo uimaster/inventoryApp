@@ -103,8 +103,8 @@ export class SupplierComponent implements OnInit, OnDestroy {
         this.suForm = this._formBuilder.group({
             supplier_ID: [0],
             supplierName: ['', [Validators.required, Validators.minLength(4)]],
-            uSerID: [this.userId],
-            companyID: [this.companyId],
+            uSerID: [JSON.parse(this.userId)],
+            companyID: [JSON.parse(this.companyId)],
             contactperson: [null, Validators.required],
             contactMobile: [null, Validators.required],
             landLineNos: [null, Validators.required],
@@ -146,7 +146,7 @@ export class SupplierComponent implements OnInit, OnDestroy {
         return this._formBuilder.group({
             taxLedgerID: [''],
             taxLedgerName: [''],
-            taxRate: [''],
+            taxRate: [0],
             calculatedOn: ['NA']
         });
     }
@@ -157,7 +157,7 @@ export class SupplierComponent implements OnInit, OnDestroy {
         this._formBuilder.group({
           taxLedgerID: [''],
           taxLedgerName: [''],
-          taxRate: [''],
+          taxRate: [0],
           calculatedOn: ['NA']
         })
       );
@@ -178,7 +178,7 @@ export class SupplierComponent implements OnInit, OnDestroy {
             address3: [''],
             state: [''],
             gstincode: [''],
-            stateCode: ['']
+            stateCode: [0]
         });
     }
 
@@ -192,7 +192,7 @@ export class SupplierComponent implements OnInit, OnDestroy {
             address3: [''],
             state: [''],
             gstincode: [''],
-            stateCode: ['']
+            stateCode: [0]
         })
       );
     }
@@ -261,12 +261,10 @@ export class SupplierComponent implements OnInit, OnDestroy {
     getCurrency() {
       this.stockService.getCurrency().subscribe( res => {
         if (res && res.status === '200') {
-          // this.currencyList = res.data;
-
           let data = res.data;
-          for (let key in data) {
-            if (data.hasOwnProperty(key)) {
-                this.currencyList.push({label: data[key].currencyName, value: data[key].currencyID});
+          for ( let key in data) {
+            if(data.hasOwnProperty(key)) {
+              this.currencyList.push({label: data[key].currencyName});
             }
           }
         }

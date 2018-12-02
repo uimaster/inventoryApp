@@ -54,11 +54,11 @@
       <div class="ui-g-4">
           <div class="form-group">
             <span class="ui-float-label">
-              <input type="text" formControlName="EmailID" pInputText id="EmailID">
-              <label for="EmailID">Email Id</label>
+              <input type="text" formControlName="emailID" pInputText id="emailID">
+              <label for="emailID">Email Id</label>
             </span>
-              <div *ngIf="EmailID.invalid && (EmailID.dirty || EmailID.touched)" class="alert alert-danger">
-                  <div *ngIf="EmailID.errors.required">
+              <div *ngIf="emailID.invalid && (emailID.dirty || emailID.touched)" class="alert alert-danger">
+                  <div *ngIf="emailID.errors.required">
                       This field is required.
                   </div>
               </div>
@@ -92,14 +92,14 @@
             <div class="ui-g-4">
               <div class="form-group">
                 <span class="ui-float-label">
-                  <p-dropdown [options]="ledgerList" formControlName="taxLedgerName" placeholder="Tax Ledger Name"></p-dropdown>
+                  <p-dropdown [options]="ledgerList" formControlName="taxLedgerID" placeholder="Tax Ledger Name"></p-dropdown>
                 </span>
               </div>
             </div>
             <div class="ui-g-4">
               <div class="form-group">
                 <span class="ui-float-label">
-                  <input type="text" formControlName="taxRate" pInputText id="taxRate">
+                  <input type="number" formControlName="taxRate" pInputText id="taxRate">
                   <label for="taxRate">Tax Rate</label>
                 </span>
               </div>
@@ -161,7 +161,7 @@
             <div class="ui-g-3">
                 <div class="form-group">
                   <span class="ui-float-label">
-                    <input type="text" formControlName="stateCode" pInputText id="stateCode">
+                    <input type="number" formControlName="stateCode" pInputText id="stateCode">
                     <label for="stateCode">State Code</label>
                   </span>
                 </div>
@@ -223,7 +223,7 @@
             <div class="ui-g-4">
               <div class="form-group">
                 <span class="ui-float-label">
-                  <p-dropdown [options]="currencyList" formControlName="currency"  id="currency" optionLabel="currencyName"  placeholder="Currency"></p-dropdown>
+                  <p-dropdown [options]="currencyList" formControlName="currency"></p-dropdown>
                   <!-- <input type="text" formControlName="currency" pInputText id="currency">
                   <label for="currency">Currency</label> -->
                 </span>

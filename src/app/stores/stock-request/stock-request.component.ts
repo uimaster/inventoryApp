@@ -27,6 +27,7 @@ export class StockRequestComponent implements OnInit {
     localStorage.setItem('showSupplier', 'true');
     localStorage.setItem('transactionTypeId', '15');
     localStorage.setItem('FormHeader', 'Stock Issue Request Edit/Create Form');
+    localStorage.setItem('transationLinkRef', 'false');
   }
 
   getTransactionList() {
@@ -41,11 +42,17 @@ export class StockRequestComponent implements OnInit {
   }
 
   addRecord() {
+    let backUrl = this.router.url;
+    localStorage.setItem('rollBackUrl', backUrl);
+
     this.router.navigate(['/stores/addEditStore']);
     localStorage.setItem('transactionID', '0');
   }
 
   editRecord(id) {
+    let backUrl = this.router.url;
+    localStorage.setItem('rollBackUrl', backUrl);
+
     localStorage.setItem('transactionID', id);
     this.router.navigate(['/stores/addEditStore']);
   }

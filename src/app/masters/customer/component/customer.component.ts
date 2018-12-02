@@ -52,7 +52,6 @@ export class CustomerComponent implements OnInit, OnDestroy {
     getCustomerData(customerId) {
         this.customerDataSubscription = this.customerService.getCustomerData(this.customerID).subscribe((res: CustomerResponse) => {
             this.customer = res.data[0];
-
             if (this.customerID && this.customer) {
 
                 this.cForm.controls['customerName'].setValue(this.customer['customerName']);
@@ -61,7 +60,7 @@ export class CustomerComponent implements OnInit, OnDestroy {
                 this.cForm.controls['landLineNos'].setValue(this.customer['landLineNos']);
                 this.cForm.controls['contactperson'].setValue(this.customer['contactperson']);
                 this.cForm.controls['customer_ID'].setValue(this.customer['customer_ID']);
-                this.cForm.controls['EmailID'].setValue(this.customer['EmailID']);
+                this.cForm.controls['emailID'].setValue(this.customer['emailID']);
                 const controlArray = <FormArray> this.cForm.get('customerTaxes');
                 controlArray.controls[0].get('taxLedgerID').setValue(this.customer['customerTaxes'][0].taxLedgerID);
                 controlArray.controls[0].get('taxLedgerName').setValue(this.customer['customerTaxes'][0].taxLedgerName);
@@ -92,9 +91,9 @@ export class CustomerComponent implements OnInit, OnDestroy {
       this.cForm = this._formBuilder.group({
           customer_ID: [0],
           customerName: ['', [Validators.required, Validators.minLength(4)]],
-          uSerID: [this.userId],
-          companyID: [this.companyId],
-          EmailID: ['', Validators.required],
+          uSerID: [JSON.parse(this.userId)],
+          companyID: [JSON.parse(this.companyId)],
+          emailID: ['', Validators.required],
           contactperson: ['', Validators.required],
           contactMobile: ['', Validators.required],
           landLineNos: ['', Validators.required],
@@ -108,7 +107,7 @@ export class CustomerComponent implements OnInit, OnDestroy {
     get contactperson() { return this.cForm.get('contactperson'); }
     get contactMobile() { return this.cForm.get('contactMobile'); }
     get landLineNos() { return this.cForm.get('landLineNos'); }
-    get EmailID() { return this.cForm.get('EmailID'); }
+    get emailID() { return this.cForm.get('emailID'); }
     get locationName() { return this.cForm.get(['customerAddList'], 0, ['locationName']); }
     get address1() { return this.cForm.get(['customerAddList'], 0, ['address1']); }
     get address2() { return this.cForm.get(['customerAddList'], 0, ['address2']); }
@@ -135,7 +134,7 @@ export class CustomerComponent implements OnInit, OnDestroy {
         return this._formBuilder.group({
             taxLedgerID: [''],
             taxLedgerName: [''],
-            taxRate: [''],
+            taxRate: [0],
             calculatedOn: ['']
         });
     }
@@ -146,7 +145,7 @@ export class CustomerComponent implements OnInit, OnDestroy {
         this._formBuilder.group({
           taxLedgerID: [''],
             taxLedgerName: [''],
-            taxRate: [''],
+            taxRate: [0],
             calculatedOn: ['']
         })
       );
@@ -165,8 +164,8 @@ export class CustomerComponent implements OnInit, OnDestroy {
             address2: [''],
             address3: [''],
             state: [''],
-            gstincode: [''],
-            stateCode: ['']
+            gstincode: [],
+            stateCode: [0]
         });
     }
 
@@ -181,7 +180,7 @@ export class CustomerComponent implements OnInit, OnDestroy {
           address3: [''],
           state: [''],
           gstincode: [''],
-          stateCode: ['']
+          stateCode: [0]
         })
       );
     }
@@ -229,7 +228,7 @@ export class CustomerComponent implements OnInit, OnDestroy {
           let data = res.data;
           for (let key in data) {
             if (data.hasOwnProperty(key)) {
-                this.ledgerList.push({label: data[key].ledgerName, value: data[key].ledgerName});
+                this.ledgerList.push({label: data[key].ledgerName, value: data[key].ledger_ID});
             }
           }
         }
@@ -254,7 +253,12 @@ export class CustomerComponent implements OnInit, OnDestroy {
     getCurrency() {
       this.stockService.getCurrency().subscribe( res => {
         if (res && res.status === '200') {
-          this.currencyList = res.data;
+          let data = res.data;
+          for ( let key in data) {
+            if(data.hasOwnProperty(key)) {
+              this.currencyList.push({label: data[key].currencyName});
+            }
+          }
         }
       });
     }

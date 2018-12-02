@@ -26,6 +26,7 @@ export class GnrComponent implements OnInit {
     localStorage.setItem('showSupplier', 'true');
     localStorage.setItem('FormHeader', 'Good Receipt Note Edit/Create Form');
     localStorage.setItem('transactionTypeId', '3');
+    localStorage.setItem('transationLinkRef', 'true');
   }
 
   getTransactionList() {
@@ -40,11 +41,17 @@ export class GnrComponent implements OnInit {
   }
 
   addNote() {
+    let backUrl = this.router.url;
+    localStorage.setItem('rollBackUrl', backUrl);
+
     this.router.navigate(['/stores/addEditStore']);
     localStorage.setItem('transactionID', '0');
   }
 
   editNote(id) {
+    let backUrl = this.router.url;
+    localStorage.setItem('rollBackUrl', backUrl);
+
     localStorage.setItem('transactionID', id);
     this.router.navigate(['/stores/addEditStore']);
   }

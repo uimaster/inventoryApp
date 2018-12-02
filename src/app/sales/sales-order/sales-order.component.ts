@@ -29,6 +29,7 @@ export class SalesOrderComponent implements OnInit {
     localStorage.setItem('showSupplier', 'false');
     localStorage.setItem('transactionTypeId', '10');
     localStorage.setItem('FormHeader', 'Sales Order Edit/Create Form');
+    localStorage.setItem('transationLinkRef', 'false');
   }
 
   getSalesOrderList() {
@@ -41,11 +42,17 @@ export class SalesOrderComponent implements OnInit {
   }
 
   addSalesOrder() {
+    let backUrl = this.router.url;
+    localStorage.setItem('rollBackUrl', backUrl);
+
     this.router.navigate(['/sales/addEditsales']);
     localStorage.setItem('transactionID', '0');
   }
 
   editSalesOrder(id) {
+    let backUrl = this.router.url;
+    localStorage.setItem('rollBackUrl', backUrl);
+
     localStorage.setItem('transactionID', id);
     this.router.navigate(['/sales/addEditsales']);
   }

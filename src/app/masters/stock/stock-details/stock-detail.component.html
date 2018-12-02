@@ -205,14 +205,14 @@
     </div>
 
     <fieldset formArrayName="stockItemOpeningBal">
-      <legend>Stock Item Opening Balance</legend>
+      <legend>Opening Balance</legend>
       <div *ngFor="let ctrl of sForm.get('stockItemOpeningBal').controls; let i = index;">
         <div [formGroupName]="i">
           <div class="ui-g">
             <div class="ui-g-3">
               <div class="form-group">
                 <span class="ui-float-label">
-                  <p-dropdown [options]="locationList" formControlName="locationName" placeholder="Location Name"></p-dropdown>
+                  <p-dropdown [options]="locationList" formControlName="locationName"></p-dropdown>
                 </span>
               </div>
             </div>
@@ -263,14 +263,14 @@
     </fieldset>
     <br/>
     <fieldset formArrayName="stockItemSuppliers">
-        <legend>Stock Item Suppliers</legend>
+        <legend>Suppliers</legend>
         <div *ngFor="let ctrl of sForm.get('stockItemSuppliers').controls; let i = index;">
           <div [formGroupName]="i">
             <div class="ui-g">
               <div class="ui-g-4">
                 <div class="form-group">
                   <span class="ui-float-label">
-                    <p-dropdown [options]="supplierlist" formControlName="ledgerName" placeholder="Ledger Name"></p-dropdown>
+                    <p-dropdown [options]="supplierlist" formControlName="ledgerName"></p-dropdown>
                   </span>
 
                   <div *ngIf="ledgerName.invalid && (ledgerName.dirty || ledgerName.touched)" class="alert alert-danger">

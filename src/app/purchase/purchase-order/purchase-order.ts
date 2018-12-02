@@ -30,11 +30,17 @@ export class PurchaseOrderComponent implements OnInit {
   addPOrder() {
     this.router.navigate(['/purchase/addPOrder']);
     localStorage.setItem('transactionID', '0');
+    let backUrl = this.router.url;
+    localStorage.setItem('rollBackUrl', backUrl);
   }
 
   getPurchaseDetails(id) {
+    let backUrl = this.router.url;
+    localStorage.setItem('rollBackUrl', backUrl);
+
     localStorage.setItem('transactionID', id);
     this.router.navigate(['/purchase/addPOrder']);
+
   }
 
 }

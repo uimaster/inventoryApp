@@ -16,11 +16,11 @@ export class ProdEntryComponent implements OnInit {
     localStorage.setItem('transItemDetails', 'true');
     localStorage.setItem('transLedgerDetails', 'false');
     localStorage.setItem('transPOTerms', 'false');
-    localStorage.setItem('transBoxDetails', 'true');
+    localStorage.setItem('transBoxDetails', 'false');
     localStorage.setItem('transBatchDetails', 'false');
     localStorage.setItem('transGRNTerms', 'false');
     localStorage.setItem('transInvoiceTerms', 'false');
-    localStorage.setItem('transWorkCompletionDetails', 'true');
+    localStorage.setItem('transWorkCompletionDetails', 'false');
     localStorage.setItem('showCurrency', 'false');
     localStorage.setItem('showLedger', 'true');
     localStorage.setItem('showSupplier', 'false');

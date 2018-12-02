@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { PurchaseService } from '../purchase/purchase.service';
@@ -54,8 +54,9 @@ export class TransactionFormComponent implements OnInit {
   date5 = new Date();
   date4 = new Date();
 
-  showSupplier: false;
-  showLedger: true;
+  showSupplier = false;
+  showLedger = true;
+  transationLinkRef = false;
   transactionTypeId: number;
   gstTaxList = [];
   // @ViewChild('taxSelect') taxSelect: ElementRef;
@@ -68,9 +69,13 @@ export class TransactionFormComponent implements OnInit {
     private trasactionService: TransactionSerivices,
     private supplierService: SupplierService,
     private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit() {
+
+    console.log('sdfsfsd', this.router);
+
     this.transItemDetails = JSON.parse(localStorage.getItem('transItemDetails'));
     this.transLedgerDetails = JSON.parse(localStorage.getItem('transLedgerDetails'));
     this.transPOTerms = JSON.parse(localStorage.getItem('transPOTerms'));
@@ -83,6 +88,8 @@ export class TransactionFormComponent implements OnInit {
 
     this.showLedger = JSON.parse(localStorage.getItem('showLedger'));
     this.showSupplier = JSON.parse(localStorage.getItem('showSupplier'));
+    this.transationLinkRef = JSON.parse(localStorage.getItem('transationLinkRef'));
+
     this.transactionTypeId = JSON.parse(localStorage.getItem('transactionTypeId'));
 
     // setTimeout(() => {
@@ -95,7 +102,10 @@ export class TransactionFormComponent implements OnInit {
       this.getGstRate();
       this.getPendingSalesOrderList();
       this.getPOPendingList();
-      this.getTrasactionDetails(this.transactionId);
+      setTimeout(() => {
+        this.getTrasactionDetails(this.transactionId);
+      }, 2000);
+
     // }, 0);
 
   }
@@ -455,7 +465,7 @@ export class TransactionFormComponent implements OnInit {
   convertToDateFormat(Datestr) {
     if (Datestr != '') {
       // Datestr='03/08/2016'
-      var datedata = Datestr.split('/');
+      var datedata = Datestr.split('-');
       var formatedDateString =
         datedata[2] + '-' + datedata[1] + '-' + datedata[0] + 'T00:00:00.000Z';
       return formatedDateString;
@@ -608,9 +618,11 @@ export class TransactionFormComponent implements OnInit {
           if (res && res.status === '200') {
             this.successMsg = res.message;
             this.showSuccess = true;
-            // setTimeout(() => {
-            //   this.router.navigate(['/purchaseOrder']);
-            // }, 3000);
+            // localStorage.setItem('rollBackUrl', 'this.router.url');
+            let rollBackUrl = localStorage.getItem('rollBackUrl');
+            setTimeout(() => {
+              this.router.navigate(['/' + rollBackUrl]);
+            }, 3000);
           } else {
             this.errorMsg = res.message;
             this.showError = true;
@@ -763,7 +775,6 @@ export class TransactionFormComponent implements OnInit {
     const itemAmount = itemRate * itemQnt;
     itemfrmArray.controls[i].get('itemAmount').setValue(itemAmount);
     itemTotalAmount = itemTotalAmount + itemAmount;
-    console.log(itemTotalAmount);
     }
 
 
@@ -773,5 +784,8 @@ export class TransactionFormComponent implements OnInit {
     const ledgerAmnt = taxRate * onePercnt;
     ledgerfrmArray.controls[0].get('ledgerAmount').setValue(ledgerAmnt);
     this.totalAmount = itemTotalAmount + ledgerAmnt;
+    // this.transactionForm.controls['transaction_Amount'].
+    this.transactionForm.controls['transaction_Amount'].setValue(this.totalAmount);
+
   }
 }

@@ -28,6 +28,7 @@ export class PhysicalStockComponent implements OnInit {
     localStorage.setItem('showSupplier', 'true');
     localStorage.setItem('FormHeader', 'Physical Stock RM Edit/Create Form');
     localStorage.setItem('transactionTypeId', '14');
+    localStorage.setItem('transationLinkRef', 'false');
   }
 
   getTransactionList() {
@@ -42,11 +43,17 @@ export class PhysicalStockComponent implements OnInit {
   }
 
   addRecord() {
+    let backUrl = this.router.url;
+    localStorage.setItem('rollBackUrl', backUrl);
+
     this.router.navigate(['/stores/addEditStore']);
     localStorage.setItem('transactionID', '0');
   }
 
   editRecord(id) {
+    let backUrl = this.router.url;
+    localStorage.setItem('rollBackUrl', backUrl);
+
     localStorage.setItem('transactionID', id);
     this.router.navigate(['/stores/addEditStore']);
   }
