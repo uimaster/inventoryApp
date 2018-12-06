@@ -40,3 +40,4 @@ export const POSTINVOICEGENERATION =  BASEURL + 'Transactions/PostSalesInvoiceGe
 export const GETTAXTYPE = BASEURL + 'Ledger/GetTaxLedgerList';
 export const GETPENDINGPOLIST = BASEURL + 'Transactions/getPendingPOList';
 export const GETPENDINGSALESORDERLIST = BASEURL + 'Transactions/GetPendingSalesOrderList';
+// export const GETPENDINGPOLIST = BASEURL + 'Transactions/getPendingPOList';

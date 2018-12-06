@@ -25,7 +25,7 @@ export class PhysicalStockComponent implements OnInit {
     localStorage.setItem('transWorkCompletionDetails', 'false');
     localStorage.setItem('showCurrency', 'false');
     localStorage.setItem('showLedger', 'false');
-    localStorage.setItem('showSupplier', 'true');
+    localStorage.setItem('showSupplier', 'false');
     localStorage.setItem('FormHeader', 'Physical Stock RM Edit/Create Form');
     localStorage.setItem('transactionTypeId', '14');
     localStorage.setItem('transationLinkRef', 'false');

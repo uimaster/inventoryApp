@@ -34,7 +34,7 @@
       <div class="ui-g-6" *ngIf="showLedger">
         <div class="form-group">
           <span class="ui-float-label">
-            <p-dropdown [options]="ledgerList" formControlName="ledgerID"  placeholder="Customer" [style]="{'width':'95%'}" ></p-dropdown>
+            <p-dropdown [options]="customerList" formControlName="ledgerID"  placeholder="Customer" [style]="{'width':'95%'}" ></p-dropdown>
           </span>
         </div>
       </div>
@@ -43,7 +43,7 @@
       <div class="ui-g-6" *ngIf="transationLinkRef">
         <div class="form-group">
           <span class="ui-float-label">
-            <p-dropdown [options]="salesOrderPendingList" formControlName="transactionLinkID"  placeholder="Transaction Link Ref." [style]="{'width':'95%'}" ></p-dropdown>
+            <p-dropdown [options]="POpendingList" formControlName="transactionLinkID" (onChange)="getSelectLinkRef($event)" placeholder="Transaction Link Ref." [style]="{'width':'95%'}" ></p-dropdown>
           </span>
         </div>
       </div>

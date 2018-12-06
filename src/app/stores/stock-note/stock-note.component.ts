@@ -24,7 +24,7 @@ export class StockNoteComponent implements OnInit {
     localStorage.setItem('transWorkCompletionDetails', 'false');
     localStorage.setItem('showCurrency', 'false');
     localStorage.setItem('showLedger', 'false');
-    localStorage.setItem('showSupplier', 'true');
+    localStorage.setItem('showSupplier', 'false');
     localStorage.setItem('transactionTypeId', '4');
     localStorage.setItem('FormHeader', 'Stock Issue Note Edit/Create Form');
     localStorage.setItem('transationLinkRef', 'false');
