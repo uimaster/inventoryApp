@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./fginward.component.scss']
 })
 export class FGInwardComponent implements OnInit {
-  fgList = [];
+  fgList = []; 
   constructor( private transactionSerivices: TransactionSerivices, private router: Router) { }
 
   ngOnInit() {
