@@ -89,11 +89,6 @@ export class SupplierComponent implements OnInit, OnDestroy {
                 controlArrayTerms.controls[0].get('deliveryTerms').setValue(this.supplier['supplierTerms'][0].deliveryTerms);
                 }
             }
-
-
-
-
-
         });
 
 
@@ -144,7 +139,7 @@ export class SupplierComponent implements OnInit, OnDestroy {
 
     createSupplierTaxes() {
         return this._formBuilder.group({
-            taxLedgerID: [''],
+            taxLedgerID: [0],
             taxLedgerName: [''],
             taxRate: [0],
             calculatedOn: ['NA']
@@ -155,7 +150,7 @@ export class SupplierComponent implements OnInit, OnDestroy {
       const stockItemArray = <FormArray>this.suForm.get('supplierTaxes');
       stockItemArray.push(
         this._formBuilder.group({
-          taxLedgerID: [''],
+          taxLedgerID: [0],
           taxLedgerName: [''],
           taxRate: [0],
           calculatedOn: ['NA']
@@ -209,7 +204,7 @@ export class SupplierComponent implements OnInit, OnDestroy {
             transporters: [''],
             packing: ['NA'],
             freight: [''],
-            deliveryTerms: ['']
+            deliveryTerms: [0]
         });
     }
 

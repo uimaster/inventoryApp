@@ -26,6 +26,7 @@ export class FGInwardComponent implements OnInit {
     localStorage.setItem('showSupplier', 'false');
     localStorage.setItem('transactionTypeId', '13');
     localStorage.setItem('FormHeader', 'Finish Goods Inwards Edit/Create Form');
+    localStorage.setItem('transationLinkRef', 'false');
   }
 
   getTransactionList() {

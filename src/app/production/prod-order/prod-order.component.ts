@@ -26,6 +26,7 @@ export class ProdOrderComponent implements OnInit {
     localStorage.setItem('showSupplier', 'false');
     localStorage.setItem('transactionTypeId', '16');
     localStorage.setItem('FormHeader', 'Production Order Edit/Create Form');
+    localStorage.setItem('transationLinkRef', 'false');
   }
 
   getTransactionList() {

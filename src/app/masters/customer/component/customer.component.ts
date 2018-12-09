@@ -132,7 +132,7 @@ export class CustomerComponent implements OnInit, OnDestroy {
 
     createcustomerTaxes() {
         return this._formBuilder.group({
-            taxLedgerID: [''],
+            taxLedgerID: ['0'],
             taxLedgerName: [''],
             taxRate: [0],
             calculatedOn: ['']
@@ -143,7 +143,7 @@ export class CustomerComponent implements OnInit, OnDestroy {
       const stockItemArray = <FormArray>this.cForm.get('customerTaxes');
       stockItemArray.push(
         this._formBuilder.group({
-          taxLedgerID: [''],
+          taxLedgerID: ['0'],
             taxLedgerName: [''],
             taxRate: [0],
             calculatedOn: ['']
@@ -164,7 +164,7 @@ export class CustomerComponent implements OnInit, OnDestroy {
             address2: [''],
             address3: [''],
             state: [''],
-            gstincode: [],
+            gstincode: [0],
             stateCode: [0]
         });
     }
@@ -179,7 +179,7 @@ export class CustomerComponent implements OnInit, OnDestroy {
           address2: [''],
           address3: [''],
           state: [''],
-          gstincode: [''],
+          gstincode: ['0'],
           stateCode: [0]
         })
       );

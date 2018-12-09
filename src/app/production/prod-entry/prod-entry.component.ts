@@ -26,6 +26,7 @@ export class ProdEntryComponent implements OnInit {
     localStorage.setItem('showSupplier', 'false');
     localStorage.setItem('transactionTypeId', '17');
     localStorage.setItem('FormHeader', 'Production Entery Edit/Create Form');
+    localStorage.setItem('transationLinkRef', 'false');
   }
 
   getTransactionList() {
