@@ -2,7 +2,8 @@
 <p-panel header="Physical Stock" class="Tabledata">
   <p-header>
       <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addRecord()"></button>
-  </p-header>
+
+    </p-header>
   <div *ngIf="physicaStocknList" class="table-responsive">
       <table class="table">
           <thead>
@@ -21,7 +22,8 @@
                   <td>{{item.locationName}}</td>
                   <td>
                       <button pButton type="button" style="margin-right: 5px;" icon="fa fa-pencil" class="ui-button-success" (click)="editRecord(item.transactionID)" ></button>
-                      <button pButton type="button" icon="fa fa-trash-o" class="ui-button-danger"></button>
+                      <button pButton type="button" style="margin-right: 5px;" icon="fa fa-trash-o" class="ui-button-danger"></button>
+                      <button pButton type="button" icon="fa fa-print" class="ui-button-info"></button>
                   </td>
               </tr>
           </ng-container>

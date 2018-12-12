@@ -2,6 +2,8 @@
 <p-panel header="Sales Order Verification List" class="Tabledata">
     <p-header>
         <button pButton type="button" style="float:right" icon="pi pi-plus" label="Authorise" class="ui-button-success" (click)="authoriseOrder()"></button>
+        <button pButton type="button" style="float:right" icon="fa fa-trash-o" label="Delete" class="ui-button-danger"></button>
+      <button pButton type="button" style="float:right" icon="fa fa-print" label="Print" class="ui-button-info"></button>
     </p-header>
     <div *ngIf="verificationList" class="table-responsive">
         <table class="table">

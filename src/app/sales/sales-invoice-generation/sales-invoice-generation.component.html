@@ -2,6 +2,8 @@
 <p-panel header="Sales Invoice Generation List" class="Tabledata">
     <p-header>
         <button pButton type="button" style="float:right" icon="pi pi-plus" label="Authorise" class="ui-button-success" (click)="authoriseInvoice()"></button>
+        <button pButton type="button" style="float:right" icon="fa fa-trash-o" label="Delete" class="ui-button-danger"></button>
+      <button pButton type="button" style="float:right" icon="fa fa-print" label="Print" class="ui-button-info"></button>
     </p-header>
     <div *ngIf="generationList" class="table-responsive">
         <table class="table">

@@ -22,7 +22,7 @@ export class ProdEntryComponent implements OnInit {
     localStorage.setItem('transInvoiceTerms', 'false');
     localStorage.setItem('transWorkCompletionDetails', 'false');
     localStorage.setItem('showCurrency', 'false');
-    localStorage.setItem('showLedger', 'true');
+    localStorage.setItem('showLedger', 'false');
     localStorage.setItem('showSupplier', 'false');
     localStorage.setItem('transactionTypeId', '17');
     localStorage.setItem('FormHeader', 'Production Entery Edit/Create Form');

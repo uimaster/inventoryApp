@@ -1,4 +1,4 @@
-
+<p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
 <form [formGroup]="transactionForm" (submit)="saveTransation(transactionForm.value)" class="formData">
   <div class="message error" *ngIf="showError">{{errorMsg}}</div>
   <div class="message success" *ngIf="showSuccess">{{successMsg}}</div>
@@ -99,9 +99,9 @@
       <div >
         <table width="100%" class="fieldTable">
           <thead>
-            <th width="25%">StockItem</th>
-            <th width="20%">Additional Desc.</th>
-            <th width="15%">Location ID</th>
+            <th width="30%">StockItem</th>
+            <th width="30%">Additional Desc.</th>
+            <!-- <th width="15%">Location ID</th> -->
             <th width="10%">Qty</th>
             <th width="10%">Rate</th>
             <th width="10%">Amount</th>
@@ -110,15 +110,15 @@
           <tbody>
             <tr  *ngFor="let ctrl of transactionForm.get('transItemDetails').controls; let i = index;" [formGroupName]="i">
               <td class="specialDropdown" style="text-align: left;">
-                <p-dropdown [options]="itemMasterList" formControlName="stockitemID" placeholder="Stock Item" filter="true" [style]="{'width':'300px'}">
+                <p-dropdown [options]="itemMasterList" formControlName="stockitemID" placeholder="Stock Item" filter="true" [style]="{'width':'95%'}">
                 </p-dropdown>
               </td>
-              <td>
-                <textarea [rows]="2" [cols]="30" pInputTextarea  formControlName="transactionItem_AdditionalDesciption" placeholder="Additional Desc."></textarea>
+              <td style="text-align: left;">
+                <textarea [rows]="2" style="width:98%" pInputTextarea  formControlName="transactionItem_AdditionalDesciption" placeholder="Additional Desc."></textarea>
               </td>
-              <td>
+              <!-- <td>
                 <p-dropdown [options]="locationList" formControlName="locationID"  placeholder="Location Name"></p-dropdown>
-              </td>
+              </td> -->
               <td><input type="text" formControlName="itemQty" pInputText (keyup)="getAmount()"></td>
               <td><input type="text" formControlName="itemRate" pInputText (keyup)="getAmount()"></td>
               <td><input type="text" formControlName="itemAmount" pInputText (keyup)="getAmount()" ></td>
@@ -147,7 +147,7 @@
           <tbody>
             <tr  *ngFor="let ctrl of transactionForm.get('transLedgerDetails').controls; let i = index;" [formGroupName]="i">
               <td style="text-align: left;">
-                <p-dropdown [options]="gstTaxList" formControlName="ledgerID" filter="true" #taxSelect  placeholder="Tax Ledger Name" [style]="{'width':'95%'}" (onChange)="getTaxRate(taxSelect);"></p-dropdown>
+                <p-dropdown [options]="gstTaxList" formControlName="ledgerID" filter="true" #taxSelect  placeholder="Tax Ledger Name" [style]="{'width':'95%'}" (onChange)="getTaxRate(taxSelect, i);"></p-dropdown>
               </td>
               <td><input type="text" formControlName="taxRate" pInputText ></td>
               <td><input type="text" formControlName="ledgerAmount" pInputText (keyup)="getAmount()"></td>
@@ -227,7 +227,11 @@
           </thead>
           <tbody>
             <tr  *ngFor="let ctrl of transactionForm.get('transBoxDetails').controls; let i = index;" [formGroupName]="i">
-              <td><input type="text" formControlName="stockitemID" pInputText ></td>
+              <td>
+
+                <p-dropdown [options]="itemMasterList" formControlName="stockitemID" placeholder="Stock Item" filter="true" [style]="{'width':'300px'}">
+                  </p-dropdown>
+              </td>
               <td><input type="text" formControlName="itemQty" pInputText ></td>
               <td><input type="text" formControlName="itemRate" pInputText></td>
               <td><input type="text" formControlName="itemAmount" pInputText ></td>

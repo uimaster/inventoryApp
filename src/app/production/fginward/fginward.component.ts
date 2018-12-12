@@ -17,12 +17,12 @@ export class FGInwardComponent implements OnInit {
     localStorage.setItem('transLedgerDetails', 'false');
     localStorage.setItem('transPOTerms', 'false');
     localStorage.setItem('transBoxDetails', 'false');
-    localStorage.setItem('transBatchDetails', 'true');
+    localStorage.setItem('transBatchDetails', 'false');
     localStorage.setItem('transGRNTerms', 'false');
     localStorage.setItem('transInvoiceTerms', 'false');
     localStorage.setItem('transWorkCompletionDetails', 'false');
     localStorage.setItem('showCurrency', 'false');
-    localStorage.setItem('showLedger', 'true');
+    localStorage.setItem('showLedger', 'false');
     localStorage.setItem('showSupplier', 'false');
     localStorage.setItem('transactionTypeId', '13');
     localStorage.setItem('FormHeader', 'Finish Goods Inwards Edit/Create Form');

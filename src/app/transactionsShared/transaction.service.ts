@@ -69,8 +69,18 @@ export class TransactionSerivices {
 
    // GET getPendingPOList LIST //
    getPendingPOList(): Observable<any> {
+
+    let url = '';
+    const rollbackurl = localStorage.getItem('rollBackUrl');
+
+    if (rollbackurl === '/sales/packingList') {
+      url = urls.GETPENDINGSALESORDERLIST;
+    } else {
+      url = urls.GETPENDINGPOLIST;
+    }
+
     const params = new HttpParams().set('CompanyID', '1');
-    return this.http.get(urls.GETPENDINGPOLIST, {params})
+    return this.http.get(url, {params})
     .map((res: any) => {
         return res;
     })
@@ -78,13 +88,13 @@ export class TransactionSerivices {
   }
 
    // GET getPendingSalesOrderList LIST //
-   getPendingSalesOrderList(): Observable<any> {
-    const params = new HttpParams().set('CompanyID', '1');
-    return this.http.get(urls.GETPENDINGSALESORDERLIST, {params})
-    .map((res: any) => {
-        return res;
-    })
-    .catch((error) => Observable.throw('server Error.'));
-  }
+  //  getPendingSalesOrderList(): Observable<any> {
+  //   const params = new HttpParams().set('CompanyID', '1');
+  //   return this.http.get(urls.GETPENDINGSALESORDERLIST, {params})
+  //   .map((res: any) => {
+  //       return res;
+  //   })
+  //   .catch((error) => Observable.throw('server Error.'));
+  // }
 
 }

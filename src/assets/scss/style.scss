@@ -1043,3 +1043,17 @@ fieldset {
 //     text-indent: inherit;
 //   }
 // }
+.ui-panel .ui-panel-titlebar{ padding: 1em; .ui-button{ margin-left: 10px;}}
+.ui-progress-spinner { -webkit-box-shadow: 0px 0px 28px 10px rgba(0,0,0,0.07);
+  -moz-box-shadow: 0px 0px 28px 10px rgba(0,0,0,0.07);
+  box-shadow: 0px 0px 28px 10px rgba(0,0,0,0.07); position: fixed;
+  margin: 0 auto;
+  width: 145px;
+  height: 145px;
+  display: inline-block;
+  z-index: 9999;
+  background-color: #fff;
+  padding: 0px;
+  left: 50%;
+  top: 50%; border-radius: 5px; margin-left: -75px; margin-top: -85px;}
+  .ui-progress-spinner-svg{ height: 80%; width: 80%;}

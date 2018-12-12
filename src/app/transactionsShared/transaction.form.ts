@@ -64,6 +64,7 @@ export class TransactionFormComponent implements OnInit {
   gstTaxList = [];
   selectedCar3: any;
   selectedCity: any;
+  showLoader = false;
   // @ViewChild('taxSelect') taxSelect: ElementRef;
 
   constructor(
@@ -104,7 +105,7 @@ export class TransactionFormComponent implements OnInit {
       this.createTransactionForm();
       this.getSupplier();
       this.getGstRate();
-      this.getPendingSalesOrderList();
+      // this.getPendingSalesOrderList();
       this.getPOPendingList();
       this.getCustomers();
       setTimeout(() => {
@@ -479,6 +480,7 @@ export class TransactionFormComponent implements OnInit {
 
   getTrasactionDetails(id) {
     if (id > 0) {
+      this.showLoader = true;
     this.trasactionService.getTransactionDetails(id).subscribe( res => {
 
         if (res.status === '200') {
@@ -506,47 +508,31 @@ export class TransactionFormComponent implements OnInit {
 
           if (this.detailsData[0].transItemDetails.length > 0 && this.transItemDetails) {
 
-            // for (let i = 0; i < this.detailsData[0].transItemDetails.length; i++) {
-            //   // console.log(this.detailsData[0].transItemDetails[i]);
-            //   // this.ItemData = this.detailsData[0].transItemDetails[i];
-            //   controlArray.controls[0].get('transactionID').setValue(this.detailsData[0].transItemDetails[i].transactionID);
-            //   controlArray.controls[0].get('stockitemID').setValue(this.detailsData[0].transItemDetails[i].stockitemID);
-            //   controlArray.controls[0].get('transactionItem_AdditionalDesciption')
-            //   .setValue(this.detailsData[0].transItemDetails[i].transactionItem_AdditionalDesciption);
-            //   controlArray.controls[0].get('itemQty').setValue(this.detailsData[0].transItemDetails[i].itemQty);
-            //   controlArray.controls[0].get('itemReceived_Qty').setValue(this.detailsData[0].transItemDetails[i].itemReceived_Qty);
-            //   controlArray.controls[0].get('itemChallan_Qty').setValue(this.detailsData[0].transItemDetails[i].itemChallan_Qty);
-            //   controlArray.controls[0].get('itemPending_Qty').setValue(this.detailsData[0].transItemDetails[i].itemPending_Qty);
-            //   controlArray.controls[0].get('itemRate').setValue(this.detailsData[0].transItemDetails[i].itemRate);
-            //   controlArray.controls[0].get('itemAmount').setValue(this.detailsData[0].transItemDetails[i].itemAmount);
-            //   controlArray.controls[0].get('itemStops').setValue(this.detailsData[0].transItemDetails[i].itemStops);
-            //   controlArray.controls[0].get('itemLength').setValue(this.detailsData[0].transItemDetails[i].itemLength);
-            //   controlArray.controls[0].get('itemBatchApplicable').setValue(this.detailsData[0].transItemDetails[i].itemBatchApplicable);
-            // controlArray.controls[0].get('packingBoxStockItemID').setValue(this.detailsData[0].transItemDetails[i].packingBoxStockItemID);
-            // controlArray.controls[0].get('transactionItemSerialNo').setValue(this.detailsData[0].transItemDetails[i].transactionItemSerialNo);
-            //   controlArray.controls[0].get('locationID').setValue(this.detailsData[0].transItemDetails[i].locationID);
-            // }
+            const formArray = <FormArray>this.transactionForm.get('transItemDetails');
+            formArray.removeAt(0);
 
+            for (let i = 0; i < this.detailsData[0].transItemDetails.length; i++) {
+              formArray.push(
+                this.fb.group ({
+                  transactionID: [this.detailsData[0].transItemDetails[i].transactionID],
+                  stockitemID: [this.detailsData[0].transItemDetails[i].stockitemID],
+                  transactionItem_AdditionalDesciption: [this.detailsData[0].transItemDetails[i].transactionItem_AdditionalDesciption],
+                  locationID: [1],
+                  itemQty: [this.detailsData[0].transItemDetails[i].itemQty],
+                  itemReceived_Qty: [this.detailsData[0].transItemDetails[i].itemReceived_Qty],
+                  itemChallan_Qty: [this.detailsData[0].transItemDetails[i].itemChallan_Qty],
+                  itemPending_Qty: [this.detailsData[0].transItemDetails[i].itemPending_Qty],
+                  itemRate: [this.detailsData[0].transItemDetails[i].itemRate],
+                  itemAmount: [this.detailsData[0].transItemDetails[i].itemAmount],
+                  itemStops: [this.detailsData[0].transItemDetails[i].itemStops],
+                  itemLength: [this.detailsData[0].transItemDetails[i].itemLength],
+                  itemBatchApplicable: [this.detailsData[0].transItemDetails[i].itemBatchApplicable],
+                  packingBoxStockItemID: [this.detailsData[0].transItemDetails[i].packingBoxStockItemID],
+                  transactionItemSerialNo: [this.detailsData[0].transItemDetails[i].transactionItemSerialNo]
+                })
+              );
 
-            this.ItemData = this.detailsData[0].transItemDetails;
-            const controlArray = <FormArray>this.transactionForm.get('transItemDetails');
-
-            controlArray.controls[0].get('transactionID').setValue(this.ItemData[0].transactionID);
-            controlArray.controls[0].get('stockitemID').setValue(this.ItemData[0].stockitemID);
-            controlArray.controls[0].get('transactionItem_AdditionalDesciption')
-            .setValue(this.ItemData[0].transactionItem_AdditionalDesciption);
-            controlArray.controls[0].get('itemQty').setValue(this.ItemData[0].itemQty);
-            controlArray.controls[0].get('itemReceived_Qty').setValue(this.ItemData[0].itemReceived_Qty);
-            controlArray.controls[0].get('itemChallan_Qty').setValue(this.ItemData[0].itemChallan_Qty);
-            controlArray.controls[0].get('itemPending_Qty').setValue(this.ItemData[0].itemPending_Qty);
-            controlArray.controls[0].get('itemRate').setValue(this.ItemData[0].itemRate);
-            controlArray.controls[0].get('itemAmount').setValue(this.ItemData[0].itemAmount);
-            controlArray.controls[0].get('itemStops').setValue(this.ItemData[0].itemStops);
-            controlArray.controls[0].get('itemLength').setValue(this.ItemData[0].itemLength);
-            controlArray.controls[0].get('itemBatchApplicable').setValue(this.ItemData[0].itemBatchApplicable);
-            controlArray.controls[0].get('packingBoxStockItemID').setValue(this.ItemData[0].packingBoxStockItemID);
-            controlArray.controls[0].get('transactionItemSerialNo').setValue(this.ItemData[0].transactionItemSerialNo);
-            controlArray.controls[0].get('locationID').setValue(this.ItemData[0].locationID);
+            }
           }
           if (this.detailsData[0].transPOTerms.length > 0 && this.transPOTerms) {
             this.POData = this.detailsData[0].transPOTerms;
@@ -561,13 +547,18 @@ export class TransactionFormComponent implements OnInit {
             // controlArray.controls[0].get('transactionDueDate').setValue(dueDate);
           }
           if (this.detailsData[0].transLedgerDetails.length > 0 && this.transLedgerDetails) {
-            this.ledgerData = this.detailsData[0].transLedgerDetails;
-            const controlArray = <FormArray>this.transactionForm.get('transLedgerDetails');
-
-            controlArray.controls[0].get('transactionID').setValue(this.ledgerData[0].transactionID);
-            controlArray.controls[0].get('ledgerID').setValue(this.ledgerData[0].ledgerID);
-            controlArray.controls[0].get('taxRate').setValue(this.ledgerData[0].taxRate);
-            controlArray.controls[0].get('ledgerAmount').setValue(this.ledgerData[0].ledgerAmount);
+            const ledgerArray = <FormArray>this.transactionForm.get('transLedgerDetails');
+            ledgerArray.removeAt(0);
+            for (let i = 0; i < this.detailsData[0].transLedgerDetails.length; i++) {
+              ledgerArray.push(
+                this.fb.group ({
+                  transactionID: [this.detailsData[0].transLedgerDetails[i].transactionID],
+                  ledgerID: [this.detailsData[0].transLedgerDetails[i].ledgerID],
+                  taxRate: [this.detailsData[0].transLedgerDetails[i].taxRate],
+                  ledgerAmount: [this.detailsData[0].transLedgerDetails[i].ledgerAmount]
+                })
+              );
+            }
           }
 
 
@@ -633,14 +624,17 @@ export class TransactionFormComponent implements OnInit {
           }
 
         }
-
+        this.showLoader = false;
     });
+
     }
+
   }
 
 
   saveTransation(formData) {
     if (this.transactionForm.valid) {
+      this.showLoader = true;
       this.trasactionService.AddTransaction(formData).subscribe (
         res => {
           if (res && res.status === '200') {
@@ -657,6 +651,7 @@ export class TransactionFormComponent implements OnInit {
             // setTimeout(() => {
             //   this.router.navigate(['/purchaseOrder']);
             // }, 3000);
+            this.showLoader = false;
           }
         }
       );
@@ -706,6 +701,7 @@ export class TransactionFormComponent implements OnInit {
           }
         }
       }
+
     });
   }
 
@@ -777,31 +773,31 @@ export class TransactionFormComponent implements OnInit {
         let data = res.data;
         for (let key in data) {
           if (data.hasOwnProperty(key)) {
-              this.POpendingList.push({label: data[key].ledgerName, value: data[key].transactionID});
+              this.POpendingList.push({label: data[key].transactionNo, value: data[key].transactionID});
           }
         }
       }
     });
   }
 
-  getPendingSalesOrderList() {
-    this.trasactionService.getPendingSalesOrderList().subscribe( res => {
-      if (res && res.status === '200') {
-        // this.ledgerList = res.data;
+  // getPendingSalesOrderList() {
+  //   this.trasactionService.getPendingSalesOrderList().subscribe( res => {
+  //     if (res && res.status === '200') {
+  //       // this.ledgerList = res.data;
 
-        let data = res.data;
-        for (let key in data) {
-          if (data.hasOwnProperty(key)) {
-              this.salesOrderPendingList.push({label: data[key].ledgerName, value: data[key].ledger_ID});
-          }
-        }
-      }
-    });
-  }
+  //       let data = res.data;
+  //       for (let key in data) {
+  //         if (data.hasOwnProperty(key)) {
+  //             this.salesOrderPendingList.push({label: data[key].ledgerName, value: data[key].transactionID});
+  //         }
+  //       }
+  //     }
+  //   });
+  // }
 
-  getTaxRate(data) {
+  getTaxRate(data, i) {
     const ledgerfrmArray = <FormArray>this.transactionForm.get('transLedgerDetails');
-    ledgerfrmArray.controls[0].get('taxRate').setValue(data.selectedOption.rateofTax);
+    ledgerfrmArray.controls[i].get('taxRate').setValue(data.selectedOption.rateofTax);
     this.getAmount();
   }
 
@@ -822,12 +818,16 @@ export class TransactionFormComponent implements OnInit {
 
 
     const ledgerfrmArray = <FormArray>this.transactionForm.get('transLedgerDetails');
-    const taxRate = ledgerfrmArray.controls[0].get('taxRate').value;
+    var ledgerAmnt = 0;
+    var grantLedgerAmnt = 0;
+    for (let i = 0; i < ledgerfrmArray.length; i++) {
+    const taxRate = ledgerfrmArray.controls[i].get('taxRate').value;
     const onePercnt = itemTotalAmount / 100;
-    const ledgerAmnt = taxRate * onePercnt;
-    ledgerfrmArray.controls[0].get('ledgerAmount').setValue(ledgerAmnt);
-    this.totalAmount = itemTotalAmount + ledgerAmnt;
-    // this.transactionForm.controls['transaction_Amount'].
+    ledgerAmnt = taxRate * onePercnt;
+    ledgerfrmArray.controls[i].get('ledgerAmount').setValue(ledgerAmnt);
+    grantLedgerAmnt = grantLedgerAmnt + ledgerAmnt;
+    }
+    this.totalAmount = itemTotalAmount + grantLedgerAmnt;
     this.transactionForm.controls['transaction_Amount'].setValue(this.totalAmount);
 
   }
@@ -837,6 +837,8 @@ export class TransactionFormComponent implements OnInit {
       this.trasactionService.getTransactionDetails(event.value).subscribe( res => {
         if (res.status === '200') {
           this.detailsData = res.data;
+          this.totalAmount = this.detailsData[0].transaction_Amount;
+          this.transactionForm.controls['transaction_Amount'].setValue(this.detailsData[0].transaction_Amount);
           if (this.detailsData[0].transItemDetails.length > 0 && this.transItemDetails) {
             this.ItemData = this.detailsData[0].transItemDetails;
             const controlArray = <FormArray>this.transactionForm.get('transItemDetails');
