@@ -28,6 +28,17 @@ export class TransactionSerivices {
     );
   }
 
+
+  // GET TRANSACTION LIST //
+  getItemList(): Observable<any> {
+    const params = new HttpParams().set('CompanyID', '1');
+    return this.http.get(urls.GETITEMLIST, {params}).pipe(
+      map(res => {
+        return res;
+      })
+    );
+  }
+
   // ADD TRANSACTION DETAILS//
   AddTransaction(payload: any): Observable<any> {
     return this.http.post(urls.POSTTRANSACTION, payload)

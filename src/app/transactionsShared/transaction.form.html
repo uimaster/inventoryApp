@@ -26,7 +26,7 @@
       <div class="ui-g-6" *ngIf="showSupplier">
         <div class="form-group">
           <span class="ui-float-label">
-            <p-dropdown [options]="supplierList" formControlName="ledgerID"  placeholder="Suppliers" [style]="{'width':'95%'}"></p-dropdown>
+            <p-dropdown [options]="supplierList" formControlName="ledgerID"  placeholder="Suppliers"  filter="true"  [style]="{'width':'95%'}"></p-dropdown>
           </span>
         </div>
       </div>
@@ -34,7 +34,7 @@
       <div class="ui-g-6" *ngIf="showLedger">
         <div class="form-group">
           <span class="ui-float-label">
-            <p-dropdown [options]="customerList" formControlName="ledgerID"  placeholder="Customer" [style]="{'width':'95%'}" ></p-dropdown>
+            <p-dropdown [options]="customerList" formControlName="ledgerID"  placeholder="Customer"  filter="true"  [style]="{'width':'95%'}" ></p-dropdown>
           </span>
         </div>
       </div>

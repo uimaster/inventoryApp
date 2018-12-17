@@ -98,8 +98,9 @@ export class TransactionFormComponent implements OnInit {
     this.transactionTypeId = JSON.parse(localStorage.getItem('transactionTypeId'));
 
     // setTimeout(() => {
+      // this.showLoader = true;
       this.getCurrency();
-      this.getItemMasterList();
+      // this.getItemMasterList();
       this.getLocation();
       this.getLedgers();
       this.createTransactionForm();
@@ -107,10 +108,11 @@ export class TransactionFormComponent implements OnInit {
       this.getGstRate();
       // this.getPendingSalesOrderList();
       this.getPOPendingList();
+      this.getItemList();
       this.getCustomers();
       setTimeout(() => {
         this.getTrasactionDetails(this.transactionId);
-      }, 2000);
+      }, 4000);
 
     // }, 0);
 
@@ -469,26 +471,28 @@ export class TransactionFormComponent implements OnInit {
   }
 
   convertToDateFormat(Datestr) {
+    debugger;
     if (Datestr != '') {
       // Datestr='03/08/2016'
       var datedata = Datestr.split('-');
       var formatedDateString =
-        datedata[2] + '-' + datedata[1] + '-' + datedata[0] + 'T00:00:00.000Z';
+        datedata[0] + '-' + datedata[1] + '-' + datedata[2];
+        console.log(formatedDateString);
       return formatedDateString;
     }
   }
 
   getTrasactionDetails(id) {
     if (id > 0) {
-      this.showLoader = true;
+     this.showLoader = true;
     this.trasactionService.getTransactionDetails(id).subscribe( res => {
 
         if (res.status === '200') {
           this.detailsData = res.data;
-          console.log('purchaseDetails:', this.detailsData[0].transactionID);
+
           // if (this.detailsData[0].length > 0) {
             this.transactionForm.controls['transactionID'].setValue(this.detailsData[0].transactionID);
-            this.transactionForm.controls['transactionDate'].setValue(new Date(this.detailsData[0].transactionDate));
+            this.transactionForm.controls['transactionDate'].setValue(this.convertToDateFormat(this.detailsData[0].transactionDate));
             this.transactionForm.controls['transactionNo'].setValue(this.detailsData[0].transactionNo);
             this.transactionForm.controls['transactionTypeId'].setValue(this.detailsData[0].transactionTypeId);
             this.transactionForm.controls['transactionSeriesID'].setValue(this.detailsData[0].transactionSeriesID);
@@ -690,20 +694,34 @@ export class TransactionFormComponent implements OnInit {
 
   }
 
-  getItemMasterList() {
-    this.stockService.getAllStocks().subscribe( res => {
-      if (res && res.status === '200') {
-        // this.itemMasterList = res.data;
-        let data = res.data;
+  // getItemMasterList() {
+  //   this.stockService.getAllStocks().subscribe( res => {
+  //     if (res && res.status === '200') {
+  //       // this.itemMasterList = res.data;
+  //       let data = res.data;
+  //       for (let key in data) {
+  //         if (data.hasOwnProperty(key)) {
+  //             this.itemMasterList.push({label: data[key].itemCode + ', ' + data[key].itemName, value: data[key].stockItemID});
+  //         }
+  //       }
+  //     }
+
+  //   });
+  // }
+
+  getItemList() {
+    this.trasactionService.getItemList().subscribe( res => {
+      console.log('itesms:', res);
+      let data = res.data;
         for (let key in data) {
           if (data.hasOwnProperty(key)) {
-              this.itemMasterList.push({label: data[key].itemCode + ', ' + data[key].itemName, value: data[key].stockItemID});
+              this.itemMasterList.push({label: data[key].itemName, value: data[key].stockItemID});
           }
         }
-      }
-
     });
   }
+
+
 
   getLocation() {
     this.stockService.getLocation().subscribe( res => {
@@ -871,5 +889,9 @@ export class TransactionFormComponent implements OnInit {
       });
     }
   }
+
+  // dateSelection(data) {
+  //   console.log('dataeee', data.target);
+  // }
 
 }

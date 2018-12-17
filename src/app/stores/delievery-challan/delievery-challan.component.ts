@@ -25,6 +25,7 @@ export class DelieveryChallanComponent implements OnInit {
     localStorage.setItem('showCurrency', 'false');
     localStorage.setItem('showLedger', 'false');
     localStorage.setItem('showSupplier', 'true');
+    localStorage.setItem('transactionTypeId', '4');
     localStorage.setItem('FormHeader', 'Good Receipt Note Edit/Create Form');
     localStorage.setItem('transationLinkRef', 'false');
   }
