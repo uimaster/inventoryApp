@@ -43,21 +43,22 @@
       <div class="ui-g-6" *ngIf="transationLinkRef">
         <div class="form-group">
           <span class="ui-float-label">
-            <p-dropdown [options]="POpendingList" formControlName="transactionLinkID" (onChange)="getSelectLinkRef($event)" placeholder="Transaction Link Ref." [style]="{'width':'95%'}" ></p-dropdown>
+            <p-dropdown [options]="POpendingList" formControlName="transactionLinkID" (onChange)="getSelectLinkRef($event)" placeholder="Commission No." [style]="{'width':'95%'}" ></p-dropdown>
           </span>
         </div>
       </div>
 
 
 
-      <!-- <div class="ui-g-6">
+      <div class="ui-g-6">
         <div class="form-group">
           <span class="ui-float-label">
-            <input type="text" formControlName="transaction_PendingAmount" pInputText id="transaction_PendingAmount">
-            <label for="transaction_PendingAmount">Total Amount Due</label>
+            <input type="text" formControlName="transactionLinkRef" pInputText id="transactionLinkRef">
+            <label for="transactionLinkRef">PO Number</label>
           </span>
         </div>
-      </div> -->
+      </div>
+
       <div class="ui-g-6" *ngIf="showCurrency">
         <div class="form-group">
           <span class="ui-float-label">
@@ -65,6 +66,16 @@
           </span>
         </div>
       </div>
+
+      <div class="ui-g-6" *ngIf="showLocation">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <p-dropdown [options]="locationList" formControlName="locationID"  placeholder="Location Name"></p-dropdown>
+          </span>
+        </div>
+      </div>
+
+
       <!-- <div class="ui-g-4">
         <div class="form-group">
           <span class="ui-float-label">
@@ -99,7 +110,7 @@
       <div >
         <table width="100%" class="fieldTable">
           <thead>
-            <th width="30%">StockItem</th>
+            <th width="30%">Item Name</th>
             <th width="30%">Additional Desc.</th>
             <!-- <th width="15%">Location ID</th> -->
             <th width="10%">Qty</th>
@@ -112,6 +123,11 @@
               <td class="specialDropdown" style="text-align: left;">
                 <p-dropdown [options]="itemMasterList" formControlName="stockitemID" placeholder="Stock Item" filter="true" [style]="{'width':'95%'}">
                 </p-dropdown>
+                <!-- <p-autoComplete formControlName="stockitemID" [suggestions]="itemMasterList" (completeMethod)="getItemList()" [filter]="true" [size]="30" placeholder="Countries" [minLength]="1">
+                  <ng-template let-brand pTemplate="item">
+                    {{brand.stockItemDesc}}
+                  </ng-template>
+                </p-autoComplete> -->
               </td>
               <td style="text-align: left;">
                 <textarea [rows]="2" style="width:98%" pInputTextarea  formControlName="transactionItem_AdditionalDesciption" placeholder="Additional Desc."></textarea>

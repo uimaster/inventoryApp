@@ -66,7 +66,6 @@ export class CreatePOrderComponent implements OnInit {
     localStorage.setItem('transInvoiceTerms', 'false');
     localStorage.setItem('transWorkCompletionDetails', 'false');
     localStorage.setItem('showCurrency', 'false');
-    localStorage.setItem('transactionTypeId', '1');
     localStorage.setItem('showLedger', 'false');
     localStorage.setItem('showSupplier', 'true');
     localStorage.setItem('transationLinkRef', 'false');

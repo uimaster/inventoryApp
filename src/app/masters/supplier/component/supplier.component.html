@@ -39,11 +39,11 @@
             <div class="ui-g-4">
                 <div class="form-group">
                   <span class="ui-float-label">
-                    <input type="text" formControlName="EmailID" pInputText id="EmailID">
-                    <label for="EmailID">Email Id</label>
+                    <input type="text" formControlName="emailID" pInputText id="emailID">
+                    <label for="emailID">Email Id</label>
                   </span>
-                    <div *ngIf="EmailID.invalid && (EmailID.dirty || EmailID.touched)" class="alert alert-danger">
-                        <div *ngIf="EmailID.errors.required">
+                    <div *ngIf="emailID.invalid && (emailID.dirty || emailID.touched)" class="alert alert-danger">
+                        <div *ngIf="emailID.errors.required">
                             This field is required.
                         </div>
                     </div>
@@ -91,7 +91,7 @@
                         <div class="ui-g-4">
                             <div class="form-group">
                                 <span class="ui-float-label">
-                                  <p-dropdown [options]="ledgerList" formControlName="taxLedgerName"  placeholder="Tax Ledger Name"></p-dropdown>
+                                  <p-dropdown [options]="ledgerList" formControlName="taxLedgerID"  placeholder="Tax Ledger Name"></p-dropdown>
                                 </span>
                             </div>
                         </div>

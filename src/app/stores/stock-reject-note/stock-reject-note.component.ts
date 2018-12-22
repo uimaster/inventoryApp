@@ -28,6 +28,7 @@ export class StockRejectNoteComponent implements OnInit {
     localStorage.setItem('transactionTypeId', '6');
     localStorage.setItem('FormHeader', 'Stock Rejection Note Edit/Create Form');
     localStorage.setItem('transationLinkRef', 'false');
+    localStorage.setItem('showLocation', 'true');
   }
 
   getTransactionList() {
@@ -55,5 +56,17 @@ export class StockRejectNoteComponent implements OnInit {
 
     localStorage.setItem('transactionID', id);
     this.router.navigate(['/stores/addEditStore']);
+  }
+
+  generateReport(id) {
+    this.transactionSerivices.generateReport(id).subscribe( res => {
+      if (res.status === '200') {
+        const fileName = res.data[0].downloadFileName;
+        const downloadUrl = 'http://apietrax.iflotech.in/api/ReportDownload/DownloadReportPDF?ReportFileName=' + fileName;
+        window.location.href = downloadUrl;
+      } else if ( res.status === '500') {
+        alert('Download Report Failed !');
+      }
+      });
   }
 }

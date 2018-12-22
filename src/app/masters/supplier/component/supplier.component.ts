@@ -7,6 +7,7 @@ import {SupplierService} from '../services/supplier.service';
 import {SupplierResponse} from '../models/supplier.model';
 import { LedgerService } from '../../ledger/services/ledger.service';
 import { StockService } from '../../stock/services/stock.service';
+import { CustomerService } from '../../customer/services/customer.service';
 
 
 @Component({
@@ -35,7 +36,8 @@ export class SupplierComponent implements OnInit, OnDestroy {
       private _formBuilder: FormBuilder,
       private router: Router,
       private ledgerService: LedgerService,
-      private stockService: StockService
+      private stockService: StockService,
+      private customerService: CustomerService
     ) { }
     ngOnInit() {
       this.supplierForm();
@@ -57,37 +59,62 @@ export class SupplierComponent implements OnInit, OnDestroy {
                 this.suForm.controls['supplierName'].setValue(this.supplier['supplierName']);
                 this.suForm.controls['uSerID'].setValue(this.supplier['uSerID']);
                 this.suForm.controls['companyID'].setValue(this.supplier['companyID']);
-                this.suForm.controls['EmailID'].setValue(this.supplier['EmailID']);
+                this.suForm.controls['emailID'].setValue(this.supplier['emailID']);
                 this.suForm.controls['contactperson'].setValue(this.supplier['contactperson']);
                 this.suForm.controls['contactMobile'].setValue(this.supplier['contactMobile']);
                 this.suForm.controls['landLineNos'].setValue(this.supplier['landLineNos']);
+
                 const controlArray = <FormArray> this.suForm.get('supplierTaxes');
-                if (controlArray.length > 0) {
-                 controlArray.controls[0].get('taxLedgerID').setValue(this.supplier['supplierTaxes'][0].taxLedgerID);
-                  controlArray.controls[0].get('taxLedgerName').setValue(this.supplier['supplierTaxes'][0].taxLedgerName);
-                  controlArray.controls[0].get('taxRate').setValue(this.supplier['supplierTaxes'][0].taxRate);
-                  controlArray.controls[0].get('calculatedOn').setValue(this.supplier['supplierTaxes'][0].calculatedOn);
-                }
+                 for ( var i = 0; i < this.supplier.supplierTaxes.length; i++) {
+                  controlArray.push(
+                    this._formBuilder.group({
+                      taxLedgerID: [this.supplier.supplierTaxes[i].taxLedgerID],
+                      taxLedgerName: [this.supplier.supplierTaxes[i].taxLedgerName],
+                      taxRate: [this.supplier.supplierTaxes[i].taxRate],
+                      calculatedOn: [this.supplier.supplierTaxes[i].calculatedOn]
+                    })
+                  );
+                  if (controlArray.length > 0) {
+                    controlArray.removeAt(0);
+                  }
+                 }
+
+
                 const controlArrayAddress = <FormArray> this.suForm.get('supplierAddressList');
-                if (controlArrayAddress.length > 0) {
-                controlArrayAddress.controls[0].get('locationName').setValue(this.supplier['supplierAddressList'][0].locationName);
-                controlArrayAddress.controls[0].get('address1').setValue(this.supplier['supplierAddressList'][0].address1);
-                controlArrayAddress.controls[0].get('address2').setValue(this.supplier['supplierAddressList'][0].address2);
-                controlArrayAddress.controls[0].get('address3').setValue(this.supplier['supplierAddressList'][0].address3);
-                controlArrayAddress.controls[0].get('state').setValue(this.supplier['supplierAddressList'][0].state);
-                controlArrayAddress.controls[0].get('gstincode').setValue(this.supplier['supplierAddressList'][0].gstincode);
-                controlArrayAddress.controls[0].get('stateCode').setValue(this.supplier['supplierAddressList'][0].stateCode);
-                }
+                  for ( var i = 0; i < this.supplier.supplierAddressList.length; i ++ ) {
+                    controlArrayAddress.push(
+                      this._formBuilder.group({
+                        locationName: [this.supplier.supplierAddressList[i].locationName],
+                        address1: [this.supplier.supplierAddressList[i].address1],
+                        address2: [this.supplier.supplierAddressList[i].address2],
+                        address3: [this.supplier.supplierAddressList[i].address3],
+                        state: [this.supplier.supplierAddressList[i].state],
+                        gstincode: [this.supplier.supplierAddressList[i].gstincode],
+                        stateCode: [this.supplier.supplierAddressList[i].stateCode]
+                      })
+                    );
+                    if (controlArrayAddress.length > 0) {
+                      controlArrayAddress.removeAt(0);
+                    }
+                  }
+
 
                 const controlArrayTerms = <FormArray> this.suForm.get('supplierTerms');
-                if (controlArrayTerms.length > 0) {
-                controlArrayTerms.controls[0].get('paymentTerms').setValue(this.supplier['supplierTerms'][0].paymentTerms);
-                controlArrayTerms.controls[0].get('currency').setValue(this.supplier['supplierTerms'][0].currency);
-                controlArrayTerms.controls[0].get('transporters').setValue(this.supplier['supplierTerms'][0].transporters);
-                controlArrayTerms.controls[0].get('packing').setValue(this.supplier['supplierTerms'][0].packing);
-                controlArrayTerms.controls[0].get('freight').setValue(this.supplier['supplierTerms'][0].freight);
-                controlArrayTerms.controls[0].get('deliveryTerms').setValue(this.supplier['supplierTerms'][0].deliveryTerms);
-                }
+                  for ( var i = 0; i < this.supplier.supplierTerms.length ; i++ ) {
+                    controlArrayTerms.push(
+                      this._formBuilder.group({
+                        paymentTerms: [this.supplier.supplierTerms[i].paymentTerms],
+                        currency: [this.supplier.supplierTerms[i].currency],
+                        transporters: [this.supplier.supplierTerms[i].transporters],
+                        packing: [this.supplier.supplierTerms[i].packing],
+                        freight: [this.supplier.supplierTerms[i].freight],
+                        deliveryTerms: [this.supplier.supplierTerms[i].deliveryTerms]
+                      })
+                    );
+                    if (controlArrayTerms.length > 0) {
+                      controlArrayTerms.removeAt(0);
+                    }
+                  }
             }
         });
 
@@ -103,7 +130,7 @@ export class SupplierComponent implements OnInit, OnDestroy {
             contactperson: [null, Validators.required],
             contactMobile: [null, Validators.required],
             landLineNos: [null, Validators.required],
-            EmailID: [null, Validators.required],
+            emailID: [null, Validators.required],
             supplierTaxes:  this._formBuilder.array([this.createSupplierTaxes()]),
             supplierAddressList:  this._formBuilder.array([this.createSupplierAddressList()]),
             supplierTerms:  this._formBuilder.array([this.createSupplierTerms()]),
@@ -115,7 +142,7 @@ export class SupplierComponent implements OnInit, OnDestroy {
     get contactperson() { return this.suForm.get('contactperson'); }
     get contactMobile() { return this.suForm.get('contactMobile'); }
     get landLineNos() { return this.suForm.get('landLineNos'); }
-    get EmailID() { return this.suForm.get('EmailID'); }
+    get emailID() { return this.suForm.get('emailID'); }
     get locationName() { return this.suForm.get(['supplierAddressList'], 0, ['locationName']); }
     get address1() { return this.suForm.get(['supplierAddressList'], 0, ['address1']); }
     get address2() { return this.suForm.get(['supplierAddressList'], 0, ['address2']); }
@@ -226,13 +253,12 @@ export class SupplierComponent implements OnInit, OnDestroy {
     }
 
     getLedgers() {
-      this.ledgerService.getAllLedgers().subscribe( res => {
+      this.customerService.getTaxType().subscribe( res => {
         if (res && res.status === '200') {
-         // this.ledgerList = res.data;
           let data = res.data;
           for (let key in data) {
             if (data.hasOwnProperty(key)) {
-                this.ledgerList.push({label: data[key].ledgerName, value: data[key].ledgerName});
+                this.ledgerList.push({label: data[key].ledgerName, value: data[key].ledger_ID});
             }
           }
         }

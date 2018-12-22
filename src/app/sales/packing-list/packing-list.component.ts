@@ -9,7 +9,6 @@ import { TransactionSerivices } from '../../transactionsShared/transaction.servi
 })
 export class PackingListComponent implements OnInit {
   public packingList = [];
-
   constructor(
     private transComService: TransactionSerivices, private router: Router,
   ) { }
@@ -30,6 +29,7 @@ export class PackingListComponent implements OnInit {
     localStorage.setItem('transactionTypeId', '11');
     localStorage.setItem('FormHeader', 'Packing List Edit/Create Form');
     localStorage.setItem('transationLinkRef', 'true');
+    localStorage.setItem('showLocation', 'false');
   }
 
   getSalesOrderList() {
@@ -53,5 +53,16 @@ export class PackingListComponent implements OnInit {
     localStorage.setItem('rollBackUrl', backUrl);
     localStorage.setItem('transactionID', id);
     this.router.navigate(['/sales/addEditsales']);
+  }
+  generateReport(id) {
+    this.transComService.generateReport(id).subscribe( res => {
+      if (res.status === '200') {
+        const fileName = res.data[0].downloadFileName;
+        const downloadUrl = 'http://apietrax.iflotech.in/api/ReportDownload/DownloadReportPDF?ReportFileName=' + fileName;
+        window.location.href = downloadUrl;
+      } else if ( res.status === '500') {
+        alert('Download Report Failed !');
+      }
+      });
   }
 }

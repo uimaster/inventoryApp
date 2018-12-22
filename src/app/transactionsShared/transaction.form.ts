@@ -51,6 +51,7 @@ export class TransactionFormComponent implements OnInit {
   transInvoiceTerms = true;
   transWorkCompletionDetails = true;
   showCurrency = true;
+  showLocation = true;
   totalAmount = 0;
 
   date3 = new Date();
@@ -94,11 +95,12 @@ export class TransactionFormComponent implements OnInit {
     this.showLedger = JSON.parse(localStorage.getItem('showLedger'));
     this.showSupplier = JSON.parse(localStorage.getItem('showSupplier'));
     this.transationLinkRef = JSON.parse(localStorage.getItem('transationLinkRef'));
-
+    this.showLocation = JSON.parse(localStorage.getItem('showLocation'));
     this.transactionTypeId = JSON.parse(localStorage.getItem('transactionTypeId'));
 
     // setTimeout(() => {
-      // this.showLoader = true;
+      this.showLoader = true;
+      this.getItemList();
       this.getCurrency();
       // this.getItemMasterList();
       this.getLocation();
@@ -108,7 +110,6 @@ export class TransactionFormComponent implements OnInit {
       this.getGstRate();
       // this.getPendingSalesOrderList();
       this.getPOPendingList();
-      this.getItemList();
       this.getCustomers();
       setTimeout(() => {
         this.getTrasactionDetails(this.transactionId);
@@ -332,7 +333,7 @@ export class TransactionFormComponent implements OnInit {
     if (this.transItemDetails) {
       return this.fb.group({
         transactionID: [0],
-        stockitemID: [1],
+        stockitemID: [0],
         transactionItem_AdditionalDesciption: [''],
         locationID: [1],
         itemQty: [0],
@@ -373,7 +374,6 @@ export class TransactionFormComponent implements OnInit {
         transactionItemSerialNo: [0]
       })
     );
-    console.log(stockItemArray);
   }
 
   deleteItemDetails(index) {
@@ -471,7 +471,6 @@ export class TransactionFormComponent implements OnInit {
   }
 
   convertToDateFormat(Datestr) {
-    debugger;
     if (Datestr != '') {
       // Datestr='03/08/2016'
       var datedata = Datestr.split('-');
@@ -507,7 +506,6 @@ export class TransactionFormComponent implements OnInit {
             this.transactionForm.controls['currencyID'].setValue(this.detailsData[0].currencyID);
             this.transactionForm.controls['transactionDueDate'].setValue(this.detailsData[0].transactionDueDate);
             this.totalAmount = this.detailsData[0].transaction_Amount;
-            console.log(this.totalAmount);
          // }
 
           if (this.detailsData[0].transItemDetails.length > 0 && this.transItemDetails) {
@@ -711,11 +709,10 @@ export class TransactionFormComponent implements OnInit {
 
   getItemList() {
     this.trasactionService.getItemList().subscribe( res => {
-      console.log('itesms:', res);
       let data = res.data;
         for (let key in data) {
           if (data.hasOwnProperty(key)) {
-              this.itemMasterList.push({label: data[key].itemName, value: data[key].stockItemID});
+              this.itemMasterList.push({label: data[key].stockItemDesc, value: data[key].stockItemID});
           }
         }
     });
@@ -860,38 +857,66 @@ export class TransactionFormComponent implements OnInit {
           if (this.detailsData[0].transItemDetails.length > 0 && this.transItemDetails) {
             this.ItemData = this.detailsData[0].transItemDetails;
             const controlArray = <FormArray>this.transactionForm.get('transItemDetails');
-            controlArray.controls[0].get('transactionID').setValue(this.ItemData[0].transactionID);
-            controlArray.controls[0].get('stockitemID').setValue(this.ItemData[0].stockitemID);
-            controlArray.controls[0].get('transactionItem_AdditionalDesciption')
-            .setValue(this.ItemData[0].transactionItem_AdditionalDesciption);
-            controlArray.controls[0].get('itemQty').setValue(this.ItemData[0].itemQty);
-            controlArray.controls[0].get('itemReceived_Qty').setValue(this.ItemData[0].itemReceived_Qty);
-            controlArray.controls[0].get('itemChallan_Qty').setValue(this.ItemData[0].itemChallan_Qty);
-            controlArray.controls[0].get('itemPending_Qty').setValue(this.ItemData[0].itemPending_Qty);
-            controlArray.controls[0].get('itemRate').setValue(this.ItemData[0].itemRate);
-            controlArray.controls[0].get('itemAmount').setValue(this.ItemData[0].itemAmount);
-            controlArray.controls[0].get('itemStops').setValue(this.ItemData[0].itemStops);
-            controlArray.controls[0].get('itemLength').setValue(this.ItemData[0].itemLength);
-            controlArray.controls[0].get('itemBatchApplicable').setValue(this.ItemData[0].itemBatchApplicable);
-            controlArray.controls[0].get('packingBoxStockItemID').setValue(this.ItemData[0].packingBoxStockItemID);
-            controlArray.controls[0].get('transactionItemSerialNo').setValue(this.ItemData[0].transactionItemSerialNo);
-            controlArray.controls[0].get('locationID').setValue(this.ItemData[0].locationID);
+            for( var i = 0; i < this.ItemData.length; i++) {
+              controlArray.push(
+                this.fb.group({
+                  transactionID: [this.ItemData[i].transactionID],
+                  stockitemID: [this.ItemData[i].stockItemDesc],
+                  transactionItem_AdditionalDesciption: [this.ItemData[i].transactionItem_AdditionalDesciption],
+                  itemQty: [this.ItemData[i].itemQty],
+                  itemReceived_Qty: [this.ItemData[i].itemReceived_Qty],
+                  itemChallan_Qty: [this.ItemData[i].itemChallan_Qty],
+                  itemPending_Qty: [this.ItemData[i].itemPending_Qty],
+                  itemRate: [this.ItemData[i].itemRate],
+                  itemAmount: [this.ItemData[i].itemAmount],
+                  itemStops: [this.ItemData[i].itemStops],
+                  itemLength: [this.ItemData[i].itemLength],
+                  itemBatchApplicable: [this.ItemData[i].itemBatchApplicable],
+                  packingBoxStockItemID: [this.ItemData[i].packingBoxStockItemID],
+                  transactionItemSerialNo: [this.ItemData[i].transactionItemSerialNo],
+                  locationID: [this.ItemData[i].locationID]
+                })
+              )
+            }
+
+            // controlArray.controls[0].get('transactionID').setValue(this.ItemData[0].transactionID);
+            // controlArray.controls[0].get('stockitemID').setValue(this.ItemData[0].stockitemID);
+            // controlArray.controls[0].get('transactionItem_AdditionalDesciption')
+            // .setValue(this.ItemData[0].transactionItem_AdditionalDesciption);
+            // controlArray.controls[0].get('itemQty').setValue(this.ItemData[0].itemQty);
+            // controlArray.controls[0].get('itemReceived_Qty').setValue(this.ItemData[0].itemReceived_Qty);
+            // controlArray.controls[0].get('itemChallan_Qty').setValue(this.ItemData[0].itemChallan_Qty);
+            // controlArray.controls[0].get('itemPending_Qty').setValue(this.ItemData[0].itemPending_Qty);
+            // controlArray.controls[0].get('itemRate').setValue(this.ItemData[0].itemRate);
+            // controlArray.controls[0].get('itemAmount').setValue(this.ItemData[0].itemAmount);
+            // controlArray.controls[0].get('itemStops').setValue(this.ItemData[0].itemStops);
+            // controlArray.controls[0].get('itemLength').setValue(this.ItemData[0].itemLength);
+            // controlArray.controls[0].get('itemBatchApplicable').setValue(this.ItemData[0].itemBatchApplicable);
+            // controlArray.controls[0].get('packingBoxStockItemID').setValue(this.ItemData[0].packingBoxStockItemID);
+            // controlArray.controls[0].get('transactionItemSerialNo').setValue(this.ItemData[0].transactionItemSerialNo);
+            // controlArray.controls[0].get('locationID').setValue(this.ItemData[0].locationID);
           }
           if (this.detailsData[0].transLedgerDetails.length > 0 && this.transLedgerDetails) {
             this.ledgerData = this.detailsData[0].transLedgerDetails;
             const controlArray = <FormArray>this.transactionForm.get('transLedgerDetails');
-            controlArray.controls[0].get('transactionID').setValue(this.ledgerData[0].transactionID);
-            controlArray.controls[0].get('ledgerID').setValue(this.ledgerData[0].ledgerID);
-            controlArray.controls[0].get('taxRate').setValue(this.ledgerData[0].taxRate);
-            controlArray.controls[0].get('ledgerAmount').setValue(this.ledgerData[0].ledgerAmount);
+            for ( var i = 0; i < this.ledgerData.length; i++) {
+              controlArray.push(
+                this.fb.group({
+                  transactionID: [this.ledgerData[i].transactionID],
+                  ledgerID: [this.ledgerData[i].ledgerID],
+                  taxRate: [this.ledgerData[i].taxRate],
+                  ledgerAmount: [this.ledgerData[i].ledgerAmount],
+                })
+              );
+            }
+            // controlArray.controls[0].get('transactionID').setValue(this.ledgerData[0].transactionID);
+            // controlArray.controls[0].get('ledgerID').setValue(this.ledgerData[0].ledgerID);
+            // controlArray.controls[0].get('taxRate').setValue(this.ledgerData[0].taxRate);
+            // controlArray.controls[0].get('ledgerAmount').setValue(this.ledgerData[0].ledgerAmount);
           }
         }
       });
     }
   }
-
-  // dateSelection(data) {
-  //   console.log('dataeee', data.target);
-  // }
 
 }

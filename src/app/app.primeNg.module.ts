@@ -12,7 +12,7 @@ import {RadioButtonModule} from 'primeng/radiobutton';
 import {DialogModule} from 'primeng/dialog';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import {PanelModule} from 'primeng/panel';
-import { ProgressSpinnerModule } from 'primeng/primeng';
+import { ProgressSpinnerModule, AutoCompleteModule } from 'primeng/primeng';
 
 
 @NgModule({
@@ -29,7 +29,8 @@ import { ProgressSpinnerModule } from 'primeng/primeng';
     DialogModule,
     InputTextareaModule,
     PanelModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    AutoCompleteModule
   ],
   exports: [
     SidebarModule,
@@ -44,7 +45,8 @@ import { ProgressSpinnerModule } from 'primeng/primeng';
     DialogModule,
     InputTextareaModule,
     PanelModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    AutoCompleteModule
   ]
 })
 

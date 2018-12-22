@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 
 import * as urls from './../../utils/app.urls';
+import { DOWNLOADREPORT } from '../../utils/app.urls';
 
 @Injectable()
 
@@ -98,14 +99,14 @@ export class TransactionSerivices {
     .catch((error) => Observable.throw('server Error.'));
   }
 
-   // GET getPendingSalesOrderList LIST //
-  //  getPendingSalesOrderList(): Observable<any> {
-  //   const params = new HttpParams().set('CompanyID', '1');
-  //   return this.http.get(urls.GETPENDINGSALESORDERLIST, {params})
-  //   .map((res: any) => {
-  //       return res;
-  //   })
-  //   .catch((error) => Observable.throw('server Error.'));
-  // }
+  generateReport(id) {
+    const transactionType = localStorage.getItem('transactionTypeId');
+    const params = new HttpParams().set('TransactionID', id).set('ReportTypeID', transactionType);
+    return this.http.get(urls.GENERATEREPORT, {params}).pipe(
+      map((res: any) => {
+        return res;
+      })
+    ).catch((error) => Observable.throw(error.JSON || 'Server Error !'));
+  }
 
 }

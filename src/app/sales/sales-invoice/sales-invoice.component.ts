@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
 })
 export class SalesInvoiceComponent implements OnInit {
   public invoiceList = [];
-
   constructor(
     private transComService: TransactionSerivices, private router: Router
   ) { }
@@ -30,6 +29,7 @@ export class SalesInvoiceComponent implements OnInit {
     localStorage.setItem('transactionTypeId', '12');
     localStorage.setItem('FormHeader', 'Sales Invoice Edit/Create Form');
     localStorage.setItem('transationLinkRef', 'true');
+    localStorage.setItem('showLocation', 'false');
   }
 
   getSalesOrderList() {
@@ -54,5 +54,17 @@ export class SalesInvoiceComponent implements OnInit {
 
     localStorage.setItem('transactionID', id);
     this.router.navigate(['/sales/addEditsales']);
+  }
+
+  generateReport(id) {
+    this.transComService.generateReport(id).subscribe( res => {
+      if (res.status === '200') {
+        const fileName = res.data[0].downloadFileName;
+        const downloadUrl = 'http://apietrax.iflotech.in/api/ReportDownload/DownloadReportPDF?ReportFileName=' + fileName;
+        window.location.href = downloadUrl;
+      } else if ( res.status === '500') {
+        alert('Download Report Failed !');
+      }
+      });
   }
 }

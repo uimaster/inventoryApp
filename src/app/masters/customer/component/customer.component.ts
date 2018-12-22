@@ -61,28 +61,56 @@ export class CustomerComponent implements OnInit, OnDestroy {
                 this.cForm.controls['contactperson'].setValue(this.customer['contactperson']);
                 this.cForm.controls['customer_ID'].setValue(this.customer['customer_ID']);
                 this.cForm.controls['emailID'].setValue(this.customer['emailID']);
+
                 const controlArray = <FormArray> this.cForm.get('customerTaxes');
-                controlArray.controls[0].get('taxLedgerID').setValue(this.customer['customerTaxes'][0].taxLedgerID);
-                controlArray.controls[0].get('taxLedgerName').setValue(this.customer['customerTaxes'][0].taxLedgerName);
-                controlArray.controls[0].get('taxRate').setValue(this.customer['customerTaxes'][0].taxRate);
-                controlArray.controls[0].get('calculatedOn').setValue(this.customer['customerTaxes'][0].calculatedOn);
+                for (var i = 0; i <  this.customer.customerTaxes.length; i++) {
+                  controlArray.push(
+                    this._formBuilder.group({
+                      taxLedgerID: [this.customer.customerTaxes[i].taxLedgerID],
+                      taxLedgerName: [this.customer.customerTaxes[i].taxLedgerName],
+                      taxRate: [this.customer.customerTaxes[i].taxRate],
+                      calculatedOn: [this.customer.customerTaxes[i].calculatedOn]
+                    })
+                  );
+                  if (controlArray.length > 0) {
+                    controlArray.removeAt(0);
+                  }
+                }
 
                 const controlArrayAddress = <FormArray> this.cForm.get('customerAddList');
-                controlArrayAddress.controls[0].get('locationName').setValue(this.customer['customerAddList'][0].locationName);
-                controlArrayAddress.controls[0].get('address1').setValue(this.customer['customerAddList'][0].address1);
-                controlArrayAddress.controls[0].get('address2').setValue(this.customer['customerAddList'][0].address2);
-                controlArrayAddress.controls[0].get('address3').setValue(this.customer['customerAddList'][0].address3);
-                controlArrayAddress.controls[0].get('state').setValue(this.customer['customerAddList'][0].state);
-                controlArrayAddress.controls[0].get('gstincode').setValue(this.customer['customerAddList'][0].gstincode);
-                controlArrayAddress.controls[0].get('stateCode').setValue(this.customer['customerAddList'][0].stateCode);
+                for ( var i = 0; i < this.customer.customerAddList.length; i ++ ) {
+                  controlArrayAddress.push(
+                    this._formBuilder.group({
+                      locationName: [this.customer.customerAddList[i].locationName],
+                      address1: [this.customer.customerAddList[i].address1],
+                      address2: [this.customer.customerAddList[i].address2],
+                      address3: [this.customer.customerAddList[i].address3],
+                      state: [this.customer.customerAddList[i].state],
+                      gstincode: [this.customer.customerAddList[i].gstincode],
+                      stateCode: [this.customer.customerAddList[i].stateCode]
+                    })
+                  );
+                  if (controlArrayAddress.length > 0) {
+                    controlArrayAddress.removeAt(0);
+                  }
+                }
 
                 const controlArrayTerms = <FormArray> this.cForm.get('customerTerms');
-                controlArrayTerms.controls[0].get('paymentTerms').setValue(this.customer['customerTerms'][0].paymentTerms);
-                controlArrayTerms.controls[0].get('currency').setValue(this.customer['customerTerms'][0].currency);
-                controlArrayTerms.controls[0].get('transporters').setValue(this.customer['customerTerms'][0].transporters);
-                controlArrayTerms.controls[0].get('packing').setValue(this.customer['customerTerms'][0].packing);
-                controlArrayTerms.controls[0].get('freight').setValue(this.customer['customerTerms'][0].freight);
-                controlArrayTerms.controls[0].get('deliveryTerms').setValue(this.customer['customerTerms'][0].deliveryTerms);
+                for ( var i = 0; i < this.customer.customerTerms.length ; i++ ) {
+                  controlArrayTerms.push(
+                    this._formBuilder.group({
+                      paymentTerms: [this.customer.customerTerms[i].paymentTerms],
+                      currency: [this.customer.customerTerms[i].currency],
+                      transporters: [this.customer.customerTerms[i].transporters],
+                      packing: [this.customer.customerTerms[i].packing],
+                      freight: [this.customer.customerTerms[i].freight],
+                      deliveryTerms: [this.customer.customerTerms[i].deliveryTerms]
+                    })
+                  );
+                  if (controlArrayTerms.length > 0) {
+                    controlArrayTerms.removeAt(0);
+                  }
+                }
             }
         });
     }
@@ -224,7 +252,6 @@ export class CustomerComponent implements OnInit, OnDestroy {
     getLedgers() {
       this.customerService.getTaxType().subscribe( res => {
         if (res && res.status === '200') {
-          // this.ledgerList = res.data;
           let data = res.data;
           for (let key in data) {
             if (data.hasOwnProperty(key)) {
