@@ -5,13 +5,16 @@
         <nav class="navbar">
           <div class="navbar-header">
             <a href="#" class="navbar-brand">
-              <img src="assets/images/logo.png" alt="">
+              <img src="assets/images/login-logo.png" alt="">
             </a>
-            <button type="text" (click)="display = true" pButton icon="pi pi-plus" label="Show" class="navbarleft">
+            <span class="heading">
+              Dashboard
+            </span>
+            <!-- <button type="text" (click)="display = true" pButton class="navbarleft">
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
-            </button>
+            </button> -->
           </div>
           <div class="userprofile">
             <ul>
@@ -25,31 +28,52 @@
                 <span>
                   <i class="fa fa-user" aria-hidden="true"></i>
                 </span>
-                <ul>
+                <!-- <ul>
                   <li>
                     <a href="#">Name</a>
                   </li>
                   <li>
                     <a href="#">Sign Out</a>
                   </li>
-                </ul>
+                </ul> -->
               </li>
             </ul>
           </div>
         </nav>
-        <p-sidebar [(visible)]="display" [styleClass]="sidebarnavbg">
-          <div class="sidebarnav">
-            <div class="profilelogo">
-              <img src="assets/images/profile.jpg" class="img-responsive" alt="profile">
-            </div>
-            <ul>
-              <li>Sushil K.</li>
-              <li>Basic member</li>
-              <li><a href="javascript:void(0)">Upgrade</a></li>
-            </ul>
-            <p-panelMenu [model]="items" [style]="{'width':'100%'}"></p-panelMenu>
-          </div>
-        </p-sidebar>
+        <div class="sideBar">
+          <ul>
+            <li>
+              <a routerLink="/dashboard" routerLinkActive="active"><i class="fa fa-tachometer" aria-hidden="true"></i> <span>Dashboard</span></a>
+            </li>
+            <li>
+              <a routerLink="/masters" routerLinkActive="active"><i class="fa fa-address-book" aria-hidden="true"></i> <span>Masters</span></a>
+            </li>
+            <li>
+              <a routerLink="/bill-material" routerLinkActive="active"><i class="fa fa-tasks" aria-hidden="true"></i> <span>Bill Of Material</span></a>
+            </li>
+            <li>
+              <a routerLink="/planning" routerLinkActive="active"><i class="fa fa-address-card" aria-hidden="true"></i> <span>Planning</span></a>
+            </li>
+            <li>
+              <a routerLink="/purchase" routerLinkActive="active"><i class="fa fa-shopping-cart" aria-hidden="true"></i> <span>Purchase</span></a>
+            </li>
+            <li>
+              <a routerLink="/stores" routerLinkActive="active"><i class="fa fa-archive" aria-hidden="true"></i> <span>Stores</span></a>
+            </li>
+            <li>
+              <a routerLink="/production" routerLinkActive="active"><i class="fa fa-product-hunt" aria-hidden="true"></i> <span>Production</span></a>
+            </li>
+            <li>
+              <a routerLink="/sales" routerLinkActive="active"><i class="fa fa-balance-scale" aria-hidden="true"></i> <span>Sales</span></a>
+            </li>
+            <!-- <li>
+              <a routerLink="/utilities" routerLinkActive="active"><i class="fa fa-sliders" aria-hidden="true"></i> <span>Utilities</span></a>
+            </li> -->
+            <li>
+              <a routerLink="/logout" routerLinkActive="active" (click)="logOut()"><i class="fa fa-power-off" aria-hidden="true"></i> <span>Logout</span></a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>

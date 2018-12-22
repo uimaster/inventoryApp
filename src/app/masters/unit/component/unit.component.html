@@ -1,0 +1,28 @@
+<p-panel header="Unit Add/Edit Form" class="Tabledata">
+  <form [formGroup]="uForm" (ngSubmit)="saveUnit(uForm.value)" class="formData">
+
+      <div class="message error" *ngIf="showError">Updatation/creation failed .</div>
+      <div class="message success" *ngIf="showSuccess">You have Updated/created successfully.</div>
+
+    <div class="ui-g">
+      <div class="ui-g-6">
+        <div class="form-group">
+            <span class="ui-float-label">
+          <input type="text" formControlName="unitName" pInputText id="unitName">
+          <label for="unitName">Unit Name</label>
+          </span>
+          <div *ngIf="unitName.invalid && (unitName.dirty || unitName.touched)" class="alert alert-danger">
+            <div *ngIf="unitName.errors.required">
+              Unit name is required.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br/>
+    <p style="text-align: center">
+      <button pButton type="submit" label="Submit" class="ui-button-success" [disabled]="!uForm.valid" style="margin-right: 10px;"></button>
+      <button pButton type="button" label="Cancel" class="ui-button-secondary"></button>
+    </p>
+  </form>
+</p-panel>

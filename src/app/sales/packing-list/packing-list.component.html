@@ -1,0 +1,40 @@
+
+<p-panel header="Packing List" class="Tabledata">
+  <p-header>
+      <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addPackingList()"></button>
+
+    </p-header>
+  <div *ngIf="packingList" class="table-responsive">
+      <table class="table">
+          <thead>
+          <tr>
+              <th>Doc Date</th>
+              <th>Doc No </th>
+              <th>Customer</th>
+              <th>SO. No.</th>
+              <th>Action</th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container *ngIf="packingList">
+              <tr *ngFor="let item of packingList; index as i;">
+                  <td>{{item.transactionDate}}</td>
+                  <td>{{item.transactionNo}}</td>
+                  <td>{{item.ledgerName}}</td>
+                  <td>{{item.transactionNo}}</td>
+                  <td>
+                      <button pButton type="button" style="margin-right: 5px;" icon="fa fa-pencil" class="ui-button-success" (click)="editPackingList(item.transactionID)" ></button>
+                      <button pButton type="button" style="margin-right: 5px;" icon="fa fa-trash-o" class="ui-button-danger"></button>
+                      <a pButton type="button" icon="fa fa-print" class="ui-button-info" target="_blank" (click)="generateReport(item.transactionID)"> </a>
+                  </td>
+              </tr>
+          </ng-container>
+          </tbody>
+      </table>
+  </div>
+  <div  *ngIf="!packingList || packingList.length < 1" style="text-align: center">
+    <br/>
+    No Records available !
+    <br/><br/>
+  </div>
+</p-panel>

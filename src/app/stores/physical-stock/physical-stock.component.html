@@ -1,0 +1,38 @@
+
+<p-panel header="Physical Stock" class="Tabledata">
+  <p-header>
+      <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addRecord()"></button>
+
+    </p-header>
+  <div *ngIf="physicaStocknList" class="table-responsive">
+      <table class="table">
+          <thead>
+          <tr>
+              <th>Doc Date</th>
+              <th>Doc No </th>
+              <th>Godown Location</th>
+              <th>Action</th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container *ngIf="physicaStocknList">
+              <tr *ngFor="let item of physicaStocknList; index as i;">
+                  <td>{{item.transactionDate}}</td>
+                  <td>{{item.transactionNo}}</td>
+                  <td>{{item.locationName}}</td>
+                  <td>
+                      <button pButton type="button" style="margin-right: 5px;" icon="fa fa-pencil" class="ui-button-success" (click)="editRecord(item.transactionID)" ></button>
+                      <button pButton type="button" style="margin-right: 5px;" icon="fa fa-trash-o" class="ui-button-danger"></button>
+                      <a pButton type="button" icon="fa fa-print" class="ui-button-info" target="_blank" (click)="generateReport(item.transactionID)"> </a>
+                  </td>
+              </tr>
+          </ng-container>
+          </tbody>
+      </table>
+  </div>
+  <div  *ngIf="!physicaStocknList || physicaStocknList.length < 1" style="text-align: center">
+    <br/>
+    No Records available !
+    <br/><br/>
+  </div>
+</p-panel>

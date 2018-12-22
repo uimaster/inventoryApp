@@ -1,0 +1,26 @@
+<p-panel header="Unit List" class="Tabledata">
+  <p-header>
+    <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addUnit()"></button>
+  </p-header>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Unit Name</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="unitList">
+          <tr *ngFor="let unit of unitList; index as i;">
+            <td> {{unit.unitName}}</td>
+            <td>
+              <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="setUnit(unit.unit_ID)"></button>
+              <button pButton type="button" label="Delete" class="ui-button-danger"></button>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</p-panel>

@@ -1,0 +1,320 @@
+<p-panel header="Supplier Add/Edit Form" class="Tabledata">
+    <form [formGroup] = "suForm" (ngSubmit)="saveSupplier(suForm.value)" class="formData">
+        <div class="message error" *ngIf="showError">Updatation/creation failed .</div>
+        <div class="message success" *ngIf="showSuccess">You have Updated/created successfully.</div>
+
+        <div class="ui-g">
+            <div class="ui-g-4">
+                <div class="form-group">
+                  <span class="ui-float-label">
+                    <input type="text" formControlName="supplierName" pInputText id="supplierName">
+                    <label for="supplierName">Supplier name</label>
+                  </span>
+
+                    <div *ngIf="supplierName.invalid && (supplierName.dirty || supplierName.touched)" class="alert alert-danger">
+                        <div *ngIf="supplierName.errors.required">
+                            Supplier name is required.
+                        </div>
+                        <div *ngIf="supplierName.errors.minlength">
+                            Supplier Name must be at least 4 characters long.
+                        </div>
+                    </div>
+                </div>
+              </div>
+
+            <div class="ui-g-4">
+                <div class="form-group">
+                  <span class="ui-float-label">
+                    <input type="text" formControlName="contactperson" pInputText id="contactperson">
+                    <label for="contactperson">Contact Person</label>
+                  </span>
+                    <div *ngIf="contactperson.invalid && (contactperson.dirty || contactperson.touched)" class="alert alert-danger">
+                        <div *ngIf="contactperson.errors.required">
+                            This field is required.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui-g-4">
+                <div class="form-group">
+                  <span class="ui-float-label">
+                    <input type="text" formControlName="emailID" pInputText id="emailID">
+                    <label for="emailID">Email Id</label>
+                  </span>
+                    <div *ngIf="emailID.invalid && (emailID.dirty || emailID.touched)" class="alert alert-danger">
+                        <div *ngIf="emailID.errors.required">
+                            This field is required.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui-g-4">
+                <div class="form-group">
+                  <span class="ui-float-label">
+                    <input type="text" formControlName="contactMobile" pInputText id="contactMobile" />
+                    <label for="contactMobile">Mobile</label>
+                  </span>
+
+                    <div *ngIf="contactMobile.invalid && (contactMobile.dirty || contactMobile.touched)" class="alert alert-danger">
+                        <div *ngIf="contactMobile.errors.required">
+                            This field is required.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui-g-4">
+                <div class="form-group">
+                  <span class="ui-float-label">
+                    <input type="text" formControlName="landLineNos" pInputText id="landLineNos" />
+                    <label for="landLineNos">Landline No</label>
+                  </span>
+
+                    <div *ngIf="landLineNos.invalid && (landLineNos.dirty || landLineNos.touched)" class="alert alert-danger">
+                        <div *ngIf="landLineNos.errors.required">
+                            This field is required.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <fieldset formArrayName="supplierTaxes">
+            <legend>Supplier Taxes</legend>
+            <div *ngFor="let ctrl of suForm.get('supplierTaxes').controls; let i = index;">
+                <div [formGroupName]="i">
+                    <div class="ui-g">
+                        <div class="ui-g-4">
+                            <div class="form-group">
+                                <span class="ui-float-label">
+                                  <p-dropdown [options]="ledgerList" formControlName="taxLedgerID"  placeholder="Tax Ledger Name"></p-dropdown>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="ui-g-4">
+                            <div class="form-group">
+                                <span class="ui-float-label">
+                                  <input type="number" formControlName="taxRate" pInputText id="taxRate">
+                                  <label for="taxRate">Tax Rate</label>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="ui-g-3">
+                            <div class="form-group">
+                                <span class="ui-float-label">
+                                  <input type="text" formControlName="calculatedOn" pInputText id="calculatedOn">
+                                  <label for="calculatedOn">Calculated On</label>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="ui-g-1">
+                          <button pButton type="button" style="margin-right: 5px;" icon="fa fa-plus" class="ui-button-success" (click)="addTaxes()"></button>
+                          <button pButton type="button" icon="fa fa-trash-o" class="ui-button-danger" [disabled]="i<1" (click)="removeTaxes(i)"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </fieldset>
+
+        <br/>
+
+
+
+        <fieldset formArrayName="supplierAddressList">
+            <legend>Supplier Address List</legend>
+            <div *ngFor="let ctrl of suForm.get('supplierAddressList').controls; let i = index;">
+                <div [formGroupName]="i">
+                    <div class="ui-g">
+                        <div class="ui-g-3">
+                            <div class="form-group">
+                                <span class="ui-float-label">
+                                  <!-- <p-dropdown [options]="locationList" formControlName="locationName" placeholder="Location Name"></p-dropdown> -->
+                                  <input type="text" formControlName="locationName" pInputText id="locationName">
+                                  <label for="locationName">Location Name</label>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="ui-g-3">
+                            <div class="form-group">
+                                <span class="ui-float-label">
+                                  <input type="text" formControlName="state" pInputText id="state">
+                                  <label for="state">State</label>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="ui-g-3">
+                            <div class="form-group">
+                                <span class="ui-float-label">
+                                  <input type="text" formControlName="gstincode" pInputText id="gstincode">
+                                  <label for="gstincode">GstinCode</label>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="ui-g-3">
+                            <div class="form-group">
+                                <span class="ui-float-label">
+                                  <input type="number" formControlName="stateCode" pInputText id="stateCode">
+                                  <label for="stateCode">State Code</label>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="ui-g-4">
+                            <div class="form-group">
+                                <span class="ui-float-label">
+                                  <textarea [rows]="2" [cols]="30" pInputTextarea formControlName="address1" id="address1"></textarea>
+                                  <label for="address1">Address1</label>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="ui-g-4">
+                            <div class="form-group">
+                                <span class="ui-float-label">
+                                  <textarea [rows]="2" [cols]="30" pInputTextarea formControlName="address2" id="address2"></textarea>
+                                  <label for="address2">Address2</label>
+                                </span>
+
+                            </div>
+                        </div>
+                        <div class="ui-g-3">
+                            <div class="form-group">
+                            <span class="ui-float-label">
+                              <textarea [rows]="2" [cols]="30" pInputTextarea formControlName="address3" id="address3"></textarea>
+                              <label for="address3">Address3</label>
+                            </span>
+                            </div>
+                        </div>
+
+
+                        <div class="ui-g-1">
+                            <button pButton type="button" style="margin-right: 5px;" icon="fa fa-plus" class="ui-button-success" (click)="addAddress()"></button>
+                            <button pButton type="button" icon="fa fa-trash-o" class="ui-button-danger" [disabled]="i<1" (click)="removeAddress(i)"></button>
+                          </div>
+                    </div>
+                </div>
+            </div>
+
+        </fieldset>
+        <br/>
+        <fieldset formArrayName="supplierTerms">
+            <legend>Supplier Terms</legend>
+            <div *ngFor="let ctrl of suForm.get('supplierTerms').controls; let i = index;">
+                <div [formGroupName]="i">
+                    <div class="ui-g">
+                        <div class="ui-g-4">
+                            <div class="form-group">
+                              <span class="ui-float-label">
+                                <input type="text" formControlName="paymentTerms" pInputText id="paymentTerms">
+                                <label for="paymentTerms">Payment Terms</label>
+                              </span>
+
+                                <div *ngIf="paymentTerms.invalid && (paymentTerms.dirty || paymentTerms.touched)" class="alert alert-danger">
+                                    <div *ngIf="paymentTerms.errors.required">
+                                        Payment Terms is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-4">
+                            <div class="form-group">
+                              <span class="ui-float-label">
+                                  <p-dropdown [options]="currencyList" formControlName="currency"></p-dropdown>
+                              </span>
+
+                                <div *ngIf="currency.invalid && (currency.dirty || currency.touched)" class="alert alert-danger">
+                                    <div *ngIf="currency.errors.required">
+                                        Currency is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-4">
+                            <div class="form-group">
+                              <span class="ui-float-label">
+                                <input type="text" formControlName="transporters" pInputText id="transporters">
+                                <label for="transporters">Transporters</label>
+                              </span>
+
+                                <div *ngIf="transporters.invalid && (transporters.dirty || transporters.touched)" class="alert alert-danger">
+                                    <div *ngIf="transporters.errors.required">
+                                        Transporters is required.
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="ui-g-4">
+                            <div class="form-group">
+                              <span class="ui-float-label">
+                                <input type="text" formControlName="packing" pInputText id="packing">
+                                <label for="packing">Packing</label>
+                              </span>
+
+                                <div *ngIf="packing.invalid && (packing.dirty || packing.touched)" class="alert alert-danger">
+                                    <div *ngIf="packing.errors.required">
+                                        Packing is required.
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="ui-g-4">
+                            <div class="form-group">
+                              <span class="ui-float-label">
+                                <input type="text" formControlName="freight" pInputText id="freight">
+                                <label for="freight">Freight</label>
+                              </span>
+
+                                <div *ngIf="freight.invalid && (freight.dirty || freight.touched)" class="alert alert-danger">
+                                    <div *ngIf="freight.errors.required">
+                                        Freight is required.
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="ui-g-4">
+                            <div class="form-group">
+                              <span class="ui-float-label">
+                                <input type="text" formControlName="deliveryTerms" pInputText id="deliveryTerms">
+                                <label for="deliveryTerms">Delivery Terms</label>
+                              </span>
+
+                                <div *ngIf="deliveryTerms.invalid && (deliveryTerms.dirty || deliveryTerms.touched)" class="alert alert-danger">
+                                    <div *ngIf="deliveryTerms.errors.required">
+                                        Delivery Terms is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </fieldset>
+        <br/>
+        <p style="text-align: center">
+            <button pButton type="submit" label="Submit" class="ui-button-success" [disabled]="!suForm.valid" style="margin-right: 10px;"></button>
+            <button pButton type="button" label="Cancel" class="ui-button-secondary"></button>
+        </p>
+    </form>
+</p-panel>

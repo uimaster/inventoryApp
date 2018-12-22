@@ -1,0 +1,96 @@
+<p-panel header="Ledgers Add/Edit Form" class="Tabledata">
+  <form [formGroup]="lForm" (ngSubmit)="saveLedger(lForm.value)" class="formData">
+
+    <div class="message error" *ngIf="showError">Updatation/creation failed .</div>
+    <div class="message success" *ngIf="showSuccess">You have Updated/created successfully.</div>
+
+    <div class="ui-g">
+      <div class="ui-g-6">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <input type="text" formControlName="ledgerName" pInputText id="ledgerName">
+            <label for="ledgerName">Ledger name</label>
+          </span>
+
+          <div *ngIf="ledgerName.invalid && (ledgerName.dirty || ledgerName.touched)" class="alert alert-danger">
+            <div *ngIf="ledgerName.errors.required">
+              Ledger name is required.
+            </div>
+            <div *ngIf="ledgerName.errors.minlength">
+              Ledger Name must be at least 4 characters long.
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="ui-g-6">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <input type="text" formControlName="rateofTax" pInputText id="rateofTax">
+            <label for="rateofTax">Tax Rate</label>
+          </span>
+          <div *ngIf="rateofTax.invalid && (rateofTax.dirty || rateofTax.touched)" class="alert alert-danger">
+            <div *ngIf="rateofTax.errors.required">
+              Rate of tax is required.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ui-g-6">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <p-dropdown [options]="calculatedOnList" formControlName="calculatedOn"  id="calculatedOn" placeholder="calculatedOn"></p-dropdown>
+            <!--<input type="text" formControlName="calculatedOn" pInputText id="calculatedOn">-->
+
+          </span>
+          <div *ngIf="calculatedOn.invalid && (calculatedOn.dirty || calculatedOn.touched)" class="alert alert-danger">
+            <div *ngIf="calculatedOn.errors.required">
+              This field is required.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-g-6">
+        <div class="form-group">
+          <span class="ui-float-label">
+
+             <p-dropdown [options]="taxTypeList" formControlName="taxType"  id="taxType" placeholder="Tax Type"></p-dropdown>
+            <!--<input type="text" formControlName="taxType" pInputText id="taxType" />-->
+            <!--<label for="taxType">Tax type</label>-->
+          </span>
+
+          <div *ngIf="taxType.invalid && (taxType.dirty || taxType.touched)" class="alert alert-danger">
+            <div *ngIf="taxType.errors.required">
+              This field is required.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-g-6">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <input type="text" formControlName="gstRate" pInputText id="gstRate" />
+            <label for="gstRate">GST Rate</label>
+          </span>
+          <div *ngIf="gstRate.invalid && (gstRate.dirty || gstRate.touched)" class="alert alert-danger">
+            <div *ngIf="gstRate.errors.required">
+              This field is required.
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+    </div>
+
+    <br/>
+    <p style="text-align: center">
+      <button pButton type="submit" label="Submit" class="ui-button-success" [disabled]="!lForm.valid" style="margin-right: 10px;"></button>
+      <button pButton type="button" label="Cancel" class="ui-button-secondary"></button>
+    </p>
+  </form>
+</p-panel>
