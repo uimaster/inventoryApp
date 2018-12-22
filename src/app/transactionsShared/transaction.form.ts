@@ -66,6 +66,8 @@ export class TransactionFormComponent implements OnInit {
   selectedCar3: any;
   selectedCity: any;
   showLoader = false;
+  filteredItems = [];
+  itemName: string;
   // @ViewChild('taxSelect') taxSelect: ElementRef;
 
   constructor(
@@ -483,7 +485,6 @@ export class TransactionFormComponent implements OnInit {
 
   getTrasactionDetails(id) {
     if (id > 0) {
-     this.showLoader = true;
     this.trasactionService.getTransactionDetails(id).subscribe( res => {
 
         if (res.status === '200') {
@@ -517,7 +518,7 @@ export class TransactionFormComponent implements OnInit {
               formArray.push(
                 this.fb.group ({
                   transactionID: [this.detailsData[0].transItemDetails[i].transactionID],
-                  stockitemID: [this.detailsData[0].transItemDetails[i].stockitemID],
+                  stockitemID: [this.detailsData[0].transItemDetails[i].stockItemDesc],
                   transactionItem_AdditionalDesciption: [this.detailsData[0].transItemDetails[i].transactionItem_AdditionalDesciption],
                   locationID: [1],
                   itemQty: [this.detailsData[0].transItemDetails[i].itemQty],
@@ -570,7 +571,7 @@ export class TransactionFormComponent implements OnInit {
             this.boxDetailData = this.detailsData[0].transBoxDetails;
             const controlArray = <FormArray>this.transactionForm.get('transBoxDetails');
 
-            controlArray.controls[0].get('stockitemID').setValue(this.boxDetailData[0].stockitemID);
+            controlArray.controls[0].get('stockitemID').setValue(this.boxDetailData[0].stockItemDesc);
             controlArray.controls[0].get('itemQty').setValue(this.boxDetailData[0].itemQty);
             controlArray.controls[0].get('itemRate').setValue(this.boxDetailData[0].itemRate);
             controlArray.controls[0].get('itemAmount').setValue(this.boxDetailData[0].itemAmount);
@@ -630,7 +631,7 @@ export class TransactionFormComponent implements OnInit {
     });
 
     }
-
+    this.showLoader = false;
   }
 
 
@@ -716,6 +717,16 @@ export class TransactionFormComponent implements OnInit {
           }
         }
     });
+  }
+
+  filterItems(event) {
+      this.filteredItems = [];
+      for(let i = 0; i < this.itemMasterList.length; i++) {
+          let itemName = this.itemMasterList[i].label;
+          if (itemName.toLowerCase().indexOf(event.query.toLowerCase()) == -1) {
+              this.filteredItems.push(itemName);
+          }
+      }
   }
 
 

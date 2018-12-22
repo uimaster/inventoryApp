@@ -121,13 +121,21 @@
           <tbody>
             <tr  *ngFor="let ctrl of transactionForm.get('transItemDetails').controls; let i = index;" [formGroupName]="i">
               <td class="specialDropdown" style="text-align: left;">
-                <p-dropdown [options]="itemMasterList" formControlName="stockitemID" placeholder="Stock Item" filter="true" [style]="{'width':'95%'}">
-                </p-dropdown>
-                <!-- <p-autoComplete formControlName="stockitemID" [suggestions]="itemMasterList" (completeMethod)="getItemList()" [filter]="true" [size]="30" placeholder="Countries" [minLength]="1">
-                  <ng-template let-brand pTemplate="item">
-                    {{brand.stockItemDesc}}
-                  </ng-template>
-                </p-autoComplete> -->
+                <!-- <p-dropdown [options]="itemMasterList" formControlName="stockitemID" placeholder="Stock Item" filter="true" [style]="{'width':'95%'}">
+                </p-dropdown> -->
+
+                <p-autoComplete
+                  [showTransitionOptions]="'10ms'"
+                  [ui-autocomplete-loader]="true"
+                  [hideTransitionOptions]="'10ms'"
+                  formControlName="stockitemID"
+                  [suggestions]="filteredItems"
+                  (completeMethod)="filterItems($event)"
+                  [size]="30"
+                  placeholder="Item Name"
+                  [minLength]="2">
+                    {{itemName}}
+                </p-autoComplete>
               </td>
               <td style="text-align: left;">
                 <textarea [rows]="2" style="width:98%" pInputTextarea  formControlName="transactionItem_AdditionalDesciption" placeholder="Additional Desc."></textarea>
@@ -245,8 +253,23 @@
             <tr  *ngFor="let ctrl of transactionForm.get('transBoxDetails').controls; let i = index;" [formGroupName]="i">
               <td>
 
-                <p-dropdown [options]="itemMasterList" formControlName="stockitemID" placeholder="Stock Item" filter="true" [style]="{'width':'300px'}">
-                  </p-dropdown>
+                <!-- <p-dropdown [options]="itemMasterList" formControlName="stockitemID" placeholder="Stock Item" filter="true" [style]="{'width':'300px'}">
+                  </p-dropdown> -->
+
+                  <p-autoComplete
+                  [showTransitionOptions]="'10ms'"
+                  [ui-autocomplete-loader]="true"
+                  [hideTransitionOptions]="'10ms'"
+                  formControlName="stockitemID"
+                  [(ngModel)]="itemName"
+                  [suggestions]="filteredItems"
+                  (completeMethod)="filterItems($event)"
+                  [size]="30"
+                  placeholder="Item Name"
+                  [minLength]="2" [style]="{'width':'100%'}">
+                    {{itemName}}
+                </p-autoComplete>
+
               </td>
               <td><input type="text" formControlName="itemQty" pInputText ></td>
               <td><input type="text" formControlName="itemRate" pInputText></td>

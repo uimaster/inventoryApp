@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@ang
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { PurchaseService } from './../purchase.service';
+import { TransactionSerivices } from '../../transactionsShared/transaction.service';
 
 @Component({
   selector: 'app-purchase-order',
@@ -19,7 +20,13 @@ export class POAuthListComponent implements OnInit {
   display = false;
   unauthenticationData: any;
   unauthenticationForm: any;
-  constructor( private purchaseService: PurchaseService, private router: Router, private fb: FormBuilder, private http: HttpClient) {
+  constructor(
+    private purchaseService: PurchaseService,
+    private router: Router,
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private trasactionService: TransactionSerivices
+    ) {
     // this.createForm();
   }
 
