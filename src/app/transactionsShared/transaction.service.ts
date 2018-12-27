@@ -123,9 +123,9 @@ export class TransactionSerivices {
   }
 
   validateBatch(itemcode, batchcode) {
-    let params = new HttpParams().set('ITEMCODE', itemcode).set('BATCHNO', batchcode).set('TRTRYPE', '2');
+    const params = new HttpParams().set('ITEMCODE', itemcode).set('BATCHNO', batchcode).set('TRTRYPE', '2');
     return this.http.get(urls.VALIDATEBATCH, {params}).pipe(
-      map( res => {
+      map((res: any)  => {
         return res;
       })
     );
