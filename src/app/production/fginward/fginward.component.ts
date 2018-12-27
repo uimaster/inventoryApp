@@ -28,6 +28,7 @@ export class FGInwardComponent implements OnInit {
     localStorage.setItem('FormHeader', 'Finish Goods Inwards Edit/Create Form');
     localStorage.setItem('transationLinkRef', 'false');
     localStorage.setItem('showLocation', 'true');
+    localStorage.setItem('barcodeFields', 'true');
   }
 
   getTransactionList() {
@@ -43,11 +44,15 @@ export class FGInwardComponent implements OnInit {
   addfg() {
     this.router.navigate(['/production/addEditProduction']);
     localStorage.setItem('transactionID', '0');
+    let backUrl = this.router.url;
+    localStorage.setItem('rollBackUrl', backUrl);
   }
 
   editfg(id) {
     localStorage.setItem('transactionID', id);
     this.router.navigate(['/production/addEditProduction']);
+    let backUrl = this.router.url;
+    localStorage.setItem('rollBackUrl', backUrl);
   }
   generateReport(id) {
     this.transactionSerivices.generateReport(id).subscribe( res => {

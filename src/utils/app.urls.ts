@@ -42,3 +42,4 @@ export const GETPENDINGSALESORDERLIST = BASEURL + 'Transactions/GetPendingSalesO
 export const GETITEMLIST = BASEURL + 'Stockitem/GetStockItems';
 export const GENERATEREPORT = BASEURL + 'Reports/GenerateReportsPDF';
 export const DOWNLOADREPORT = BASEURL + 'ReportDownload/DownloadReportPDF';
+export const VALIDATEBATCH = BASEURL + 'StockItem/GetValidateBatch';

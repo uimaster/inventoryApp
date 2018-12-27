@@ -965,7 +965,7 @@ input {
   .ui-float-label {
     .ui-inputtext {
       width: 100%;
-      padding: 8px;
+      padding: 5px;
     }
     .ui-dropdown {
       width: 100%!important;
@@ -1057,3 +1057,8 @@ fieldset {
   left: 50%;
   top: 50%; border-radius: 5px; margin-left: -75px; margin-top: -85px;}
   .ui-progress-spinner-svg{ height: 80%; width: 80%;}
+  .wid100{ width: 96%!important;
+    .ui-inputtext{ width: 100%!important;}
+  }
+
+  .ui-inputtext{ font-size: 14px; line-height: 24px;}

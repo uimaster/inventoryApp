@@ -122,4 +122,15 @@ export class TransactionSerivices {
     ).catch((error) => Observable.throw(error.JSON || 'Server Error !'));
   }
 
+  validateBatch(itemcode, batchcode) {
+    let params = new HttpParams().set('ITEMCODE', itemcode).set('BATCHNO', batchcode).set('TRTRYPE', '2');
+    return this.http.get(urls.VALIDATEBATCH, {params}).pipe(
+      map( res => {
+        return res;
+      })
+    );
+  }
+
+  // StockItem/GetValidateBatch?ITEMCODE=91HW0007&BATCHNO=0000118&TRTRYPE=2
+
 }
