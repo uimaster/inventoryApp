@@ -20,8 +20,21 @@ export class TransactionSerivices {
 
   // GET TRANSACTION LIST //
   getTransactionList(typeId): Observable<any> {
-    const params = new HttpParams().set('CompanyID', '1').set('TransactionTypeID', typeId).set('FromDate', '20/07/2018')
-    .set('ToDate', this.today);
+    var starDate = '';
+    var toDate = '';
+
+    if (localStorage.getItem('fromDate') !== '') {
+      starDate = JSON.parse(localStorage.getItem('fromDate'));
+    } else {
+      starDate = this.today;
+    }
+    if (localStorage.getItem('toDate') !== '') {
+      toDate = JSON.parse(localStorage.getItem('toDate'));
+    } else {
+      toDate = this.today;
+    }
+    const params = new HttpParams().set('CompanyID', '1').set('TransactionTypeID', typeId).set('FromDate', starDate)
+    .set('ToDate', toDate);
     return this.http.get(urls.GETTRANSACTION, {params}).pipe(
       map(res => {
         return res;
@@ -108,5 +121,16 @@ export class TransactionSerivices {
       })
     ).catch((error) => Observable.throw(error.JSON || 'Server Error !'));
   }
+
+  validateBatch(itemcode, batchcode) {
+    const params = new HttpParams().set('ITEMCODE', itemcode).set('BATCHNO', batchcode).set('TRTRYPE', '2');
+    return this.http.get(urls.VALIDATEBATCH, {params}).pipe(
+      map((res: any)  => {
+        return res;
+      })
+    );
+  }
+
+  // StockItem/GetValidateBatch?ITEMCODE=91HW0007&BATCHNO=0000118&TRTRYPE=2
 
 }

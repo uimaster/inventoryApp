@@ -9,13 +9,15 @@ import { ProdEntryComponent } from './prod-entry/prod-entry.component';
 import { FGInwardComponent } from './fginward/fginward.component';
 import { TransactionCommonModule } from '../transactionsShared/transaction.module';
 import { TransactionSerivices } from '../transactionsShared/transaction.service';
+import { FiltersModule } from '../transFilters/transFilter.Module';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
     ProductionRouteModule,
-    TransactionCommonModule
+    TransactionCommonModule,
+    FiltersModule
   ],
   declarations: [ ProductionComponent, CreateProdComponent, ProdOrderComponent, ProdEntryComponent, FGInwardComponent],
   providers : [ TransactionSerivices ]

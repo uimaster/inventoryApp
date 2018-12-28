@@ -14,13 +14,15 @@ import { ReturnableChallanComponent } from './returnable-challan/returnable-chal
 import { PhysicalStockComponent } from './physical-stock/physical-stock.component';
 import { TransactionSerivices } from '../transactionsShared/transaction.service';
 import { TransactionCommonModule } from '../transactionsShared/transaction.module';
+import { FiltersModule } from '../transFilters/transFilter.Module';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
     StoresRouteModule,
-    TransactionCommonModule
+    TransactionCommonModule,
+    FiltersModule
   ],
   declarations: [
     StoreComponent,

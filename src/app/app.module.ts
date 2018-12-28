@@ -15,6 +15,7 @@ import { TokenInterceptor } from './auth/token.interceptor';
 import { AuthService } from './auth/auth.service';
 import { SharedModule} from './shared/shared.module';
 // import { TransactionFormModule } from './transactions-form/transaction.module';
+import { FiltersModule } from './transFilters/transFilter.Module';
 
 
 @NgModule({

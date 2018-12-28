@@ -11,7 +11,11 @@ import { TransactionSerivices } from '../../transactionsShared/transaction.servi
 export class PurchaseOrderComponent implements OnInit {
 
   purchaseList = [];
-  constructor( private purchaseService: PurchaseService, private router: Router, private transactionSerivices: TransactionSerivices) { }
+  constructor(
+    private purchaseService: PurchaseService,
+    private router: Router,
+    private transactionSerivices: TransactionSerivices
+    ) { }
 
   ngOnInit() {
     this.getPurchaseList();
@@ -19,7 +23,7 @@ export class PurchaseOrderComponent implements OnInit {
   }
 
   getPurchaseList() {
-    this.purchaseService.getPurchaseList().subscribe ( res => {
+    this.transactionSerivices.getTransactionList('1').subscribe ( res => {
       if (res) {
         if (res.status === '200') {
           this.purchaseList = res.data;

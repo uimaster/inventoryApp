@@ -13,13 +13,15 @@ import { SalesOrderAcceptanceComponent } from './sales-order-acceptance/sales-or
 import { SalesInvoiceGenerationComponent } from './sales-invoice-generation/sales-invoice-generation.component';
 import { TransactionCommonModule } from '../transactionsShared/transaction.module';
 import { SalesService } from './sales.service';
+import { FiltersModule } from '../transFilters/transFilter.Module';
 
 @NgModule({
   imports: [
     CommonModule,
     SalesRouteModule,
     SharedModule,
-    TransactionCommonModule
+    TransactionCommonModule,
+    FiltersModule
   ],
   declarations: [
     SalesComponent,

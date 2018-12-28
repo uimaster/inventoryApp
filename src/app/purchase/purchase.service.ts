@@ -45,7 +45,21 @@ export class PurchaseService {
   }
 
   getPOAuthList(): Observable<any> {
-    const params = new HttpParams().set('CompanyID', '1').set('FromDate', '01/07/2018').set('ToDate', this.today);
+    var starDate = '';
+    var toDate = '';
+
+    if (localStorage.getItem('fromDate') !== '') {
+      starDate = JSON.parse(localStorage.getItem('fromDate'));
+    } else {
+      starDate = this.today;
+    }
+    if (localStorage.getItem('toDate') !== '') {
+      toDate = JSON.parse(localStorage.getItem('toDate'));
+    } else {
+      toDate = this.today;
+    }
+
+    const params = new HttpParams().set('CompanyID', '1').set('FromDate', starDate).set('ToDate', toDate);
 
     return this.http.get(urls.GETPOAUTHLIST, {params})
       .map((res: any) => {

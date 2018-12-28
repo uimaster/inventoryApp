@@ -14,6 +14,7 @@ import { LedgerService } from '../masters/ledger/services/ledger.service';
 import { SupplierService } from '../masters/supplier/services/supplier.service';
 import { TransactionSerivices } from '../transactionsShared/transaction.service';
 import { TransactionCommonModule } from '../transactionsShared/transaction.module';
+import { FiltersModule } from '../transFilters/transFilter.Module';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { TransactionCommonModule } from '../transactionsShared/transaction.modul
     ReactiveFormsModule,
     PrimeNGModule,
     FormsModule,
-    TransactionCommonModule
+    TransactionCommonModule,
+    FiltersModule
   ],
   declarations: [ PurchaseComponent, PurchaseOrderComponent, CreatePOrderComponent, POAuthListComponent],
   providers: [ PurchaseService, StockService, LedgerService, SupplierService, TransactionSerivices],

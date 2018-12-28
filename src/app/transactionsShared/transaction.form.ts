@@ -1,5 +1,5 @@
 import { Router, ActivatedRoute } from '@angular/router';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { PurchaseService } from '../purchase/purchase.service';
 import { StockService } from '../masters/stock/services/stock.service';
@@ -15,7 +15,7 @@ import { CustomerService } from '../masters/customer/services/customer.service';
   styleUrls: ['./transaction.form.scss']
 })
 
-export class TransactionFormComponent implements OnInit {
+export class TransactionFormComponent implements OnInit, OnDestroy {
   public transactionForm: any;
   public showError =  false;
   public showSuccess = false;
@@ -66,6 +66,9 @@ export class TransactionFormComponent implements OnInit {
   selectedCar3: any;
   selectedCity: any;
   showLoader = false;
+  filteredItems = [];
+  itemName: string;
+  barcodeFields: boolean;
   // @ViewChild('taxSelect') taxSelect: ElementRef;
 
   constructor(
@@ -78,7 +81,7 @@ export class TransactionFormComponent implements OnInit {
     private customerService: CustomerService,
     private router: Router,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit() {
 
@@ -97,6 +100,7 @@ export class TransactionFormComponent implements OnInit {
     this.transationLinkRef = JSON.parse(localStorage.getItem('transationLinkRef'));
     this.showLocation = JSON.parse(localStorage.getItem('showLocation'));
     this.transactionTypeId = JSON.parse(localStorage.getItem('transactionTypeId'));
+    this.barcodeFields = JSON.parse(localStorage.getItem('barcodeFields'));
 
     // setTimeout(() => {
       this.showLoader = true;
@@ -150,7 +154,8 @@ export class TransactionFormComponent implements OnInit {
   createBoxDetails() {
     if (this.transBoxDetails) {
         return this.fb.group({
-        stockitemID: [1],
+        stockitemID: [0],
+        stockItemDesc: '',
         itemQty: [0],
         itemRate: [0],
         itemAmount: [0],
@@ -178,11 +183,28 @@ export class TransactionFormComponent implements OnInit {
     if (this.transBatchDetails) {
       return this.fb.group({
         batchNo: [0],
+        stockitemID: [0],
         batchID: [0]
       });
     } else {
       return this.fb.group([]);
     }
+  }
+
+  addBatch() {
+    const stockItemArray = <FormArray>this.transactionForm.get('transBatchDetails');
+    stockItemArray.push(
+      this.fb.group({
+        batchNo: [0],
+        stockitemID: [0],
+        batchID: [0]
+      })
+    );
+  }
+
+  removeBatch(index) {
+    const stockItemArray = <FormArray>this.transactionForm.get('transBatchDetails');
+    stockItemArray.removeAt(index);
   }
 
   get batchNo() {
@@ -336,6 +358,7 @@ export class TransactionFormComponent implements OnInit {
         stockitemID: [0],
         transactionItem_AdditionalDesciption: [''],
         locationID: [1],
+        stockItemDesc: '',
         itemQty: [0],
         itemReceived_Qty: [0],
         itemChallan_Qty: [0],
@@ -386,6 +409,11 @@ export class TransactionFormComponent implements OnInit {
   get stockitemID() {
     return this.transactionForm.get(['transItemDetails'], 0, ['stockitemID']);
   }
+
+  get stockItemDesc() {
+    return this.transactionForm.get(['transItemDetails'], 0, ['stockItemDesc']);
+  }
+
   get transactionItem_AdditionalDesciption() {
     return this.transactionForm.get(['transItemDetails'], 0, ['transactionItem_AdditionalDesciption']);
   }
@@ -483,7 +511,6 @@ export class TransactionFormComponent implements OnInit {
 
   getTrasactionDetails(id) {
     if (id > 0) {
-     this.showLoader = true;
     this.trasactionService.getTransactionDetails(id).subscribe( res => {
 
         if (res.status === '200') {
@@ -518,6 +545,7 @@ export class TransactionFormComponent implements OnInit {
                 this.fb.group ({
                   transactionID: [this.detailsData[0].transItemDetails[i].transactionID],
                   stockitemID: [this.detailsData[0].transItemDetails[i].stockitemID],
+                  stockItemDesc: [this.detailsData[0].transItemDetails[i].stockItemDesc],
                   transactionItem_AdditionalDesciption: [this.detailsData[0].transItemDetails[i].transactionItem_AdditionalDesciption],
                   locationID: [1],
                   itemQty: [this.detailsData[0].transItemDetails[i].itemQty],
@@ -571,6 +599,7 @@ export class TransactionFormComponent implements OnInit {
             const controlArray = <FormArray>this.transactionForm.get('transBoxDetails');
 
             controlArray.controls[0].get('stockitemID').setValue(this.boxDetailData[0].stockitemID);
+            controlArray.controls[0].get('stockItemDesc').setValue(this.boxDetailData[0].stockItemDesc);
             controlArray.controls[0].get('itemQty').setValue(this.boxDetailData[0].itemQty);
             controlArray.controls[0].get('itemRate').setValue(this.boxDetailData[0].itemRate);
             controlArray.controls[0].get('itemAmount').setValue(this.boxDetailData[0].itemAmount);
@@ -582,8 +611,9 @@ export class TransactionFormComponent implements OnInit {
           if (this.detailsData[0].transBatchDetails.length > 0 && this.transBatchDetails) {
             this.batchDetailData = this.detailsData[0].transBatchDetails;
             const controlArray = <FormArray>this.transactionForm.get('transBatchDetails');
-
             controlArray.controls[0].get('batchNo').setValue(this.batchDetailData[0].batchNo);
+            controlArray.controls[0].get('stockitemID').setValue(this.batchDetailData[0].stockitemID);
+            controlArray.controls[0].get('stockItemDesc').setValue(this.batchDetailData[0].stockItemDesc);
             controlArray.controls[0].get('batchID').setValue(this.batchDetailData[0].batchID);
           }
 
@@ -630,7 +660,7 @@ export class TransactionFormComponent implements OnInit {
     });
 
     }
-
+    this.showLoader = false;
   }
 
 
@@ -716,6 +746,24 @@ export class TransactionFormComponent implements OnInit {
           }
         }
     });
+  }
+
+  filterItems(event) {
+      this.filteredItems = [];
+      for (let i = 0; i < this.itemMasterList.length; i++) {
+          let itemName = this.itemMasterList[i].label;
+          if (itemName.toLowerCase().indexOf(event.query.toLowerCase()) == 0) {
+              this.filteredItems.push(itemName);
+          }
+      }
+  }
+
+  getSelectedVal(event, elem) {
+    for ( var i = 0; i < this.itemMasterList.length; i++) {
+      if (this.itemMasterList[i].label === event) {
+        this.transactionForm.get(elem).controls[0].get('stockitemID').setValue(this.itemMasterList[i].value);
+      }
+    }
   }
 
 
@@ -861,7 +909,8 @@ export class TransactionFormComponent implements OnInit {
               controlArray.push(
                 this.fb.group({
                   transactionID: [this.ItemData[i].transactionID],
-                  stockitemID: [this.ItemData[i].stockItemDesc],
+                  stockitemID: [this.ItemData[i].stockitemID],
+                  stockItemDesc: [this.ItemData[i].stockItemDesc],
                   transactionItem_AdditionalDesciption: [this.ItemData[i].transactionItem_AdditionalDesciption],
                   itemQty: [this.ItemData[i].itemQty],
                   itemReceived_Qty: [this.ItemData[i].itemReceived_Qty],
@@ -878,23 +927,6 @@ export class TransactionFormComponent implements OnInit {
                 })
               )
             }
-
-            // controlArray.controls[0].get('transactionID').setValue(this.ItemData[0].transactionID);
-            // controlArray.controls[0].get('stockitemID').setValue(this.ItemData[0].stockitemID);
-            // controlArray.controls[0].get('transactionItem_AdditionalDesciption')
-            // .setValue(this.ItemData[0].transactionItem_AdditionalDesciption);
-            // controlArray.controls[0].get('itemQty').setValue(this.ItemData[0].itemQty);
-            // controlArray.controls[0].get('itemReceived_Qty').setValue(this.ItemData[0].itemReceived_Qty);
-            // controlArray.controls[0].get('itemChallan_Qty').setValue(this.ItemData[0].itemChallan_Qty);
-            // controlArray.controls[0].get('itemPending_Qty').setValue(this.ItemData[0].itemPending_Qty);
-            // controlArray.controls[0].get('itemRate').setValue(this.ItemData[0].itemRate);
-            // controlArray.controls[0].get('itemAmount').setValue(this.ItemData[0].itemAmount);
-            // controlArray.controls[0].get('itemStops').setValue(this.ItemData[0].itemStops);
-            // controlArray.controls[0].get('itemLength').setValue(this.ItemData[0].itemLength);
-            // controlArray.controls[0].get('itemBatchApplicable').setValue(this.ItemData[0].itemBatchApplicable);
-            // controlArray.controls[0].get('packingBoxStockItemID').setValue(this.ItemData[0].packingBoxStockItemID);
-            // controlArray.controls[0].get('transactionItemSerialNo').setValue(this.ItemData[0].transactionItemSerialNo);
-            // controlArray.controls[0].get('locationID').setValue(this.ItemData[0].locationID);
           }
           if (this.detailsData[0].transLedgerDetails.length > 0 && this.transLedgerDetails) {
             this.ledgerData = this.detailsData[0].transLedgerDetails;
@@ -909,14 +941,61 @@ export class TransactionFormComponent implements OnInit {
                 })
               );
             }
-            // controlArray.controls[0].get('transactionID').setValue(this.ledgerData[0].transactionID);
-            // controlArray.controls[0].get('ledgerID').setValue(this.ledgerData[0].ledgerID);
-            // controlArray.controls[0].get('taxRate').setValue(this.ledgerData[0].taxRate);
-            // controlArray.controls[0].get('ledgerAmount').setValue(this.ledgerData[0].ledgerAmount);
           }
         }
       });
     }
+  }
+
+  getBarcode(data) {
+    var barcode = data.target.value.split('-');
+    var inputItemCode;
+    if (barcode !== 0 && barcode !== undefined) {
+      inputItemCode = barcode[0].trim();
+    }
+    var stockItem = 0;
+    var splitedStockItem = 0;
+    const controlArray = <FormArray>this.transactionForm.get('transItemDetails');
+    for( var i = 0; i < controlArray.length; i++) {
+      let itemCode = controlArray.controls[i].get('stockItemDesc').value;
+      if (itemCode !== 0 && itemCode !== undefined) {
+        splitedStockItem = itemCode.split('|');
+        stockItem = splitedStockItem[0].trim();
+      }
+
+      if (inputItemCode === stockItem) {
+        let scanQty = controlArray.controls[i].get('itemReceived_Qty').value;
+        let qty = controlArray.controls[i].get('itemQty').value;
+        if (scanQty < qty) {
+          scanQty += 1;
+        } else {
+          alert('Scanned quantity can not be greater quantity, Please try again.');
+        }
+        controlArray.controls[i].get('itemReceived_Qty').setValue(scanQty);
+        if (barcode !== 0 && barcode !== undefined) {
+          this.validateBatch(barcode[0].trim(), barcode[1].trim());
+        }
+      }
+    }
+
+  }
+
+  validateBatch(itemcode, batchcode) {
+    this.trasactionService.validateBatch(itemcode, batchcode).subscribe( res => {
+      if (res.status === '200') {
+        let data = res.data;
+        const formArray = <FormArray>this.transactionForm.get('transBatchDetails');
+            formArray.push(this.fb.group({
+              batchNo: [data[0].batchno],
+              stockitemID: [data[0].stockItemID],
+              batchID: [data[0].batchid]
+            }));
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    localStorage.setItem('barcodeFields', 'false');
   }
 
 }

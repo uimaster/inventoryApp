@@ -30,6 +30,7 @@ export class PackingListComponent implements OnInit {
     localStorage.setItem('FormHeader', 'Packing List Edit/Create Form');
     localStorage.setItem('transationLinkRef', 'true');
     localStorage.setItem('showLocation', 'false');
+    localStorage.setItem('barcodeFields', 'true');
   }
 
   getSalesOrderList() {

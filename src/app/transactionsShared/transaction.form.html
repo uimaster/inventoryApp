@@ -76,14 +76,14 @@
       </div>
 
 
-      <!-- <div class="ui-g-4">
+      <div class="ui-g-6">
         <div class="form-group">
           <span class="ui-float-label">
-            <p-calendar [(ngModel)]="date4" [showIcon]="true" formControlName="transactionDueDate"></p-calendar>
-            <label for="transactionDueDate">Transaction Due Date</label>
+              <input type="text" pInputText (blur)="getBarcode($event)" id="barCode">
+            <label for="barCode">Barcode</label>
           </span>
         </div>
-      </div> -->
+      </div>
     </div>
     <div class="ui-g-3">
         <div style="border: 3px solid #ddd; width: 100%; min-height: 115px; text-align: center; line-height: 115px;">
@@ -111,8 +111,10 @@
         <table width="100%" class="fieldTable">
           <thead>
             <th width="30%">Item Name</th>
-            <th width="30%">Additional Desc.</th>
-            <!-- <th width="15%">Location ID</th> -->
+            <!-- <th width="30%">Additional Desc.</th> -->
+            <th width="10%" *ngIf="barcodeFields">Length</th>
+            <th width="10%" *ngIf="barcodeFields">Stops</th>
+            <th width="10%" *ngIf="barcodeFields">Scanned Qty</th>
             <th width="10%">Qty</th>
             <th width="10%">Rate</th>
             <th width="10%">Amount</th>
@@ -121,20 +123,28 @@
           <tbody>
             <tr  *ngFor="let ctrl of transactionForm.get('transItemDetails').controls; let i = index;" [formGroupName]="i">
               <td class="specialDropdown" style="text-align: left;">
-                <p-dropdown [options]="itemMasterList" formControlName="stockitemID" placeholder="Stock Item" filter="true" [style]="{'width':'95%'}">
-                </p-dropdown>
-                <!-- <p-autoComplete formControlName="stockitemID" [suggestions]="itemMasterList" (completeMethod)="getItemList()" [filter]="true" [size]="30" placeholder="Countries" [minLength]="1">
-                  <ng-template let-brand pTemplate="item">
-                    {{brand.stockItemDesc}}
-                  </ng-template>
-                </p-autoComplete> -->
+
+                <p-autoComplete
+                  formControlName="stockItemDesc"
+                  [suggestions]="filteredItems"
+                  (completeMethod)="filterItems($event)"
+                  (onSelect)="getSelectedVal($event, 'transItemDetails')"
+                  [size]="30"
+                  placeholder="Enter ItemCode To Search"
+                  [minLength]="1"
+                  styleClass="wid100"
+                >
+                    {{itemName}}
+                </p-autoComplete>
+                <input type="text" formControlName="stockitemID" pInputText style="visibility: hidden; height: 0; width: 0; font-size: 0;">
               </td>
-              <td style="text-align: left;">
+              <!-- <td style="text-align: left;">
                 <textarea [rows]="2" style="width:98%" pInputTextarea  formControlName="transactionItem_AdditionalDesciption" placeholder="Additional Desc."></textarea>
-              </td>
-              <!-- <td>
-                <p-dropdown [options]="locationList" formControlName="locationID"  placeholder="Location Name"></p-dropdown>
               </td> -->
+
+              <td *ngIf="barcodeFields"><input type="text" formControlName="itemLength" pInputText ></td>
+              <td *ngIf="barcodeFields"><input type="text" formControlName="itemStops" pInputText ></td>
+              <td *ngIf="barcodeFields"><input type="text" formControlName="itemReceived_Qty" pInputText disabled="disabled"></td>
               <td><input type="text" formControlName="itemQty" pInputText (keyup)="getAmount()"></td>
               <td><input type="text" formControlName="itemRate" pInputText (keyup)="getAmount()"></td>
               <td><input type="text" formControlName="itemAmount" pInputText (keyup)="getAmount()" ></td>
@@ -210,7 +220,7 @@
           <tbody>
             <tr  *ngFor="let ctrl of transactionForm.get('transPOTerms').controls; let i = index;" [formGroupName]="i">
               <td style="text-align: left">
-                <p-calendar [(ngModel)]="date5" [showIcon]="true" dateFormat="dd/mm/yyyy" formControlName="transactionDueDate"></p-calendar>
+                <p-calendar [(ngModel)]="date5" [showIcon]="true" dateFormat="dd/mm/yy" formControlName="transactionDueDate"></p-calendar>
               </td>
               <td><input type="text" formControlName="transactionTransporter" pInputText ></td>
               <td><input type="text" formControlName="transctionSupplierRef" pInputText></td>
@@ -245,9 +255,26 @@
             <tr  *ngFor="let ctrl of transactionForm.get('transBoxDetails').controls; let i = index;" [formGroupName]="i">
               <td>
 
-                <p-dropdown [options]="itemMasterList" formControlName="stockitemID" placeholder="Stock Item" filter="true" [style]="{'width':'300px'}">
-                  </p-dropdown>
+                <!-- <p-dropdown [options]="itemMasterList" formControlName="stockitemID" placeholder="Stock Item" filter="true" [style]="{'width':'300px'}">
+                  </p-dropdown> -->
+
+                  <p-autoComplete
+                  [showTransitionOptions]="'10ms'"
+                  [ui-autocomplete-loader]="true"
+                  [hideTransitionOptions]="'10ms'"
+                  formControlName="stockItemDesc"
+                  [suggestions]="filteredItems"
+                  (completeMethod)="filterItems($event)"
+                  (onSelect)="getSelectedVal($event, 'transBoxDetails')"
+                  [size]="30"
+                  placeholder="Item Name"
+                  [minLength]="1" [style]="{'width':'100%'}">
+                    {{itemName}}
+                </p-autoComplete>
+                <input type="text" formControlName="stockitemID" pInputText style="visibility: hidden; height: 0; width: 0; font-size: 0;">
               </td>
+
+
               <td><input type="text" formControlName="itemQty" pInputText ></td>
               <td><input type="text" formControlName="itemRate" pInputText></td>
               <td><input type="text" formControlName="itemAmount" pInputText ></td>
@@ -272,12 +299,19 @@
         <table width="100%" class="fieldTable">
           <thead>
             <th>Batch No.</th>
+            <th>Item Name</th>
             <th>Batch ID</th>
+            <th width="10%" style="text-align:center">Actions</th>
           </thead>
           <tbody>
             <tr  *ngFor="let ctrl of transactionForm.get('transBatchDetails').controls; let i = index;" [formGroupName]="i">
-              <td><input type="text" formControlName="batchNo" pInputText ></td>
-              <td><input type="text" formControlName="batchID" pInputText ></td>
+              <td><input type="text" formControlName="batchNo" pInputText disabled="disabled"></td>
+              <td><input type="text" formControlName="stockitemID" pInputText disabled="disabled"></td>
+              <td><input type="text" formControlName="batchID" pInputText disabled="disabled"></td>
+              <td align="center">
+                <button pButton type="button" icon="fa fa-plus" class="ui-button-success" (click)="addBatch()"></button>
+                <button pButton type="button" icon="fa fa-trash-o" class="ui-button-danger" [disabled]="i < 1" (click)="removeBatch(i)"></button>
+              </td>
             </tr>
           </tbody>
         </table>

@@ -313,9 +313,9 @@ input {
   background-color: #fff;
   padding: 15px;
   border-radius: 3px;
-  -webkit-box-shadow: 0px 3px 5px #c3c3c3;
-  -moz-box-shadow: 0px 3px 5px #c3c3c3;
-  box-shadow: 0px 3px 5px #c3c3c3;
+  -webkit-box-shadow: 0px 1px 2px #c3c3c3;
+  -moz-box-shadow: 0px 1px 2px #c3c3c3;
+  box-shadow: 0px 1px 2px #c3c3c3;
   min-height: 140px;
   h6 {
     font-size: 14px;
@@ -965,7 +965,7 @@ input {
   .ui-float-label {
     .ui-inputtext {
       width: 100%;
-      padding: 8px;
+      padding: 5px;
     }
     .ui-dropdown {
       width: 100%!important;
@@ -1064,3 +1064,8 @@ fieldset {
     margin-right: auto;
     width: 40%;
 }
+  .wid100{ width: 96%!important;
+    .ui-inputtext{ width: 100%!important;}
+  }
+
+  .ui-inputtext{ font-size: 14px; line-height: 24px;}
