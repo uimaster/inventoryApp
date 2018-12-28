@@ -15,6 +15,8 @@ import {CustomerListComponent} from './customer/component/customer-list.componen
 import {CustomerComponent} from './customer/component/customer.component';
 import {SupplierListComponent} from './supplier/component/supplier-list.component';
 import {SupplierComponent} from './supplier/component/supplier.component';
+import {PricelistListComponent} from './pricelist/component/pricelist-list.component';
+import {PricelistComponent} from './pricelist/component/pricelist.component';
 
 export const routes: Routes = [
   { path: '',  component: MastersComponent,
@@ -38,7 +40,10 @@ export const routes: Routes = [
           { path: 'customer/:id', component: CustomerComponent},
           { path: 'suppliers', component: SupplierListComponent},
           { path: 'add-supplier', component: SupplierComponent},
-          { path: 'supplier/:id', component: SupplierComponent}
+          { path: 'supplier/:id', component: SupplierComponent},
+          { path: 'pricelist/:typeID', component: PricelistListComponent},
+          { path: 'add-pricelist/:typeID', component: PricelistComponent},
+          { path: 'pricelist/:typeID/:id', component: PricelistComponent}
 
         ]
       }

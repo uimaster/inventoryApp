@@ -1,6 +1,6 @@
 
-// export const BASEURL = 'http://apietrax.iflotech.in/api/'; // Dev base url
-export const BASEURL = 'http://192.168.1.60:90/api/'; // Live base url
+export const BASEURL = 'http://apietrax.iflotech.in/api/'; // Dev base url
+//export const BASEURL = 'http://192.168.1.60:90/api/'; // Live base url
 
 
 // Masters urls //
@@ -42,3 +42,25 @@ export const GETPENDINGSALESORDERLIST = BASEURL + 'Transactions/GetPendingSalesO
 export const GETITEMLIST = BASEURL + 'Stockitem/GetStockItems';
 export const GENERATEREPORT = BASEURL + 'Reports/GenerateReportsPDF';
 export const DOWNLOADREPORT = BASEURL + 'ReportDownload/DownloadReportPDF';
+
+//PriceLIST
+export const GETPRICELISTLIST =  BASEURL + 'PriceLists/GetPriceLists';
+export const GETPRICELISTDETAIL =  BASEURL + 'PriceLists/GetPriceListDetails';
+export const UPDATEPRICELIST =  BASEURL + 'PriceLists/UpdatePriceList';
+
+// Bill of Material URLS
+export const GETBOMLIST =  BASEURL + 'BOM/getBOMList';
+export const GETBOMDETAIL = BASEURL + 'BOM/GetBOMDetails';
+export const GETBOMTYPES = BASEURL + 'BOM/GetBOMType';
+export const GETBOMLEVELS = BASEURL + 'BOM/getBOMLevels';
+export const GETBOMCOMTYPES = BASEURL + 'BOM/getBOMComponentTypes';
+export const GETBOMPARATYPES = BASEURL + 'BOM/getParameterTypes';
+export const UPDATEBOM = BASEURL + 'BOM/POSTUpdateBOM';
+
+//Planning
+export const GETFGLIST =  BASEURL + 'planning/getFGPlanList';
+export const GETFGDETAIL =  BASEURL + 'planning/GetFGPlanDetails';
+export const UPDATEFG =  BASEURL + 'planning/POSTUpdateFGPlan';
+export const GETRMQLIST =  BASEURL + 'planning/getRMQList';
+export const GETRMQDETAIL =  BASEURL + 'planning/GetRMQDetails';
+export const UPDATERMQ =  BASEURL + 'planning/POSTUpdateRMQ';

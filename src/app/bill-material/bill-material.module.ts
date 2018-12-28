@@ -4,12 +4,14 @@ import { BillMaterialComponent } from './bill-material.component';
 import { SharedModule } from '../shared/shared.module';
 import { BillRouteModule } from './bill-material.route.module';
 import { CreateComponent } from './create/create.component';
+import { BomModule } from './bom/bom.module';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
-    BillRouteModule
+    BillRouteModule,
+    BomModule
   ],
   declarations: [ BillMaterialComponent, CreateComponent ]
 })

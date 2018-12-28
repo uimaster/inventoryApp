@@ -1,0 +1,95 @@
+<ng-template 
+    *ngIf="!loadingList;then showBlock; else loading">
+</ng-template>
+
+<ng-template #showBlock>
+<p-panel header="FG List" class="Tabledata" *ngIf="type=='fg'">
+    <p-header>
+        <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="add('fg')"></button>
+    </p-header>
+    
+    <div class="ui-g">
+        <div class="ui-g-12">
+            <div class="form-group">
+            <span class="ui-float-label">
+                <input type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)">
+            </span>
+            </div>
+        </div>
+    </div>    
+        
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>From Date</th>
+                <th>To Date</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container *ngIf="planningList">
+                <tr *ngFor="let plan of planningList; index as i;">
+                    <td>{{plan.planDate}}</td>
+                    <td>{{plan.periodFromDate}}</td>
+                    <td>{{plan.periodToDate}}</td>
+                    <td>
+                        <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="set('fg',plan.planID)"></button>
+                        <button pButton type="button" label="Delete" class="ui-button-danger" ></button>
+                    </td>
+                </tr>
+            </ng-container>
+            </tbody>
+        </table>
+    </div>
+</p-panel>
+
+<p-panel header="RMQ List" class="Tabledata" *ngIf="type=='rmq'">
+    <p-header>
+        <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="add('rmq')"></button>
+    </p-header>
+    
+    <div class="ui-g">
+        <div class="ui-g-12">
+            <div class="form-group">
+            <span class="ui-float-label">
+                <input type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)">
+            </span>
+            </div>
+        </div>
+    </div>    
+        
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>RMQ Date</th>
+                <th>Plan ID</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container *ngIf="planningList">
+                <tr *ngFor="let plan of planningList; index as i;">
+                    <td>{{plan.rmqDate}}</td>
+                    <td>{{plan.planID}}</td>
+                    <td>
+                        <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="set('rmq',plan.rmqid)"></button>
+                        <button pButton type="button" label="Delete" class="ui-button-danger" ></button>
+                    </td>
+                </tr>
+            </ng-container>
+            </tbody>
+        </table>
+    </div>
+</p-panel>
+</ng-template>
+
+
+
+<ng-template #loading>
+    <p-panel>
+        <img class="img-center" src="assets/images/spinner.gif" />
+    </p-panel>
+</ng-template>  

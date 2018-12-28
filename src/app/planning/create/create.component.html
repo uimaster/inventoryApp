@@ -1,3 +1,334 @@
-<p>
-  create works!
-</p>
+
+<p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
+
+<p-panel header="FG Add/Edit Form" class="Tabledata" *ngIf="type=='fg'">
+    <p-header>
+        <button pButton type="button" style="float:right" icon="pi pi-plus" label="Load Items" class="ui-button-success"></button>
+        <button pButton type="button" style="float:right" icon="pi pi-plus" label="Load Prev FG Plan" class="ui-button-success"></button>
+    </p-header>
+    <form [formGroup]="cForm" (ngSubmit)="saveFg(cForm.value)" class="formData">
+      <div class="message error" *ngIf="showError">Updatation/creation failed .</div>
+      <div class="message success" *ngIf="showSuccess">You have Updated/created successfully.</div>
+  
+      <div class="ui-g">
+        <div class="ui-g-3">
+          <div class="form-group">
+            <span class="ui-float-label">
+              <p-calendar formControlName="planDate" dateFormat="dd-mm-yy" [(ngModel)]="date1" [showIcon]="true"></p-calendar>
+              <label for="planDate">Plan Date</label>
+            </span>
+  
+            <div *ngIf="planDate.invalid && (planDate.dirty || planDate.touched)" class="alert alert-danger">
+              <div *ngIf="planDate.errors.required">
+                Plan date is required.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ui-g-3">
+            <div class="form-group">
+                <span class="ui-float-label">
+                <p-calendar formControlName="periodFromDate" dateFormat="dd-mm-yy" [(ngModel)]="date2" [showIcon]="true"></p-calendar>
+                <label for="periodFromDate">Period From Date</label>
+                </span>
+            </div>
+        </div>
+
+        <div class="ui-g-3">
+            <div class="form-group">
+                <span class="ui-float-label">
+                <p-calendar formControlName="periodToDate" dateFormat="dd-mm-yy" [(ngModel)]="date3" [showIcon]="true"></p-calendar>
+                <label for="periodToDate">Period To Date</label>
+                </span>
+            </div>
+        </div>
+
+        <div class="ui-g-3">
+            <div class="form-group">
+                <span class="ui-float-label">
+                <input type="number" formControlName="prevPlanID" pInputText id="prevPlanID">
+                <label for="periodToDate">Prev Plan ID</label>
+                </span>
+            </div>
+        </div>
+
+      </div>
+
+    <fieldset  formArrayName="fgPlanDetails">
+        <legend>Item Details</legend>    
+        <div >
+        <table width="100%" class="fieldTable">
+            <thead>
+            <th>Stock Item</th>
+            <!-- <th>Prev Plan ID</th> -->
+            <th>Current Plan Qty</th>
+            <th>Current Month Qty</th>
+            <th>Next Month Qty</th>
+            <th>Order Month Qty</th>
+            <th>Future Required Qty</th>
+            <th>Future Required Length</th>
+            <th>Future Required Stops</th>
+            <th>Priority</th>
+            <th>Net Required Qty</th>
+            <th>FG Stock Qty</th>
+            <th>Cumulative Length</th>
+            <th>Cumulative Stops</th>
+            </thead>
+            <tbody>
+            <tr  *ngFor="let ctrl of cForm.get('fgPlanDetails').controls; let i = index;" [formGroupName]="i">
+            <!-- <tr> -->
+                <td>
+                    <p-dropdown [options]="allStockItems" formControlName="stockItemID" placeholder="Stock Item" filter="true" [style]="{'width':'95%'}">
+                            </p-dropdown>
+                </td>
+                <!-- <td><input type="number" formControlName="prevPlanID" pInputText id="prevPlanID"></td> -->
+                <td><input type="number" formControlName="currentPlanQty" pInputText id="currentPlanQty"></td>
+                <td><input type="number" formControlName="currentMonthQty" pInputText id="currentMonthQty"></td>
+                <td><input type="number" formControlName="nextMonthQty" pInputText id="nextMonthQty"></td>
+                <td><input type="number" formControlName="orderMonthQty" pInputText id="orderMonthQty"></td>
+                <td><input type="number" formControlName="futureRequiredQty" pInputText id="futureRequiredQty"></td>
+                <td><input type="number" formControlName="futureRequiredLength" pInputText id="futureRequiredLength"></td>
+                <td><input type="number" formControlName="futureRequiredStops" pInputText id="futureRequiredStops"></td>
+                <td><input type="number" formControlName="priority" pInputText id="priority"></td>
+                <td><input type="number" formControlName="netRequiredQty" pInputText id="netRequiredQty"></td>
+                <td><input type="number" formControlName="fgStockQty" pInputText id="fgStockQty"></td>
+                <td><input type="number" formControlName="cumulativeLength" pInputText id="cumulativeLength"></td>
+                <td><input type="number" formControlName="cumulativeStops" pInputText id="cumulativeStops"></td>
+
+            </tr>
+            </tbody>
+        </table>
+        </div>
+    <!-- <div class="ui-g"> 
+        <div class="ui-g-6">
+            <div class="form-group">
+                <span class="ui-float-label">
+                <p-dropdown [options]="allStockItems" formControlName="stockItemID" placeholder="Stock Item" filter="true" [style]="{'width':'95%'}">
+                </p-dropdown>
+                </span>
+            </div>
+        </div>
+        <div class="ui-g-3">
+            <div class="form-group">
+                <span class="ui-float-label">
+                <input type="number" formControlName="prevPlanID" pInputText id="prevPlanID">
+                <label for="prevPlanID">prevPlanID</label>
+                </span>
+            </div>
+        </div>
+        <div class="ui-g-3">
+            <div class="form-group">
+                <span class="ui-float-label">
+                <input type="number" formControlName="currentPlanQty" pInputText id="currentPlanQty">
+                <label for="currentPlanQty">currentPlanQty</label>
+                </span>
+            </div>
+        </div>
+    </div>
+    <br/>
+      
+    <div class="ui-g">
+        <div class="ui-g-3">
+            <div class="form-group">
+                <span class="ui-float-label">
+                <input type="number" formControlName="currentMonthQty" pInputText id="currentMonthQty">
+                <label for="currentMonthQty">currentMonthQty</label>
+                </span>
+            </div>
+        </div>
+        <div class="ui-g-3">
+            <div class="form-group">
+                <span class="ui-float-label">
+                <input type="number" formControlName="nextMonthQty" pInputText id="nextMonthQty">
+                <label for="nextMonthQty">nextMonthQty</label>
+                </span>
+            </div>
+        </div>
+        <div class="ui-g-3">
+            <div class="form-group">
+                <span class="ui-float-label">
+                <input type="number" formControlName="orderMonthQty" pInputText id="orderMonthQty">
+                <label for="orderMonthQty">orderMonthQty</label>
+                </span>
+            </div>
+        </div>
+        <div class="ui-g-3">
+            <div class="form-group">
+                <span class="ui-float-label">
+                <input type="number" formControlName="futureRequiredQty" pInputText id="futureRequiredQty">
+                <label for="futureRequiredQty">futureRequiredQty</label>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <br/>
+    <div class="ui-g">
+        <div class="ui-g-3">
+            <div class="form-group">
+                <span class="ui-float-label">
+                <input type="number" formControlName="futureRequiredLength" pInputText id="futureRequiredLength">
+                <label for="futureRequiredLength">futureRequiredLength</label>
+                </span>
+            </div>
+        </div>
+        <div class="ui-g-3">
+            <div class="form-group">
+                <span class="ui-float-label">
+                <input type="number" formControlName="futureRequiredStops" pInputText id="futureRequiredStops">
+                <label for="futureRequiredStops">futureRequiredStops</label>
+                </span>
+            </div>
+        </div>
+        <div class="ui-g-3">
+            <div class="form-group">
+                <span class="ui-float-label">
+                <input type="number" formControlName="priority" pInputText id="priority">
+                <label for="priority">priority</label>
+                </span>
+            </div>
+        </div>
+        <div class="ui-g-3">
+            <div class="form-group">
+                <span class="ui-float-label">
+                <input type="number" formControlName="netRequiredQty" pInputText id="netRequiredQty">
+                <label for="netRequiredQty">netRequiredQty</label>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <br/>
+    <div class="ui-g">
+        <div class="ui-g-3">
+            <div class="form-group">
+                <span class="ui-float-label">
+                <input type="number" formControlName="fgStockQty" pInputText id="fgStockQty">
+                <label for="fgStockQty">fgStockQty</label>
+                </span>
+            </div>
+        </div>
+        <div class="ui-g-3">
+            <div class="form-group">
+                <span class="ui-float-label">
+                <input type="number" formControlName="cumulativeLength" pInputText id="cumulativeLength">
+                <label for="cumulativeLength">cumulativeLength</label>
+                </span>
+            </div>
+        </div>
+        <div class="ui-g-3">
+            <div class="form-group">
+                <span class="ui-float-label">
+                <input type="number" formControlName="cumulativeStops" pInputText id="cumulativeStops">
+                <label for="cumulativeStops">cumulativeStops</label>
+                </span>
+            </div>
+        </div>
+    </div>
+     -->
+    
+    </fieldset>
+    <br/>
+
+      <p style="text-align: center">
+        <button pButton type="submit" label="Submit" class="ui-button-success" [disabled]="!cForm.valid" style="margin-right: 10px;"></button>
+        <button pButton type="button" label="Cancel" class="ui-button-secondary"></button>
+      </p>
+    </form>
+</p-panel>
+
+
+<p-panel header="FG Add/Edit Form" class="Tabledata" *ngIf="type=='rmq'">
+    <p-header>
+        <!-- <button pButton type="button" style="float:right" icon="pi pi-plus" label="Load Items" class="ui-button-success"></button>
+        <button pButton type="button" style="float:right" icon="pi pi-plus" label="Load Prev FG Plan" class="ui-button-success"></button> -->
+    </p-header>
+    <form [formGroup]="cForm" (ngSubmit)="saveRmq(cForm.value)" class="formData">
+      <div class="message error" *ngIf="showError">Updatation/creation failed .</div>
+      <div class="message success" *ngIf="showSuccess">You have Updated/created successfully.</div>
+  
+      <div class="ui-g">
+        <div class="ui-g-4">
+          <div class="form-group">
+            <span class="ui-float-label">
+              <p-calendar formControlName="rmqDate" dateFormat="dd-mm-yy" [(ngModel)]="date1" [showIcon]="true"></p-calendar>
+              <label for="rmqDate">RMQ Date</label>
+            </span>
+  
+            <div *ngIf="rmqDate.invalid && (rmqDate.dirty || rmqDate.touched)" class="alert alert-danger">
+              <div *ngIf="rmqDate.errors.required">
+                RMQ date is required.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ui-g-4">
+            <div class="form-group">
+                <span class="ui-float-label">
+                <input type="number" formControlName="planID" pInputText id="planID">
+                <label for="planID">planID</label>
+                </span>
+                <div *ngIf="planID.invalid && (planID.dirty || planID.touched)" class="alert alert-danger">
+                <div *ngIf="planID.errors.required">
+                    Plan ID is required.
+                </div>
+                </div>
+            </div>
+        </div>
+        
+      </div>
+     
+      <fieldset formArrayName="rmqDetail">
+        <legend>Item Details</legend>    
+        <div >
+        <table width="100%" class="fieldTable">
+            <thead>
+            <th>Stock Item</th>
+            <th>Store Stock Qty</th>
+            <th>pending Order Qty</th>
+            <th>Current Month Qty</th>
+            <th>Next Month Qty</th>
+            <th>Order Month Qty</th>
+            <th>Required Qty</th>
+            <th>Wip Qty</th>
+            <th>Lead Time</th>
+            <th>MO Qty</th>
+            <th>Net Required Qty</th>
+            <th>Ledger ID</th>
+            <th>Supplier Name</th>
+            </thead>
+            <tbody>
+            <tr  *ngFor="let ctrl of cForm.get('rmqDetail').controls; let i = index;" [formGroupName]="i">
+            <!-- <tr> -->
+                <td>
+                    <p-dropdown [options]="allStockItems" formControlName="stockItemID" placeholder="Stock Item" filter="true" [style]="{'width':'95%'}">
+                            </p-dropdown>
+                </td>
+                <td><input type="number" formControlName="storeStockQty" pInputText id="storeStockQty"></td>
+                <td><input type="number" formControlName="pendingOrderQty" pInputText id="pendingOrderQty"></td>
+                <td><input type="number" formControlName="currentMonthQty" pInputText id="currentMonthQty"></td>
+                <td><input type="number" formControlName="nextMonthQty" pInputText id="nextMonthQty"></td>
+                <td><input type="number" formControlName="orderMonthQty" pInputText id="orderMonthQty"></td>
+                <td><input type="number" formControlName="requiredQty" pInputText id="requiredQty"></td>
+                <td><input type="number" formControlName="wipQty" pInputText id="wipQty"></td>
+                <td><input type="number" formControlName="leadTime" pInputText id="leadTime"></td>
+                <td><input type="number" formControlName="moQty" pInputText id="moQty"></td>
+                <td><input type="number" formControlName="netRequiredQty" pInputText id="netRequiredQty"></td>
+                <td><input type="number" formControlName="ledgerID" pInputText id="ledgerID"></td>
+                <td><input type="number" formControlName="supplierName" pInputText id="supplierName"></td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+    </fieldset>
+    <br/>
+
+      <p style="text-align: center">
+        <button pButton type="submit" label="Submit" class="ui-button-success" [disabled]="!cForm.valid" style="margin-right: 10px;"></button>
+        <button pButton type="button" label="Cancel" class="ui-button-secondary"></button>
+      </p>
+    </form>
+</p-panel>
+
+
