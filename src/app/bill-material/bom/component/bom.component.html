@@ -1,5 +1,5 @@
 <app-navbar> </app-navbar>
-
+<p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
 <p-panel header="Bom Add/Edit Form" class="Tabledata">
   <form [formGroup]="cForm" (ngSubmit)="saveBom(cForm.value)" class="formData">
     <div class="message error" *ngIf="showError">Updatation/creation failed .</div>
@@ -24,15 +24,27 @@
       <div class="ui-g-4">
         <div class="form-group">
           <span class="ui-float-label">
-            <p-dropdown [options]="allStockItems" formControlName="stockItemID" filter="true" [style]="{'width':'95%'}">
-            </p-dropdown>
-            <label for="botid">Stock Item</label>
+            <!-- <p-dropdown [options]="allStockItems" formControlName="stockItemID" filter="true" [style]="{'width':'95%'}">
+            </p-dropdown> -->
+            <p-autoComplete
+                formControlName="itemName"
+                [suggestions]="filteredItems"
+                (completeMethod)="filterItems($event)"
+                (onSelect)="getSelectedVal($event, 'stockItemID')"
+                [size]="30"
+                [minLength]="1"
+                styleClass="wid100"
+            >
+            <input type="text" formControlName="stockItemID" pInputText style="visibility: hidden; height: 0; width: 0; font-size: 0;">
+                {{itemName}}
+            </p-autoComplete>
+            <label for="stockItemID">Stock Item</label>
           </span>
-          <div *ngIf="stockItemID.invalid && (stockItemID.dirty || stockItemID.touched)" class="alert alert-danger">
+          <!-- <div *ngIf="stockItemID.invalid && (stockItemID.dirty || stockItemID.touched)" class="alert alert-danger">
             <div *ngIf="stockItemID.errors.required">
               This field is required.
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
 
@@ -84,8 +96,21 @@
             <div class="ui-g-3">
               <div class="form-group">
                 <span class="ui-float-label">
-                  <p-dropdown [options]="allStockItems" formControlName="stockItemID" placeholder="Stock Item" filter="true" [style]="{'width':'95%'}">
-                  </p-dropdown>
+                  <!-- <p-dropdown [options]="allStockItems" formControlName="stockItemID" placeholder="Stock Item" filter="true" [style]="{'width':'95%'}">
+                  </p-dropdown> -->
+                <p-autoComplete
+                    formControlName="itemName"
+                    [suggestions]="filteredItems"
+                    (completeMethod)="filterItems($event)"
+                    (onSelect)="getSelectedValInner($event, 'bomDetail',i)"
+                    [size]="30"
+                    [minLength]="1"
+                    styleClass="wid100"
+                >
+                <input type="text" formControlName="stockItemID" pInputText style="visibility: hidden; height: 0; width: 0; font-size: 0;">
+                    {{itemName}}
+                </p-autoComplete>
+                <label for="stockItemID">Stock Item</label>
                 </span>
               </div>
             </div>
@@ -97,22 +122,33 @@
                 </span>
               </div>
             </div>
-            <div class="ui-g-3">
+            <div class="ui-g-2">
               <div class="form-group">
                 <span class="ui-float-label">
-                <p-dropdown [options]="allBomLevels" formControlName="bmlid" placeholder="BOM Level" filter="true" [style]="{'width':'95%'}">
+                <p-dropdown [options]="allBomLevels" formControlName="bmlid" filter="true" [style]="{'width':'95%'}">
                 </p-dropdown>
+                <label for="bmlid">BOM Level</label>
                 </span>
               </div>
             </div>
-            <div class="ui-g-3">
+            <div class="ui-g-2">
                 <div class="form-group">
                   <span class="ui-float-label">
-                  <p-dropdown [options]="allBomComTypes" formControlName="bomcomtypeid" placeholder="BOM Component Type" filter="true" [style]="{'width':'95%'}">
+                  <p-dropdown [options]="allBomComTypes" formControlName="bomcomtypeid" filter="true" [style]="{'width':'95%'}">
                   </p-dropdown>
+                  <label for="bomcomtypeid">BOM Component Type</label>
                   </span>
                 </div>
-              </div>
+            </div>
+            <div class="ui-g-2">
+            <div class="form-group">
+                <span class="ui-float-label">
+                <p-dropdown [options]="allParameterTypes" formControlName="parameterid" filter="true" [style]="{'width':'95%'}">
+                </p-dropdown>
+                <label for="parameterid">Parameter Type</label>
+                </span>
+            </div>
+            </div>
             <div class="ui-g-1">
               <button pButton type="button" style="margin-right: 5px;" icon="fa fa-plus" class="ui-button-success" (click)="addItems()"></button>
               <button pButton type="button" icon="fa fa-trash-o" class="ui-button-danger" [disabled]="i<1" (click)="removeItems(i)"></button>

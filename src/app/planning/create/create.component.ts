@@ -33,7 +33,8 @@ export class CreateComponent implements OnInit {
   companyId = localStorage.getItem('companyID');
   date1 = new Date();
   date2 = new Date();
-  date3 = new Date();  
+  date3 = new Date(); 
+  filteredItems = []; 
   
   ngOnInit() {
     this.showLoader = true;
@@ -87,13 +88,13 @@ export class CreateComponent implements OnInit {
             this[type] = res.data[0];
             if (this.type == 'fg') {
                 var parts = this.fg['planDate'].split("-");
-                let planDate = new Date(parts[2], parts[1] - 1, parts[0]);
+                let planDate = new Date(parts[0], parts[1] - 1, parts[2]);
 
                 var parts1 = this.fg['periodFromDate'].split("-");
-                let periodFromDate = new Date(parts1[2], parts1[1] - 1, parts1[0]);
+                let periodFromDate = new Date(parts1[0], parts1[1] - 1, parts1[2]);
 
                 var parts2 = this.fg['periodToDate'].split("-");
-                let periodToDate = new Date(parts2[2], parts2[1] - 1, parts2[0]);
+                let periodToDate = new Date(parts2[0], parts2[1] - 1, parts2[2]);
 
                 this.cForm.controls['planID'].setValue(this.fg['planID']);
                 this.cForm.controls['planDate'].setValue(planDate);
@@ -128,6 +129,7 @@ export class CreateComponent implements OnInit {
     }
     createfgPlanDetails() {
         return this._formBuilder.group({
+            itemName:[''],
             stockItemID:[0],
             currentPlanQty: [0],
             currentMonthQty:[0],
@@ -143,6 +145,32 @@ export class CreateComponent implements OnInit {
             cumulativeStops:[0]
         });
     }
+    addFGItems() {
+        const stockItemArray = <FormArray>this.cForm.get('fgPlanDetails');
+        stockItemArray.push(
+          this._formBuilder.group({
+            itemName:[''],
+            stockItemID:[0],
+            currentPlanQty: [0],
+            currentMonthQty:[0],
+            nextMonthQty:[0],
+            orderMonthQty:[0],
+            futureRequiredQty:[0],
+            futureRequiredLength:[0],
+            futureRequiredStops:[0],
+            priority:[0],
+            netRequiredQty:[0],
+            fgStockQty:[0],
+            cumulativeLength:[0],
+            cumulativeStops:[0]
+          })
+        );
+    }
+  
+    removeFGItems(index) {
+        const stockItemArray = <FormArray>this.cForm.get('fgPlanDetails');
+        stockItemArray.removeAt(index);
+    }
 
     rmqForm() {
         this.cForm = this._formBuilder.group({
@@ -155,6 +183,7 @@ export class CreateComponent implements OnInit {
     }
     creatermqDetail() {
         return this._formBuilder.group({
+            itemName:[''],
             stockItemID: [0],
             currentMonthQty:[0],
             nextMonthQty:[0],
@@ -170,6 +199,32 @@ export class CreateComponent implements OnInit {
             supplierName:[0],
         });
     }
+    addRMQItems() {
+        const stockItemArray = <FormArray>this.cForm.get('rmqDetail');
+        stockItemArray.push(
+          this._formBuilder.group({
+            itemName:[''],
+            stockItemID: [0],
+            currentMonthQty:[0],
+            nextMonthQty:[0],
+            orderMonthQty:[0],
+            requiredQty:[0],
+            storeStockQty:[0],
+            pendingOrderQty:[0],
+            wipQty:[0],
+            leadTime:[0],
+            moQty:[0],
+            netRequiredQty:[0],
+            ledgerID:[0],
+            supplierName:[0],
+          })
+        );
+    }
+  
+    removeRMQItems(index) {
+        const stockItemArray = <FormArray>this.cForm.get('rmqDetail');
+        stockItemArray.removeAt(index);
+    }
 
     get planDate() { return this.cForm.get('planDate'); }
     get periodFromDate() { return this.cForm.get('periodFromDate'); }
@@ -179,9 +234,9 @@ export class CreateComponent implements OnInit {
     get planID() { return this.cForm.get('planID'); }    
 
     saveFg (form: any) {
-       form.planDate = this.datePipe.transform(form.planDate, 'dd-mm-yyyy'); 
-       form.periodFromDate = this.datePipe.transform(form.periodFromDate, 'dd-mm-yyyy'); 
-       form.periodToDate = this.datePipe.transform(form.periodToDate, 'dd-mm-yyyy'); 
+       form.planDate = this.datePipe.transform(form.planDate, 'yyyy-MM-dd'); 
+       form.periodFromDate = this.datePipe.transform(form.periodFromDate, 'yyyy-MM-dd'); 
+       form.periodToDate = this.datePipe.transform(form.periodToDate, 'yyyy-MM-dd'); 
         this._planningService.updateFG(form).subscribe(res => {
             if (res.status === '200') {
                 this.showSuccess = true;
@@ -195,7 +250,7 @@ export class CreateComponent implements OnInit {
     }
 
     saveRmq (form: any) {
-        form.rmqDate = this.datePipe.transform(form.rmqDate, 'dd-mm-yyyy'); 
+        form.rmqDate = this.datePipe.transform(form.rmqDate, 'yyyy-MM-dd'); 
         this._planningService.updateRMQ(form).subscribe(res => {
             if (res.status === '200') {
                 this.showSuccess = true;
@@ -206,5 +261,23 @@ export class CreateComponent implements OnInit {
               this.showError = true;
             }
         });
+    }
+
+    filterItems(event) {
+        this.filteredItems = [];
+        for (let i = 0; i < this.allStockItems.length; i++) {
+            let itemName = this.allStockItems[i].label;
+            if (itemName.toLowerCase().indexOf(event.query.toLowerCase()) == 0) {
+                this.filteredItems.push(itemName);
+            }
+        }
+    }
+  
+    getSelectedVal(event, elem,index) {
+      for ( var i = 0; i < this.allStockItems.length; i++) {
+        if (this.allStockItems[i].label === event) {
+          this.cForm.get(elem).controls[index].get('stockItemID').setValue(this.allStockItems[i].value);
+        }
+      }
     }
 }

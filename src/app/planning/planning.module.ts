@@ -8,13 +8,15 @@ import { CreateComponent } from './create/create.component';
 import { PlanningService } from './services/planning.service';
 import { DatePipe } from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
+import { FiltersModule } from './filters/filter.Module';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
     PlanningRouteModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FiltersModule
   ],
   declarations: [ PlanningComponent, PlanningListComponent, CreateComponent ],
   providers: [ PlanningService,DatePipe ],

@@ -15,21 +15,7 @@ export class PricelistComponent implements OnInit, OnDestroy {
     text: string;
 
     results: string[];
-
-    search(event) {
-        this.allStockItems = this.allStockItemsData.filter(
-            row => {
-                for (var key in row) {
-                    if (row.hasOwnProperty(key)) {
-                        if(row[key].toString().toLowerCase().includes(event.query.toLowerCase())){
-                            return true;
-                        }
-                       // console.log(key + " -> " + row[key]);
-                    }
-                }
-            }    
-        );
-    }
+    filteredItems= [];
     showLoader = false;
     public priceListID;
     public typeID:number;
@@ -51,6 +37,8 @@ export class PricelistComponent implements OnInit, OnDestroy {
     public priceList;
     public cForm;
     date1 = new Date();
+    itemName: string;
+
     ngOnInit() {
         this.showLoader = true;
         this.getStockItems();
@@ -71,17 +59,21 @@ export class PricelistComponent implements OnInit, OnDestroy {
         this.priceListDataSubscription = this.priceListService.getPricelistData(this.priceListID).subscribe((res: PricelistResponse) => {
             this.priceList = res.data[0];
             if (this.priceListID && this.priceList) {
+                var parts = this.priceList['priceListDate'].split("-");
+                let priceListDate = new Date(parts[0], parts[1] - 1, parts[2]);
+
                 this.cForm.controls['priceListID'].setValue(this.priceList['priceListID']);
-                this.cForm.controls['priceListDate'].setValue(this.priceList['priceListDate']);
+                this.cForm.controls['priceListDate'].setValue(priceListDate);
                 this.cForm.controls['ledgerID'].setValue(this.priceList['ledgerID']);
                 this.cForm.controls['companyID'].setValue(this.priceList['companyID']);
                 //this.cForm.controls['itemCount'].setValue(this.priceList['itemCount']);
                 this.cForm.controls['priceListTypeID'].setValue(this.priceList['priceListTypeID']);
-                
-                // const controlArray = <FormArray> this.cForm.get('priceListItems');
-                // controlArray.removeAt(0);
-                // this.priceList['priceListItems'].forEach(row => controlArray.push(this._formBuilder.group(row)));
-                this.cForm.setControl('priceListItems', this._formBuilder.array((this.priceList['priceListItems'] || []).map((x) => this._formBuilder.group(x) )));                                
+                if (this.priceList['priceListItems'].length > 0) {
+                    // const controlArray = <FormArray> this.cForm.get('priceListItems');
+                    // controlArray.removeAt(0);
+                    // this.priceList['priceListItems'].forEach(row => controlArray.push(this._formBuilder.group(row)));
+                    this.cForm.setControl('priceListItems', this._formBuilder.array((this.priceList['priceListItems'] || []).map((x) => this._formBuilder.group(x))));                                
+                }
             }
            // this.showLoader = false;
         });
@@ -100,18 +92,12 @@ export class PricelistComponent implements OnInit, OnDestroy {
     }
 
     get priceListDate() { return this.cForm.get('priceListDate'); }
-   // get itemCount() { return this.cForm.get('itemCount'); }
     get ledgerID() { return this.cForm.get('ledgerID'); }
-
-    // get taxLedgerID() { return this.cForm.get(['priceListItems'], 0, ['stockItemID']); }
-    // get taxLedgerName() { return this.cForm.get(['priceListItems'], 0, ['itemSerialNo']); }
-    // get taxRate() { return this.cForm.get(['priceListItems'], 0, ['itemRate']); }
-    // get calculatedOn() { return this.cForm.get(['priceListItems'], 0, ['stopsRate']); }
-
 
     createpriceListItems() {
         return this._formBuilder.group({
             stockItemID: [0],
+            itemName:[''],
             itemSerialNo: [0],
             itemRate: [0],
             stopsRate: [0],
@@ -120,11 +106,12 @@ export class PricelistComponent implements OnInit, OnDestroy {
         });
     }
 
-    additems() {
+    addItems() {
       const stockItemArray = <FormArray>this.cForm.get('priceListItems');
       stockItemArray.push(
         this._formBuilder.group({
             stockItemID: [0],
+            itemName:'',
             itemSerialNo: [0],
             itemRate: [0],
             stopsRate: [0],
@@ -146,7 +133,7 @@ export class PricelistComponent implements OnInit, OnDestroy {
 
     savePricelist (form: any) {
         form.priceListTypeID = Number(this.typeID);
-        //form.priceListDate = this.datePipe.transform(form.priceListDate, 'yyyy-MM-dd'); 
+        form.priceListDate = this.datePipe.transform(form.priceListDate, 'yyyy-MM-dd'); 
         this.priceListService.updatePricelist(form).subscribe((res: PricelistResponse) => {
             if (res.status === '200') {
                 this.showSuccess = true;
@@ -173,8 +160,6 @@ export class PricelistComponent implements OnInit, OnDestroy {
       });
     }
 
-    
-
     getStockItems() {
         this.priceListService.getAllStocks().subscribe( res => {
             if (res && res.status === '200') {
@@ -183,7 +168,7 @@ export class PricelistComponent implements OnInit, OnDestroy {
                 let data = res.data;
                 for (let key in data) {
                     if (data.hasOwnProperty(key)) {
-                        this.allStockItems.push({label: data[key].itemName, value: data[key].stockItemID});
+                        this.allStockItems.push({label: data[key].stockItemDesc, value: data[key].stockItemID});
                         //this.allStockItemsData.push({label: data[key].itemName, value: data[key].stockItemID});                        
                     }
                 }
@@ -192,4 +177,39 @@ export class PricelistComponent implements OnInit, OnDestroy {
             this.showLoader = false;
         });
     }
+
+       
+    search(event) {
+        this.allStockItems = this.allStockItemsData.filter(
+            row => {
+                for (var key in row) {
+                    if (row.hasOwnProperty(key)) {
+                        if(row[key].toString().toLowerCase().includes(event.query.toLowerCase())){
+                            return true;
+                        }
+                       // console.log(key + " -> " + row[key]);
+                    }
+                }
+            }    
+        );
+    }
+
+    filterItems(event) {
+        this.filteredItems = [];
+        for (let i = 0; i < this.allStockItems.length; i++) {
+            let itemName = this.allStockItems[i].label;
+            if (itemName.toLowerCase().indexOf(event.query.toLowerCase()) == 0) {
+                this.filteredItems.push(itemName);
+            }
+        }
+    }
+  
+    getSelectedVal(event, elem,index) {
+      for ( var i = 0; i < this.allStockItems.length; i++) {
+        if (this.allStockItems[i].label === event) {
+          this.cForm.get(elem).controls[index].get('stockItemID').setValue(this.allStockItems[i].value);
+        }
+      }
+    }
+
 }

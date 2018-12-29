@@ -11,7 +11,7 @@
       <div class="message success" *ngIf="showSuccess">You have Updated/created successfully.</div>
   
       <div class="ui-g">
-        <div class="ui-g-3">
+        <div class="ui-g-4">
           <div class="form-group">
             <span class="ui-float-label">
               <p-calendar formControlName="planDate" dateFormat="dd-mm-yy" [(ngModel)]="date1" [showIcon]="true"></p-calendar>
@@ -26,7 +26,18 @@
           </div>
         </div>
 
-        <div class="ui-g-3">
+        <div class="ui-g-4">
+            <div class="form-group">
+                <span class="ui-float-label">
+                <input type="number" formControlName="prevPlanID" pInputText id="prevPlanID">
+                <label for="periodToDate">Prev Plan ID</label>
+                </span>
+            </div>
+        </div>
+      </div>
+
+      <div class="ui-g">
+       <div class="ui-g-4">
             <div class="form-group">
                 <span class="ui-float-label">
                 <p-calendar formControlName="periodFromDate" dateFormat="dd-mm-yy" [(ngModel)]="date2" [showIcon]="true"></p-calendar>
@@ -35,7 +46,7 @@
             </div>
         </div>
 
-        <div class="ui-g-3">
+        <div class="ui-g-4">
             <div class="form-group">
                 <span class="ui-float-label">
                 <p-calendar formControlName="periodToDate" dateFormat="dd-mm-yy" [(ngModel)]="date3" [showIcon]="true"></p-calendar>
@@ -43,16 +54,6 @@
                 </span>
             </div>
         </div>
-
-        <div class="ui-g-3">
-            <div class="form-group">
-                <span class="ui-float-label">
-                <input type="number" formControlName="prevPlanID" pInputText id="prevPlanID">
-                <label for="periodToDate">Prev Plan ID</label>
-                </span>
-            </div>
-        </div>
-
       </div>
 
     <fieldset  formArrayName="fgPlanDetails">
@@ -79,8 +80,21 @@
             <tr  *ngFor="let ctrl of cForm.get('fgPlanDetails').controls; let i = index;" [formGroupName]="i">
             <!-- <tr> -->
                 <td>
-                    <p-dropdown [options]="allStockItems" formControlName="stockItemID" placeholder="Stock Item" filter="true" [style]="{'width':'95%'}">
-                            </p-dropdown>
+                    <!-- <p-dropdown [options]="allStockItems" formControlName="stockItemID" placeholder="Stock Item" filter="true" [style]="{'width':'95%'}">
+                            </p-dropdown> -->
+                <p-autoComplete
+                    formControlName="itemName"
+                    [suggestions]="filteredItems"
+                    (completeMethod)="filterItems($event)"
+                    (onSelect)="getSelectedVal($event, 'fgPlanDetails',i)"
+                    [size]="30"
+                    placeholder="Enter ItemCode To Search"
+                    [minLength]="1"
+                    styleClass="wid100"
+                    >
+                    <input type="text" formControlName="stockItemID" pInputText style="visibility: hidden; height: 0; width: 0; font-size: 0;">
+                        {{itemName}}
+                </p-autoComplete>            
                 </td>
                 <!-- <td><input type="number" formControlName="prevPlanID" pInputText id="prevPlanID"></td> -->
                 <td><input type="number" formControlName="currentPlanQty" pInputText id="currentPlanQty"></td>
@@ -95,139 +109,14 @@
                 <td><input type="number" formControlName="fgStockQty" pInputText id="fgStockQty"></td>
                 <td><input type="number" formControlName="cumulativeLength" pInputText id="cumulativeLength"></td>
                 <td><input type="number" formControlName="cumulativeStops" pInputText id="cumulativeStops"></td>
-
+                <td style="text-align:center">
+                    <button pButton type="button" style="margin-right: 5px;" icon="fa fa-plus" class="ui-button-success" (click)="addFGItems()"></button>
+                    <button pButton type="button" icon="fa fa-trash-o" class="ui-button-danger" [disabled]="i<1" (click)="removeFGItems(i)"></button>
+                </td>
             </tr>
             </tbody>
         </table>
         </div>
-    <!-- <div class="ui-g"> 
-        <div class="ui-g-6">
-            <div class="form-group">
-                <span class="ui-float-label">
-                <p-dropdown [options]="allStockItems" formControlName="stockItemID" placeholder="Stock Item" filter="true" [style]="{'width':'95%'}">
-                </p-dropdown>
-                </span>
-            </div>
-        </div>
-        <div class="ui-g-3">
-            <div class="form-group">
-                <span class="ui-float-label">
-                <input type="number" formControlName="prevPlanID" pInputText id="prevPlanID">
-                <label for="prevPlanID">prevPlanID</label>
-                </span>
-            </div>
-        </div>
-        <div class="ui-g-3">
-            <div class="form-group">
-                <span class="ui-float-label">
-                <input type="number" formControlName="currentPlanQty" pInputText id="currentPlanQty">
-                <label for="currentPlanQty">currentPlanQty</label>
-                </span>
-            </div>
-        </div>
-    </div>
-    <br/>
-      
-    <div class="ui-g">
-        <div class="ui-g-3">
-            <div class="form-group">
-                <span class="ui-float-label">
-                <input type="number" formControlName="currentMonthQty" pInputText id="currentMonthQty">
-                <label for="currentMonthQty">currentMonthQty</label>
-                </span>
-            </div>
-        </div>
-        <div class="ui-g-3">
-            <div class="form-group">
-                <span class="ui-float-label">
-                <input type="number" formControlName="nextMonthQty" pInputText id="nextMonthQty">
-                <label for="nextMonthQty">nextMonthQty</label>
-                </span>
-            </div>
-        </div>
-        <div class="ui-g-3">
-            <div class="form-group">
-                <span class="ui-float-label">
-                <input type="number" formControlName="orderMonthQty" pInputText id="orderMonthQty">
-                <label for="orderMonthQty">orderMonthQty</label>
-                </span>
-            </div>
-        </div>
-        <div class="ui-g-3">
-            <div class="form-group">
-                <span class="ui-float-label">
-                <input type="number" formControlName="futureRequiredQty" pInputText id="futureRequiredQty">
-                <label for="futureRequiredQty">futureRequiredQty</label>
-                </span>
-            </div>
-        </div>
-    </div>
-
-    <br/>
-    <div class="ui-g">
-        <div class="ui-g-3">
-            <div class="form-group">
-                <span class="ui-float-label">
-                <input type="number" formControlName="futureRequiredLength" pInputText id="futureRequiredLength">
-                <label for="futureRequiredLength">futureRequiredLength</label>
-                </span>
-            </div>
-        </div>
-        <div class="ui-g-3">
-            <div class="form-group">
-                <span class="ui-float-label">
-                <input type="number" formControlName="futureRequiredStops" pInputText id="futureRequiredStops">
-                <label for="futureRequiredStops">futureRequiredStops</label>
-                </span>
-            </div>
-        </div>
-        <div class="ui-g-3">
-            <div class="form-group">
-                <span class="ui-float-label">
-                <input type="number" formControlName="priority" pInputText id="priority">
-                <label for="priority">priority</label>
-                </span>
-            </div>
-        </div>
-        <div class="ui-g-3">
-            <div class="form-group">
-                <span class="ui-float-label">
-                <input type="number" formControlName="netRequiredQty" pInputText id="netRequiredQty">
-                <label for="netRequiredQty">netRequiredQty</label>
-                </span>
-            </div>
-        </div>
-    </div>
-
-    <br/>
-    <div class="ui-g">
-        <div class="ui-g-3">
-            <div class="form-group">
-                <span class="ui-float-label">
-                <input type="number" formControlName="fgStockQty" pInputText id="fgStockQty">
-                <label for="fgStockQty">fgStockQty</label>
-                </span>
-            </div>
-        </div>
-        <div class="ui-g-3">
-            <div class="form-group">
-                <span class="ui-float-label">
-                <input type="number" formControlName="cumulativeLength" pInputText id="cumulativeLength">
-                <label for="cumulativeLength">cumulativeLength</label>
-                </span>
-            </div>
-        </div>
-        <div class="ui-g-3">
-            <div class="form-group">
-                <span class="ui-float-label">
-                <input type="number" formControlName="cumulativeStops" pInputText id="cumulativeStops">
-                <label for="cumulativeStops">cumulativeStops</label>
-                </span>
-            </div>
-        </div>
-    </div>
-     -->
-    
     </fieldset>
     <br/>
 
@@ -302,8 +191,21 @@
             <tr  *ngFor="let ctrl of cForm.get('rmqDetail').controls; let i = index;" [formGroupName]="i">
             <!-- <tr> -->
                 <td>
-                    <p-dropdown [options]="allStockItems" formControlName="stockItemID" placeholder="Stock Item" filter="true" [style]="{'width':'95%'}">
-                            </p-dropdown>
+                    <!-- <p-dropdown [options]="allStockItems" formControlName="stockItemID" placeholder="Stock Item" filter="true" [style]="{'width':'95%'}">
+                    </p-dropdown> -->
+                <p-autoComplete
+                    formControlName="itemName"
+                    [suggestions]="filteredItems"
+                    (completeMethod)="filterItems($event)"
+                    (onSelect)="getSelectedVal($event, 'rmqDetail',i)"
+                    [size]="30"
+                    placeholder="Enter ItemCode To Search"
+                    [minLength]="1"
+                    styleClass="wid100"
+                  >
+                  <input type="text" formControlName="stockItemID" pInputText style="visibility: hidden; height: 0; width: 0; font-size: 0;">
+                      {{itemName}}
+                  </p-autoComplete>
                 </td>
                 <td><input type="number" formControlName="storeStockQty" pInputText id="storeStockQty"></td>
                 <td><input type="number" formControlName="pendingOrderQty" pInputText id="pendingOrderQty"></td>
@@ -317,6 +219,10 @@
                 <td><input type="number" formControlName="netRequiredQty" pInputText id="netRequiredQty"></td>
                 <td><input type="number" formControlName="ledgerID" pInputText id="ledgerID"></td>
                 <td><input type="number" formControlName="supplierName" pInputText id="supplierName"></td>
+                <td style="text-align:center">
+                    <button pButton type="button" style="margin-right: 5px;" icon="fa fa-plus" class="ui-button-success" (click)="addRMQItems()"></button>
+                    <button pButton type="button" icon="fa fa-trash-o" class="ui-button-danger" [disabled]="i<1" (click)="removeRMQItems(i)"></button>
+                </td>
             </tr>
             </tbody>
         </table>

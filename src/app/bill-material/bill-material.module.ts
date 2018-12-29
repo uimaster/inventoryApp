@@ -5,13 +5,15 @@ import { SharedModule } from '../shared/shared.module';
 import { BillRouteModule } from './bill-material.route.module';
 import { CreateComponent } from './create/create.component';
 import { BomModule } from './bom/bom.module';
+import { FiltersModule } from './filters/filter.Module';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
     BillRouteModule,
-    BomModule
+    BomModule,
+    FiltersModule
   ],
   declarations: [ BillMaterialComponent, CreateComponent ]
 })
