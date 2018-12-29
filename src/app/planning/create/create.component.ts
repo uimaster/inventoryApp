@@ -35,6 +35,7 @@ export class CreateComponent implements OnInit {
   date2 = new Date();
   date3 = new Date(); 
   filteredItems = []; 
+  itemName:string;
   
   ngOnInit() {
     this.showLoader = true;
@@ -65,7 +66,8 @@ export class CreateComponent implements OnInit {
             let data = res.data;
                 for (let key in data) {
                     if (data.hasOwnProperty(key)) {
-                        this.allStockItems.push({label: data[key].itemCode + ', ' + data[key].itemName, value: data[key].stockItemID});
+                        this.allStockItems.push({label: data[key].stockItemDesc, value: data[key].stockItemID});
+                        //this.allStockItems.push({label: data[key].itemCode + ', ' + data[key].itemName, value: data[key].stockItemID});
                     }
                 }
             }

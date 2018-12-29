@@ -37,6 +37,7 @@ export class BomComponent implements OnInit, OnDestroy {
     date1 = new Date();
     filteredItems = [];
     showLoader = false;
+    itemName: string;
 
     ngOnInit() {
       this.showLoader = true;
@@ -237,7 +238,8 @@ export class BomComponent implements OnInit, OnDestroy {
           let data = res.data;
           for (let key in data) {
             if (data.hasOwnProperty(key)) {
-                this.allStockItems.push({label: data[key].itemCode + ', ' + data[key].itemName, value: data[key].stockItemID});
+                //this.allStockItems.push({label: data[key].itemCode + ', ' + data[key].itemName, value: data[key].stockItemID});
+                this.allStockItems.push({label: data[key].stockItemDesc, value: data[key].stockItemID});
             }
           }
         }
