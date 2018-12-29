@@ -40,7 +40,7 @@
           <span class="ui-float-label">
 
 
-            <p-dropdown [options]="stockGroupList" [(ngModel)]="stockGroup_ID" formControlName="stockGroup_ID"  id="stockGroup_ID" placeholder="Stock Group Name"></p-dropdown>
+            <p-dropdown [options]="stockGroupList" formControlName="stockGroup_ID"  id="stockGroup_ID" placeholder="Stock Group Name"></p-dropdown>
 
             <!--<input type="text" formControlName="stockGroupName" pInputText id="stockGroupName">-->
             <!--<label for="stockGroupName">Stock Group Name</label>-->
@@ -58,7 +58,7 @@
         <div class="form-group">
           <span class="ui-float-label">
 
-          <p-dropdown [options]="unitDataList" [(ngModel)]="unit_ID" formControlName="unit_ID"  id="unit_ID" placeholder="Unit Name"></p-dropdown>
+          <p-dropdown [options]="unitDataList" formControlName="unit_ID"  id="unit_ID" placeholder="Unit Name"></p-dropdown>
 
           </span>
           <div *ngIf="unit_ID.invalid && (unit_ID.dirty || unit_ID.touched)" class="alert alert-danger">
