@@ -131,7 +131,7 @@ export class CreateComponent implements OnInit {
     }
     createfgPlanDetails() {
         return this._formBuilder.group({
-            itemName:[''],
+            stockItemDesc:[''],
             stockItemID:[0],
             currentPlanQty: [0],
             currentMonthQty:[0],
@@ -151,7 +151,7 @@ export class CreateComponent implements OnInit {
         const stockItemArray = <FormArray>this.cForm.get('fgPlanDetails');
         stockItemArray.push(
           this._formBuilder.group({
-            itemName:[''],
+            stockItemDesc:[''],
             stockItemID:[0],
             currentPlanQty: [0],
             currentMonthQty:[0],
@@ -185,7 +185,7 @@ export class CreateComponent implements OnInit {
     }
     creatermqDetail() {
         return this._formBuilder.group({
-            itemName:[''],
+            stockItemDesc:[''],
             stockItemID: [0],
             currentMonthQty:[0],
             nextMonthQty:[0],
@@ -205,7 +205,7 @@ export class CreateComponent implements OnInit {
         const stockItemArray = <FormArray>this.cForm.get('rmqDetail');
         stockItemArray.push(
           this._formBuilder.group({
-            itemName:[''],
+            stockItemDesc:[''],
             stockItemID: [0],
             currentMonthQty:[0],
             nextMonthQty:[0],
