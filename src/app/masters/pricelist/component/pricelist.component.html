@@ -35,7 +35,7 @@
       <div *ngFor="let ctrl of cForm.get('priceListItems').controls; let i = index;" [formGroupName]="i">
         <div >
           <div class="ui-g">
-            <div class="ui-g-2">
+            <div class="ui-g-4" >
               <div class="form-group">
                 <span class="ui-float-label">
                   <!-- <p-dropdown [options]="allStockItems" formControlName="stockItemID" placeholder="Stock Item"></p-dropdown> -->
@@ -65,7 +65,7 @@
                     </span>
                 </div>
             </div>
-            <div class="ui-g-2">
+            <div class="ui-g-1">
               <div class="form-group">
                 <span class="ui-float-label">
                   <input type="number" formControlName="itemRate" pInputText id="itemRate">
@@ -73,7 +73,7 @@
                 </span>
               </div>
             </div>
-            <div class="ui-g-2">
+            <div class="ui-g-1">
                 <div class="form-group">
                     <span class="ui-float-label">
                     <input type="number" formControlName="stopsRate" pInputText id="stopsRate">
@@ -98,7 +98,7 @@
               </div>
             </div>
             <div class="ui-g-1">
-              <button pButton type="button" style="margin-right: 5px;" icon="fa fa-plus" class="ui-button-success" (click)="addItems()"></button>
+              <button pButton type="button" icon="fa fa-plus" class="ui-button-success" (click)="addItems()"></button>
               <button pButton type="button" icon="fa fa-trash-o" class="ui-button-danger" [disabled]="i<1" (click)="removeItems(i)"></button>
             </div>
           </div>

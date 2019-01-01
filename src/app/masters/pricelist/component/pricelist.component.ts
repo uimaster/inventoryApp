@@ -42,13 +42,14 @@ export class PricelistComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.showLoader = true;
         this.getStockItems();
-        this.getLedgers();
+        
         this.priceListForm();
 
       //setTimeout(() => {
         this._route.params.subscribe((params) => {
           this.priceListID = params.id;
           this.typeID = params.typeID;
+          this.getLedgers();
           //this.getPricelistData(this.priceListID);
         });
       //}, 4000);
@@ -147,17 +148,33 @@ export class PricelistComponent implements OnInit, OnDestroy {
     }
 
     getLedgers() {
-      this.priceListService.getAllCustomers().subscribe( res => {
+
+      if(this.typeID==1){
+        this.priceListService.getAllSuppliers().subscribe( res => {
         if (res && res.status === '200') {
           // this.ledgerList = res.data;
           let data = res.data;
           for (let key in data) {
             if (data.hasOwnProperty(key)) {
-                this.ledgerList.push({label: data[key].customerName, value: data[key].customer_ID});
+                this.ledgerList.push({label: data[key].supplierName, value: data[key].supplier_ID});
             }
           }
         }
-      });
+        });
+      }  
+      else if(this.typeID==2){
+        this.priceListService.getAllCustomers().subscribe( res => {
+          if (res && res.status === '200') {
+            // this.ledgerList = res.data;
+            let data = res.data;
+            for (let key in data) {
+              if (data.hasOwnProperty(key)) {
+                  this.ledgerList.push({label: data[key].customerName, value: data[key].customer_ID});
+              }
+            }
+          }
+        });
+      }  
     }
 
     getStockItems() {

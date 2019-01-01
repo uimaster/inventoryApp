@@ -61,7 +61,7 @@
         <div >
         <table width="100%" class="fieldTable">
             <thead>
-            <th>Stock Item</th>
+            <th width="30%">Stock Item</th>
             <!-- <th>Prev Plan ID</th> -->
             <th>Current Plan Qty</th>
             <th>Current Month Qty</th>
@@ -90,7 +90,7 @@
                     [size]="30"
                     placeholder="Enter ItemCode To Search"
                     [minLength]="1"
-                    styleClass="wid100"
+                    [style]="{'width':'100%'}"
                     >
                     <input type="text" formControlName="stockItemID" pInputText style="visibility: hidden; height: 0; width: 0; font-size: 0;">
                         {{stockItemDesc}}
@@ -109,8 +109,8 @@
                 <td><input type="number" formControlName="fgStockQty" pInputText id="fgStockQty"></td>
                 <td><input type="number" formControlName="cumulativeLength" pInputText id="cumulativeLength"></td>
                 <td><input type="number" formControlName="cumulativeStops" pInputText id="cumulativeStops"></td>
-                <td style="text-align:center">
-                    <button pButton type="button" style="margin-right: 5px;" icon="fa fa-plus" class="ui-button-success" (click)="addFGItems()"></button>
+                <td >
+                    <button pButton type="button" icon="fa fa-plus" class="ui-button-success" (click)="addFGItems()"></button>
                     <button pButton type="button" icon="fa fa-trash-o" class="ui-button-danger" [disabled]="i<1" (click)="removeFGItems(i)"></button>
                 </td>
             </tr>
@@ -128,7 +128,7 @@
 </p-panel>
 
 
-<p-panel header="FG Add/Edit Form" class="Tabledata" *ngIf="type=='rmq'">
+<p-panel header="RMQ Add/Edit Form" class="Tabledata" *ngIf="type=='rmq'">
     <p-header>
         <!-- <button pButton type="button" style="float:right" icon="pi pi-plus" label="Load Items" class="ui-button-success"></button>
         <button pButton type="button" style="float:right" icon="pi pi-plus" label="Load Prev FG Plan" class="ui-button-success"></button> -->
@@ -170,10 +170,10 @@
      
       <fieldset formArrayName="rmqDetail">
         <legend>Item Details</legend>    
-        <div >
+        <div>
         <table width="100%" class="fieldTable">
             <thead>
-            <th>Stock Item</th>
+            <th width="30%">Stock Item</th>
             <th>Store Stock Qty</th>
             <th>pending Order Qty</th>
             <th>Current Month Qty</th>
@@ -184,27 +184,27 @@
             <th>Lead Time</th>
             <th>MO Qty</th>
             <th>Net Required Qty</th>
-            <th>Ledger ID</th>
-            <th>Supplier Name</th>
+            <th width="15%">Ledger </th>
+            <!-- <th>Supplier Name</th> -->
             </thead>
             <tbody>
             <tr  *ngFor="let ctrl of cForm.get('rmqDetail').controls; let i = index;" [formGroupName]="i">
             <!-- <tr> -->
-                <td>
+                <td class="specialDropdown" style="text-align: left;">
                     <!-- <p-dropdown [options]="allStockItems" formControlName="stockItemID" placeholder="Stock Item" filter="true" [style]="{'width':'95%'}">
                     </p-dropdown> -->
                 <p-autoComplete
-                    formControlName="itemName"
+                    formControlName="stockItemDesc"
                     [suggestions]="filteredItems"
                     (completeMethod)="filterItems($event)"
                     (onSelect)="getSelectedVal($event, 'rmqDetail',i)"
-                    [size]="30"
                     placeholder="Enter ItemCode To Search"
                     [minLength]="1"
-                    styleClass="wid100"
+                    [size]="30"
+                    [style]="{'width':'100%'}"
                   >
                   <input type="text" formControlName="stockItemID" pInputText style="visibility: hidden; height: 0; width: 0; font-size: 0;">
-                      {{itemName}}
+                      {{stockItemDesc}}
                   </p-autoComplete>
                 </td>
                 <td><input type="number" formControlName="storeStockQty" pInputText id="storeStockQty"></td>
@@ -217,8 +217,11 @@
                 <td><input type="number" formControlName="leadTime" pInputText id="leadTime"></td>
                 <td><input type="number" formControlName="moQty" pInputText id="moQty"></td>
                 <td><input type="number" formControlName="netRequiredQty" pInputText id="netRequiredQty"></td>
-                <td><input type="number" formControlName="ledgerID" pInputText id="ledgerID"></td>
-                <td><input type="number" formControlName="supplierName" pInputText id="supplierName"></td>
+                <td style="text-align: left;">
+                    <p-dropdown [options]="ledgerList" [style]="{'width':'95%'}" formControlName="ledgerID"></p-dropdown>
+                </td>
+                <!-- <td><input type="number" formControlName="ledgerID" pInputText id="ledgerID"></td>
+                <td><input type="number" formControlName="supplierName" pInputText id="supplierName"></td> -->
                 <td style="text-align:center">
                     <button pButton type="button" style="margin-right: 5px;" icon="fa fa-plus" class="ui-button-success" (click)="addRMQItems()"></button>
                     <button pButton type="button" icon="fa fa-trash-o" class="ui-button-danger" [disabled]="i<1" (click)="removeRMQItems(i)"></button>

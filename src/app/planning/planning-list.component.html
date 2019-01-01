@@ -1,9 +1,10 @@
-<ng-template 
+<p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
+<!-- <ng-template 
     *ngIf="!loadingList;then showBlock; else loading">
 </ng-template>
 
 <ng-template #showBlock>
-<p-panel header="FG List" class="Tabledata" *ngIf="type=='fg'">
+ --><p-panel header="FG List" class="Tabledata" *ngIf="type=='fg'">
     <p-header>
         <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="add('fg')"></button>
     </p-header>
@@ -84,7 +85,7 @@
         </table>
     </div>
 </p-panel>
-</ng-template>
+<!-- </ng-template>
 
 
 
@@ -92,4 +93,4 @@
     <p-panel>
         <img class="img-center" src="assets/images/spinner.gif" />
     </p-panel>
-</ng-template>  
+</ng-template>   -->

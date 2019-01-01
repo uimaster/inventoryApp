@@ -14,7 +14,7 @@ export class PlanningListComponent implements OnInit, OnDestroy {
     public type:any;
     public planningList: any;
     public listData: any;
-    public loadingList: boolean = false;
+    public showLoader: boolean = false;
     public planningListDataSubscription: Subscription;
 
 
@@ -27,6 +27,7 @@ export class PlanningListComponent implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit() {
+        this.showLoader = true;
         this._route.params.subscribe((params) => {
             this.type = params.type;
             if(this.type=='fg'){
@@ -39,7 +40,7 @@ export class PlanningListComponent implements OnInit, OnDestroy {
     }
 
     getList(fName){
-        this.loadingList = true;
+       // this.showLoader = true;
         this.planningList = [];
         this.listData = [];
 
@@ -52,14 +53,15 @@ export class PlanningListComponent implements OnInit, OnDestroy {
     
         this.planningListDataSubscription = this._planningService[fName](fDate,tDate).subscribe(
             result => {
-                this.loadingList = false;
+               // this.showLoader = false;
                 if (result && result.status === '200')  {
                     this.planningList = result.data;
                     this.listData = result.data;
                 }
+                this.showLoader = false;
             },
             error => {
-                this.loadingList = false;
+               // this.showLoader = false;
             }
         );
       }

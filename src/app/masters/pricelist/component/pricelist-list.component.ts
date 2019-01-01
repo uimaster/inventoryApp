@@ -14,7 +14,8 @@ export class PricelistListComponent implements OnInit, OnDestroy {
     public priceList: any;
     public typeID;
     public priceListListDataSubscription: Subscription;
-    public loadingList: boolean = false;
+    //public loadingList: boolean = false;
+    showLoader = false;
     constructor(
         private priceListService: PricelistService, 
         private router: Router,
@@ -22,6 +23,7 @@ export class PricelistListComponent implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit() {
+        this.showLoader = true;
         this._route.params.subscribe((params) => {
             this.typeID = params.typeID;
             this.getPricelistList();
@@ -29,9 +31,9 @@ export class PricelistListComponent implements OnInit, OnDestroy {
     }
 
     getPricelistList() {
-        this.loadingList = true;
+        this.showLoader = true;
         this.priceListListDataSubscription = this.priceListService.getAllPricelists(this.typeID,0).subscribe((res: PricelistResponse) => {
-            this.loadingList = false;
+            this.showLoader = false;
             if (res && res.status === '200')  {
                 this.priceList = res.data;
                 // console.log(this.unitList);

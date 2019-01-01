@@ -35,11 +35,13 @@ export class CreateComponent implements OnInit {
   date2 = new Date();
   date3 = new Date(); 
   filteredItems = []; 
+  ledgerList = [];
   itemName:string;
   
   ngOnInit() {
     this.showLoader = true;
-    this.getStockItems();    
+    this.getStockItems();  
+    this.getLedgers();    
     
     //setTimeout(() => {
         this._route.params.subscribe((params) => {
@@ -80,6 +82,20 @@ export class CreateComponent implements OnInit {
                 this.getData('getRMQDetail',this.type,this.id);
             }
             this.showLoader = false;
+        });
+    }
+
+    getLedgers(){
+        this._planningService.getAllSuppliers().subscribe( res => {
+            if (res && res.status === '200') {
+              // this.ledgerList = res.data;
+              let data = res.data;
+              for (let key in data) {
+                if (data.hasOwnProperty(key)) {
+                    this.ledgerList.push({label: data[key].supplierName, value: data[key].supplier_ID});
+                }
+              }
+            }
         });
     }
 
@@ -198,7 +214,7 @@ export class CreateComponent implements OnInit {
             moQty:[0],
             netRequiredQty:[0],
             ledgerID:[0],
-            supplierName:[0],
+           // supplierName:[0],
         });
     }
     addRMQItems() {
@@ -218,7 +234,7 @@ export class CreateComponent implements OnInit {
             moQty:[0],
             netRequiredQty:[0],
             ledgerID:[0],
-            supplierName:[0],
+           // supplierName:[0],
           })
         );
     }

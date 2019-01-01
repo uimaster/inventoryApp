@@ -13,7 +13,7 @@ import {BomResponse} from '../models/bom.model';
 export class BomListComponent implements OnInit, OnDestroy {
     public bomList: any;
     public listData: any;
-    public loadingList:boolean = false;
+    public showLoader:boolean = false;
     public bomListDataSubscription: Subscription;
     constructor(private bomService: BomService, private router: Router) { }
 
@@ -22,9 +22,9 @@ export class BomListComponent implements OnInit, OnDestroy {
     }
 
     getBomList() {
-        this.loadingList = true;
+        this.showLoader = true;
         this.bomListDataSubscription = this.bomService.getAllBoms().subscribe((res: BomResponse) => {
-            this.loadingList = false;
+            this.showLoader = false;
             if (res && res.status === '200')  {
                 this.bomList = res.data;
                 this.listData = res.data;

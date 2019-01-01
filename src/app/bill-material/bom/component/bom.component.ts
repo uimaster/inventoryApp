@@ -131,7 +131,8 @@ export class BomComponent implements OnInit, OnDestroy {
             bmlid: [0],
             bomcomtypeid: [0],
             parameterid:[0],
-            itemName:['']
+            itemName:[''],
+            parameterval:['']
         });
     }
 
@@ -144,7 +145,8 @@ export class BomComponent implements OnInit, OnDestroy {
             bmlid: [0],
             bomcomtypeid: [0],
             parameterid:[0],
-            itemName:['']
+            itemName:[''],
+            parameterval:['']
         })
       );
     }

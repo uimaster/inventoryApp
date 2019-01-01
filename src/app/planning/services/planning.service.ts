@@ -100,4 +100,13 @@ export class PlanningService {
             })
         );
     }
+
+    getAllSuppliers(): Observable<any> {
+        const params = new HttpParams().set('CompanyID', '1');
+        return this.http.get(urls.GETSUPPLIERLIST, {params}).pipe(
+            map(res => {
+                return res;
+            })
+        );
+    }
 }

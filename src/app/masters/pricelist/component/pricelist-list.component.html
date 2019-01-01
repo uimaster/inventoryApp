@@ -1,8 +1,9 @@
-<ng-template 
+<p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
+<!-- <ng-template 
     *ngIf="!loadingList;then showBlock; else loading">
 </ng-template>
 
-<ng-template #showBlock>
+<ng-template #showBlock> -->
 <p-panel header="Price List" class="Tabledata">
     <p-header>
         <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addPricelist()"></button>
@@ -33,7 +34,7 @@
         </table>
     </div>
 </p-panel>
-</ng-template>
+<!-- </ng-template>
 
 
 
@@ -41,4 +42,4 @@
     <p-panel>
         <img class="img-center" src="assets/images/spinner.gif" />
     </p-panel>
-</ng-template>  
+</ng-template>   -->
