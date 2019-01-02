@@ -35,6 +35,14 @@
       <div *ngFor="let ctrl of cForm.get('priceListItems').controls; let i = index;" [formGroupName]="i">
         <div >
           <div class="ui-g">
+            <div class="ui-g-1">
+                <div class="form-group">
+                    <span class="ui-float-label">
+                    <input type="text" pInputText value="{{i+1}}" disabled="disabled">
+                    <!-- <label for="itemSerialNo">Item Serial No.</label> -->
+                    </span>
+                </div>
+            </div>
             <div class="ui-g-4" >
               <div class="form-group">
                 <span class="ui-float-label">
@@ -58,14 +66,6 @@
               </div>
             </div>
             <div class="ui-g-2">
-                <div class="form-group">
-                    <span class="ui-float-label">
-                    <input type="number" formControlName="itemSerialNo" pInputText id="itemSerialNo">
-                    <label for="itemSerialNo">Item Serial No.</label>
-                    </span>
-                </div>
-            </div>
-            <div class="ui-g-1">
               <div class="form-group">
                 <span class="ui-float-label">
                   <input type="number" formControlName="itemRate" pInputText id="itemRate">

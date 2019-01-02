@@ -56,25 +56,26 @@
         </div>
       </div>
 
-    <fieldset  formArrayName="fgPlanDetails">
+    <fieldset  formArrayName="fgPlanDetails" style="overflow-x:auto; min-height:300px">
         <legend>Item Details</legend>    
-        <div >
-        <table width="100%" class="fieldTable">
+        <div style="width:200%;" >
+        <table class="fieldTable">
             <thead>
-            <th width="30%">Stock Item</th>
+            <th width="20%">Stock Item</th>
             <!-- <th>Prev Plan ID</th> -->
-            <th>Current Plan Qty</th>
-            <th>Current Month Qty</th>
-            <th>Next Month Qty</th>
-            <th>Order Month Qty</th>
-            <th>Future Required Qty</th>
-            <th>Future Required Length</th>
-            <th>Future Required Stops</th>
-            <th>Priority</th>
-            <th>Net Required Qty</th>
-            <th>FG Stock Qty</th>
-            <th>Cumulative Length</th>
-            <th>Cumulative Stops</th>
+            <th width="7%">Current Plan Qty</th>
+            <th width="7%">Current Month Qty</th>
+            <th width="6%">Next Month Qty</th>
+            <th width="6%">Order Month Qty</th>
+            <th width="7%">Future Required Qty</th>
+            <th width="7%">Future Required Length</th>
+            <th width="7%">Future Required Stops</th>
+            <th width="5%">Priority</th>
+            <th width="7%">Net Required Qty</th>
+            <th width="4%">FG Stock Qty</th>
+            <th width="6%">Cumulative Length</th>
+            <th width="6%">Cumulative Stops</th>
+            <th width="5%" style="text-align:center">Actions</th>
             </thead>
             <tbody>
             <tr  *ngFor="let ctrl of cForm.get('fgPlanDetails').controls; let i = index;" [formGroupName]="i">
@@ -90,7 +91,7 @@
                     [size]="30"
                     placeholder="Enter ItemCode To Search"
                     [minLength]="1"
-                    [style]="{'width':'100%'}"
+                    styleClass="wid100"
                     >
                     <input type="text" formControlName="stockItemID" pInputText style="visibility: hidden; height: 0; width: 0; font-size: 0;">
                         {{stockItemDesc}}
@@ -109,7 +110,7 @@
                 <td><input type="number" formControlName="fgStockQty" pInputText id="fgStockQty"></td>
                 <td><input type="number" formControlName="cumulativeLength" pInputText id="cumulativeLength"></td>
                 <td><input type="number" formControlName="cumulativeStops" pInputText id="cumulativeStops"></td>
-                <td >
+                <td style="text-align:center" >
                     <button pButton type="button" icon="fa fa-plus" class="ui-button-success" (click)="addFGItems()"></button>
                     <button pButton type="button" icon="fa fa-trash-o" class="ui-button-danger" [disabled]="i<1" (click)="removeFGItems(i)"></button>
                 </td>
@@ -168,24 +169,24 @@
         
       </div>
      
-      <fieldset formArrayName="rmqDetail">
+      <fieldset formArrayName="rmqDetail" style="overflow-x:auto; min-height:300px">
         <legend>Item Details</legend>    
-        <div>
-        <table width="100%" class="fieldTable">
+        <div style="width:200%;">
+        <table class="fieldTable">
             <thead>
-            <th width="30%">Stock Item</th>
-            <th>Store Stock Qty</th>
-            <th>pending Order Qty</th>
-            <th>Current Month Qty</th>
-            <th>Next Month Qty</th>
-            <th>Order Month Qty</th>
-            <th>Required Qty</th>
-            <th>Wip Qty</th>
-            <th>Lead Time</th>
-            <th>MO Qty</th>
-            <th>Net Required Qty</th>
-            <th width="15%">Ledger </th>
-            <!-- <th>Supplier Name</th> -->
+            <th width="20%">Stock Item</th>
+            <th width="7%">Store Stock Qty</th>
+            <th width="7%">pending Order Qty</th>
+            <th width="7%">Current Month Qty</th>
+            <th width="7%">Next Month Qty</th>
+            <th width="7%">Order Month Qty</th>
+            <th width="7%">Required Qty</th>
+            <th width="4%">Wip Qty</th>
+            <th width="4%">Lead Time</th>
+            <th width="4%">MO Qty</th>
+            <th width="7%">Net Required Qty</th>
+            <th width="14%">Ledger </th>
+            <th width="5%" style="text-align:center">Actions</th>
             </thead>
             <tbody>
             <tr  *ngFor="let ctrl of cForm.get('rmqDetail').controls; let i = index;" [formGroupName]="i">
@@ -201,7 +202,7 @@
                     placeholder="Enter ItemCode To Search"
                     [minLength]="1"
                     [size]="30"
-                    [style]="{'width':'100%'}"
+                    styleClass="wid100"
                   >
                   <input type="text" formControlName="stockItemID" pInputText style="visibility: hidden; height: 0; width: 0; font-size: 0;">
                       {{stockItemDesc}}

@@ -61,7 +61,7 @@ export class PricelistComponent implements OnInit, OnDestroy {
             this.priceList = res.data[0];
             if (this.priceListID && this.priceList) {
                 var parts = this.priceList['priceListDate'].split("-");
-                let priceListDate = new Date(parts[0], parts[1] - 1, parts[2]);
+                let priceListDate = new Date(parts[2], parts[1] - 1, parts[0]);
 
                 this.cForm.controls['priceListID'].setValue(this.priceList['priceListID']);
                 this.cForm.controls['priceListDate'].setValue(priceListDate);
@@ -99,7 +99,7 @@ export class PricelistComponent implements OnInit, OnDestroy {
         return this._formBuilder.group({
             stockItemID: [0],
             itemName:[''],
-            itemSerialNo: [0],
+            //itemSerialNo: [0],
             itemRate: [0],
             stopsRate: [0],
             lengthRate: [0],
@@ -113,7 +113,7 @@ export class PricelistComponent implements OnInit, OnDestroy {
         this._formBuilder.group({
             stockItemID: [0],
             itemName:'',
-            itemSerialNo: [0],
+           // itemSerialNo: [0],
             itemRate: [0],
             stopsRate: [0],
             lengthRate: [0],
@@ -133,6 +133,13 @@ export class PricelistComponent implements OnInit, OnDestroy {
 
 
     savePricelist (form: any) {
+        //console.log(form);
+        //console.log(this.cForm.getRawValue());
+        // for (let index = 0; index < form.priceListItems.length; index++) {
+        //     const element = form.priceListItems[index];
+        //     element.itemSerialNo = index+1;
+        // }
+       // console.log(form);
         form.priceListTypeID = Number(this.typeID);
         form.priceListDate = this.datePipe.transform(form.priceListDate, 'yyyy-MM-dd'); 
         this.priceListService.updatePricelist(form).subscribe((res: PricelistResponse) => {

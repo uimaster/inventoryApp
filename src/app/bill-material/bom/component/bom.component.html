@@ -88,12 +88,12 @@
 
 
 
-    <fieldset formArrayName="bomDetail">
+    <fieldset formArrayName="bomDetail" style="overflow-x:auto; min-height:300px" >
       <legend>Bom Item Details</legend>
       <div *ngFor="let ctrl of cForm.get('bomDetail').controls; let i = index;">
-        <div [formGroupName]="i">
+        <div [formGroupName]="i" style="width:133%;">
           <div class="ui-g">
-            <div class="ui-g-4">
+            <div class="ui-g-3">
               <div class="form-group">
                 <span class="ui-float-label">
                   <!-- <p-dropdown [options]="allStockItems" formControlName="stockItemID" placeholder="Stock Item" filter="true" [style]="{'width':'95%'}">
@@ -125,7 +125,7 @@
             <div class="ui-g-1">
               <div class="form-group">
                 <span class="ui-float-label">
-                <p-dropdown [options]="allBomLevels" formControlName="bmlid" filter="true" [style]="{'width':'95%'}">
+                <p-dropdown  [options]="allBomLevels" formControlName="bmlid" filter="true" [style]="{'width':'95%'}">
                 </p-dropdown>
                 <label for="bmlid">BOM Level</label>
                 </span>
@@ -149,7 +149,7 @@
                 </span>
             </div>
             </div>
-            <div class="ui-g-1">
+            <div class="ui-g-2">
               <div class="form-group">
                 <span class="ui-float-label">
                   <input type="text" formControlName="parameterval" pInputText id="parameterval">
