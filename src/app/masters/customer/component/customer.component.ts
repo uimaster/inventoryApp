@@ -25,6 +25,7 @@ export class CustomerComponent implements OnInit, OnDestroy {
     showSuccess = false;
     companyId = localStorage.getItem('companyID');
     userId = localStorage.getItem('userID');
+    public stateList = [];
     constructor(
       private customerService: CustomerService,
       private _route: ActivatedRoute,
@@ -37,16 +38,17 @@ export class CustomerComponent implements OnInit, OnDestroy {
     public cForm;
     ngOnInit() {
       this.customerForm();
-      setTimeout(() => {
-        this._route.params.subscribe((params) => {
-          this.customerID = params.id;
-          this.getCustomerData(this.customerID);
-        });
-      }, 1000);
-
+      this.getStates();
       this.getLedgers();
       this.getLocation();
       this.getCurrency();
+      this._route.params.subscribe((params) => {
+        this.customerID = params.id;
+      });
+
+      setTimeout(() => {
+        this.getCustomerData(this.customerID);
+      }, 2000);
     }
 
     getCustomerData(customerId) {
@@ -63,7 +65,8 @@ export class CustomerComponent implements OnInit, OnDestroy {
                 this.cForm.controls['emailID'].setValue(this.customer['emailID']);
 
                 const controlArray = <FormArray> this.cForm.get('customerTaxes');
-                for (var i = 0; i <  this.customer.customerTaxes.length; i++) {
+
+                for ( var i = 0; i <  this.customer.customerTaxes.length; i++) {
                   controlArray.push(
                     this._formBuilder.group({
                       taxLedgerID: [this.customer.customerTaxes[i].taxLedgerID],
@@ -72,9 +75,10 @@ export class CustomerComponent implements OnInit, OnDestroy {
                       calculatedOn: [this.customer.customerTaxes[i].calculatedOn]
                     })
                   );
-                  if (controlArray.length > 0) {
-                    controlArray.removeAt(0);
-                  }
+                }
+
+                if (controlArray.length > 0) {
+                  controlArray.removeAt(0);
                 }
 
                 const controlArrayAddress = <FormArray> this.cForm.get('customerAddList');
@@ -90,9 +94,10 @@ export class CustomerComponent implements OnInit, OnDestroy {
                       stateCode: [this.customer.customerAddList[i].stateCode]
                     })
                   );
-                  if (controlArrayAddress.length > 0) {
-                    controlArrayAddress.removeAt(0);
-                  }
+                }
+
+                if (controlArrayAddress.length > 0) {
+                  controlArrayAddress.removeAt(0);
                 }
 
                 const controlArrayTerms = <FormArray> this.cForm.get('customerTerms');
@@ -107,9 +112,10 @@ export class CustomerComponent implements OnInit, OnDestroy {
                       deliveryTerms: [this.customer.customerTerms[i].deliveryTerms]
                     })
                   );
-                  if (controlArrayTerms.length > 0) {
-                    controlArrayTerms.removeAt(0);
-                  }
+                }
+
+                if (controlArrayTerms.length > 0) {
+                  controlArrayTerms.removeAt(0);
                 }
             }
         });
@@ -288,6 +294,25 @@ export class CustomerComponent implements OnInit, OnDestroy {
           }
         }
       });
+    }
+
+    getStates() {
+      this.customerService.getStates().subscribe( res => {
+        if(res && res.status === '200') {
+          let data = res.data;
+          for ( let key in data) {
+            if (data.hasOwnProperty(key)) {
+              this.stateList.push({label: data[key].stateName, value: data[key].stateCode});
+            }
+          }
+        }
+      });
+    }
+
+    getStateSelect(state, frmArray) {
+      const stateCode = state.value;
+      const supplierArray = <FormArray>this.cForm.get('customerAddList');
+      supplierArray.controls[frmArray].get('stateCode').setValue(stateCode);
     }
 
 }

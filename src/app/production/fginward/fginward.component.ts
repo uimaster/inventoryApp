@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TransactionSerivices } from '../../transactionsShared/transaction.service';
 import { Router } from '@angular/router';
+import { BASEURL } from '../../../utils/app.urls';
 
 @Component({
   selector: 'app-fginward',
   templateUrl: './fginward.component.html',
   styleUrls: ['./fginward.component.scss']
 })
-export class FGInwardComponent implements OnInit {
+export class FGInwardComponent implements OnInit, OnDestroy {
   fgList = [];
   constructor( private transactionSerivices: TransactionSerivices, private router: Router) { }
 
@@ -28,8 +29,9 @@ export class FGInwardComponent implements OnInit {
     localStorage.setItem('FormHeader', 'Finish Goods Inwards Edit/Create Form');
     localStorage.setItem('transationLinkRef', 'false');
     localStorage.setItem('showLocation', 'true');
-    localStorage.setItem('barcodeFields', 'true');
+    localStorage.setItem('showBarcode', 'true');
   }
+
 
   getTransactionList() {
     this.transactionSerivices.getTransactionList(13).subscribe ( res => {
@@ -58,11 +60,15 @@ export class FGInwardComponent implements OnInit {
     this.transactionSerivices.generateReport(id).subscribe( res => {
       if (res.status === '200') {
         const fileName = res.data[0].downloadFileName;
-        const downloadUrl = 'http://apietrax.iflotech.in/api/ReportDownload/DownloadReportPDF?ReportFileName=' + fileName;
+        const downloadUrl = BASEURL + 'ReportDownload/DownloadReportPDF?ReportFileName=' + fileName;
         window.location.href = downloadUrl;
       } else if ( res.status === '500') {
         alert('Download Report Failed !');
       }
       });
+  }
+
+  ngOnDestroy() {
+    // localStorage.setItem('showBarcode', 'false');
   }
 }

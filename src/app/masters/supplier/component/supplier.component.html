@@ -143,8 +143,8 @@
                         <div class="ui-g-3">
                             <div class="form-group">
                                 <span class="ui-float-label">
-                                  <input type="text" formControlName="state" pInputText id="state">
-                                  <label for="state">State</label>
+                                  <p-dropdown [options]="stateList" (onChange)="getStateSelect($event, i)" formControlName="state" placeholder="State Name"></p-dropdown>
+                                  <!-- <label for="state">State Name</label> -->
                                 </span>
                             </div>
                         </div>

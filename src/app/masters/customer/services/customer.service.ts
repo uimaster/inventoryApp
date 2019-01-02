@@ -3,7 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 
-import {GETCUSTOMERLIST, GETCUSTOMERDETAIL, UPDATECUSTOMER, GETTAXTYPE} from '../../../../utils/app.urls';
+import {GETCUSTOMERLIST, GETCUSTOMERDETAIL, UPDATECUSTOMER, GETTAXTYPE, GETSTATEURL} from '../../../../utils/app.urls';
 
 @Injectable()
 export class CustomerService {
@@ -34,17 +34,20 @@ export class CustomerService {
     }
 
     // GET CURRENCY LIST //
-  getTaxType(): Observable<any> {
-    const params = new HttpParams().set('CompanyID', '1');
-    return this.http.get(GETTAXTYPE, {params})
-    .map((res: any) => {
-        return res;
-    })
-    .catch((error) => Observable.throw('server Error.'));
-  }
+    getTaxType(): Observable<any> {
+      const params = new HttpParams().set('CompanyID', '1');
+      return this.http.get(GETTAXTYPE, {params})
+      .map((res: any) => {
+          return res;
+      })
+      .catch((error) => Observable.throw('server Error.'));
+    }
 
-
-
-
-
+    getStates() {
+      return this.http.get(GETSTATEURL).pipe(
+        map((res: any) => {
+          return res;
+        })
+      );
+    }
 }

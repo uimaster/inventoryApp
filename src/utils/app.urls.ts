@@ -1,6 +1,6 @@
 
-export const BASEURL = 'http://apietrax.iflotech.in/api/'; // Dev base url
-// export const BASEURL = 'http://192.168.1.60:90/api/'; // Live base url
+// export const BASEURL = 'http://apietrax.iflotech.in/api/'; // Dev base url
+export const BASEURL = 'http://192.168.1.60:90/api/'; // Live base url
 
 
 // Masters urls //
@@ -25,6 +25,7 @@ export const CALCULATEDON =  BASEURL + 'Masters/GetCalculatedOnList';
 export const TAXTYPE =  BASEURL + 'Masters/GetTaxTypeList';
 export const LOCATIONURL = BASEURL + 'Masters/GetLocationList';
 export const CURRENCYLISTURL = BASEURL + 'Masters/GetCurrencyList';
+export const GETSTATEURL = BASEURL + 'Masters/GetStates';
 
 // Transaction urls //
 export const GETTRANSACTION = BASEURL + 'Transactions/GetTransactionsList';
@@ -43,3 +44,5 @@ export const GETITEMLIST = BASEURL + 'Stockitem/GetStockItems';
 export const GENERATEREPORT = BASEURL + 'Reports/GenerateReportsPDF';
 export const DOWNLOADREPORT = BASEURL + 'ReportDownload/DownloadReportPDF';
 export const VALIDATEBATCH = BASEURL + 'StockItem/GetValidateBatch';
+export const GETTRANSACTIONTYPESERIES = BASEURL + 'Transactions/GetTransactionTypeSeries';
+

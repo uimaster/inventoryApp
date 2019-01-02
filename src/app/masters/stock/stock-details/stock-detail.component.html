@@ -144,6 +144,21 @@
       </div>
 
       <div class="ui-g-4">
+          <div class="form-group">
+            <span class="ui-float-label">
+              <input type="text" formControlName="gstUnit" pInputText id="gstUnit" />
+              <label for="gstUnit">GST Unit</label>
+            </span>
+
+            <!-- <div *ngIf="gstUnit.invalid && (gstUnit.dirty || gstUnit.touched)" class="alert alert-danger">
+              <div *ngIf="gstUnit.errors.required">
+                This field is required.
+              </div>
+            </div> -->
+          </div>
+        </div>
+
+      <div class="ui-g-4">
         <div class="form-group">
           <span class="ui-float-label">
             <p-dropdown [options]="barCodeApplicable" formControlName="barcodeapplicable"  optionLabel="label" [showClear]="true"></p-dropdown>

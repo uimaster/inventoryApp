@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TransactionSerivices } from '../../transactionsShared/transaction.service';
 import { Router } from '@angular/router';
+import { BASEURL } from '../../../utils/app.urls';
 
 @Component({
   selector: 'app-gnr',
   templateUrl: './gnr.component.html',
   styleUrls: ['./gnr.component.scss']
 })
-export class GnrComponent implements OnInit {
+export class GnrComponent implements OnInit, OnDestroy {
   grnList = [];
   constructor( private transactionSerivices: TransactionSerivices, private router: Router ) { }
 
@@ -26,9 +27,14 @@ export class GnrComponent implements OnInit {
     localStorage.setItem('showSupplier', 'true');
     localStorage.setItem('FormHeader', 'Good Receipt Note Edit/Create Form');
     localStorage.setItem('transactionTypeId', '3');
-    localStorage.setItem('transationLinkRef', 'true');
+    localStorage.setItem('transationLinkRef', 'false');
     localStorage.setItem('showLocation', 'true');
+    localStorage.setItem('showBarcode', 'true');
+    localStorage.setItem('transationLinkRefNamePO', 'true');
+
   }
+
+
 
   getTransactionList() {
     this.transactionSerivices.getTransactionList(3).subscribe ( res => {
@@ -60,11 +66,15 @@ export class GnrComponent implements OnInit {
     this.transactionSerivices.generateReport(id).subscribe( res => {
       if (res.status === '200') {
         const fileName = res.data[0].downloadFileName;
-        const downloadUrl = 'http://apietrax.iflotech.in/api/ReportDownload/DownloadReportPDF?ReportFileName=' + fileName;
+        const downloadUrl = BASEURL + 'ReportDownload/DownloadReportPDF?ReportFileName=' + fileName;
         window.location.href = downloadUrl;
       } else if ( res.status === '500') {
         alert('Download Report Failed !');
       }
       });
+  }
+
+  ngOnDestroy() {
+    // localStorage.setItem('showBarcode', 'false');
   }
 }

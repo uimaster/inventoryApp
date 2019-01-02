@@ -43,14 +43,34 @@
       <div class="ui-g-6" *ngIf="transationLinkRef">
         <div class="form-group">
           <span class="ui-float-label">
-            <p-dropdown [options]="POpendingList" formControlName="transactionLinkID" (onChange)="getSelectLinkRef($event)" placeholder="Commission No." [style]="{'width':'95%'}" ></p-dropdown>
+            <p-dropdown [options]="POpendingList" filter="true" formControlName="transactionLinkID" (onChange)="getSelectLinkRef($event)" placeholder="Commission No." [style]="{'width':'95%'}" ></p-dropdown>
+          </span>
+        </div>
+      </div>
+
+      <div class="ui-g-6" *ngIf="transationLinkRefNamePO">
+          <div class="form-group">
+            <span class="ui-float-label">
+              <p-dropdown [options]="POpendingList" filter="true" formControlName="transactionLinkID" (onChange)="getSelectLinkRef($event)" placeholder="PO No." [style]="{'width':'95%'}" ></p-dropdown>
+            </span>
+          </div>
+        </div>
+
+
+
+      <div class="ui-g-6" *ngIf="transationLinkRefInput">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <input type="text" formControlName="transactionLinkID" pInputText id="transactionLinkID">
+            <label for="transactionLinkID">Commission No.</label>
+            <!-- <p-dropdown [options]="POpendingList" formControlName="transactionLinkID" (onChange)="getSelectLinkRef($event)" placeholder="Commission No." [style]="{'width':'95%'}" ></p-dropdown> -->
           </span>
         </div>
       </div>
 
 
 
-      <div class="ui-g-6">
+      <div class="ui-g-6" *ngIf="showPO">
         <div class="form-group">
           <span class="ui-float-label">
             <input type="text" formControlName="transactionLinkRef" pInputText id="transactionLinkRef">
@@ -75,8 +95,16 @@
         </div>
       </div>
 
+      <div class="ui-g-6" *ngIf="showTransactionSeries">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <p-dropdown [options]="transactionTypeSeriesList" formControlName="transactionSeriesID"  placeholder="Transaction Series"></p-dropdown>
+            <!-- <label for="transaction_Amount">Total Amount</label> -->
+          </span>
+        </div>
+      </div>
 
-      <div class="ui-g-6">
+      <div class="ui-g-6" *ngIf="showBarcode">
         <div class="form-group">
           <span class="ui-float-label">
               <input type="text" pInputText (blur)="getBarcode($event)" id="barCode">
@@ -86,20 +114,12 @@
       </div>
     </div>
     <div class="ui-g-3">
-        <div style="border: 3px solid #ddd; width: 100%; min-height: 115px; text-align: center; line-height: 115px;">
+        <div style="border: 3px solid #ddd; width: 100%; min-height: 115px; text-align: center; line-height: 115px;  border-radius: 10px;">
           <h4 style="vertical-align: middle; display: inline-block;">
             Total Amount: <br/>
             <span style="font-size:42px;">{{totalAmount}}</span>
           </h4>
         </div>
-
-        <!-- <div class="form-group">
-          <span class="ui-float-label">
-            <input type="text" formControlName="transaction_Amount" pInputText id="transaction_Amount">
-            <label for="transaction_Amount">Total Amount</label>
-          </span>
-        </div> -->
-
     </div>
   </div>
 
@@ -112,9 +132,9 @@
           <thead>
             <th width="30%">Item Name</th>
             <!-- <th width="30%">Additional Desc.</th> -->
-            <th width="10%" *ngIf="barcodeFields">Length</th>
-            <th width="10%" *ngIf="barcodeFields">Stops</th>
-            <th width="10%" *ngIf="barcodeFields">Scanned Qty</th>
+            <th width="10%" *ngIf="showBarcode">Length</th>
+            <th width="10%" *ngIf="showBarcode">Stops</th>
+            <th width="10%" *ngIf="showBarcode">Scanned Qty</th>
             <th width="10%">Qty</th>
             <th width="10%">Rate</th>
             <th width="10%">Amount</th>
@@ -142,9 +162,9 @@
                 <textarea [rows]="2" style="width:98%" pInputTextarea  formControlName="transactionItem_AdditionalDesciption" placeholder="Additional Desc."></textarea>
               </td> -->
 
-              <td *ngIf="barcodeFields"><input type="text" formControlName="itemLength" pInputText ></td>
-              <td *ngIf="barcodeFields"><input type="text" formControlName="itemStops" pInputText ></td>
-              <td *ngIf="barcodeFields"><input type="text" formControlName="itemReceived_Qty" pInputText disabled="disabled"></td>
+              <td *ngIf="showBarcode"><input type="text" formControlName="itemLength" pInputText ></td>
+              <td *ngIf="showBarcode"><input type="text" formControlName="itemStops" pInputText ></td>
+              <td *ngIf="showBarcode"><input type="text" formControlName="itemReceived_Qty" pInputText disabled="disabled"></td>
               <td><input type="text" formControlName="itemQty" pInputText (keyup)="getAmount()"></td>
               <td><input type="text" formControlName="itemRate" pInputText (keyup)="getAmount()"></td>
               <td><input type="text" formControlName="itemAmount" pInputText (keyup)="getAmount()" ></td>

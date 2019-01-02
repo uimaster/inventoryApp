@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TransactionSerivices } from '../../transactionsShared/transaction.service';
 import { Router } from '@angular/router';
+import { BASEURL } from '../../../utils/app.urls';
 
 @Component({
   selector: 'app-returnable-challan',
@@ -63,7 +64,7 @@ export class ReturnableChallanComponent implements OnInit {
     this.transactionSerivices.generateReport(id).subscribe( res => {
       if (res.status === '200') {
         const fileName = res.data[0].downloadFileName;
-        const downloadUrl = 'http://apietrax.iflotech.in/api/ReportDownload/DownloadReportPDF?ReportFileName=' + fileName;
+        const downloadUrl = BASEURL + 'ReportDownload/DownloadReportPDF?ReportFileName=' + fileName;
         window.location.href = downloadUrl;
       } else if ( res.status === '500') {
         alert('Download Report Failed !');

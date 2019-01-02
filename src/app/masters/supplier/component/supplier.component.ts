@@ -29,6 +29,7 @@ export class SupplierComponent implements OnInit, OnDestroy {
     showSuccess = false;
     companyId = JSON.parse(localStorage.getItem('companyID'));
     userId = JSON.parse(localStorage.getItem('userID'));
+    public stateList = [];
 
     constructor(
       private supplierService: SupplierService,
@@ -41,13 +42,16 @@ export class SupplierComponent implements OnInit, OnDestroy {
     ) { }
     ngOnInit() {
       this.supplierForm();
-      this._route.params.subscribe((params) => {
-          this.supplierID = params.id;
-          this.getSupplierData(this.supplierID);
-      });
       this.getLedgers();
       this.getLocation();
       this.getCurrency();
+      this.getStates();
+      this._route.params.subscribe((params) => {
+        this.supplierID = params.id;
+      });
+      setTimeout(() => {
+        this.getSupplierData(this.supplierID);
+      }, 2000);
     }
 
     getSupplierData(supplierID) {
@@ -74,10 +78,11 @@ export class SupplierComponent implements OnInit, OnDestroy {
                       calculatedOn: [this.supplier.supplierTaxes[i].calculatedOn]
                     })
                   );
-                  if (controlArray.length > 0) {
-                    controlArray.removeAt(0);
-                  }
                  }
+
+                 if (controlArray.length > 0) {
+                  controlArray.removeAt(0);
+                }
 
 
                 const controlArrayAddress = <FormArray> this.suForm.get('supplierAddressList');
@@ -93,9 +98,10 @@ export class SupplierComponent implements OnInit, OnDestroy {
                         stateCode: [this.supplier.supplierAddressList[i].stateCode]
                       })
                     );
-                    if (controlArrayAddress.length > 0) {
-                      controlArrayAddress.removeAt(0);
-                    }
+                  }
+
+                  if (controlArrayAddress.length > 0) {
+                    controlArrayAddress.removeAt(0);
                   }
 
 
@@ -111,9 +117,10 @@ export class SupplierComponent implements OnInit, OnDestroy {
                         deliveryTerms: [this.supplier.supplierTerms[i].deliveryTerms]
                       })
                     );
-                    if (controlArrayTerms.length > 0) {
-                      controlArrayTerms.removeAt(0);
-                    }
+                  }
+
+                  if (controlArrayTerms.length > 0) {
+                    controlArrayTerms.removeAt(0);
                   }
             }
         });
@@ -290,6 +297,25 @@ export class SupplierComponent implements OnInit, OnDestroy {
           }
         }
       });
+    }
+
+    getStates() {
+      this.supplierService.getStates().subscribe( res => {
+        if(res && res.status === '200') {
+          let data = res.data;
+          for ( let key in data) {
+            if (data.hasOwnProperty(key)) {
+              this.stateList.push({label: data[key].stateName, value: data[key].stateCode});
+            }
+          }
+        }
+      });
+    }
+
+    getStateSelect(state, frmArray) {
+      const stateCode = state.value;
+      const supplierArray = <FormArray>this.suForm.get('supplierAddressList');
+      supplierArray.controls[frmArray].get('stateCode').setValue(stateCode);
     }
 
 }

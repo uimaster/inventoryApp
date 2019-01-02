@@ -8,6 +8,7 @@
       <table class="table">
           <thead>
           <tr>
+              <th>S. No.</th>
               <th>Doc Date</th>
               <th>Doc No </th>
               <th>Supplier</th>
@@ -17,6 +18,7 @@
           <tbody>
           <ng-container *ngIf="challanList">
               <tr *ngFor="let item of challanList; index as i;">
+                  <td>{{i+1}}</td>
                   <td>{{item.transactionDate}}</td>
                   <td>{{item.transactionNo}}</td>
                   <td>{{item.ledgerName}}</td>

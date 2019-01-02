@@ -131,6 +131,14 @@ export class TransactionSerivices {
     );
   }
 
-  // StockItem/GetValidateBatch?ITEMCODE=91HW0007&BATCHNO=0000118&TRTRYPE=2
+  getTransactionTypeSeries() {
+    const transactionType = localStorage.getItem('transactionTypeId');
+    const params = new HttpParams().set('TransactionTypeID', transactionType);
+    return this.http.get(urls.GETTRANSACTIONTYPESERIES, {params}).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
 
 }

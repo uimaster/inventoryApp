@@ -35,7 +35,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
   public customerList = [];
   public salesOrderPendingList = [];
   public POpendingList = [];
-
+  public transactionTypeSeriesList = [];
   public boxDetailData = [];
   public batchDetailData = [];
   public GRNTermsData = [];
@@ -69,6 +69,11 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
   filteredItems = [];
   itemName: string;
   barcodeFields: boolean;
+  showTransactionSeries: boolean;
+  showPO: boolean;
+  showBarcode: boolean;
+  transationLinkRefInput: boolean;
+  transationLinkRefNamePO: boolean;
   // @ViewChild('taxSelect') taxSelect: ElementRef;
 
   constructor(
@@ -101,6 +106,11 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
     this.showLocation = JSON.parse(localStorage.getItem('showLocation'));
     this.transactionTypeId = JSON.parse(localStorage.getItem('transactionTypeId'));
     this.barcodeFields = JSON.parse(localStorage.getItem('barcodeFields'));
+    this.showTransactionSeries = JSON.parse(localStorage.getItem('showTransactionSeries'));
+    this.showPO = JSON.parse(localStorage.getItem('showPO'));
+    this.showBarcode = JSON.parse(localStorage.getItem('showBarcode'));
+    this.transationLinkRefInput = JSON.parse(localStorage.getItem('transationLinkRefInput'));
+    this.transationLinkRefNamePO = JSON.parse(localStorage.getItem('transationLinkRefNamePO'));
 
     // setTimeout(() => {
       this.showLoader = true;
@@ -115,6 +125,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
       // this.getPendingSalesOrderList();
       this.getPOPendingList();
       this.getCustomers();
+      this.getTransactionTypeSeries();
       setTimeout(() => {
         this.getTrasactionDetails(this.transactionId);
       }, 4000);
@@ -390,6 +401,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
         itemPending_Qty: [0],
         itemRate: [0],
         itemAmount: [0],
+        stockItemDesc: [''],
         itemStops: [0],
         itemLength: [0],
         itemBatchApplicable: [0],
@@ -613,7 +625,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
             const controlArray = <FormArray>this.transactionForm.get('transBatchDetails');
             controlArray.controls[0].get('batchNo').setValue(this.batchDetailData[0].batchNo);
             controlArray.controls[0].get('stockitemID').setValue(this.batchDetailData[0].stockitemID);
-            controlArray.controls[0].get('stockItemDesc').setValue(this.batchDetailData[0].stockItemDesc);
+            // controlArray.controls[0].get('stockItemDesc').setValue(this.batchDetailData[0].stockItemDesc);
             controlArray.controls[0].get('batchID').setValue(this.batchDetailData[0].batchID);
           }
 
@@ -667,6 +679,22 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
   saveTransation(formData) {
     if (this.transactionForm.valid) {
       this.showLoader = true;
+
+      let tDate = formData.transactionDate;
+
+      let dDate = new Date(tDate);
+      let year = dDate.getFullYear();
+      var month: any = dDate.getMonth() + 1;
+      if(month < 10) {
+        month = '0' + month;
+      }
+      var day: any = dDate.getDate();
+      if(day < 10) {
+        day = '0' + day;
+      }
+      let fDate = year + '-' + month + '-' + day;
+      formData.transactionDate = fDate;
+
       this.trasactionService.AddTransaction(formData).subscribe (
         res => {
           if (res && res.status === '200') {
@@ -902,6 +930,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
           this.detailsData = res.data;
           this.totalAmount = this.detailsData[0].transaction_Amount;
           this.transactionForm.controls['transaction_Amount'].setValue(this.detailsData[0].transaction_Amount);
+          this.transactionForm.controls['ledgerID'].setValue(this.detailsData[0].ledgerID);
           if (this.detailsData[0].transItemDetails.length > 0 && this.transItemDetails) {
             this.ItemData = this.detailsData[0].transItemDetails;
             const controlArray = <FormArray>this.transactionForm.get('transItemDetails');
@@ -925,7 +954,11 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
                   transactionItemSerialNo: [this.ItemData[i].transactionItemSerialNo],
                   locationID: [this.ItemData[i].locationID]
                 })
-              )
+              );
+            }
+
+            if (controlArray.length > 0) {
+              controlArray.removeAt(0);
             }
           }
           if (this.detailsData[0].transLedgerDetails.length > 0 && this.transLedgerDetails) {
@@ -940,6 +973,9 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
                   ledgerAmount: [this.ledgerData[i].ledgerAmount],
                 })
               );
+            }
+            if (controlArray.length > 0) {
+              controlArray.removeAt(0);
             }
           }
         }
@@ -985,17 +1021,40 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
       if (res.status === '200') {
         let data = res.data;
         const formArray = <FormArray>this.transactionForm.get('transBatchDetails');
-            formArray.push(this.fb.group({
-              batchNo: [data[0].batchno],
-              stockitemID: [data[0].stockItemID],
-              batchID: [data[0].batchid]
-            }));
+          formArray.push(this.fb.group({
+            batchNo: [data[0].batchno],
+            stockitemID: [data[0].stockItemID],
+            batchID: [data[0].batchid]
+          }));
+        if (formArray.controls[0].get('batchNo').value === 0) {
+          formArray.removeAt(0);
+        }
       }
     });
   }
 
+  getTransactionTypeSeries() {
+    this.trasactionService.getTransactionTypeSeries().subscribe( res => {
+      if (res && res.status === '200') {
+        let data = res.data;
+        for (let key in data) {
+          if (data.hasOwnProperty(key)) {
+            this.transactionTypeSeriesList.push({label: data[key].seriesName, value: data[key].transactionSeriesID});
+          }
+        }
+      }
+    });
+    console.log('transactionTypeSeriesList', this.transactionTypeSeriesList);
+  }
+
   ngOnDestroy() {
     localStorage.setItem('barcodeFields', 'false');
+    localStorage.setItem('showTransactionSeries', 'false');
+    localStorage.setItem('showPO', 'false');
+    localStorage.setItem('showBarcode', 'false');
+    localStorage.setItem('transationLinkRefInput', 'false');
+    localStorage.setItem('transationLinkRefNamePO', 'false');
+
   }
 
 }

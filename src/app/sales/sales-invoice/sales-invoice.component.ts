@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TransactionSerivices } from '../../transactionsShared/transaction.service';
 import { Router } from '@angular/router';
+import { BASEURL } from '../../../utils/app.urls';
 
 @Component({
   selector: 'app-sales-invoice',
@@ -30,6 +31,7 @@ export class SalesInvoiceComponent implements OnInit {
     localStorage.setItem('FormHeader', 'Sales Invoice Edit/Create Form');
     localStorage.setItem('transationLinkRef', 'true');
     localStorage.setItem('showLocation', 'false');
+    localStorage.setItem('showTransactionSeries', 'true');
   }
 
   getSalesOrderList() {
@@ -60,7 +62,7 @@ export class SalesInvoiceComponent implements OnInit {
     this.transComService.generateReport(id).subscribe( res => {
       if (res.status === '200') {
         const fileName = res.data[0].downloadFileName;
-        const downloadUrl = 'http://apietrax.iflotech.in/api/ReportDownload/DownloadReportPDF?ReportFileName=' + fileName;
+        const downloadUrl = BASEURL + 'ReportDownload/DownloadReportPDF?ReportFileName=' + fileName;
         window.location.href = downloadUrl;
       } else if ( res.status === '500') {
         alert('Download Report Failed !');

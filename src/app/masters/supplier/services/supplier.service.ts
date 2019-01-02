@@ -3,7 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 
-import {GETSUPPLIERLIST, GETSUPPLIERDETAIL, UPDATESUPPLIER} from '../../../../utils/app.urls';
+import {GETSUPPLIERLIST, GETSUPPLIERDETAIL, UPDATESUPPLIER, GETSTATEURL} from '../../../../utils/app.urls';
 
 @Injectable()
 export class SupplierService {
@@ -17,28 +17,32 @@ export class SupplierService {
                 return res;
             })
         );
-        
+
     }
 
     getSupplierData(supplierID): Observable<any> {
-
         const params = new HttpParams().set('SupplierID', supplierID);
         return this.http.get(GETSUPPLIERDETAIL, {params}).pipe(
             map(res => {
                 return res;
             })
         );
-
-
     }
 
 
     updateSupplier(payload: any): Observable<any> {
-        return this.http.post(UPDATESUPPLIER, payload);
+        return this.http.post(UPDATESUPPLIER, payload).pipe(
+          map((res: any) => {
+            return res;
+          })
+        );
     }
 
-
-
-
-
+    getStates() {
+      return this.http.get(GETSTATEURL).pipe(
+        map((res: any) => {
+          return res;
+        })
+      );
+    }
 }

@@ -111,6 +111,7 @@ export class StockDetailComponent implements OnInit, OnDestroy {
           this.sForm.controls['bufferQty'].setValue(this.stock['bufferQty']);
           this.sForm.controls['hsnCode'].setValue(this.stock['hsnCode']);
           this.sForm.controls['taxrate'].setValue(this.stock['taxrate']);
+          this.sForm.controls['gstUnit'].setValue(this.stock['gstUnit']);
           this.sForm.controls['barcodeapplicable'].setValue(
             this.stock['barcodeapplicable']
           );
@@ -189,6 +190,7 @@ export class StockDetailComponent implements OnInit, OnDestroy {
       bufferQty: [''],
       hsnCode: [''],
       taxrate: [''],
+      gstUnit: [''],
       barcodeapplicable: [''],
       barcodelength: [''],
       branchName: [''],
@@ -309,6 +311,11 @@ export class StockDetailComponent implements OnInit, OnDestroy {
   get taxrate() {
     return this.sForm.get('taxrate');
   }
+
+  get gstUnit() {
+    return this.sForm.get('gstUnit');
+  }
+
   get barcodeapplicable() {
     return this.sForm.get('barcodeapplicable');
   }

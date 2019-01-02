@@ -86,7 +86,6 @@ export class CreatePOrderComponent implements OnInit {
     this.router.navigate(['/stores/addEditStore']);
     localStorage.setItem('transactionID', '0');
     console.log('========', this.router.url);
-    debugger;
   }
 
   editNote(id) {
