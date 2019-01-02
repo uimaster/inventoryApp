@@ -13,7 +13,7 @@ import { CustomerModule } from './customer/customer.module';
 import { SupplierModule } from './supplier/supplier.module';
 import { UnitModule } from './unit/unit.module';
 import { LedgerModule } from './ledger/ledger.module';
-
+import { PricelistModule } from './pricelist/pricelist.module';
 
 @NgModule({
   imports: [
@@ -27,7 +27,8 @@ import { LedgerModule } from './ledger/ledger.module';
     StockGroupModule,
     UnitModule,
     CustomerModule,
-    SupplierModule
+    SupplierModule,
+    PricelistModule
   ],
   declarations: [MastersComponent,],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

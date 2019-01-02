@@ -1057,6 +1057,13 @@ fieldset {
   left: 50%;
   top: 50%; border-radius: 5px; margin-left: -75px; margin-top: -85px;}
   .ui-progress-spinner-svg{ height: 80%; width: 80%;}
+
+.img-center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+}
   .wid100{ width: 96%!important;
     .ui-inputtext{ width: 100%!important;}
   }

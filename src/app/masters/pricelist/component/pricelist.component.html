@@ -1,0 +1,119 @@
+<p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
+<p-panel header="PriceList Add/Edit Form" class="Tabledata">
+  <form [formGroup]="cForm" (ngSubmit)="savePricelist(cForm.value)" class="formData">
+    <div class="message error" *ngIf="showError">Updatation/creation failed .</div>
+    <div class="message success" *ngIf="showSuccess">You have Updated/created successfully.</div>
+
+    <div class="ui-g">
+      <div class="ui-g-4">
+        <div class="form-group">
+            <span class="ui-float-label">
+                <p-calendar formControlName="priceListDate" dateFormat="dd-mm-yy" [(ngModel)]="date1" [showIcon]="true"></p-calendar>
+                <label for="priceListDate">Price List Date</label>
+            </span>
+          <div *ngIf="priceListDate.invalid && (priceListDate.dirty || priceListDate.touched)" class="alert alert-danger">
+            <div *ngIf="priceListDate.errors.required">
+                PriceList Date is required.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-g-4">
+        <div class="form-group">
+            <span class="ui-float-label">
+            <p-dropdown [options]="ledgerList" formControlName="ledgerID"></p-dropdown>
+            <label for="ledgerID" *ngIf="typeID==1">Supplier</label>
+            <label for="ledgerID" *ngIf="typeID==2">Customer</label>
+            </span>
+        </div>
+      </div>
+    </div>
+
+    <fieldset formArrayName="priceListItems">
+      <legend>Items</legend>
+      <div *ngFor="let ctrl of cForm.get('priceListItems').controls; let i = index;" [formGroupName]="i">
+        <div >
+          <div class="ui-g">
+            <div class="ui-g-4" >
+              <div class="form-group">
+                <span class="ui-float-label">
+                  <!-- <p-dropdown [options]="allStockItems" formControlName="stockItemID" placeholder="Stock Item"></p-dropdown> -->
+                  <!-- <p-dropdown [options]="allStockItems" formControlName="stockItemID" placeholder="Stock Item" filter="true" [style]="{'width':'95%'}">
+                    </p-dropdown> -->
+                 <p-autoComplete
+                    formControlName="itemName"
+                    [suggestions]="filteredItems"
+                    (completeMethod)="filterItems($event)"
+                    (onSelect)="getSelectedVal($event, 'priceListItems',i)"
+                    [size]="30"
+                    placeholder="Enter ItemCode To Search"
+                    [minLength]="1"
+                    styleClass="wid100"
+                  >
+                  <input type="text" formControlName="stockItemID" pInputText style="visibility: hidden; height: 0; width: 0; font-size: 0;">
+                      {{itemName}}
+                  </p-autoComplete>
+                </span>
+              </div>
+            </div>
+            <div class="ui-g-2">
+                <div class="form-group">
+                    <span class="ui-float-label">
+                    <input type="number" formControlName="itemSerialNo" pInputText id="itemSerialNo">
+                    <label for="itemSerialNo">Item Serial No.</label>
+                    </span>
+                </div>
+            </div>
+            <div class="ui-g-1">
+              <div class="form-group">
+                <span class="ui-float-label">
+                  <input type="number" formControlName="itemRate" pInputText id="itemRate">
+                  <label for="itemRate">Item Rate</label>
+                </span>
+              </div>
+            </div>
+            <div class="ui-g-1">
+                <div class="form-group">
+                    <span class="ui-float-label">
+                    <input type="number" formControlName="stopsRate" pInputText id="stopsRate">
+                    <label for="stopsRate">Stops Rate</label>
+                    </span>
+                </div>
+            </div>
+            <div class="ui-g-1">
+                <div class="form-group">
+                    <span class="ui-float-label">
+                    <input type="number" formControlName="lengthRate" pInputText id="lengthRate">
+                    <label for="lengthRate">Length Rate</label>
+                    </span>
+                </div>
+            </div>
+            <div class="ui-g-2">
+              <div class="form-group">
+                <span class="ui-float-label">
+                  <input type="number" formControlName="discountPercentage" pInputText id="discountPercentage">
+                  <label for="discountPercentage">Discount Percentage</label>
+                </span>
+              </div>
+            </div>
+            <div class="ui-g-1">
+              <button pButton type="button" icon="fa fa-plus" class="ui-button-success" (click)="addItems()"></button>
+              <button pButton type="button" icon="fa fa-trash-o" class="ui-button-danger" [disabled]="i<1" (click)="removeItems(i)"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </fieldset>
+
+    <br/>
+
+
+    <br/>
+    <p style="text-align: center">
+      <button pButton type="submit" label="Submit" class="ui-button-success" [disabled]="!cForm.valid" style="margin-right: 10px;"></button>
+      <button pButton type="button" label="Cancel" class="ui-button-secondary"></button>
+    </p>
+  </form>
+</p-panel>

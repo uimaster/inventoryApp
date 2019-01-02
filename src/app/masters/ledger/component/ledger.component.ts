@@ -20,8 +20,8 @@ export class LedgerComponent implements OnInit, OnDestroy {
     public ledgerDataSubscription: Subscription;
     public ledger;
     public lForm;
-    private calculatedOnList: any = [];
-    private taxTypeList: any = [];
+    public calculatedOnList: any = [];
+    public taxTypeList: any = [];
     companyId = localStorage.getItem('companyID');
     userId = localStorage.getItem('userID');
     showError = false;
