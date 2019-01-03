@@ -74,10 +74,10 @@ export class ReportsListComponent implements OnInit, OnDestroy {
         if (localStorage.getItem('r_stockItemID') !== '') {
             StockItemID = JSON.parse(localStorage.getItem('r_stockItemID'));
         }
+        if (localStorage.getItem('r_ledgerID') !== '') {
+            LedgerID = JSON.parse(localStorage.getItem('r_ledgerID'));
+        }
         
-        
-       
-    
         this.reportsListDataSubscription = this._reportsService.getPOReportList(ReportsTypeID,StockItemID,LedgerID,fromDate,toDate).subscribe(
             result => {
                // this.showLoader = false;

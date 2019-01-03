@@ -19,6 +19,9 @@ export class FiltersComponent implements OnInit, OnDestroy {
   public reportTypeList = [ {label: 'All', value: 1}, {label: 'Pending List', value: 2}];
   public stockItemList = [];
   public filteredItems = [];  
+  public ledgerList = [];
+  public ledgerID = 0;
+  public stockItemID = 0;
   itemName: string;  
 
 
@@ -30,13 +33,16 @@ export class FiltersComponent implements OnInit, OnDestroy {
     if (window.location.href !== this.currentUrl) {
       localStorage.removeItem('r_fromDate');
       localStorage.removeItem('r_toDate');
-      localStorage.removeItem('r_reportTypeID');
+      localStorage.removeItem('r_reportsTypeID');
       localStorage.removeItem('r_stockItemID');
+      localStorage.removeItem('r_ledgerID');
     }
   }
 
   ngOnInit() {
     this.getStockItemList();
+    this.getLedgers();
+
     var date = new Date();
     if (localStorage.getItem('r_fromDate')) { this.dateValue1 = JSON.parse(localStorage.getItem('r_fromDate')); }
     else{ 
@@ -52,12 +58,6 @@ export class FiltersComponent implements OnInit, OnDestroy {
 
     if (localStorage.getItem('r_reportsTypeID')) { this.selectedReportType = JSON.parse(localStorage.getItem('r_reportsTypeID')); }
     else{ localStorage.setItem('r_reportsTypeID', JSON.stringify(this.selectedReportType)); }
-
-
-    if (localStorage.getItem('r_stockItemName')) { 
-        this.itemName = JSON.parse(localStorage.getItem('r_stockItemName')); 
-    }
-    if(!localStorage.getItem('r_stockItemID')){ localStorage.setItem('r_stockItemID', JSON.stringify(0)); }
   }
 
   convertDate(data) {
@@ -108,6 +108,23 @@ export class FiltersComponent implements OnInit, OnDestroy {
                         this.stockItemList.push({label: data[key].stockItemDesc, value: data[key].stockItemID});
                     }
                 }
+                if (localStorage.getItem('r_stockItemID')) { 
+                    let stockItemID = JSON.parse(localStorage.getItem('r_stockItemID'));
+                    if(stockItemID != 0){
+                        let item = this.stockItemList.find(item => item.value == stockItemID);
+                        this.itemName = item.label;
+                        this.stockItemID = item.stockItemID;
+                    }
+                    
+                    // this.stockItemID = [{
+                    //     label:item.label,
+                    //     value:item.stockItemID
+                    // }]; 
+                }
+                else{
+                    localStorage.setItem('r_stockItemID', JSON.stringify(this.stockItemID));
+                }
+                
             }
         },
         //error => { // this.showLoader = false; }
@@ -125,19 +142,45 @@ export class FiltersComponent implements OnInit, OnDestroy {
     }
 
     getStockItem(event) {
-        console.log('ee',);
+        console.log('enter');
         for ( var i = 0; i < this.stockItemList.length; i++) {
             if (this.stockItemList[i].label === event) {
-                localStorage.setItem('r_stockItemName', JSON.stringify(this.stockItemList[i].label));
                 localStorage.setItem('r_stockItemID', JSON.stringify(this.stockItemList[i].value));
             }
         }
     }
 
     clearValue(){
-        localStorage.removeItem('r_stockItemName');
-        localStorage.removeItem('r_stockItemID');
+        localStorage.setItem('r_stockItemID',JSON.stringify(0));
     }
 
+    getLedgers(){
+        this.reportsService.getAllSuppliers().subscribe( res => {
+            if (res && res.status === '200') {
+              // this.ledgerList = res.data;
+              let data = res.data;
+              for (let key in data) {
+                if (data.hasOwnProperty(key)) {
+                    this.ledgerList.push({label: data[key].supplierName, value: data[key].supplier_ID});
+                }
+              }
+              if(localStorage.getItem('r_ledgerID')){ 
+                this.ledgerID = JSON.parse(localStorage.getItem('r_ledgerID')); 
+              }
+              else{
+                localStorage.setItem('r_ledgerID', JSON.stringify(this.ledgerID));
+              }
+            }
+        });
+    }
+
+    onChangeLedger(event){   
+       if(event.value!=''){
+        localStorage.setItem('r_ledgerID', JSON.stringify(event.value));
+       }
+       else{
+        localStorage.setItem('r_ledgerID', JSON.stringify(0));   
+       }
+    }
 
 }

@@ -12,7 +12,7 @@
             </div>
           </div> -->
 
-          <div class="col-sm-2">
+          <div class="col-sm-1">
             <div class="form-group">
               <span class="ui-float-label">
                 <p-dropdown  id="reportTypeID" [(ngModel)]="selectedReportType"  [options]="reportTypeList" 
@@ -22,7 +22,7 @@
             </div>
           </div>
 
-          <div class="col-sm-4">
+          <div class="col-sm-3">
             <div class="form-group">
               <span class="ui-float-label">
                 <p-autoComplete
@@ -42,6 +42,14 @@
                 </span>
             </div>
            </div> 
+           <div class="col-sm-2">
+            <div class="form-group">
+              <span class="ui-float-label">
+                <p-dropdown [filter]="true" [editable]="true" [options]="ledgerList" [style]="{'width':'95%'}" (onChange)="onChangeLedger($event)" [(ngModel)]="ledgerID"></p-dropdown>
+                <label for="stockItemID">Supplier</label>
+              </span>
+            </div>
+           </div>
 
           <div class="col-sm-2">
             <div class="form-group">

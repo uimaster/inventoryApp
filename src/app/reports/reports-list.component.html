@@ -4,7 +4,9 @@
 </ng-template>
 
 <ng-template #showBlock>
- --><p-panel header="FG List" class="Tabledata" *ngIf="type=='po-report'">
+ -->
+ <app-reports-filter></app-reports-filter>
+ <p-panel header="FG List" class="Tabledata" *ngIf="type=='po-report'">
     <p-header>
         <button pButton type="button" style="float:right" icon="fa fa-file-excel-o" label="Export" class="ui-button-success" (click)="exportAsXLSX()"></button>
     </p-header>
@@ -24,16 +26,16 @@
             <thead>
             <tr>
                 <th width="8%">PO No</th>
-                <th width="8%">Date</th>
-                <th width="8%">Due Date</th>
-                <th width="8%">Total Amount</th>
+                <th width="8%">PO Date</th>
                 <th width="10%">Supplier</th>
-                <th width="5%">Item Rate</th>
-                <th width="5%">Item Qty</th>
-                <th width="5%">Item Amount</th>
                 <th width="7%">Item Code</th>
                 <th width="20%">Item Desc</th>
+                <th width="5%">Item Qty</th>
                 <th width="8%">Pending Qty</th>
+                <th width="5%">Rate</th>
+                <th width="5%">Amount</th>
+                <th width="8%">Total Amount</th>
+                <th width="8%">Due Date</th>
                 <th width="8%">Status</th>
             </tr>
             </thead>
@@ -41,17 +43,20 @@
             <ng-container *ngIf="reportsList">
                 <tr *ngFor="let report of reportsList; index as i;">
                     <td>{{report.pono}}</td>
-                    <td>{{report.poDate | date}}</td>
-                    <td>{{report.poDueDate| date}}</td>
-                    <td>{{report.totalAmount}}</td>
+                    <td>{{report.poDate | date:'dd/MM/yyyy'}}</td>
                     <td>{{report.supplierName}}</td>
-                    <td>{{report.itemRate}}</td>
-                    <td>{{report.itemQty}}</td>
-                    <td>{{report.itemAmount}}</td>
                     <td>{{report.itemCode}}</td>
                     <td>{{report.itemDesc}}</td>
+                    <td>{{report.itemQty}}</td>
                     <td>{{report.pendingQty}}</td>
-                    <td>{{report.trstatus}}</td>
+                    <td>{{report.itemRate}}</td>
+                    <td>{{report.itemAmount}}</td>
+                    <td>{{report.totalAmount}}</td>
+                    <td>{{report.poDueDate| date:'dd/MM/yyyy'}}</td>
+                    <td>
+                        <span *ngIf="report.trstatus == 1"><i style="color:orange" class="fa fa-clock-o"></i></span>
+                        <span *ngIf="report.trstatus == 2"><i style="color:green" class="fa fa-check-square-o"></i></span>
+                    </td>
                     <!-- <td>
                         <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="set('fg',plan.planID)"></button>
                         <button pButton type="button" label="Delete" class="ui-button-danger" ></button>

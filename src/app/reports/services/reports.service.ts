@@ -10,9 +10,9 @@ export class ReportsService {
 
     constructor(private http: HttpClient) {}
 
-    getPOReportList(ReportTypeID,StockitemID,LedgerID,FromDate,ToDate): Observable<any> {
+    getPOReportList(ReportTypeID,StockItemID,LedgerID,FromDate,ToDate): Observable<any> {
       const params = new HttpParams().set('ReportTypeID', ReportTypeID)
-        .set('StockitemID', StockitemID).set('LedgerID', LedgerID)
+        .set('StockitemID', StockItemID).set('LedgerID', LedgerID)
         .set('FromDate', FromDate).set('ToDate', ToDate);
       return this.http.get(urls.POREPORT, {params}).pipe(
           map(res => {
@@ -26,6 +26,15 @@ export class ReportsService {
         return this.http.get(urls.STOCKITEMLIST, {params}).pipe(
             map(res => {
             return res;
+            })
+        );
+    }
+
+    getAllSuppliers(): Observable<any> {
+        const params = new HttpParams().set('CompanyID', '1');
+        return this.http.get(urls.GETSUPPLIERLIST, {params}).pipe(
+            map(res => {
+                return res;
             })
         );
     }
