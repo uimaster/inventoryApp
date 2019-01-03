@@ -69,3 +69,13 @@ export const UPDATEFG =  BASEURL + 'planning/POSTUpdateFGPlan';
 export const GETRMQLIST =  BASEURL + 'planning/getRMQList';
 export const GETRMQDETAIL =  BASEURL + 'planning/GetRMQDetails';
 export const UPDATERMQ =  BASEURL + 'planning/POSTUpdateRMQ';
+
+//REPORTS
+export const POREPORT           =  BASEURL + 'Reports/GeneratePOReport';
+export const SOREPORT           =  BASEURL + 'Reports/GenerateSOReport';
+export const STOCKSUMMARYREPORT =  BASEURL + 'Reports/GenerateStockSummaryReport';
+export const MSLREPORT          =  BASEURL + 'Reports/GenerateMSLReport';
+export const SALESREPORT        =  BASEURL + 'Reports/GenerateSalesReport';
+export const GRNREGISTER        =  BASEURL + 'Reports/GenerateGRNRegister';
+export const STOCKISSUEREGISTER =  BASEURL + 'Reports/GenerateStockIssueRegister';
+export const STOCKITEMLIST =  BASEURL + 'Stockitem/GetStockItemsforTransaction';

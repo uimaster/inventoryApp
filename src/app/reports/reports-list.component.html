@@ -1,0 +1,74 @@
+<p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
+<!-- <ng-template 
+    *ngIf="!loadingList;then showBlock; else loading">
+</ng-template>
+
+<ng-template #showBlock>
+ --><p-panel header="FG List" class="Tabledata" *ngIf="type=='po-report'">
+    <p-header>
+        <button pButton type="button" style="float:right" icon="fa fa-file-excel-o" label="Export" class="ui-button-success" (click)="exportAsXLSX()"></button>
+    </p-header>
+    
+    <!-- <div class="ui-g">
+        <div class="ui-g-12">
+            <div class="form-group">
+            <span class="ui-float-label">
+                <input type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)">
+            </span>
+            </div>
+        </div>
+    </div>     -->
+        
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th width="8%">PO No</th>
+                <th width="8%">Date</th>
+                <th width="8%">Due Date</th>
+                <th width="8%">Total Amount</th>
+                <th width="10%">Supplier</th>
+                <th width="5%">Item Rate</th>
+                <th width="5%">Item Qty</th>
+                <th width="5%">Item Amount</th>
+                <th width="7%">Item Code</th>
+                <th width="20%">Item Desc</th>
+                <th width="8%">Pending Qty</th>
+                <th width="8%">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container *ngIf="reportsList">
+                <tr *ngFor="let report of reportsList; index as i;">
+                    <td>{{report.pono}}</td>
+                    <td>{{report.poDate | date}}</td>
+                    <td>{{report.poDueDate| date}}</td>
+                    <td>{{report.totalAmount}}</td>
+                    <td>{{report.supplierName}}</td>
+                    <td>{{report.itemRate}}</td>
+                    <td>{{report.itemQty}}</td>
+                    <td>{{report.itemAmount}}</td>
+                    <td>{{report.itemCode}}</td>
+                    <td>{{report.itemDesc}}</td>
+                    <td>{{report.pendingQty}}</td>
+                    <td>{{report.trstatus}}</td>
+                    <!-- <td>
+                        <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="set('fg',plan.planID)"></button>
+                        <button pButton type="button" label="Delete" class="ui-button-danger" ></button>
+                    </td> -->
+                </tr>
+            </ng-container>
+            </tbody>
+        </table>
+    </div>
+</p-panel>
+
+<!-- </ng-template>
+
+
+
+<ng-template #loading>
+    <p-panel>
+        <img class="img-center" src="assets/images/spinner.gif" />
+    </p-panel>
+</ng-template>   -->

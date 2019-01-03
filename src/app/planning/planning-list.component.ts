@@ -45,13 +45,20 @@ export class PlanningListComponent implements OnInit, OnDestroy {
         this.listData = [];
 
         var date = new Date();
-        var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-        var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-    
-        let fDate = this.datePipe.transform(firstDay, 'dd/MM/yyyy'); 
-        let tDate = this.datePipe.transform(lastDay, 'dd/MM/yyyy'); 
-    
-        this.planningListDataSubscription = this._planningService[fName](fDate,tDate).subscribe(
+        var fromDate = '';
+        var toDate = '';
+        if (localStorage.getItem('fromDate') !== '') {
+            fromDate = JSON.parse(localStorage.getItem('fromDate'));
+        } else {
+            fromDate = this.datePipe.transform(new Date(date.getFullYear(), date.getMonth(), 1), 'dd/MM/yyyy')
+        }
+        if (localStorage.getItem('toDate') !== '') {
+            toDate = JSON.parse(localStorage.getItem('toDate'));
+        } else {
+            toDate = this.datePipe.transform(new Date(date.getFullYear(), date.getMonth() + 1, 0), 'dd/MM/yyyy'); 
+        }
+
+        this.planningListDataSubscription = this._planningService[fName](fromDate,toDate).subscribe(
             result => {
                // this.showLoader = false;
                 if (result && result.status === '200')  {
@@ -75,7 +82,8 @@ export class PlanningListComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.planningListDataSubscription.unsubscribe();
+        if(this.planningListDataSubscription)
+            this.planningListDataSubscription.unsubscribe();
     }
 
 

@@ -13,7 +13,8 @@ export const routes: Routes = [
     { path: 'stores', loadChildren: 'app/stores/stores.module#StoresModule' },
     { path: 'production', loadChildren: 'app/production/production.module#ProductionModule' },
     { path: 'sales', loadChildren: 'app/sales/sales.module#SalesModule' },
-    { path: 'utilities', loadChildren: 'app/utilities/utilities.module#UtilitiesModule' }
+    { path: 'utilities', loadChildren: 'app/utilities/utilities.module#UtilitiesModule' },
+    { path: 'reports', loadChildren: 'app/reports/reports.module#ReportsModule' },
 ];
 
 @NgModule({
