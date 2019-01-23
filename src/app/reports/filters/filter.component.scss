@@ -19,6 +19,9 @@
 .form-group{
   margin: 15px auto 10px;
 }
-.ui-button.ui-button-success.ui-state-default{ margin-top: 15px; width: 100%; height: 38px;}
+.go-btn{ margin-top: 15px; width: 100%; height: 38px;}
 
-
+.ui-dropdown .ui-dropdown-clear-icon {
+    right: 3em !important;
+    font-size: 1em !important;
+}
