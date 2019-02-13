@@ -101,6 +101,15 @@ export class PlanningService {
         );
     }
 
+    getStockItemForGroup(): Observable<any> {
+        const params = new HttpParams().set('CompanyID', '1').set('StockGroupID', '2');
+        return this.http.get(urls.GETSTOCKITEMFORGROUP, {params}).pipe(
+            map(res => {
+            return res;
+            })
+        );
+    }
+
     getAllSuppliers(): Observable<any> {
         const params = new HttpParams().set('CompanyID', '1');
         return this.http.get(urls.GETSUPPLIERLIST, {params}).pipe(

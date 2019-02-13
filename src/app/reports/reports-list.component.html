@@ -1,25 +1,11 @@
 <p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
-<!-- <ng-template 
-    *ngIf="!loadingList;then showBlock; else loading">
-</ng-template>
+<app-reports-filter></app-reports-filter>
 
-<ng-template #showBlock>
- -->
- <app-reports-filter></app-reports-filter>
- <p-panel header="FG List" class="Tabledata" *ngIf="type=='po-report'">
+<p-panel header="PO Report" class="Tabledata" *ngIf="type=='po-report'">
     <p-header>
         <button pButton type="button" style="float:right" icon="fa fa-file-excel-o" label="Export" class="ui-button-success" (click)="exportAsXLSX()"></button>
     </p-header>
-    
-    <!-- <div class="ui-g">
-        <div class="ui-g-12">
-            <div class="form-group">
-            <span class="ui-float-label">
-                <input type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)">
-            </span>
-            </div>
-        </div>
-    </div>     -->
+    <!-- <div class="ui-g"><div class="ui-g-12"><div class="form-group"><span class="ui-float-label"><input type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)"></span></div></div></div>     -->
         
     <div class="table-responsive">
         <table class="table">
@@ -54,13 +40,9 @@
                     <td>{{report.totalAmount}}</td>
                     <td>{{report.poDueDate| date:'dd/MM/yyyy'}}</td>
                     <td>
-                        <span *ngIf="report.trstatus == 1"><i style="color:orange" class="fa fa-clock-o"></i></span>
-                        <span *ngIf="report.trstatus == 2"><i style="color:green" class="fa fa-check-square-o"></i></span>
+                        <span *ngIf="report.trstatus == 1"><i style="color:orange" class="fa fa-clock-o fa-2x"></i></span>
+                        <span *ngIf="report.trstatus == 2"><i style="color:green" class="fa fa-check-square-o fa-2x"></i></span>
                     </td>
-                    <!-- <td>
-                        <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="set('fg',plan.planID)"></button>
-                        <button pButton type="button" label="Delete" class="ui-button-danger" ></button>
-                    </td> -->
                 </tr>
             </ng-container>
             </tbody>
@@ -68,12 +50,237 @@
     </div>
 </p-panel>
 
-<!-- </ng-template>
+<p-panel header="SO Report" class="Tabledata" *ngIf="type=='so-report'">
+    <p-header>
+        <button pButton type="button" style="float:right" icon="fa fa-file-excel-o" label="Export" class="ui-button-success" (click)="exportAsXLSX()"></button>
+    </p-header>
+    <!-- <div class="ui-g"><div class="ui-g-12"><div class="form-group"><span class="ui-float-label"><input type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)"></span></div></div></div>     -->
+        
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th width="10%">SO No</th>
+                <th width="15%">SO Date</th>
+                <th width="20%">Customer</th>
+                <th width="10%">Commission No</th>
+                <th width="10%">PO No</th>
+                <th width="10%">Total Amount</th>
+                <th width="15%">Due Date</th>
+                <th width="10%">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container *ngIf="reportsList">
+                <tr *ngFor="let report of reportsList; index as i;">
+                    <td>{{report.sono}}</td>
+                    <td>{{report.soDate | date:'dd/MM/yyyy'}}</td>
+                    <td>{{report.customerName}}</td>
+                    <td>{{report.commissionNo}}</td>
+                    <td>{{report.pono}}</td>
+                    <td>{{report.totalAmount}}</td>
+                    <td>{{report.soDueDate}}</td>
+                    <td>
+                        <span *ngIf="report.trstatus == 1"><i style="color:orange" class="fa fa-clock-o fa-2x"></i></span>
+                        <span *ngIf="report.trstatus == 2"><i style="color:green" class="fa fa-check-square-o fa-2x"></i></span>
+                    </td>
+                </tr>
+            </ng-container>
+            </tbody>
+        </table>
+    </div>
+</p-panel>
 
 
+<p-panel header="Stock Summary" class="Tabledata" *ngIf="type=='stock-summary'">
+    <p-header>
+        <button pButton type="button" style="float:right" icon="fa fa-file-excel-o" label="Export" class="ui-button-success" (click)="exportAsXLSX()"></button>
+    </p-header>
+    <!-- <div class="ui-g"><div class="ui-g-12"><div class="form-group"><span class="ui-float-label"><input type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)"></span></div></div></div>     -->
+        
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th width="5%">SNo</th>
+                <th width="10%">Item Code</th>
+                <th width="20%">Item Name</th>
+                <th width="10%">OpBal</th>
+                <th width="5%">GRN Qty</th>
+                <th width="10%">Purchase Rtn</th>
+                <th width="5%">Stock Issue Qty</th>
+                <th width="10%">Sales Qty</th>
+                <th width="10%">Closing Qty</th>
+                <th width="10%">Closing Rate</th>
+                <th width="10%">Closing Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container *ngIf="reportsList">
+                <tr *ngFor="let report of reportsList; index as i;">
+                    <td>{{i+1}}</td>
+                    <td>{{report.itemCode}}</td>
+                    <td>{{report.itemName}}</td>
+                    <td>{{report.opBalQty}}</td>
+                    <td>{{report.grnQty}}</td>
+                    <td>{{report.purchaseReturnQty}}</td>
+                    <td>{{report.stockIssueQty}}</td>
+                    <td>{{report.salesQty}}</td>
+                    <td>{{report.closingQty}}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </ng-container>
+            </tbody>
+        </table>
+    </div>
+</p-panel>
 
-<ng-template #loading>
-    <p-panel>
-        <img class="img-center" src="assets/images/spinner.gif" />
-    </p-panel>
-</ng-template>   -->
+<p-panel header="MSL Report" class="Tabledata" *ngIf="type=='msl-report'">
+    <p-header>
+        <button pButton type="button" style="float:right" icon="fa fa-file-excel-o" label="Export" class="ui-button-success" (click)="exportAsXLSX()"></button>
+    </p-header>
+    <div class="ui-g"><div class="ui-g-12"><div class="form-group"><span class="ui-float-label"><input type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)"></span></div></div></div>    
+        
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th width="10%">SNo</th>
+                <th width="20%">Item Code</th>
+                <th width="30%">Item Name</th>
+                <th width="20%">MSL Qty</th>
+                <th width="20%">Closing Qty</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container *ngIf="reportsList">
+                <tr *ngFor="let report of reportsList; index as i;">
+                    <td>{{i+1}}</td>
+                    <td>{{report.itemCode}}</td>
+                    <td>{{report.itemName}}</td>
+                    <td>{{report.mslQty}}</td>
+                    <td>{{report.currentSTKQty}}</td>
+                </tr>
+            </ng-container>
+            </tbody>
+        </table>
+    </div>
+</p-panel>
+
+<p-panel header="Sales Register" class="Tabledata" *ngIf="type=='sales-register'">
+    <p-header>
+        <button pButton type="button" style="float:right" icon="fa fa-file-excel-o" label="Export" class="ui-button-success" (click)="exportAsXLSX()"></button>
+    </p-header>
+    <div class="ui-g"><div class="ui-g-12"><div class="form-group"><span class="ui-float-label"><input type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)"></span></div></div></div>    
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th width="10%">SNo</th>
+                <th width="10%">Invoice Number</th>
+                <th width="10%">Invoice Date</th>
+                <th width="20%">Customer Name</th>
+                <th width="10%">Total Amount</th>
+                <th width="10%">Commission No</th>
+                <th width="10%">PO No</th>
+                <th width="10%">EWayBillNo</th>
+                <th width="10%">EwayBillDate</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container *ngIf="reportsList">
+                <tr *ngFor="let report of reportsList; index as i;">
+                    <td>{{i+1}}</td>
+                    <td>{{report.transactionNO}}</td>
+                    <td>{{report.transactionDate|date:'dd/MM/yyyy'}}</td>
+                    <td>{{report.customerName}}</td>
+                    <td>{{report.totalAmount}}</td>
+                    <td></td>
+                    <td>{{report.pono}}</td>
+                    <td>{{report.eWayBillNo}}</td>
+                    <td>{{report.eWayBillDate|date:'dd/MM/yyyy'}}</td>
+                </tr>
+            </ng-container>
+            </tbody>
+        </table>
+    </div>
+</p-panel>
+
+
+<p-panel header="GRN Register" class="Tabledata" *ngIf="type=='grn-register'">
+    <p-header>
+        <button pButton type="button" style="float:right" icon="fa fa-file-excel-o" label="Export" class="ui-button-success" (click)="exportAsXLSX()"></button>
+    </p-header>
+    <div class="ui-g"><div class="ui-g-12"><div class="form-group"><span class="ui-float-label"><input type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)"></span></div></div></div>    
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th width="10%">GRN No</th>
+                <th width="10%">GRN Date</th>
+                <th width="15%">Supplier</th>
+                <th width="10%">Item Code</th>
+                <th width="15%">Item Desc</th>
+                <th width="10%">Order Qty</th>
+                <th width="5%">Received Qty</th>
+                <th width="5%">Rate</th>
+                <th width="5%">Amount</th>
+                <th width="5%">Total Amount</th>
+                <th width="10%">PO No</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container *ngIf="reportsList">
+                <tr *ngFor="let report of reportsList; index as i;">
+                    <td>{{report.transactionNO}}</td>
+                    <td>{{report.transactionDate|date:'dd/MM/yyyy'}}</td>
+                    <td>{{report.supplierName}}</td>
+                    <td>{{report.itemCode}}</td>
+                    <td>{{report.itemDesc}}</td>
+                    <td>{{report.orderqty}}</td>
+                    <td>{{report.itemQty}}</td>
+                    <td>{{report.itemRate}}</td>
+                    <td>{{report.itemAmount}}</td>
+                    <td>{{report.totalAmount}}</td>
+                    <td>{{report.pono}}</td>
+                </tr>
+            </ng-container>
+            </tbody>
+        </table>
+    </div>
+</p-panel>
+
+
+<p-panel header="Stock Issue Register" class="Tabledata" *ngIf="type=='stock-issue-register'">
+    <p-header>
+        <button pButton type="button" style="float:right" icon="fa fa-file-excel-o" label="Export" class="ui-button-success" (click)="exportAsXLSX()"></button>
+    </p-header>
+    <div class="ui-g"><div class="ui-g-12"><div class="form-group"><span class="ui-float-label"><input type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)"></span></div></div></div>    
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th width="15%">Issue No</th>
+                <th width="20%">Issue Date</th>
+                <th width="20%">Item Code</th>
+                <th width="30%">Item Desc</th>
+                <th width="15%">Issue Qty</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container *ngIf="reportsList">
+                <tr *ngFor="let report of reportsList; index as i;">
+                    <td>{{report.transactionNO}}</td>
+                    <td>{{report.transactionDate|date:'dd/MM/yyyy'}}</td>
+                    <td>{{report.itemCode}}</td>
+                    <td>{{report.itemDesc}}</td>
+                    <td>{{report.itemQty}}</td>
+                </tr>
+            </ng-container>
+            </tbody>
+        </table>
+    </div>
+</p-panel>

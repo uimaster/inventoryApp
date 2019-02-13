@@ -298,4 +298,63 @@ export class CreateComponent implements OnInit {
         }
       }
     }
+
+    loadItems(){
+        this.showLoader = true;
+        this._planningService.getStockItemForGroup().subscribe(res => {
+            if (res.status === '200') {
+                //console.log(res);
+                let data = res.data;
+                const formArray = <FormArray>this.cForm.get('fgPlanDetails');
+                formArray.removeAt(0);    
+                for (let i = 0; i < data.length; i++) {
+                  formArray.push(
+                    this._formBuilder.group ({
+                        stockItemDesc:[data[i].stockItemDesc],
+                        stockItemID:[data[i].stockItemID],
+                        currentPlanQty: [0],
+                        currentMonthQty:[0],
+                        nextMonthQty:[0],
+                        orderMonthQty:[0],
+                        futureRequiredQty:[0],
+                        futureRequiredLength:[0],
+                        futureRequiredStops:[0],
+                        priority:[0],
+                        netRequiredQty:[0],
+                        fgStockQty:[0],
+                        cumulativeLength:[0],
+                        cumulativeStops:[0]
+                    })
+                  );    
+                }
+                //this.cForm.setControl('fgPlanDetails', this._formBuilder.array((data || []).map((x) => this._formBuilder.group(x) )));
+            }
+            this.showLoader = false; 
+        });
+    }
+
+    loadPrevPlan(){
+        this.showLoader = true;
+        this.planningDataSubscription = this._planningService.getFGDetail(0).subscribe(res => {
+            this.fg = res.data[0];
+            if (res.status === '200') {
+                var parts = this.fg['planDate'].split("-");
+                let planDate = new Date(parts[0], parts[1] - 1, parts[2]);
+
+                var parts1 = this.fg['periodFromDate'].split("-");
+                let periodFromDate = new Date(parts1[0], parts1[1] - 1, parts1[2]);
+
+                var parts2 = this.fg['periodToDate'].split("-");
+                let periodToDate = new Date(parts2[0], parts2[1] - 1, parts2[2]);
+
+                this.cForm.controls['planID'].setValue(this.fg['planID']);
+                this.cForm.controls['planDate'].setValue(planDate);
+                this.cForm.controls['periodFromDate'].setValue(periodFromDate);
+                this.cForm.controls['periodToDate'].setValue(periodToDate);
+                this.cForm.controls['prevPlanID'].setValue(this.fg['prevPlanID']);
+                this.cForm.setControl('fgPlanDetails', this._formBuilder.array((this.fg['fgPlanDetails'] || []).map((x) => this._formBuilder.group(x) )));
+            }  
+            this.showLoader = false;  
+        });
+    }   
 }

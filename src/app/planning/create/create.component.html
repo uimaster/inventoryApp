@@ -3,8 +3,8 @@
 
 <p-panel header="FG Add/Edit Form" class="Tabledata" *ngIf="type=='fg'">
     <p-header>
-        <button pButton type="button" style="float:right" icon="pi pi-plus" label="Load Items" class="ui-button-success"></button>
-        <button pButton type="button" style="float:right" icon="pi pi-plus" label="Load Prev FG Plan" class="ui-button-success"></button>
+        <button (click)="loadItems()" pButton type="button" style="float:right" icon="pi pi-plus" label="Load Items" class="ui-button-success"></button>
+        <button (click)="loadPrevPlan()" pButton type="button" style="float:right" icon="pi pi-plus" label="Load Prev FG Plan" class="ui-button-success"></button>
     </p-header>
     <form [formGroup]="cForm" (ngSubmit)="saveFg(cForm.value)" class="formData">
       <div class="message error" *ngIf="showError">Updatation/creation failed .</div>
@@ -26,14 +26,14 @@
           </div>
         </div>
 
-        <div class="ui-g-4">
+        <!-- <div class="ui-g-4">
             <div class="form-group">
                 <span class="ui-float-label">
                 <input type="number" formControlName="prevPlanID" pInputText id="prevPlanID">
                 <label for="periodToDate">Prev Plan ID</label>
                 </span>
             </div>
-        </div>
+        </div> -->
       </div>
 
       <div class="ui-g">
