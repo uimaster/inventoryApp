@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { PurchaseService } from './../purchase.service';
-import { TransactionSerivices } from '../../transactionsShared/transaction.service';
+import { TransactionServices } from '../../transactionsShared/transaction.service';
 import { BASEURL } from '../../../utils/app.urls';
 
 @Component({
@@ -15,20 +15,18 @@ export class PurchaseOrderComponent implements OnInit {
   constructor(
     private purchaseService: PurchaseService,
     private router: Router,
-    private transactionSerivices: TransactionSerivices
+    private transactionSerivices: TransactionServices
     ) { }
 
   ngOnInit() {
-    this.getPurchaseList();
     localStorage.setItem('transactionTypeId', '1');
   }
 
-  getPurchaseList() {
-    this.transactionSerivices.getTransactionList('1').subscribe ( res => {
+  getPurchaseList(dates) {
+    this.transactionSerivices.getTransactionList('1', dates).subscribe ( res => {
       if (res) {
         if (res.status === '200') {
           this.purchaseList = res.data;
-          console.log('purchaseList:', this.purchaseList);
         }
       }
     });

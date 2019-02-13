@@ -13,6 +13,7 @@ import { StockResponse } from '../models/stock.model';
 import {StockGroupService} from '../../stock-group/services/stock-group.service';
 import { SupplierService } from '../../supplier/services/supplier.service';
 import { TouchSequence } from 'selenium-webdriver';
+import {SelectItem} from 'primeng/api';
 
 @Component({
   selector: 'app-stock-detail',
@@ -37,6 +38,7 @@ export class StockDetailComponent implements OnInit, OnDestroy {
   public locationList = [];
   public currencyList = [];
   public supplierlist = [];
+  public showLoader = false;
 
   errorMsg = '';
   successMsg = '';
@@ -47,6 +49,9 @@ export class StockDetailComponent implements OnInit, OnDestroy {
   userId = localStorage.getItem('userID');
   ledgerModel = {};
   locationModel = {};
+  // public stockItemGroup: SelectItem[];
+  public stockItemGroup = [];
+  public statusList = [{label: 'True', value: 'True'}, {label: 'False', value: 'False'}];
   constructor(
     private stockService: StockService,
     private ledgerService: LedgerService,
@@ -59,8 +64,8 @@ export class StockDetailComponent implements OnInit, OnDestroy {
   ) {
     this.stockForm();
     this.barCodeApplicable = [
-      {label: 'True', code: 1},
-      {label: 'False', code: 0}
+      {label: 'True', value: 'True'},
+      {label: 'False', value: 'False'}
     ];
 
   }
@@ -80,15 +85,28 @@ export class StockDetailComponent implements OnInit, OnDestroy {
     this.getStockGroupList();
     this.getLocation();
     this.getSupplier();
+    this.getStockItemGroup();
+  }
+
+  getStockItemGroup() {
+    this.stockService.getStockItemGroup().subscribe( res => {
+      if (res.status === '200') {
+        let data = res.data;
+        for (let i = 0; i < data.length; i++ ) {
+          this.stockItemGroup.push({label: data[i].stockItemDesc, value:
+             { stockItemID: data[i].stockItemID, itemDesc: data[i].stockItemDesc}});
+        }
+      }
+    });
   }
 
   getStockData(stockId) {
+    this.showLoader = true;
     this.stockItemSubscription = this.stockService
       .getStock(stockId)
       .subscribe((res: StockDetailResponse) => {
         this.stock = res.data[0];
-
-        console.log(this.stock);
+        this.showLoader = false;
 
         if (this.stockItemId && this.stock) {
           this.sForm.controls['itemName'].setValue(this.stock['itemName']);
@@ -126,50 +144,34 @@ export class StockDetailComponent implements OnInit, OnDestroy {
           this.sForm.controls['userID'].setValue(this.stock['userID']);
           this.sForm.controls['unit_ID'].setValue(this.stock['unit_ID']);
           this.sForm.controls['unitName'].setValue(this.stock['unitName']);
+          this.sForm.controls['stockItemBoxList'].setValue(this.stock['stockItemBoxList']);
           const controlArray = <FormArray>this.sForm.get('stockItemOpeningBal');
-          controlArray.controls[0]
-            .get('stockItemOPID')
-            .setValue(this.stock['stockItemOpeningBal'][0].stockItemOPID);
-          controlArray.controls[0]
-            .get('stockitem_ID')
-            .setValue(this.stock['stockItemOpeningBal'][0].stockitem_ID);
-          controlArray.controls[0]
-            .get('location_ID')
-            .setValue(this.stock['stockItemOpeningBal'][0].location_ID);
-          controlArray.controls[0]
-            .get('locationName')
-            .setValue(this.stock['stockItemOpeningBal'][0].locationName);
-          controlArray.controls[0]
-            .get('qty')
-            .setValue(this.stock['stockItemOpeningBal'][0].qty);
-          controlArray.controls[0]
-            .get('rate')
-            .setValue(this.stock['stockItemOpeningBal'][0].rate);
-          controlArray.controls[0]
-            .get('amount')
-            .setValue(this.stock['stockItemOpeningBal'][0].amount);
+          if (controlArray.length > 0) {
+            controlArray.removeAt(0);
+          }
+          for (var i = 0; i > this.stock.stockItemOpeningBal.length; i++) {
+            controlArray.controls[i].get('stockItemOPID').setValue(this.stock['stockItemOpeningBal'][i].stockItemOPID);
+            controlArray.controls[i].get('stockitem_ID').setValue(this.stock['stockItemOpeningBal'][i].stockitem_ID);
+            controlArray.controls[i].get('location_ID').setValue(this.stock['stockItemOpeningBal'][i].location_ID);
+            controlArray.controls[i].get('locationName').setValue(this.stock['stockItemOpeningBal'][i].locationName);
+            controlArray.controls[i].get('qty').setValue(this.stock['stockItemOpeningBal'][i].qty);
+            controlArray.controls[i].get('rate').setValue(this.stock['stockItemOpeningBal'][i].rate);
+            controlArray.controls[i].get('amount').setValue(this.stock['stockItemOpeningBal'][i].amount);
+          }
 
-          const ControlStockItemSupplier = <FormArray>(
-            this.sForm.get('stockItemSuppliers')
-          );
-          ControlStockItemSupplier.controls[0]
-            .get('stokItemSupplierID')
-            .setValue(this.stock['stockItemSuppliers'][0].stokItemSupplierID);
-          ControlStockItemSupplier.controls[0]
-            .get('stockitem_ID')
-            .setValue(this.stock['stockItemSuppliers'][0].stockitem_ID);
-          ControlStockItemSupplier.controls[0]
-            .get('ledger_ID')
-            .setValue(this.stock['stockItemSuppliers'][0].ledger_ID);
-          ControlStockItemSupplier.controls[0]
-            .get('ledgerName')
-            .setValue(this.stock['stockItemSuppliers'][0].ledgerName);
-          ControlStockItemSupplier.controls[0]
-            .get('orderPercentage')
-            .setValue(this.stock['stockItemSuppliers'][0].orderPercentage);
-          ControlStockItemSupplier.controls[0]
-            .get('leadTime')
-            .setValue(this.stock['stockItemSuppliers'][0].leadTime);
+
+          const ControlStockItemSupplier = <FormArray>(this.sForm.get('stockItemSuppliers'));
+          if (ControlStockItemSupplier.length > 0) {
+            ControlStockItemSupplier.removeAt(0);
+          }
+          for (var i = 0; i > this.stock.stockItemSuppliers.length; i++) {
+            ControlStockItemSupplier.controls[i].get('stokItemSupplierID').setValue(this.stock['stockItemSuppliers'][i].stokItemSupplierID);
+            ControlStockItemSupplier.controls[i].get('stockitem_ID').setValue(this.stock['stockItemSuppliers'][i].stockitem_ID);
+            ControlStockItemSupplier.controls[i].get('ledger_ID').setValue(this.stock['stockItemSuppliers'][i].ledger_ID);
+            ControlStockItemSupplier.controls[i].get('ledgerName').setValue(this.stock['stockItemSuppliers'][i].ledgerName);
+            ControlStockItemSupplier.controls[i].get('orderPercentage').setValue(this.stock['stockItemSuppliers'][i].orderPercentage);
+            ControlStockItemSupplier.controls[i].get('leadTime').setValue(this.stock['stockItemSuppliers'][i].leadTime);
+          }
         }
 
         // console.log(this.ledger);
@@ -180,41 +182,42 @@ export class StockDetailComponent implements OnInit, OnDestroy {
     this.sForm = this._formBuilder.group({
       stockItemID: [0],
       itemName: ['', [Validators.required, Validators.minLength(4)]],
-      itemCode: [''],
-      stockGroup_ID: [''],
+      itemCode: [],
+      stockGroup_ID: [],
       // stockGroupName: ['', Validators.required],
-      unit_ID: [''],
+      unit_ID: [],
       unitName: [''],
-      minimum_Order_Level: [''],
-      minimum_Order_Qty: [''],
-      bufferQty: [''],
-      hsnCode: [''],
-      taxrate: [''],
-      gstUnit: [''],
-      barcodeapplicable: [''],
-      barcodelength: [''],
+      minimum_Order_Level: [],
+      minimum_Order_Qty: [],
+      bufferQty: [],
+      hsnCode: [],
+      taxrate: [],
+      gstUnit: [],
+      barcodeapplicable: [],
+      barcodelength: [],
       branchName: [''],
-      activeStatus: [''],
-      company_ID: [this.companyId || 0],
-      userID: [this.userId || 0],
+      activeStatus: [],
+      company_ID: [JSON.parse(this.companyId) || 0],
+      userID: [JSON.parse(this.userId) || 0],
       stockItemOpeningBal: this._formBuilder.array([
         this.createStockItemOpeningBalance()
       ]),
       stockItemSuppliers: this._formBuilder.array([
         this.createStockItemSupplier()
-      ])
+      ]),
+      stockItemBoxList: []
     });
   }
 
   createStockItemOpeningBalance() {
     return this._formBuilder.group({
-      stockItemOPID: [''],
-      stockitem_ID: [''],
-      location_ID: [''],
+      stockItemOPID: [],
+      stockitem_ID: [],
+      location_ID: [],
       locationName: [''],
-      qty: [''],
-      rate: [''],
-      amount: ['']
+      qty: [],
+      rate: [],
+      amount: []
     });
   }
 
@@ -223,13 +226,13 @@ export class StockDetailComponent implements OnInit, OnDestroy {
     const stockItemArray = <FormArray>this.sForm.get('stockItemOpeningBal');
     stockItemArray.push(
       this._formBuilder.group({
-        stockItemOPID: [''],
-        stockitem_ID: [''],
-        location_ID: [''],
+        stockItemOPID: [],
+        stockitem_ID: [],
+        location_ID: [],
         locationName: [''],
-        qty: [''],
-        rate: [''],
-        amount: ['']
+        qty: [],
+        rate: [],
+        amount: []
       })
     );
   }
@@ -328,6 +331,11 @@ export class StockDetailComponent implements OnInit, OnDestroy {
   get activeStatus() {
     return this.sForm.get('activeStatus');
   }
+
+  get stockItemOPID() {
+    return this.sForm.get('stockItemOPID');
+  }
+
   get locationName() {
     return this.sForm.get(['stockItemOpeningBal'], 0, ['locationName']);
   }
@@ -353,8 +361,16 @@ export class StockDetailComponent implements OnInit, OnDestroy {
   }
   get leadTime() {
     return this.sForm.get(['stockItemSuppliers'], 0, ['leadTime']);
+
   }
 
+  get stockItemID() {
+    return this.sForm.get(['stockItemBoxList'], 0, ['stockItemID']);
+  }
+
+  get itemDesc() {
+    return this.sForm.get(['stockItemBoxList'], 0, ['itemDesc']);
+  }
   getLedgerData() {
     this.ledgerDataSubscription = this.ledgerService
       .getAllLedgers()

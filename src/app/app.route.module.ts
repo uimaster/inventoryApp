@@ -15,6 +15,8 @@ export const routes: Routes = [
     { path: 'sales', loadChildren: 'app/sales/sales.module#SalesModule' },
     { path: 'utilities', loadChildren: 'app/utilities/utilities.module#UtilitiesModule' },
     { path: 'reports', loadChildren: 'app/reports/reports.module#ReportsModule' },
+    { path: 'users', loadChildren: 'app/users/user.module#UsersModule' },
+    { path: '**', component: DashboardComponent },
 ];
 
 @NgModule({

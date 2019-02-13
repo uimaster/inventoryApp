@@ -12,7 +12,7 @@ import { StockResponse } from '../models/stock.model';
   styleUrls: ['./stock-item.component.scss']
 })
 export class StockItemComponent implements OnInit {
-
+  public showLoader = false;
   stockListResponse: Observable<any>;
   stockListResponseFailed: Observable<boolean>;
   public stockList;
@@ -23,10 +23,12 @@ export class StockItemComponent implements OnInit {
   }
 
   getStockList() {
+    this.showLoader = true;
     this.stockService.getAllStocks().subscribe((res: StockResponse) => {
       if (res && res.status === '200')  {
         this.stockList = res.data;
       }
+      this.showLoader = false;
     });
   }
 

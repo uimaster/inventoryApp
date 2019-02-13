@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SalesComponent } from './sales.component';
 import { SalesRouteModule } from './sales.route.module';
@@ -14,6 +14,8 @@ import { SalesInvoiceGenerationComponent } from './sales-invoice-generation/sale
 import { TransactionCommonModule } from '../transactionsShared/transaction.module';
 import { SalesService } from './sales.service';
 import { FiltersModule } from '../transFilters/transFilter.Module';
+import { PrimeNGModule } from './../app.primeNg.module';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -21,7 +23,10 @@ import { FiltersModule } from '../transFilters/transFilter.Module';
     SalesRouteModule,
     SharedModule,
     TransactionCommonModule,
-    FiltersModule
+    FiltersModule,
+    PrimeNGModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   declarations: [
     SalesComponent,
@@ -34,6 +39,7 @@ import { FiltersModule } from '../transFilters/transFilter.Module';
     SalesOrderAcceptanceComponent,
     SalesInvoiceGenerationComponent
   ],
-  providers: [ SalesService]
+  providers: [ SalesService],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SalesModule { }

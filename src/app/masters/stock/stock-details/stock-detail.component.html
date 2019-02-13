@@ -1,8 +1,9 @@
+<p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
 <p-panel header="StockItem Add/Edit Form" class="Tabledata">
 
-  <form [formGroup] = "sForm" (ngSubmit)="saveStockItem(sForm.value)" class="formData">
-      <div class="message error" *ngIf="showError">{{errorMsg}}</div>
-      <div class="message success" *ngIf="showSuccess">{{successMsg}}</div>
+  <form [formGroup]="sForm" (ngSubmit)="saveStockItem(sForm.value)" class="formData">
+    <div class="message error" *ngIf="showError">{{errorMsg}}</div>
+    <div class="message success" *ngIf="showSuccess">{{successMsg}}</div>
     <div class="ui-g">
       <div class="ui-g-4">
         <div class="form-group">
@@ -24,7 +25,7 @@
       <div class="ui-g-4">
         <div class="form-group">
           <span class="ui-float-label">
-            <input type="text" formControlName="itemCode" pInputText id="itemCode">
+            <input type="number" formControlName="itemCode" pInputText id="itemCode">
             <label for="itemCode">Item Code</label>
           </span>
 
@@ -35,30 +36,30 @@
           </div>
         </div>
       </div>
-        <div class="ui-g-4">
-            <div class="form-group">
+      <div class="ui-g-4">
+        <div class="form-group">
           <span class="ui-float-label">
 
 
-            <p-dropdown [options]="stockGroupList" formControlName="stockGroup_ID"  id="stockGroup_ID" placeholder="Stock Group Name"></p-dropdown>
+            <p-dropdown [options]="stockGroupList" formControlName="stockGroup_ID" id="stockGroup_ID" placeholder="Stock Group Name"></p-dropdown>
 
             <!--<input type="text" formControlName="stockGroupName" pInputText id="stockGroupName">-->
             <!--<label for="stockGroupName">Stock Group Name</label>-->
           </span>
-                <div *ngIf="stockGroup_ID.invalid && (stockGroup_ID.dirty || stockGroup_ID.touched)" class="alert alert-danger">
-                    <div *ngIf="stockGroup_ID.errors.required">
-                        Stock Group Name is required.
-                    </div>
-                </div>
+          <div *ngIf="stockGroup_ID.invalid && (stockGroup_ID.dirty || stockGroup_ID.touched)" class="alert alert-danger">
+            <div *ngIf="stockGroup_ID.errors.required">
+              Stock Group Name is required.
             </div>
+          </div>
         </div>
+      </div>
 
 
       <div class="ui-g-4">
         <div class="form-group">
           <span class="ui-float-label">
 
-          <p-dropdown [options]="unitDataList" formControlName="unit_ID"  id="unit_ID" placeholder="Unit Name"></p-dropdown>
+            <p-dropdown [options]="unitDataList" formControlName="unit_ID" id="unit_ID" placeholder="Unit Name"></p-dropdown>
 
           </span>
           <div *ngIf="unit_ID.invalid && (unit_ID.dirty || unit_ID.touched)" class="alert alert-danger">
@@ -72,7 +73,7 @@
       <div class="ui-g-4">
         <div class="form-group">
           <span class="ui-float-label">
-            <input type="text" formControlName="minimum_Order_Level" pInputText id="minimum_Order_Level" />
+            <input type="number" formControlName="minimum_Order_Level" pInputText id="minimum_Order_Level" />
             <label for="minimum_Order_Level">Minimum Order Level</label>
           </span>
 
@@ -86,7 +87,7 @@
       <div class="ui-g-4">
         <div class="form-group">
           <span class="ui-float-label">
-            <input type="text" formControlName="minimum_Order_Qty" pInputText id="minimum_Order_Qty" />
+            <input type="number" formControlName="minimum_Order_Qty" pInputText id="minimum_Order_Qty" />
             <label for="minimum_Order_Qty">Minimum Order Quantity</label>
           </span>
 
@@ -101,7 +102,7 @@
       <div class="ui-g-4">
         <div class="form-group">
           <span class="ui-float-label">
-            <input type="text" formControlName="bufferQty" pInputText id="bufferQty" />
+            <input type="number" formControlName="bufferQty" pInputText id="bufferQty" />
             <label for="bufferQty">Buffer Quantity</label>
           </span>
 
@@ -116,7 +117,7 @@
       <div class="ui-g-4">
         <div class="form-group">
           <span class="ui-float-label">
-            <input type="text" formControlName="hsnCode" pInputText id="hsnCode" />
+            <input type="number" formControlName="hsnCode" pInputText id="hsnCode" />
             <label for="hsnCode">HSN code</label>
           </span>
 
@@ -131,7 +132,7 @@
       <div class="ui-g-4">
         <div class="form-group">
           <span class="ui-float-label">
-            <input type="text" formControlName="taxrate" pInputText id="taxrate" />
+            <input type="number" formControlName="taxrate" pInputText id="taxrate" />
             <label for="taxrate">Tax rate</label>
           </span>
 
@@ -144,24 +145,24 @@
       </div>
 
       <div class="ui-g-4">
-          <div class="form-group">
-            <span class="ui-float-label">
-              <input type="text" formControlName="gstUnit" pInputText id="gstUnit" />
-              <label for="gstUnit">GST Unit</label>
-            </span>
+        <div class="form-group">
+          <span class="ui-float-label">
+            <input type="text" formControlName="gstUnit" pInputText id="gstUnit" />
+            <label for="gstUnit">GST Unit</label>
+          </span>
 
-            <!-- <div *ngIf="gstUnit.invalid && (gstUnit.dirty || gstUnit.touched)" class="alert alert-danger">
+          <!-- <div *ngIf="gstUnit.invalid && (gstUnit.dirty || gstUnit.touched)" class="alert alert-danger">
               <div *ngIf="gstUnit.errors.required">
                 This field is required.
               </div>
             </div> -->
-          </div>
         </div>
+      </div>
 
       <div class="ui-g-4">
         <div class="form-group">
           <span class="ui-float-label">
-            <p-dropdown [options]="barCodeApplicable" formControlName="barcodeapplicable"  optionLabel="label" [showClear]="true"></p-dropdown>
+            <p-dropdown [options]="barCodeApplicable" formControlName="barcodeapplicable" [showClear]="true"></p-dropdown>
             <label for="taxrate">Bar code Applicable</label>
           </span>
 
@@ -176,7 +177,7 @@
       <div class="ui-g-4">
         <div class="form-group">
           <span class="ui-float-label">
-            <input type="text" formControlName="barcodelength" pInputText id="barcodelength" />
+            <input type="number" formControlName="barcodelength" pInputText id="barcodelength" />
             <label for="taxrate">Bar code Length</label>
           </span>
 
@@ -206,7 +207,8 @@
       <div class="ui-g-4">
         <div class="form-group">
           <span class="ui-float-label">
-            <input type="text" formControlName="activeStatus" pInputText id="activeStatus" />
+            <!-- <input type="text" formControlName="activeStatus" pInputText id="activeStatus" /> -->
+            <p-dropdown [options]="statusList" formControlName="activeStatus" [showClear]="true"></p-dropdown>
             <label for="taxrate">Active Status</label>
           </span>
 
@@ -215,6 +217,15 @@
               This field is required.
             </div>
           </div>
+        </div>
+      </div>
+
+      <div class="ui-g-4">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <p-multiSelect [options]="stockItemGroup" [panelStyle]="{width:'380px'}" formControlName="stockItemBoxList"></p-multiSelect>
+            <label for="taxrate">Stock Item Group</label>
+          </span>
         </div>
       </div>
     </div>
@@ -234,7 +245,7 @@
             <div class="ui-g-3">
               <div class="form-group">
                 <span class="ui-float-label">
-                  <input type="text" formControlName="qty" pInputText id="qty">
+                  <input type="number" formControlName="qty" pInputText id="qty">
                   <label for="qty">Quantity</label>
                 </span>
 
@@ -248,7 +259,7 @@
             <div class="ui-g-2">
               <div class="form-group">
                 <span class="ui-float-label">
-                  <input type="text" formControlName="rate" pInputText id="rate">
+                  <input type="number" formControlName="rate" pInputText id="rate">
                   <label for="rate">Rate</label>
                 </span>
 
@@ -262,13 +273,14 @@
             <div class="ui-g-3">
               <div class="form-group">
                 <span class="ui-float-label">
-                  <input type="text" formControlName="amount" pInputText id="amount">
+                  <input type="number" formControlName="amount" pInputText id="amount">
                   <label for="amount">Amount</label>
                 </span>
               </div>
             </div>
             <div class="ui-g-1">
-              <button pButton type="button" style="margin-right: 5px;" icon="fa fa-plus" class="ui-button-success" (click)="addOpeningBalance()"></button>
+              <button pButton type="button" style="margin-right: 5px;" icon="fa fa-plus" class="ui-button-success"
+                (click)="addOpeningBalance()"></button>
               <button pButton type="button" icon="fa fa-trash-o" class="ui-button-danger" [disabled]="i<1" (click)="removeOpeningBalance(i)"></button>
             </div>
           </div>
@@ -276,63 +288,64 @@
       </div>
 
     </fieldset>
-    <br/>
+    <br />
     <fieldset formArrayName="stockItemSuppliers">
-        <legend>Suppliers</legend>
-        <div *ngFor="let ctrl of sForm.get('stockItemSuppliers').controls; let i = index;">
-          <div [formGroupName]="i">
-            <div class="ui-g">
-              <div class="ui-g-4">
-                <div class="form-group">
-                  <span class="ui-float-label">
-                    <p-dropdown [options]="supplierlist" formControlName="ledgerName"></p-dropdown>
-                  </span>
+      <legend>Suppliers</legend>
+      <div *ngFor="let ctrl of sForm.get('stockItemSuppliers').controls; let i = index;">
+        <div [formGroupName]="i">
+          <div class="ui-g">
+            <div class="ui-g-4">
+              <div class="form-group">
+                <span class="ui-float-label">
+                  <p-dropdown [options]="supplierlist" formControlName="ledgerName"></p-dropdown>
+                </span>
 
-                  <div *ngIf="ledgerName.invalid && (ledgerName.dirty || ledgerName.touched)" class="alert alert-danger">
-                    <div *ngIf="ledgerName.errors.required">
-                      Ledger Name is required.
-                    </div>
+                <div *ngIf="ledgerName.invalid && (ledgerName.dirty || ledgerName.touched)" class="alert alert-danger">
+                  <div *ngIf="ledgerName.errors.required">
+                    Ledger Name is required.
                   </div>
                 </div>
               </div>
+            </div>
 
-              <div class="ui-g-3">
-                <div class="form-group">
-                  <span class="ui-float-label">
-                    <input type="text" formControlName="orderPercentage" pInputText id="orderPercentage">
-                    <label for="orderPercentage">Order Percentage</label>
-                  </span>
+            <div class="ui-g-3">
+              <div class="form-group">
+                <span class="ui-float-label">
+                  <input type="text" formControlName="orderPercentage" pInputText id="orderPercentage">
+                  <label for="orderPercentage">Order Percentage</label>
+                </span>
 
-                  <div *ngIf="orderPercentage.invalid && (orderPercentage.dirty || orderPercentage.touched)" class="alert alert-danger">
-                    <div *ngIf="orderPercentage.errors.required">
-                        Order Percentage is required.
-                    </div>
+                <div *ngIf="orderPercentage.invalid && (orderPercentage.dirty || orderPercentage.touched)" class="alert alert-danger">
+                  <div *ngIf="orderPercentage.errors.required">
+                    Order Percentage is required.
                   </div>
                 </div>
               </div>
-              <div class="ui-g-4">
-                <div class="form-group">
-                  <span class="ui-float-label">
-                    <input type="text" formControlName="leadTime" pInputText id="leadTime">
-                    <label for="leadTime">LeadTime</label>
-                  </span>
-                </div>
+            </div>
+            <div class="ui-g-4">
+              <div class="form-group">
+                <span class="ui-float-label">
+                  <input type="text" formControlName="leadTime" pInputText id="leadTime">
+                  <label for="leadTime">LeadTime</label>
+                </span>
               </div>
-              <div class="ui-g-1">
-                <button pButton type="button" style="margin-right: 5px;" icon="fa fa-plus" class="ui-button-success" (click)="addSupplier()"></button>
-                <button pButton type="button" icon="fa fa-trash-o" class="ui-button-danger" [disabled]="i<1" (click)="removeSupplier(i)"></button>
-              </div>
+            </div>
+            <div class="ui-g-1">
+              <button pButton type="button" style="margin-right: 5px;" icon="fa fa-plus" class="ui-button-success"
+                (click)="addSupplier()"></button>
+              <button pButton type="button" icon="fa fa-trash-o" class="ui-button-danger" [disabled]="i<1" (click)="removeSupplier(i)"></button>
             </div>
           </div>
         </div>
+      </div>
 
-      </fieldset>
-
-
-
+    </fieldset>
 
 
-    <br/>
+
+
+
+    <br />
     <p style="text-align: center">
       <button pButton type="submit" label="Submit" class="ui-button-success" [disabled]="!sForm.valid" style="margin-right: 10px;"></button>
       <button pButton type="button" label="Cancel" class="ui-button-secondary"></button>

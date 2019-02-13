@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { TransactionSerivices } from '../../transactionsShared/transaction.service';
+import { TransactionServices } from '../../transactionsShared/transaction.service';
 import { BASEURL } from '../../../utils/app.urls';
 
 
@@ -12,11 +12,11 @@ import { BASEURL } from '../../../utils/app.urls';
 export class PackingListComponent implements OnInit, OnDestroy {
   public packingList = [];
   constructor(
-    private transComService: TransactionSerivices, private router: Router,
+    private transComService: TransactionServices, private router: Router,
   ) { }
 
   ngOnInit() {
-    this.getSalesOrderList();
+    // this.getSalesOrderList();
     localStorage.setItem('transItemDetails', 'true');
     localStorage.setItem('transLedgerDetails', 'false');
     localStorage.setItem('transPOTerms', 'false');
@@ -33,12 +33,15 @@ export class PackingListComponent implements OnInit, OnDestroy {
     localStorage.setItem('transationLinkRef', 'true');
     localStorage.setItem('showLocation', 'false');
     localStorage.setItem('showBarcode', 'true');
+    localStorage.setItem('showActionBtn', 'true');
+    localStorage.setItem('showBarcode4Pl', 'true');
+    localStorage.setItem('showScannedQty', 'true');
   }
 
 
 
-  getSalesOrderList() {
-    this.transComService.getTransactionList('11').subscribe( res => {
+  getSalesOrderList(dates) {
+    this.transComService.getTransactionList('11', dates).subscribe( res => {
       if (res && res.status === '200') {
         this.packingList = res.data;
       }

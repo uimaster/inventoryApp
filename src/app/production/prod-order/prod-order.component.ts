@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TransactionSerivices } from '../../transactionsShared/transaction.service';
+import { TransactionServices } from '../../transactionsShared/transaction.service';
 import { Router } from '@angular/router';
 import { BASEURL } from '../../../utils/app.urls';
 
@@ -10,10 +10,10 @@ import { BASEURL } from '../../../utils/app.urls';
 })
 export class ProdOrderComponent implements OnInit {
   prodOrderList = [];
-  constructor( private transactionSerivices: TransactionSerivices, private router: Router) { }
+  constructor( private transactionSerivices: TransactionServices, private router: Router) { }
 
   ngOnInit() {
-    this.getTransactionList();
+    // this.getTransactionList();
     localStorage.setItem('transItemDetails', 'true');
     localStorage.setItem('transLedgerDetails', 'false');
     localStorage.setItem('transPOTerms', 'false');
@@ -31,8 +31,8 @@ export class ProdOrderComponent implements OnInit {
     localStorage.setItem('showLocation', 'false');
   }
 
-  getTransactionList() {
-    this.transactionSerivices.getTransactionList(16).subscribe ( res => {
+  getTransactionList(dates) {
+    this.transactionSerivices.getTransactionList(16, dates).subscribe ( res => {
       if (res) {
         if (res.status === '200') {
           this.prodOrderList = res.data;

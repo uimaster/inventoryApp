@@ -44,17 +44,17 @@ export class PurchaseService {
       .catch((error) => Observable.throw(error.json() || 'Server error'));
   }
 
-  getPOAuthList(): Observable<any> {
+  getPOAuthList(dates): Observable<any> {
     var starDate = '';
     var toDate = '';
 
-    if (localStorage.getItem('fromDate') !== '') {
-      starDate = JSON.parse(localStorage.getItem('fromDate'));
+    if (dates !== '') {
+      starDate = dates[0];
     } else {
       starDate = this.today;
     }
-    if (localStorage.getItem('toDate') !== '') {
-      toDate = JSON.parse(localStorage.getItem('toDate'));
+    if (dates !== '') {
+      toDate = dates[1];
     } else {
       toDate = this.today;
     }

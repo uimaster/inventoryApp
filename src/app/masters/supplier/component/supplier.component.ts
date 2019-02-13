@@ -51,7 +51,7 @@ export class SupplierComponent implements OnInit, OnDestroy {
       });
       setTimeout(() => {
         this.getSupplierData(this.supplierID);
-      }, 2000);
+      }, 500);
     }
 
     getSupplierData(supplierID) {
@@ -93,9 +93,10 @@ export class SupplierComponent implements OnInit, OnDestroy {
                         address1: [this.supplier.supplierAddressList[i].address1],
                         address2: [this.supplier.supplierAddressList[i].address2],
                         address3: [this.supplier.supplierAddressList[i].address3],
-                        state: [this.supplier.supplierAddressList[i].state],
+                        state: [this.supplier.supplierAddressList[i].stateCode],
                         gstincode: [this.supplier.supplierAddressList[i].gstincode],
-                        stateCode: [this.supplier.supplierAddressList[i].stateCode]
+                        stateCode: [this.supplier.supplierAddressList[i].stateCode],
+                        ledaddid: [this.supplier.supplierAddressList[i].ledaddid]
                       })
                     );
                   }
@@ -207,7 +208,8 @@ export class SupplierComponent implements OnInit, OnDestroy {
             address3: [''],
             state: [''],
             gstincode: [''],
-            stateCode: [0]
+            stateCode: [0],
+            ledaddid: [0]
         });
     }
 
@@ -221,7 +223,8 @@ export class SupplierComponent implements OnInit, OnDestroy {
             address3: [''],
             state: [''],
             gstincode: [''],
-            stateCode: [0]
+            stateCode: [0],
+            ledaddid: [0]
         })
       );
     }

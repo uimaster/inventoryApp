@@ -12,7 +12,7 @@ import { StockRejectNoteComponent } from './stock-reject-note/stock-reject-note.
 import { DelieveryChallanComponent } from './delievery-challan/delievery-challan.component';
 import { ReturnableChallanComponent } from './returnable-challan/returnable-challan.component';
 import { PhysicalStockComponent } from './physical-stock/physical-stock.component';
-import { TransactionSerivices } from '../transactionsShared/transaction.service';
+import { TransactionServices } from '../transactionsShared/transaction.service';
 import { TransactionCommonModule } from '../transactionsShared/transaction.module';
 import { FiltersModule } from '../transFilters/transFilter.Module';
 
@@ -36,6 +36,6 @@ import { FiltersModule } from '../transFilters/transFilter.Module';
     ReturnableChallanComponent,
     PhysicalStockComponent
   ],
-  providers : [ TransactionSerivices ]
+  providers : [ TransactionServices ]
 })
 export class StoresModule { }

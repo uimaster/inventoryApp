@@ -1,0 +1,35 @@
+<!-- <app-navbar></app-navbar> -->
+
+<p-panel header="Users List" class="Tabledata">
+  <p-header>
+      <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add User" class="ui-button-success" (click)="addUser()"></button>
+  </p-header>
+  <div class="table-responsive">
+      <table class="table">
+          <thead>
+          <tr>
+              <th>Name</th>
+              <th>userName</th>
+              <th>Company</th>
+              <th>Active Status</th>
+              <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container *ngIf="userList">
+              <tr *ngFor="let item of userList; index as i;">
+                  <td>{{item.name}}
+                  </td>
+                  <td>{{item.userName}}</td>
+                  <td>{{item.company_ID}}</td>
+                  <td>{{item.activeStatus}}</td>
+                  <td>
+                      <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="updateUser(item.userID)"></button>
+                      <button pButton type="button" label="Delete" class="ui-button-danger" ></button>
+                  </td>
+              </tr>
+          </ng-container>
+          </tbody>
+      </table>
+  </div>
+</p-panel>

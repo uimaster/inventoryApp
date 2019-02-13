@@ -12,7 +12,7 @@ import { POAuthListComponent } from './po-authentication/po-auth.component';
 import { StockService } from '../masters/stock/services/stock.service';
 import { LedgerService } from '../masters/ledger/services/ledger.service';
 import { SupplierService } from '../masters/supplier/services/supplier.service';
-import { TransactionSerivices } from '../transactionsShared/transaction.service';
+import { TransactionServices } from '../transactionsShared/transaction.service';
 import { TransactionCommonModule } from '../transactionsShared/transaction.module';
 import { FiltersModule } from '../transFilters/transFilter.Module';
 
@@ -28,7 +28,7 @@ import { FiltersModule } from '../transFilters/transFilter.Module';
     FiltersModule
   ],
   declarations: [ PurchaseComponent, PurchaseOrderComponent, CreatePOrderComponent, POAuthListComponent],
-  providers: [ PurchaseService, StockService, LedgerService, SupplierService, TransactionSerivices],
+  providers: [ PurchaseService, StockService, LedgerService, SupplierService, TransactionServices],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PurchaseModule { }

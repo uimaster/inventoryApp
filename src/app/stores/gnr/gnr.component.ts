@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { TransactionSerivices } from '../../transactionsShared/transaction.service';
+import { TransactionServices } from '../../transactionsShared/transaction.service';
 import { Router } from '@angular/router';
 import { BASEURL } from '../../../utils/app.urls';
 
@@ -10,15 +10,15 @@ import { BASEURL } from '../../../utils/app.urls';
 })
 export class GnrComponent implements OnInit, OnDestroy {
   grnList = [];
-  constructor( private transactionSerivices: TransactionSerivices, private router: Router ) { }
+  constructor( private transactionSerivices: TransactionServices, private router: Router ) { }
 
   ngOnInit() {
-    this.getTransactionList();
+    // this.getTransactionList();
     localStorage.setItem('transItemDetails', 'true');
     localStorage.setItem('transLedgerDetails', 'true');
     localStorage.setItem('transPOTerms', 'false');
     localStorage.setItem('transBoxDetails', 'false');
-    localStorage.setItem('transBatchDetails', 'false');
+    localStorage.setItem('transBatchDetails', 'true');
     localStorage.setItem('transGRNTerms', 'true');
     localStorage.setItem('transInvoiceTerms', 'false');
     localStorage.setItem('transWorkCompletionDetails', 'false');
@@ -31,17 +31,19 @@ export class GnrComponent implements OnInit, OnDestroy {
     localStorage.setItem('showLocation', 'true');
     localStorage.setItem('showBarcode', 'true');
     localStorage.setItem('transationLinkRefNamePO', 'true');
+    localStorage.setItem('GrnInput', 'true');
+    localStorage.setItem('showActionBtn', 'true');
+    localStorage.setItem('showBarcode4Grn', 'true');
 
   }
 
 
 
-  getTransactionList() {
-    this.transactionSerivices.getTransactionList(3).subscribe ( res => {
+  getTransactionList(dates) {
+    this.transactionSerivices.getTransactionList(3, dates).subscribe ( res => {
       if (res) {
         if (res.status === '200') {
           this.grnList = res.data;
-          console.log(this.grnList);
         }
       }
     });

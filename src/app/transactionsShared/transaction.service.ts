@@ -8,7 +8,7 @@ import { DOWNLOADREPORT } from '../../utils/app.urls';
 
 @Injectable()
 
-export class TransactionSerivices {
+export class TransactionServices {
   date = new Date();
   today = [
     ('0' + this.date.getDate()).slice(-2),
@@ -19,17 +19,17 @@ export class TransactionSerivices {
   constructor(  private http: HttpClient) {}
 
   // GET TRANSACTION LIST //
-  getTransactionList(typeId): Observable<any> {
+  getTransactionList(typeId, dates): Observable<any> {
     var starDate = '';
     var toDate = '';
 
-    if (localStorage.getItem('fromDate') !== '') {
-      starDate = JSON.parse(localStorage.getItem('fromDate'));
+    if (dates !== '') {
+      starDate = dates[0];
     } else {
       starDate = this.today;
     }
-    if (localStorage.getItem('toDate') !== '') {
-      toDate = JSON.parse(localStorage.getItem('toDate'));
+    if (dates !== '') {
+      toDate = dates[1];
     } else {
       toDate = this.today;
     }
@@ -122,8 +122,8 @@ export class TransactionSerivices {
     ).catch((error) => Observable.throw(error.JSON || 'Server Error !'));
   }
 
-  validateBatch(itemcode, batchcode) {
-    const params = new HttpParams().set('ITEMCODE', itemcode).set('BATCHNO', batchcode).set('TRTRYPE', '2');
+  validateBatch(itemcode, batchcode, type) {
+    const params = new HttpParams().set('ITEMCODE', itemcode).set('BATCHNO', batchcode).set('TRTRYPE', type);
     return this.http.get(urls.VALIDATEBATCH, {params}).pipe(
       map((res: any)  => {
         return res;
@@ -135,6 +135,24 @@ export class TransactionSerivices {
     const transactionType = localStorage.getItem('transactionTypeId');
     const params = new HttpParams().set('TransactionTypeID', transactionType);
     return this.http.get(urls.GETTRANSACTIONTYPESERIES, {params}).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+
+  getItemRate(stockItemId, ledgerId) {
+    const params = new HttpParams().set('LedgerID', ledgerId).set('StockItemID', stockItemId);
+    return this.http.get(urls.GETITEMSRATE, {params}).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+
+  getLedgerLocation(ledgerId) {
+    const params = new HttpParams().set('LedgerID', ledgerId);
+    return this.http.get(urls.GETLEDGERLOCATION, {params}).pipe(
       map((res: any) => {
         return res;
       })

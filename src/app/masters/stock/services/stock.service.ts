@@ -59,6 +59,14 @@ export class StockService {
     .catch((error) => Observable.throw('server Error.'));
   }
 
+  getStockItemGroup() {
+    const params = new HttpParams().set('CompanyID', '1').set('StockGroupID', '4');
+    return this.http.get(urls.GETSTOCKITEMGROUP, {params})
+    .map((res: any) => {
+        return res;
+    })
+    .catch((error) => Observable.throw('server Error.'));
+  }
 
 
 

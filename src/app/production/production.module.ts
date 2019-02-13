@@ -8,7 +8,7 @@ import { ProdOrderComponent } from './prod-order/prod-order.component';
 import { ProdEntryComponent } from './prod-entry/prod-entry.component';
 import { FGInwardComponent } from './fginward/fginward.component';
 import { TransactionCommonModule } from '../transactionsShared/transaction.module';
-import { TransactionSerivices } from '../transactionsShared/transaction.service';
+import { TransactionServices } from '../transactionsShared/transaction.service';
 import { FiltersModule } from '../transFilters/transFilter.Module';
 
 @NgModule({
@@ -20,6 +20,6 @@ import { FiltersModule } from '../transFilters/transFilter.Module';
     FiltersModule
   ],
   declarations: [ ProductionComponent, CreateProdComponent, ProdOrderComponent, ProdEntryComponent, FGInwardComponent],
-  providers : [ TransactionSerivices ]
+  providers : [ TransactionServices ]
 })
 export class ProductionModule { }

@@ -42,12 +42,12 @@ export class BomComponent implements OnInit, OnDestroy {
     ngOnInit() {
       this.showLoader = true;
       this.bomForm();
-      //setTimeout(() => {
+      // setTimeout(() => {
         this._route.params.subscribe((params) => {
           this.bomID = params.id;
-          //this.getBomData(this.bomID);
+          // this.getBomData(this.bomID);
         });
-      //}, 4000);
+      // }, 4000);
 
       this.getStockItems();
       this.getBomTypes();
@@ -57,25 +57,23 @@ export class BomComponent implements OnInit, OnDestroy {
     }
 
     convertToDateFormat(Datestr) {
-        //debugger;
         if (Datestr != '') {
           // Datestr='03/08/2016'
           var datedata = Datestr.split('-');
           var formatedDateString =
             new Date(datedata[0] + '-' + datedata[1] + '-' + datedata[2]);
-            console.log(formatedDateString);
           return formatedDateString;
         }
     }
-      
+
     getBomData(bomId) {
-        //this.showLoader = true;
+        // this.showLoader = true;
         this.bomDataSubscription = this.bomService.getBomData(this.bomID).subscribe((res: BomResponse) => {
             this.bom = res.data[0];
             if (this.bomID && this.bom) {
                var parts = this.bom['bomDate'].split("-");
                let bomDate = new Date(parts[0], parts[1] - 1, parts[2]);
-            
+
                 this.cForm.controls['bomDate'].setValue(bomDate);
                 this.cForm.controls['stockItemID'].setValue(this.bom['stockItemID']);
                 //this.cForm.controls['itemCode'].setValue(this.bom['itemCode']);
@@ -86,7 +84,7 @@ export class BomComponent implements OnInit, OnDestroy {
                     // const controlArray = <FormArray> this.cForm.get('priceListItems');
                     // controlArray.removeAt(0);
                     // this.priceList['priceListItems'].forEach(row => controlArray.push(this._formBuilder.group(row)));
-                    this.cForm.setControl('bomDetail', this._formBuilder.array((this.bom['bomDetail'] || []).map((x) => this._formBuilder.group(x))));                                
+                    this.cForm.setControl('bomDetail', this._formBuilder.array((this.bom['bomDetail'] || []).map((x) => this._formBuilder.group(x))));
                 }
                 // const controlArray = <FormArray> this.cForm.get('bomDetail');
                 // controlArray.controls[0].get('stockItemID').setValue(this.bom['bomDetail'][0].stockItemID);
@@ -116,7 +114,7 @@ export class BomComponent implements OnInit, OnDestroy {
     //get itemCode() { return this.cForm.get('itemCode'); }
     get botid() { return this.cForm.get('botid'); }
     //get itemName() { return this.cForm.get('itemName'); }
-    
+
     // get stockItemID() { return this.cForm.get(['bomDetail'], 0, ['stockItemID']); }
     // get qty() { return this.cForm.get(['bomDetail'], 0, ['qty']); }
     // get bmlid() { return this.cForm.get(['bomDetail'], 0, ['bmlid']); }
@@ -163,7 +161,7 @@ export class BomComponent implements OnInit, OnDestroy {
 
 
     saveBom (form: any) {
-        form.bomDate = this.datePipe.transform(form.bomDate, 'yyyy-MM-dd'); 
+        form.bomDate = this.datePipe.transform(form.bomDate, 'yyyy-MM-dd');
         this.bomService.updateBom(form).subscribe((res: BomResponse) => {
             if (res.status === '200') {
                 this.showSuccess = true;
@@ -175,7 +173,7 @@ export class BomComponent implements OnInit, OnDestroy {
             }
         });
     }
-    
+
     getBomTypes() {
       this.bomService.getBomTypes().subscribe( res => {
         if (res && res.status === '200') {
@@ -259,7 +257,7 @@ export class BomComponent implements OnInit, OnDestroy {
             }
         }
     }
-  
+
     getSelectedVal(event,elem) {
       for ( var i = 0; i < this.allStockItems.length; i++) {
         if (this.allStockItems[i].label === event) {

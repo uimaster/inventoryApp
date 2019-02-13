@@ -1,0 +1,17 @@
+.dashboardlscol{
+  margin-bottom: 15px;
+  .dashboard-volumn{
+    min-height: 55px; padding: 10px 15px;
+    .dashboard-volumn-lst{
+      h3{ font-size: 18px;  color: #333; text-decoration: none; line-height: 18px;}
+      i{ font-size: 38px; color:#ff7373; margin-top: 5px; margin-left: 8px;}
+
+    }
+    &.active{
+      background-color: #ff7373;
+      .dashboard-volumn-lst h3{color: #fff }
+      .dashboard-volumn-lst i{color:#fff;}
+      p{ color: #fff;}
+    }
+  }
+}

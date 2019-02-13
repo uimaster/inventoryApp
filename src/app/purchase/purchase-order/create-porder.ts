@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
 // import { StockService } from '../../masters/stock/services/stock.service';
 // import { LedgerService } from '../../masters/ledger/services/ledger.service';
 // import { SupplierService } from '../../masters/supplier/services/supplier.service';
-import { TransactionSerivices } from '../../transactionsShared/transaction.service';
+import { TransactionServices } from '../../transactionsShared/transaction.service';
 
 @Component({
   selector: 'app-purchase',
@@ -53,7 +53,7 @@ export class CreatePOrderComponent implements OnInit {
   // }
 
   grnList = [];
-  constructor( private transactionSerivices: TransactionSerivices, private router: Router ) { }
+  constructor( private transactionSerivices: TransactionServices, private router: Router ) { }
 
   ngOnInit() {
     this.getTransactionList();
@@ -72,11 +72,10 @@ export class CreatePOrderComponent implements OnInit {
   }
 
   getTransactionList() {
-    this.transactionSerivices.getTransactionList(3).subscribe ( res => {
+    this.transactionSerivices.getTransactionList(3, []).subscribe ( res => {
       if (res) {
         if (res.status === '200') {
           this.grnList = res.data;
-          console.log(this.grnList);
         }
       }
     });
@@ -85,7 +84,6 @@ export class CreatePOrderComponent implements OnInit {
   addNote() {
     this.router.navigate(['/stores/addEditStore']);
     localStorage.setItem('transactionID', '0');
-    console.log('========', this.router.url);
   }
 
   editNote(id) {

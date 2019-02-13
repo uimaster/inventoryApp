@@ -26,12 +26,12 @@ export class SalesOrderVerificationComponent implements OnInit {
   authoriseOrder() {
     this.salesService.authoriseSalesOrder(this.authorizaionCheckedList).subscribe( res => {
       alert(res.message);
+      this.getSalesOrderList();
     });
   }
 
   getAuthCheckList(id) {
     this.authorizaionCheckedList.push({'transactionID': id});
-    console.log(this.authorizaionCheckedList);
   }
 
 }

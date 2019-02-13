@@ -1,44 +1,109 @@
-
+<app-filters (filterDates)='getSalesOrderList($event)'></app-filters>
 <p-panel header="Sales Invoice List" class="Tabledata">
   <p-header>
-      <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addSalesInvoice()"></button>
 
-    </p-header>
+    <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addSalesInvoice()"></button>
+    <button pButton type="button" style="float:right" icon="fa fa-truck" label="Update Ship Details" class="ui-button-info"
+      (click)="updateShipDetails()" [disabled]="formData.length < 1"></button>
+
+
+  </p-header>
   <div *ngIf="invoiceList" class="table-responsive">
-      <table class="table">
-          <thead>
-          <tr>
-              <th>S. No.</th>
-              <th>Doc Date</th>
-              <th>Doc No </th>
-              <th>Customer</th>
-              <th>SO. Ref.</th>
-              <th>Amount</th>
-              <th>Action</th>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>S. No.</th>
+          <th>Doc Date</th>
+          <th>Doc No </th>
+          <th>Customer</th>
+          <th>SO. Ref.</th>
+          <th>Amount</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="invoiceList">
+          <tr *ngFor="let item of invoiceList; index as i;">
+            <td>
+              <p-checkbox ([ngModel])="tableCheck" (onChange)="getCheckList($event, item.transactionID)"></p-checkbox> {{i+1}}
+            </td>
+            <td>{{item.transactionDate}}</td>
+            <td>{{item.transactionNo}}</td>
+            <td>{{item.ledgerName}}</td>
+            <td>{{item.transactionLinkDocNo}}</td>
+            <td>{{item.transaction_Amount}}</td>
+            <td>
+              <button pButton type="button" style="margin-right: 5px;" icon="fa fa-pencil" class="ui-button-success"
+                (click)="editSalesInvoice(item.transactionID)"></button>
+              <button pButton type="button" style="margin-right: 5px;" icon="fa fa-trash-o" class="ui-button-danger"></button>
+              <a pButton type="button" icon="fa fa-print" class="ui-button-info" target="_blank" (click)="generateReport(item.transactionID)">
+              </a>
+              <button pButton type="button" icon="fa fa-truck" title="Ship Details" class="ui-button-info" (click)="veiwShipDetails(item.transactionID)"></button>
+            </td>
           </tr>
-          </thead>
-          <tbody>
-          <ng-container *ngIf="invoiceList">
-              <tr *ngFor="let item of invoiceList; index as i;">
-                  <td>{{i+1}}</td>
-                  <td>{{item.transactionDate}}</td>
-                  <td>{{item.transactionNo}}</td>
-                  <td>{{item.ledgerName}}</td>
-                  <td>{{item.transactionNo}}</td>
-                  <td>{{item.transaction_Amount}}</td>
-                  <td>
-                      <button pButton type="button" style="margin-right: 5px;" icon="fa fa-pencil" class="ui-button-success" (click)="editSalesInvoice(item.transactionID)" ></button>
-                      <button pButton type="button" style="margin-right: 5px;" icon="fa fa-trash-o" class="ui-button-danger"></button>
-                      <a pButton type="button" icon="fa fa-print" class="ui-button-info" target="_blank" (click)="generateReport(item.transactionID)"> </a>
-                  </td>
-              </tr>
-          </ng-container>
-          </tbody>
-      </table>
+        </ng-container>
+      </tbody>
+    </table>
   </div>
-  <div  *ngIf="!invoiceList || invoiceList.length < 1" style="text-align: center">
-    <br/>
+  <div *ngIf="!invoiceList || invoiceList.length < 1" style="text-align: center">
+    <br />
     No Records available !
-    <br/><br/>
+    <br /><br />
   </div>
 </p-panel>
+
+
+<p-dialog header="Shipping Details" [(visible)]="displayShippingModal" [modal]="true" [responsive]="true" [style]="{width: '350px', minWidth: '200px'}"
+  [minY]="70" [maximizable]="true" [baseZIndex]="10000">
+  <p class="warnMsg"> * Marked Fields are required. </p>
+  <form [formGroup]="shippingForm">
+    <div class="form-group">
+      <span class="ui-float-label">
+        <p-dropdown [options]="shippingLedgerList" placeholder="Ledger" formControlName="ledgerID" [style]="{'width':'95%'}" [disabled]="enabledCtrls==false"></p-dropdown>
+      </span>
+    </div>
+    <div class="form-group">
+      <span class="ui-float-label">
+        <input type="text" pInputText formControlName='transporterLRNO' [disabled]="enabledCtrls">
+        <label for="barCode">Transporter LRN No. *</label>
+      </span>
+    </div>
+    <div class="form-group">
+      <span class="ui-float-label">
+        <p-calendar [(ngModel)]="LRDate" [showIcon]="true" dateFormat="dd-mm-yy" formControlName="transporterLRDate"
+          [disabled]="enabledCtrls==false"></p-calendar>
+        <label for="transporterLRDate">Transporter LR Date *</label>
+      </span>
+    </div>
+    <div class="form-group">
+      <span class="ui-float-label">
+        <input type="text" pInputText formControlName='transactioneWayBillNo' [disabled]="enabledCtrls">
+        <label for="transactioneWayBillNo">Transaction eWay Bill No.</label>
+      </span>
+    </div>
+    <div class="form-group">
+      <span class="ui-float-label">
+        <input type="text" pInputText formControlName='distanceKMS' [disabled]="enabledCtrls">
+        <label for="distanceKMS">Distance KMS. *</label>
+      </span>
+    </div>
+    <div class="form-group">
+      <span class="ui-float-label">
+        <input type="text" pInputText formControlName='vehicleNo' [disabled]="enabledCtrls">
+        <label for="vehicleNo">Vehicle No. *</label>
+      </span>
+    </div>
+    <div class="form-group">
+      <span class="ui-float-label">
+        <p-calendar [(ngModel)]="billDate" [showIcon]="true" dateFormat="dd-mm-yy" formControlName="transactioneWayBillDate"
+          [disabled]="enabledCtrls==false"></p-calendar>
+        <!-- <input type="number" pInputText formControlName='transactioneWayBillDate'> -->
+        <label for="transactioneWayBillDate">Transaction eWay Bill Date</label>
+      </span>
+    </div>
+  </form>
+  <p-footer>
+    <button type="button" pButton (click)="displayShippingModal=false" label="Cancel" class="ui-button-secondary"></button>
+    <button type="button" pButton (click)="updateShippingData()" label="Update Shipping" [disabled]="enabledCtrls==false"></button>
+  </p-footer>
+</p-dialog>

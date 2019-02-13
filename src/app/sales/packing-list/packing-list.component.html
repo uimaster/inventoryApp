@@ -1,4 +1,4 @@
-
+<app-filters (filterDates)='getSalesOrderList($event)'></app-filters>
 <p-panel header="Packing List" class="Tabledata">
   <p-header>
       <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addPackingList()"></button>
@@ -23,7 +23,7 @@
                   <td>{{item.transactionDate}}</td>
                   <td>{{item.transactionNo}}</td>
                   <td>{{item.ledgerName}}</td>
-                  <td>{{item.transactionNo}}</td>
+                  <td>{{item.transactionLinkDocNo}}</td>
                   <td>
                       <button pButton type="button" style="margin-right: 5px;" icon="fa fa-pencil" class="ui-button-success" (click)="editPackingList(item.transactionID)" ></button>
                       <button pButton type="button" style="margin-right: 5px;" icon="fa fa-trash-o" class="ui-button-danger"></button>

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TransactionFormComponent } from './transaction.form';
 import { PrimeNGModule } from '../app.primeNg.module';
-import { TransactionSerivices } from './transaction.service';
+import { TransactionServices } from './transaction.service';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { PurchaseService } from '../purchase/purchase.service';
 import { StockService } from '../masters/stock/services/stock.service';
@@ -15,7 +15,7 @@ import { CustomerService } from '../masters/customer/services/customer.service';
   imports: [ CommonModule, RouterModule, PrimeNGModule, FormsModule, ReactiveFormsModule ],
   declarations: [ TransactionFormComponent],
   exports: [ TransactionFormComponent, PrimeNGModule],
-  providers: [ TransactionSerivices, PurchaseService, StockService, LedgerService, SupplierService, CustomerService],
+  providers: [ TransactionServices, PurchaseService, StockService, LedgerService, SupplierService, CustomerService],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA]
 })
 

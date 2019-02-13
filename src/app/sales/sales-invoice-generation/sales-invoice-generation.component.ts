@@ -32,7 +32,6 @@ export class SalesInvoiceGenerationComponent implements OnInit {
 
   getAuthCheckList(id) {
     this.authorizaionCheckedList.push({'transactionID': id});
-    console.log(this.authorizaionCheckedList);
   }
 
 }

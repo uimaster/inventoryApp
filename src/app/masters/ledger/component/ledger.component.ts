@@ -22,6 +22,7 @@ export class LedgerComponent implements OnInit, OnDestroy {
     public lForm;
     public calculatedOnList: any = [];
     public taxTypeList: any = [];
+    public ledgerGroupList: any = [];
     companyId = localStorage.getItem('companyID');
     userId = localStorage.getItem('userID');
     showError = false;
@@ -46,8 +47,20 @@ export class LedgerComponent implements OnInit, OnDestroy {
           });
         }, 1000);
 
+        this.getLedgerGroupList();
 
+    }
 
+    getLedgerGroupList() {
+      this.ledgerService.getLedgerGroupList().subscribe( res => {
+        if (res.status === '200') {
+          let data = res.data;
+          for ( let i = 0; i < data.length; i++) {
+            this.ledgerGroupList.push({label: data[i].ledgerGroupName, value: data[i].ledgerGroupID});
+          }
+
+        }
+      });
     }
 
     getLedgerData() {
@@ -93,8 +106,7 @@ export class LedgerComponent implements OnInit, OnDestroy {
             taxType: ['', Validators.required],
             company_ID: [this.companyId],
             uSerID: [this.userId],
-            gstRate: [0]
-
+            gstRate: [0],
         });
     }
 

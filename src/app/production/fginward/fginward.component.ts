@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { TransactionSerivices } from '../../transactionsShared/transaction.service';
+import { TransactionServices } from '../../transactionsShared/transaction.service';
 import { Router } from '@angular/router';
 import { BASEURL } from '../../../utils/app.urls';
 
@@ -10,10 +10,10 @@ import { BASEURL } from '../../../utils/app.urls';
 })
 export class FGInwardComponent implements OnInit, OnDestroy {
   fgList = [];
-  constructor( private transactionSerivices: TransactionSerivices, private router: Router) { }
+  constructor( private transactionServices: TransactionServices, private router: Router) { }
 
   ngOnInit() {
-    this.getTransactionList();
+    // this.getTransactionList();
     localStorage.setItem('transItemDetails', 'true');
     localStorage.setItem('transLedgerDetails', 'false');
     localStorage.setItem('transPOTerms', 'false');
@@ -30,11 +30,13 @@ export class FGInwardComponent implements OnInit, OnDestroy {
     localStorage.setItem('transationLinkRef', 'false');
     localStorage.setItem('showLocation', 'true');
     localStorage.setItem('showBarcode', 'true');
+    localStorage.setItem('showActionBtn', 'true');
+    localStorage.setItem('showBarcode4Fg', 'true');
   }
 
 
-  getTransactionList() {
-    this.transactionSerivices.getTransactionList(13).subscribe ( res => {
+  getTransactionList(dates) {
+    this.transactionServices.getTransactionList(13, dates).subscribe ( res => {
       if (res) {
         if (res.status === '200') {
           this.fgList = res.data;
@@ -57,7 +59,7 @@ export class FGInwardComponent implements OnInit, OnDestroy {
     localStorage.setItem('rollBackUrl', backUrl);
   }
   generateReport(id) {
-    this.transactionSerivices.generateReport(id).subscribe( res => {
+    this.transactionServices.generateReport(id).subscribe( res => {
       if (res.status === '200') {
         const fileName = res.data[0].downloadFileName;
         const downloadUrl = BASEURL + 'ReportDownload/DownloadReportPDF?ReportFileName=' + fileName;

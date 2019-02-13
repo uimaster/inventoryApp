@@ -1,34 +1,35 @@
+<p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
 <p-panel header="Stock Items" class="Tabledata">
-  <p-header>
-    <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addStockItem(0)"></button>
-  </p-header>
+    <p-header>
+        <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addStockItem(0)"></button>
+    </p-header>
 
-  <div class="table-responsive">
-    <table class="table">
-      <thead>
-        <tr>
-          <th width="35%">Item Name</th>
-          <th width="15%">Item Code</th>
-          <th width="15%">Group Name</th>
-          <th width="15%">Unit Name</th>
-          <th width="20%">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let stock of stockList; index as i;">
-          <td>
-            {{stock.itemName}}
-          </td>
-          <td>{{stock.itemCode}}</td>
-          <td>{{stock.stockGroupName}}</td>
-          <td>{{stock.unitName}}</td>
-          <td>
-            <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="editStock(stock.stockItemID)"></button>
-            <button pButton type="button" label="Delete" class="ui-button-danger"></button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th width="35%">Item Name</th>
+                    <th width="15%">Item Code</th>
+                    <th width="15%">Group Name</th>
+                    <th width="15%">Unit Name</th>
+                    <th width="20%">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let stock of stockList; index as i;">
+                    <td>
+                        {{stock.itemName}}
+                    </td>
+                    <td>{{stock.itemCode}}</td>
+                    <td>{{stock.stockGroupName}}</td>
+                    <td>{{stock.unitName}}</td>
+                    <td>
+                        <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="editStock(stock.stockItemID)"></button>
+                        <button pButton type="button" label="Delete" class="ui-button-danger"></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
 </p-panel>

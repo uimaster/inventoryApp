@@ -48,7 +48,7 @@ export class CustomerComponent implements OnInit, OnDestroy {
 
       setTimeout(() => {
         this.getCustomerData(this.customerID);
-      }, 2000);
+      }, 500);
     }
 
     getCustomerData(customerId) {
@@ -89,9 +89,10 @@ export class CustomerComponent implements OnInit, OnDestroy {
                       address1: [this.customer.customerAddList[i].address1],
                       address2: [this.customer.customerAddList[i].address2],
                       address3: [this.customer.customerAddList[i].address3],
-                      state: [this.customer.customerAddList[i].state],
+                      state: [this.customer.customerAddList[i].stateCode],
                       gstincode: [this.customer.customerAddList[i].gstincode],
-                      stateCode: [this.customer.customerAddList[i].stateCode]
+                      stateCode: [this.customer.customerAddList[i].stateCode],
+                      ledaddid: [this.customer.customerAddList[i].ledaddid]
                     })
                   );
                 }
@@ -199,7 +200,8 @@ export class CustomerComponent implements OnInit, OnDestroy {
             address3: [''],
             state: [''],
             gstincode: [0],
-            stateCode: [0]
+            stateCode: [0],
+            ledaddid: [0]
         });
     }
 
@@ -214,7 +216,8 @@ export class CustomerComponent implements OnInit, OnDestroy {
           address3: [''],
           state: [''],
           gstincode: ['0'],
-          stateCode: [0]
+          stateCode: [0],
+          ledaddid: [0]
         })
       );
     }

@@ -13,7 +13,7 @@ const EXCEL_EXTENSION = '.xlsx';
 @Component({
     selector: 'app-reports-list',
     templateUrl: './reports-list.component.html',
-    styleUrls: ['./reports.component.scss']    
+    styleUrls: ['./reports.component.scss']
 })
 export class ReportsListComponent implements OnInit, OnDestroy {
     public type:any;
@@ -24,7 +24,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
 
 
     constructor(
-        private _reportsService: ReportsService, 
+        private _reportsService: ReportsService,
         private router: Router,
         private _route: ActivatedRoute,
         private datePipe: DatePipe,
@@ -39,7 +39,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
                 case 'po-report':
                     this.getPOReportList();
                     break;
-            
+
                 default:
                     break;
             }
@@ -66,7 +66,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
         if (localStorage.getItem('r_toDate') !== '') {
             toDate = JSON.parse(localStorage.getItem('r_toDate'));
         } else {
-            toDate = this.datePipe.transform(new Date(date.getFullYear(), date.getMonth() + 1, 0), 'dd/MM/yyyy'); 
+            toDate = this.datePipe.transform(new Date(date.getFullYear(), date.getMonth() + 1, 0), 'dd/MM/yyyy');
         }
         if (localStorage.getItem('r_reportsTypeID') !== '') {
             ReportsTypeID = JSON.parse(localStorage.getItem('r_reportsTypeID'));
@@ -77,7 +77,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
         if (localStorage.getItem('r_ledgerID') !== '') {
             LedgerID = JSON.parse(localStorage.getItem('r_ledgerID'));
         }
-        
+
         this.reportsListDataSubscription = this._reportsService.getPOReportList(ReportsTypeID,StockItemID,LedgerID,fromDate,toDate).subscribe(
             result => {
                // this.showLoader = false;
@@ -116,15 +116,14 @@ export class ReportsListComponent implements OnInit, OnDestroy {
                        // console.log(key + " -> " + row[key]);
                     }
                 }
-            }    
+            }
         );
     }
 
     exportAsXLSX():void {
-       console.log(this.reportsList);
        this.exportAsExcelFile(this.reportsList, 'PO-Report');
     }
-    
+
     public exportAsExcelFile(json: any[], excelFileName: string): void {
 
         const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
@@ -132,12 +131,12 @@ export class ReportsListComponent implements OnInit, OnDestroy {
         const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
         this.saveAsExcelFile(excelBuffer, excelFileName);
     }
-    
+
     private saveAsExcelFile(buffer: any, fileName: string): void {
         const data: Blob = new Blob([buffer], {
             type: EXCEL_TYPE
         });
         FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
     }
-    
+
 }

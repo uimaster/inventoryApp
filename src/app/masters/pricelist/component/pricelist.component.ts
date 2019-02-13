@@ -42,7 +42,7 @@ export class PricelistComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.showLoader = true;
         this.getStockItems();
-        
+
         this.priceListForm();
 
       //setTimeout(() => {
@@ -73,7 +73,7 @@ export class PricelistComponent implements OnInit, OnDestroy {
                     // const controlArray = <FormArray> this.cForm.get('priceListItems');
                     // controlArray.removeAt(0);
                     // this.priceList['priceListItems'].forEach(row => controlArray.push(this._formBuilder.group(row)));
-                    this.cForm.setControl('priceListItems', this._formBuilder.array((this.priceList['priceListItems'] || []).map((x) => this._formBuilder.group(x))));                                
+                    this.cForm.setControl('priceListItems', this._formBuilder.array((this.priceList['priceListItems'] || []).map((x) => this._formBuilder.group(x))));
                 }
             }
            // this.showLoader = false;
@@ -141,7 +141,7 @@ export class PricelistComponent implements OnInit, OnDestroy {
         // }
        // console.log(form);
         form.priceListTypeID = Number(this.typeID);
-        form.priceListDate = this.datePipe.transform(form.priceListDate, 'yyyy-MM-dd'); 
+        form.priceListDate = this.datePipe.transform(form.priceListDate, 'yyyy-MM-dd');
         this.priceListService.updatePricelist(form).subscribe((res: PricelistResponse) => {
             if (res.status === '200') {
                 this.showSuccess = true;
@@ -168,7 +168,7 @@ export class PricelistComponent implements OnInit, OnDestroy {
           }
         }
         });
-      }  
+      }
       else if(this.typeID==2){
         this.priceListService.getAllCustomers().subscribe( res => {
           if (res && res.status === '200') {
@@ -181,7 +181,7 @@ export class PricelistComponent implements OnInit, OnDestroy {
             }
           }
         });
-      }  
+      }
     }
 
     getStockItems() {
@@ -193,7 +193,7 @@ export class PricelistComponent implements OnInit, OnDestroy {
                 for (let key in data) {
                     if (data.hasOwnProperty(key)) {
                         this.allStockItems.push({label: data[key].stockItemDesc, value: data[key].stockItemID});
-                        //this.allStockItemsData.push({label: data[key].itemName, value: data[key].stockItemID});                        
+                        //this.allStockItemsData.push({label: data[key].itemName, value: data[key].stockItemID});
                     }
                 }
             }
@@ -202,7 +202,7 @@ export class PricelistComponent implements OnInit, OnDestroy {
         });
     }
 
-       
+
     search(event) {
         this.allStockItems = this.allStockItemsData.filter(
             row => {
@@ -214,7 +214,7 @@ export class PricelistComponent implements OnInit, OnDestroy {
                        // console.log(key + " -> " + row[key]);
                     }
                 }
-            }    
+            }
         );
     }
 
@@ -227,7 +227,7 @@ export class PricelistComponent implements OnInit, OnDestroy {
             }
         }
     }
-  
+
     getSelectedVal(event, elem,index) {
       for ( var i = 0; i < this.allStockItems.length; i++) {
         if (this.allStockItems[i].label === event) {

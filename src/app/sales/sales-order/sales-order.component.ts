@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TransactionSerivices } from '../../transactionsShared/transaction.service';
+import { TransactionServices } from '../../transactionsShared/transaction.service';
 import { Router } from '@angular/router';
 import { BASEURL } from '../../../utils/app.urls';
 
@@ -11,11 +11,11 @@ import { BASEURL } from '../../../utils/app.urls';
 export class SalesOrderComponent implements OnInit {
   public salesOrderList = [];
   constructor(
-    private transComService: TransactionSerivices, private router: Router
+    private transComService: TransactionServices, private router: Router
   ) { }
 
   ngOnInit() {
-    this.getSalesOrderList();
+    // this.getSalesOrderList();
     localStorage.setItem('transItemDetails', 'true');
     localStorage.setItem('transLedgerDetails', 'true');
     localStorage.setItem('transPOTerms', 'false');
@@ -33,13 +33,14 @@ export class SalesOrderComponent implements OnInit {
     localStorage.setItem('showLocation', 'false');
     localStorage.setItem('showPO', 'true');
     localStorage.setItem('transationLinkRefInput', 'true');
+    localStorage.setItem('showBoxCode', 'true');
+    localStorage.setItem('showLength4So', 'true');
   }
 
-  getSalesOrderList() {
-    this.transComService.getTransactionList('10').subscribe( res => {
+  getSalesOrderList(dates) {
+    this.transComService.getTransactionList('10', dates).subscribe( res => {
       if (res && res.status === '200') {
         this.salesOrderList = res.data;
-        console.log(this.salesOrderList);
       }
     });
   }

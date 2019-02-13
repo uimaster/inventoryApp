@@ -83,6 +83,21 @@
         </div>
       </div>
 
+      <div class="ui-g-6">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <p-dropdown [options]="ledgerGroupList" formControlName="ledgerGroupID"  id="ledgerGroupID" placeholder="Ledger Group"></p-dropdown>
+            <!--<input type="text" formControlName="calculatedOn" pInputText id="calculatedOn">-->
+
+          </span>
+          <div *ngIf="calculatedOn.invalid && (calculatedOn.dirty || calculatedOn.touched)" class="alert alert-danger">
+            <div *ngIf="calculatedOn.errors.required">
+              This field is required.
+            </div>
+          </div>
+        </div>
+      </div>
+
 
 
     </div>

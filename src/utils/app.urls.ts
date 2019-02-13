@@ -26,6 +26,8 @@ export const TAXTYPE =  BASEURL + 'Masters/GetTaxTypeList';
 export const LOCATIONURL = BASEURL + 'Masters/GetLocationList';
 export const CURRENCYLISTURL = BASEURL + 'Masters/GetCurrencyList';
 export const GETSTATEURL = BASEURL + 'Masters/GetStates';
+export const GETLEDGERGROUPLIST = BASEURL + 'Ledger/GetLedgerGroupList';
+export const GETSTOCKITEMGROUP = BASEURL + '/Stockitem/GetStockItemsforGroup';
 
 // Transaction urls //
 export const GETTRANSACTION = BASEURL + 'Transactions/GetTransactionsList';
@@ -45,10 +47,11 @@ export const GENERATEREPORT = BASEURL + 'Reports/GenerateReportsPDF';
 export const DOWNLOADREPORT = BASEURL + 'ReportDownload/DownloadReportPDF';
 export const VALIDATEBATCH = BASEURL + 'StockItem/GetValidateBatch';
 export const GETTRANSACTIONTYPESERIES = BASEURL + 'Transactions/GetTransactionTypeSeries';
+export const GETITEMSRATE = BASEURL + 'StockItem/GetStockItemRate';
+export const GETLEDGERLOCATION = BASEURL + 'Masters/GetLedgerLocationList';
 
 
-
-//PriceLIST
+// PriceLIST
 export const GETPRICELISTLIST =  BASEURL + 'PriceLists/GetPriceLists';
 export const GETPRICELISTDETAIL =  BASEURL + 'PriceLists/GetPriceListDetails';
 export const UPDATEPRICELIST =  BASEURL + 'PriceLists/UpdatePriceList';
@@ -62,7 +65,7 @@ export const GETBOMCOMTYPES = BASEURL + 'BOM/getBOMComponentTypes';
 export const GETBOMPARATYPES = BASEURL + 'BOM/getParameterTypes';
 export const UPDATEBOM = BASEURL + 'BOM/POSTUpdateBOM';
 
-//Planning
+// Planning
 export const GETFGLIST =  BASEURL + 'planning/getFGPlanList';
 export const GETFGDETAIL =  BASEURL + 'planning/GetFGPlanDetails';
 export const UPDATEFG =  BASEURL + 'planning/POSTUpdateFGPlan';
@@ -70,7 +73,7 @@ export const GETRMQLIST =  BASEURL + 'planning/getRMQList';
 export const GETRMQDETAIL =  BASEURL + 'planning/GetRMQDetails';
 export const UPDATERMQ =  BASEURL + 'planning/POSTUpdateRMQ';
 
-//REPORTS
+// REPORTS
 export const POREPORT           =  BASEURL + 'Reports/GeneratePOReport';
 export const SOREPORT           =  BASEURL + 'Reports/GenerateSOReport';
 export const STOCKSUMMARYREPORT =  BASEURL + 'Reports/GenerateStockSummaryReport';
@@ -79,3 +82,10 @@ export const SALESREPORT        =  BASEURL + 'Reports/GenerateSalesReport';
 export const GRNREGISTER        =  BASEURL + 'Reports/GenerateGRNRegister';
 export const STOCKISSUEREGISTER =  BASEURL + 'Reports/GenerateStockIssueRegister';
 export const STOCKITEMLIST =  BASEURL + 'Stockitem/GetStockItemsforTransaction';
+export const GETSHIPPINGDETAILS = BASEURL + 'Transactions/GetShippingDetailsForInvoice';
+export const UPDATESHIPPINGDETAILS = BASEURL + 'Transactions/UpdateShippingInfoForInvoices';
+export const GETSHIPPINGLEDGERS = BASEURL + 'Ledger/getTransporterList';
+
+// Users
+export const USERLIST = BASEURL + 'Users/GetUsersList';
+export const GETUSERDETAILS = BASEURL + 'Users/GetUsersDetails';

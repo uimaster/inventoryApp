@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@ang
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { PurchaseService } from './../purchase.service';
-import { TransactionSerivices } from '../../transactionsShared/transaction.service';
+import { TransactionServices } from '../../transactionsShared/transaction.service';
 
 @Component({
   selector: 'app-purchase-order',
@@ -25,13 +25,13 @@ export class POAuthListComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private http: HttpClient,
-    private trasactionService: TransactionSerivices
+    private trasactionService: TransactionServices
     ) {
     // this.createForm();
   }
 
   ngOnInit() {
-    this.getPOAuthList();
+    // this.getPOAuthList();
     this.createUnauthoriseForm();
   }
 
@@ -45,10 +45,10 @@ export class POAuthListComponent implements OnInit {
     this.purchaseService.pOAuthrize([this.authrizeForm.value]).subscribe ( res => {
       if (res && res.status === 200) {
         alert(res.message);
-        this.getPOAuthList();
+        this.getPOAuthList([]);
       } else {
         alert(res.message);
-        this.getPOAuthList();
+        this.getPOAuthList([]);
       }
     });
   }
@@ -68,8 +68,8 @@ export class POAuthListComponent implements OnInit {
     }
   }
 
-  getPOAuthList() {
-    this.purchaseService.getPOAuthList().subscribe( res => {
+  getPOAuthList(dates) {
+    this.purchaseService.getPOAuthList(dates).subscribe( res => {
       if (res) {
         if (res.status === '200') {
           this.POAuthList = res.data;
@@ -98,11 +98,11 @@ export class POAuthListComponent implements OnInit {
     this.purchaseService.pOAuthrize(JSON.stringify([this.unauthenticationForm.value])).subscribe ( res => {
       if (res && res.status === 200) {
         alert(res.message);
-        this.getPOAuthList();
+        this.getPOAuthList([]);
         this.unauthenticationForm.controls['AuthRemarks'].setValue('');
       } else {
         alert(res.message);
-        this.getPOAuthList();
+        this.getPOAuthList([]);
       }
     });
   }

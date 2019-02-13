@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TransactionSerivices } from '../../transactionsShared/transaction.service';
+import { TransactionServices } from '../../transactionsShared/transaction.service';
 import { Router } from '@angular/router';
 import { BASEURL } from '../../../utils/app.urls';
 
@@ -10,10 +10,10 @@ import { BASEURL } from '../../../utils/app.urls';
 })
 export class StockRequestComponent implements OnInit {
   stockRequestList = [];
-  constructor( private transactionSerivices: TransactionSerivices, private router: Router ) { }
+  constructor( private transactionSerivices: TransactionServices, private router: Router ) { }
 
   ngOnInit() {
-    this.getTransactionList();
+    // this.getTransactionList();
 
     localStorage.setItem('transItemDetails', 'true');
     localStorage.setItem('transLedgerDetails', 'false');
@@ -32,12 +32,11 @@ export class StockRequestComponent implements OnInit {
     localStorage.setItem('showLocation', 'true');
   }
 
-  getTransactionList() {
-    this.transactionSerivices.getTransactionList(15).subscribe ( res => {
+  getTransactionList(dates) {
+    this.transactionSerivices.getTransactionList(15, dates).subscribe ( res => {
       if (res) {
         if (res.status === '200') {
           this.stockRequestList = res.data;
-          console.log(this.stockRequestList);
         }
       }
     });
