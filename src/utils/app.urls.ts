@@ -77,6 +77,8 @@ export const GETSTOCKITEMFORGROUP = BASEURL + 'Stockitem/GetStockItemsforGroup';
 // REPORTS
 export const POREPORT           =  BASEURL + 'Reports/GeneratePOReport';
 export const SOREPORT           =  BASEURL + 'Reports/GenerateSOReport';
+export const SODETAILSREPORT    =  BASEURL + 'Reports/GenerateSODetailsReport';
+export const DESPATCHDETAILSREPORT =  BASEURL + 'Reports/GenerateDespatchDetailsReport';
 export const STOCKSUMMARYREPORT =  BASEURL + 'Reports/GenerateStockSummaryReport';
 export const MSLREPORT          =  BASEURL + 'Reports/GenerateMSLReport';
 export const SALESREPORT        =  BASEURL + 'Reports/GenerateSalesReport';
