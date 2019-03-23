@@ -25,12 +25,6 @@ export class FiltersComponent implements OnInit, OnDestroy {
   public ledgerID = 0;
   //public ledgerName = '';
   public stockItemID = 0;
-<<<<<<< HEAD
-  itemName: string;
-
-
-  constructor(private reportsService: ReportsService, private router: Router, private location: Location,private datePipe: DatePipe,) {
-=======
   public stockItemName = '';
   public type:any;
   //public ledger = [];
@@ -41,7 +35,6 @@ export class FiltersComponent implements OnInit, OnDestroy {
       private location: Location,
       private datePipe: DatePipe,
       private _route: ActivatedRoute,) {
->>>>>>> a455ac85e61264c838eb3201e308615002f94ca8
     this.currentUrl = window.location.href;
   }
 
@@ -52,7 +45,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
       localStorage.removeItem('r_reportsTypeID');
       localStorage.removeItem('r_stockItemID');
       localStorage.removeItem('r_ledgerID');
-      //localStorage.removeItem('r_ledgerName');
+      // localStorage.removeItem('r_ledgerName');
     }
   }
 
@@ -183,27 +176,27 @@ export class FiltersComponent implements OnInit, OnDestroy {
             // this.ledgerList = res.data;
             let data = res.data;
             for (let key in data) {
-            if(data.hasOwnProperty(key) && this.type=='po-report') {
-                this.ledgerList.push({label: data[key].supplierName, value: data[key].supplier_ID});
-            }
-            if (data.hasOwnProperty(key) && this.type=='so-report') {
-                this.ledgerList.push({label: data[key].customerName, value: data[key].customer_ID});
-            }
+              if (data.hasOwnProperty(key) && this.type=='po-report') {
+                  this.ledgerList.push({label: data[key].supplierName, value: data[key].supplier_ID});
+              }
+              if (data.hasOwnProperty(key) && this.type=='so-report') {
+                  this.ledgerList.push({label: data[key].customerName, value: data[key].customer_ID});
+              }
             }
             if(localStorage.getItem('r_ledgerID')){  this.ledgerID = JSON.parse(localStorage.getItem('r_ledgerID')); }
             else{ localStorage.setItem('r_ledgerID', JSON.stringify(this.ledgerID)); }
-            // let selected = this.ledgerList.find(row=>row.value == this.ledgerID);
-            // this.ledger.push({label:selected.label,value:selected.value});
-            // this.ledgerName = selected.label;
+            //let selected = this.ledgerList.find(row=>row.value == this.ledgerID);
+            //this.ledger.push({label:selected.label,value:selected.value});
+            //this.ledgerName = selected.label;
         }
     });
   }
 
   onChangeLedger(event){
-    if(event.value && event.value!='') {
-        // let selected = this.ledgerList.find(row=>row.value == event.value);
+    if(event.value && event.value!=''){
+        //let selected = this.ledgerList.find(row=>row.value == event.value);
         localStorage.setItem('r_ledgerID', JSON.stringify(event.value));
-        // localStorage.setItem('r_ledgerName', JSON.stringify(selected.label));
+        //localStorage.setItem('r_ledgerName', JSON.stringify(selected.label));
     }
     else{
         localStorage.setItem('r_ledgerID', JSON.stringify(0));

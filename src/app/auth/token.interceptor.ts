@@ -62,7 +62,7 @@ export class TokenInterceptor implements HttpInterceptor {
             localStorage.setItem('isLogin', 'false');
             return auth.refreshToken()
 
-              .flatMap((res) => {
+              .flatMap((res:any) => {
                 if  (res.message === 'Success') {
                   LocalStorage.setRefreshToken(res.data[0].bearerToken);
                   return next.handle(this.applyCredentials(req, LocalStorage.getRefreshToken()));

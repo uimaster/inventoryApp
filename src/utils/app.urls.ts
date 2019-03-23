@@ -1,6 +1,6 @@
 
 export const BASEURL = 'http://apietrax.iflotech.in/api/'; // Dev base url
-//export const BASEURL = 'http://192.168.1.60:90/api/'; // Live base url
+// export const BASEURL = 'http://192.168.1.60:90/api/'; // Live base url
 
 
 // Masters urls //
@@ -90,3 +90,4 @@ export const GETSHIPPINGLEDGERS = BASEURL + 'Ledger/getTransporterList';
 // Users
 export const USERLIST = BASEURL + 'Users/GetUsersList';
 export const GETUSERDETAILS = BASEURL + 'Users/GetUsersDetails';
+export const GETUSERTABDETAILS = BASEURL + 'Users/GetUserTabDetails';

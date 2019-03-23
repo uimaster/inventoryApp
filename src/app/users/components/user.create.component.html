@@ -1,80 +1,83 @@
 <p-panel header="Users Details" class="Tabledata">
-    <p-header>
-        <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add User" class="ui-button-success" (click)="addUser()"></button>
-    </p-header>
+  <p-header>
+    <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add User" class="ui-button-success"
+      (click)="addUser()"></button>
+  </p-header>
 
 
-    <!-- <p-progressSpinner *ngIf="showLoader"></p-progressSpinner> -->
-    <form [formGroup]="userForm" (submit)="saveUser(userForm.value)" class="formData">
-        <!-- <div class="message error" *ngIf="showError">{{errorMsg}}</div>
+  <!-- <p-progressSpinner *ngIf="showLoader"></p-progressSpinner> -->
+  <form [formGroup]="userForm" (submit)="saveUser(userForm.value)" class="formData">
+    <!-- <div class="message error" *ngIf="showError">{{errorMsg}}</div>
     <div class="message success" *ngIf="showSuccess">{{successMsg}}</div> -->
 
-        <div class="ui-g">
-            <div class="ui-g-3">
-                <div class="form-group">
-                    <span class="ui-float-label">
+    <div class="ui-g">
+      <div class="ui-g-3">
+        <div class="form-group">
+          <span class="ui-float-label">
             <input type="text" formControlName="name" pInputText id="name">
             <label for="name">Name</label>
           </span>
-                </div>
-            </div>
-            <div class="ui-g-3">
-                <div class="form-group">
-                    <span class="ui-float-label">
+        </div>
+      </div>
+      <div class="ui-g-3">
+        <div class="form-group">
+          <span class="ui-float-label">
             <p-calendar [(ngModel)]="expiryDateModel" [showIcon]="true" dateFormat="dd-mm-yy" formControlName="expiryDate"></p-calendar>
             <label for="expiryDate">Expiry Date</label>
           </span>
-                </div>
-            </div>
-            <div class="ui-g-3">
-                <div class="form-group">
-                    <span class="ui-float-label">
+        </div>
+      </div>
+      <div class="ui-g-3">
+        <div class="form-group">
+          <span class="ui-float-label">
             <input type="text" formControlName="activeStatus" pInputText id="activeStatus">
             <label for="activeStatus">Status</label>
           </span>
-                </div>
-            </div>
-            <div class="ui-g-3">
-                <div class="form-group">
-                    <span class="ui-float-label">
+        </div>
+      </div>
+      <div class="ui-g-3">
+        <div class="form-group">
+          <span class="ui-float-label">
             <input type="text" formControlName="company_ID" pInputText id="company_ID">
             <label for="company_ID">Company</label>
           </span>
-                </div>
-            </div>
         </div>
+      </div>
+    </div>
 
 
-        <div formArrayName="userRights">
-            <div *ngFor="let flevel of userForm.get('userRights').controls; let i = index;" [formGroupName]="i">
-                <p-tabView>
-                    <p-tabPanel [header]="flevel.userRightMenuName" [selected]="i == 0">
-                        fsdf{{flevel[i].userRightMenuName}}
-                        <div formArrayName="userRightTabModelList">
-                            <div *ngFor="let slevel of flevel.get('userRightTabModelList').controls; let j = index;" [formGroupName]="j">
-                                <p-fieldset [legend]="slevel.userRightTabName">
-                                    sdf{{slevel[j].userRightTabName}}
-                                    <div formArrayName="userRightActionModelList">
-                                        <div *ngFor="let tlevel of slevel.get('userRightActionModelList').controls; let h = index;" [formGroupName]="h">
-                                            sdf{{tlevel[h]}}
-                                            <input type="radio" name="createStatus" formControlName="createStatus">Create
-                                            <input type="radio" name="deleteStatus" formControlName="deleteStatus">Delete
-                                            <input type="radio" name="modifyStatus" formControlName="modifyStatus">Edit
-                                            <input type="radio" name="viewStatus" formControlName="viewStatus">View
-                                            <!-- <p-inputSwitch formControlName="createStatus">Create</p-inputSwitch>
-                                    <p-inputSwitch formControlName="deleteStatus">Delete</p-inputSwitch>
-                                    <p-inputSwitch formControlName="modifyStatus">Edit</p-inputSwitch>
-                                    <p-inputSwitch formControlName="viewStatus">View</p-inputSwitch> -->
-                                        </div>
-                                    </div>
-                                </p-fieldset>
-                            </div>
-                        </div>
-                    </p-tabPanel>
-                </p-tabView>
+    <div formArrayName="userRights">
+        <p-tabView *ngFor="let flevel of userForm.get('userRights').controls; let i = index;" formGroupName="{{i}}">
+
+          <p-tabPanel [header]="flevel.userRightMenuName">
+
+            <div formArrayName="userRightTabModelList">
+
+               <div *ngFor="let slevel of flevel.get('userRightTabModelList').controls; let j = index;" formGroupName="{{j}}">
+
+                <p-fieldset legend="{{slevel.userRightTabName}}">
+
+                  <div formArrayName="userRightActionModelList">
+
+                     <div *ngFor="let tlevel of slevel.get('userRightActionModelList').controls; let h = index;"  formGroupName="{{h}}">
+                      <input type="radio" name="createStatus" formControlName="createStatus">Create
+                      <input type="radio" name="deleteStatus" formControlName="deleteStatus">Delete
+                      <input type="radio" name="modifyStatus" formControlName="modifyStatus">Edit
+                      <input type="radio" name="viewStatus" formControlName="viewStatus">View
+                    </div>
+
+                  </div>
+
+                </p-fieldset>
+
+              </div>
+
             </div>
-        </div>
 
-        <input type="submit" value="submit" />
-    </form>
+          </p-tabPanel>
+        </p-tabView>
+    </div>
+
+    <input type="submit" value="submit" />
+  </form>
 </p-panel>

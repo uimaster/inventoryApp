@@ -1149,7 +1149,8 @@ table {
 
 .ui-state-disabled,
 .ui-widget:disabled {
-    opacity: 0.6;
+    opacity: 0.8;
+    cursor: not-allowed;
 }
 
 .ui-multiselect
@@ -1158,3 +1159,5 @@ table {
   padding: 7px;
   .ui-multiselect-label{ font-weight: normal; display: inline;}
 }
+.barcodeBtn:disabled{ opacity: 0.2; cursor: not-allowed!important;}
+.barcodeBtn:disabled *{ cursor: not-allowed!important; }

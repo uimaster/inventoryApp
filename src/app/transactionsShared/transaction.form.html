@@ -158,8 +158,8 @@
         <legend>
             Item Details
         </legend>
-        <!-- <div style=" max-height: 300px; overflow: auto" > -->
-        <div>
+        <div style="max-height: 450px; min-height: 300px; overflow: auto" >
+
             <table width="100%" class="fieldTable">
                 <thead>
                     <th width="4%">S.No.</th>
@@ -172,17 +172,26 @@
                     <th width="10%" *ngIf="GrnInput">Challan Qty.</th>
                     <th width="10%">Qty</th>
                     <th width="10%" *ngIf="showBoxCode">Box Code</th>
-                    <th width="10%">Rate</th>
-                    <th width="10%">Amount</th>
+                    <th width="10%" *ngIf="!showScannedQty">Rate</th>
+                    <th width="10%" *ngIf="!showScannedQty">Amount</th>
                     <th width="10%" style="text-align:center; min-width: 130px;">Actions</th>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let ctrl of transactionForm.get('transItemDetails').controls; let i = index;" [formGroupName]="i">
+                    <tr *ngFor="let ctrl of transactionForm.get('transItemDetails').controls; let i = index;" [formGroupName]="i" >
                         <td>{{i+1}}</td>
                         <td class="specialDropdown" style="text-align: left;">
 
-                            <p-autoComplete formControlName="stockItemDesc" [suggestions]="filteredItems" (completeMethod)="filterItems($event)" (onSelect)="getSelectedVal($event, 'transItemDetails', i)" [size]="30" placeholder="Enter ItemCode To Search" [minLength]="1" styleClass="wid100"
-                                [disabled]="showActionBtn" [dropdown]="true">
+                            <p-autoComplete
+                              formControlName="stockItemDesc"
+                              [suggestions]="filteredItems"
+                              (completeMethod)="filterItems($event)"
+                              (onSelect)="getSelectedVal($event, 'transItemDetails', i)"
+                              [size]="30"
+                              placeholder="Enter ItemCode To Search"
+                              [minLength]="1"
+                              styleClass="wid100"
+                              [disabled]="showActionBtn"
+                              [dropdown]="true">
                                 {{itemName}}
                             </p-autoComplete>
                             <input type="text" formControlName="stockitemID" pInputText style="visibility: hidden; height: 0; width: 0; font-size: 0;">
@@ -209,23 +218,21 @@
                         <td *ngIf="showLength4So"><input type="text" formControlName="itemLength" pInputText disabled="disabled"></td>
                         <td *ngIf="showLength4So"><input type="text" formControlName="itemStops" pInputText disabled="disabled"></td>
 
-                        <td *ngIf="showScannedQty"><input type="text" formControlName="itemReceived_Qty" pInputText disabled="disabled" [ngClass]="showScannedQty == false?'verified':'pending'"></td>
+                        <td *ngIf="showScannedQty"><input type="text" formControlName="itemReceived_Qty" pInputText disabled="disabled" [class.verified]="equalQtyList[i]===i && showScannedQty" [class.pending]="equalQtyList[i]!==i && showScannedQty"></td>
 
-                        <td *ngIf="GrnInput"><input type="text" formControlName="itemPending_Qty" pInputText disabled></td>
+                        <td *ngIf="GrnInput"><input type="text" formControlName="itemPending_Qty" pInputText disabled="disabled"></td>
                         <td *ngIf="GrnInput"><input type="text" formControlName="itemChallan_Qty" pInputText></td>
-                        <td><input type="text" formControlName="itemQty" pInputText (keyup)="getAmount()" [ngClass]="showScannedQty == false?'verified':'pending'"></td>
+                        <td><input type="text" formControlName="itemQty" pInputText (keyup)="getAmount()" [class.verified]="equalQtyList[i]===i && showScannedQty" [class.pending]="equalQtyList[i]!==i && showScannedQty"></td>
                         <td *ngIf="showBoxCode"><input type="text" formControlName="boxCode" pInputText [attr.disabled]="showActionBtn == true? true : null"></td>
-                        <td><input type="text" formControlName="itemRate" pInputText (keyup)="getAmount()" [attr.disabled]="showActionBtn == true? true : null"></td>
-                        <td><input type="text" formControlName="itemAmount" pInputText (keyup)="getAmount()" [attr.disabled]="showActionBtn == true? true : null"></td>
+                        <td *ngIf="!showScannedQty"><input type="text" formControlName="itemRate" pInputText (keyup)="getAmount()" [attr.disabled]="showActionBtn == true? true : null"></td>
+                        <td *ngIf="!showScannedQty"><input type="text" formControlName="itemAmount" pInputText (keyup)="getAmount()" [attr.disabled]="showActionBtn == true? true : null"></td>
                         <td style="text-align:center">
                             <button pButton type="button" *ngIf="!showActionBtn" icon="fa fa-plus" class="ui-button-success" (click)="addItemDetails()"></button>
                             <button pButton type="button" *ngIf="!showActionBtn" icon="fa fa-trash-o" class="ui-button-danger" [disabled]="i < 1" (click)="deleteItemDetails(i)"></button>
-                            <input type="hidden" formControlName="itemBarCodeApplicableStatus" [(ngModel)]="barCodeApplicableStatus" />
+                            <input type="hidden" formControlName="itemBarCodeApplicableStatus"/>
                             <!-- <i class="fa fa-hourglass-end" aria-hidden="true" *ngIf="!ctrl.itemBarCodeApplicableStatus && showActionBtn"></i> -->
                             <!-- <button pButton type="button" *ngIf="ctrl.itemBarCodeApplicableStatus && showActionBtn" disabled="disabled" icon="fa fa-check" title="Verified" class="ui-button-success"></button> -->
-                            <button pButton type="button" (click)="showGrnBarcodeDialog(i)" icon="fa fa fa-barcode" title="Pending" class="ui-button-success"></button>
-
-
+                            <button pButton type="button" *ngIf="barCodeApplicableStatus.length > 0" [disabled]="!barCodeApplicableStatus[i].status" (click)="showGrnBarcodeDialog(i)" icon="fa fa fa-barcode" title="Scan Barcode"class="ui-button-success barcodeBtn"></button>
                         </td>
                     </tr>
                 </tbody>
@@ -339,16 +346,23 @@
 
                             <!-- <p-dropdown [options]="itemMasterList" formControlName="stockitemID" placeholder="Stock Item" filter="true" [style]="{'width':'300px'}">
                   </p-dropdown> -->
-
-                            <p-autoComplete [showTransitionOptions]="'10ms'" [ui-autocomplete-loader]="true" [hideTransitionOptions]="'10ms'" formControlName="stockItemDesc" [suggestions]="filteredItems" (completeMethod)="filterItems($event)" (onSelect)="getSelectedVal($event, 'transBoxDetails', i)"
-                                [size]="30" placeholder="Item Name" [minLength]="1" [style]="{'width':'100%'}">
-
-                                {{itemName}}
+                            <p-autoComplete
+                              [showTransitionOptions]="'10ms'"
+                              [ui-autocomplete-loader]="true"
+                              [hideTransitionOptions]="'10ms'"
+                              formControlName="stockItemDesc"
+                              [suggestions]="filteredItems"
+                              (completeMethod)="filterItems($event)"
+                              (onSelect)="getSelectedVal($event, 'transBoxDetails', i)"
+                              [size]="30"
+                              placeholder="Item Name"
+                              [minLength]="1"
+                              [style]="{'width':'100%'}"
+                            >
+                              {{itemName}}
                             </p-autoComplete>
                             <input type="text" formControlName="stockitemID" pInputText style="visibility: hidden; height: 0; width: 0; font-size: 0;">
                         </td>
-
-
                         <td><input type="text" formControlName="itemQty" pInputText></td>
                         <td><input type="text" formControlName="itemRate" pInputText></td>
                         <td><input type="text" formControlName="itemAmount" pInputText></td>
@@ -513,7 +527,7 @@
     </p-footer>
 </p-dialog>
 
-<p-dialog header="Barcode Scan Dialog" [(visible)]="displayLengthDialog" [modal]="true" [responsive]="true" [style]="{width: '350px', minWidth: '200px'}" [minY]="70" [maximizable]="true" [baseZIndex]="10000">
+<p-dialog header="Barcode Scan Dialog" [(visible)]="displayLengthDialog" position="top right" [modal]="true" [responsive]="true" [style]="{width: '350px', minWidth: '200px'}" [minY]="70" [maximizable]="true" [baseZIndex]="10000">
 
     <p style="background-color:#ffcaca; padding:0 5px; line-height:34px; border-radius:4px;">{{plValidationMsg}}</p>
     <p style="background-color:#beefc8; padding:0 5px; line-height:34px; border-radius:4px; color:#18722b;">{{BarcodeSuccessMsg}}</p><br />
