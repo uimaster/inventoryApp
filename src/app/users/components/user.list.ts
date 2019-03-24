@@ -24,7 +24,7 @@ export class UsersListComponent implements OnInit {
   }
 
   updateUser(id) {
-    alert('User Details is under progress.');
-    // this.router.navigate(['users/add/', id]);
+    // alert('User Details is under progress.');
+    this.router.navigate(['users/add/', id]);
   }
 }

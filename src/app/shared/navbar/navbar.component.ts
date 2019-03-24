@@ -2,35 +2,37 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsersService } from '../../users/service/user.service';
 
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { UsersService } from "../../users/service/user.service";
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+  selector: "app-navbar",
+  templateUrl: "./navbar.component.html",
+  styleUrls: ["./navbar.component.scss"]
 })
-
 export class NavbarComponent implements OnInit {
-  public userList: any[] = [];
+  public userDetails: any[] = [];
 
-  constructor(private router: Router, private usersService: UsersService) { }
+  constructor(private router: Router, private userService: UsersService) {}
+
   ngOnInit() {
     this.getUserDetails();
   }
 
-  logOut() {
-    localStorage.clear();
-    this.router.navigate(['/login']);
-  }
-
   getUserDetails() {
-    const userId = JSON.parse(localStorage.getItem('userID'));
-    this.usersService.getUserDetails(userId).subscribe(res => {
-      if (res.status === '200') {
-        if (res && res.data !== null && res.data !== undefined) {
-          this.userList = res.data[0].userRights;
+    const userId = localStorage.getItem("userID");
+    this.userService.getUserDetails(userId).subscribe(res => {
+      if (res.status === "200") {
+        if (res && res.data[0].userRights.length > 0) {
+          this.userDetails = res.data[0].userRights;
         }
       }
     });
   }
 
+  logOut() {
+    localStorage.clear();
+    this.router.navigate(["/login"]);
+  }
 }
