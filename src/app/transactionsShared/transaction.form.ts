@@ -826,11 +826,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
             );
             formArray.removeAt(0);
             this.barCodeApplicableStatus = [];
-            for (
-              let i = 0;
-              i < this.detailsData[0].transItemDetails.length;
-              i++
-            ) {
+            for (let i = 0; i < this.detailsData[0].transItemDetails.length; i++ ) {
               formArray.push(
                 this.fb.group({
                   transactionID: [

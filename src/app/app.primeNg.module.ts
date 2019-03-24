@@ -20,6 +20,7 @@ import { InputSwitchModule } from "primeng/inputswitch";
 import { FieldsetModule } from "primeng/fieldset";
 import {TooltipModule} from 'primeng/tooltip';
 import {MultiSelectModule} from 'primeng/multiselect';
+import {AccordionModule} from 'primeng/accordion';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import {MultiSelectModule} from 'primeng/multiselect';
     InputSwitchModule,
     FieldsetModule,
     TooltipModule,
-    MultiSelectModule
+    MultiSelectModule,
+    AccordionModule
   ],
   exports: [
     SidebarModule,
@@ -67,7 +69,8 @@ import {MultiSelectModule} from 'primeng/multiselect';
     InputSwitchModule,
     FieldsetModule,
     TooltipModule,
-    MultiSelectModule
+    MultiSelectModule,
+    AccordionModule
   ]
 })
 export class PrimeNGModule {}

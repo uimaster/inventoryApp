@@ -30,8 +30,7 @@
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "node_modules/chart.js/src/chart.js"
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
             ]
           },
           "configurations": {
@@ -80,8 +79,7 @@
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "node_modules/chart.js/src/chart.js"
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",

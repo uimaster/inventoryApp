@@ -96,7 +96,7 @@ export class DashboardComponent implements OnInit {
   ];
   public lineChartLegend = true;
 
-  constructor( private userService: UsersService) {}
+  constructor() {}
 
   public randomizeType(): void {
     this.lineChartType = this.lineChartType === "line" ? "bar" : "line";
@@ -127,14 +127,6 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getUserDetails();
-  }
-
-  getUserDetails() {
-    const userid = JSON.parse(localStorage.getItem('userID'));
-     this.userService.getUserDetails(userid).subscribe(res => {
-       console.log('userdetails:', res);
-     });
   }
 
 }
