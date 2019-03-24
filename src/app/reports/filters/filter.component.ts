@@ -17,7 +17,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
   public toDate = '';
   public currentUrl = '';
   public selectedReportType = 1;
-  public reportTypeList = [ {label: 'All', value: 1}, {label: 'Pending List', value: 2}];
+  public reportTypeList = [ {label: 'All', value: 1}, {label: 'Pending List', value: 2}, {label: 'Sales Order Details', value: 3}];
   public SSreportTypeList = [ {label: 'Raw Materials', value: 1}, {label: 'Finished Goods', value: 2}];
   public stockItemList = [];
   public filteredItems = [];
@@ -93,6 +93,12 @@ export class FiltersComponent implements OnInit, OnDestroy {
     //else{ localStorage.setItem('r_ledgerID', JSON.stringify(this.ledgerID)); }
     //if(localStorage.getItem('r_ledgerName')){  this.ledgerName = JSON.parse(localStorage.getItem('r_ledgerName')); }
     //else{ localStorage.setItem('r_ledgerName', JSON.stringify(this.ledgerName)); }
+    if(this.type=='po-report'){
+        this.reportTypeList = this.reportTypeList.filter(function( obj ) {
+            return obj.value !== 3;
+        });
+        this.selectedReportType = 1;
+    }
   }
 
   convertDate(data) {

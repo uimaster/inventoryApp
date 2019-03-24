@@ -32,6 +32,24 @@ export class ReportsService {
         );
     }
 
+    getDespatchDetailsReportList(FromDate,ToDate): Observable<any> {
+        const params = new HttpParams().set('FromDate', FromDate).set('ToDate', ToDate);
+        return this.http.get(urls.DESPATCHDETAILSREPORT, {params}).pipe(
+            map(res => {
+                return res;
+            })
+        );
+    }
+
+    getSODetailsReportList(FromDate,ToDate): Observable<any> {
+        const params = new HttpParams().set('FromDate', FromDate).set('ToDate', ToDate);
+        return this.http.get(urls.SODETAILSREPORT, {params}).pipe(
+            map(res => {
+                return res;
+            })
+        );
+    }
+
     getStockSummaryList(ReportTypeID,CompanyID,FromDate,ToDate): Observable<any> {
         const params = new HttpParams().set('REPORTTYPE', ReportTypeID)
             .set('CompanyID', CompanyID).set('FromDate', FromDate).set('ToDate', ToDate);

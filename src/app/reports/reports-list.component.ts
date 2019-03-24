@@ -17,11 +17,11 @@ const EXCEL_EXTENSION = '.xlsx';
 })
 export class ReportsListComponent implements OnInit, OnDestroy {
     public type:any;
+    public sub_type:any;
     public reportsList: any;
     public listData: any;
     public showLoader: boolean = false;
     public reportsListDataSubscription: Subscription;
-
 
     constructor(
         private _reportsService: ReportsService,
@@ -42,6 +42,12 @@ export class ReportsListComponent implements OnInit, OnDestroy {
                 case 'so-report':
                     this.getList('getSOReportList');
                     break;
+                // case 'so-detail-report':
+                //     this.getList('getSODetailsReportList');
+                //     break;
+                case 'despatch-details-report':
+                    this.getList('getDespatchDetailsReportList');
+                    break;        
                 case 'stock-summary':
                     this.getList('getStockSummaryList');
                     break;
@@ -86,23 +92,52 @@ export class ReportsListComponent implements OnInit, OnDestroy {
             let  ReportsTypeID = 1;
             let StockItemID = 0;
             let LedgerID = 0;
-            if (localStorage.getItem('r_reportsTypeID') && localStorage.getItem('r_reportsTypeID') !== '') {
+            if(localStorage.getItem('r_reportsTypeID') && localStorage.getItem('r_reportsTypeID') !== '') {
                 ReportsTypeID = JSON.parse(localStorage.getItem('r_reportsTypeID'));
             }
-            if (localStorage.getItem('r_stockItemID') && localStorage.getItem('r_stockItemID') !== '') {
+            if(localStorage.getItem('r_stockItemID') && localStorage.getItem('r_stockItemID') !== '') {
                 StockItemID = JSON.parse(localStorage.getItem('r_stockItemID'));
             }
-            if (localStorage.getItem('r_ledgerID') && localStorage.getItem('r_ledgerID') !== '') {
+            if(localStorage.getItem('r_ledgerID') && localStorage.getItem('r_ledgerID') !== '') {
                 LedgerID = JSON.parse(localStorage.getItem('r_ledgerID'));
             }
-            this.reportsListDataSubscription = this._reportsService[fName](ReportsTypeID,StockItemID,LedgerID,fromDate,toDate).subscribe(
+
+            if(this.type=='so-report' && ReportsTypeID == 3){
+                fName = 'getSODetailsReportList';
+                this.sub_type = 'sales-order-details';
+                this.reportsListDataSubscription = this._reportsService[fName](fromDate,toDate).subscribe(
+                    result => {
+                        if (result && result.status === '200')  {
+                            this.reportsList = result.data;
+                            this.listData = result.data;
+                        }
+                        this.showLoader = false;
+                    },
+                );
+            }
+            else{
+                this.sub_type = 'pending-list';
+                this.reportsListDataSubscription = this._reportsService[fName](ReportsTypeID,StockItemID,LedgerID,fromDate,toDate).subscribe(
+                    result => {
+                        if (result && result.status === '200')  {
+                            this.reportsList = result.data;
+                            this.listData = result.data;
+                        }
+                        this.showLoader = false;
+                    }
+                );
+            }            
+        }
+
+        if(this.type=='despatch-details-report'){
+            this.reportsListDataSubscription = this._reportsService[fName](fromDate,toDate).subscribe(
                 result => {
                     if (result && result.status === '200')  {
                         this.reportsList = result.data;
                         this.listData = result.data;
                     }
                     this.showLoader = false;
-                }
+                },
             );
         }
 
@@ -190,6 +225,13 @@ export class ReportsListComponent implements OnInit, OnDestroy {
     capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
+    formatDate(dateStr){
+        if(dateStr){
+            let myDate = dateStr.replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")
+            return this.datePipe.transform(myDate, 'dd/MM/yyyy', 'es-ES');
+        }        
+    }
+
 
     exportAsXLSX():void {
        // console.log(this.reportsList);
