@@ -15,6 +15,7 @@ export class CreateUsersComponent implements OnInit {
   public userForm: FormGroup;
   public expiryDateModel: Date = new Date();
   public userTabDetails: any[];
+  public userMasterData: any[] = [];
   // public createStatus = false;
   // public deleteStatus = false;
   // public modifyStatus = false;
@@ -23,13 +24,14 @@ export class CreateUsersComponent implements OnInit {
     private userService: UsersService,
     private activeRoute: ActivatedRoute,
     private fb: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit() {
+    this.getUserMaster();
     this.activeRoute.params.subscribe(params => {
       this.userId = params.id;
     });
-    this.getUserDetails(this.userId);
+    // this.getUserDetails(this.userId);
     this.createUser();
   }
 
@@ -45,7 +47,15 @@ export class CreateUsersComponent implements OnInit {
     });
   }
 
-  getUserDetails(id) {
+  getUserMaster() {
+    this.userService.getUserMaster().subscribe(res => {
+      if (res.status === '200') {
+        this.userMasterData = res.data;
+      }
+    });
+  }
+
+  /*getUserDetails(id) {
     this.userService.getUserDetails(id).subscribe(res => {
       if (res && res.status === "200") {
         this.userDetails = res.data;
@@ -68,36 +78,44 @@ export class CreateUsersComponent implements OnInit {
           // this.userForm.controls['expiryDate'].setValue(this.convertToDateFormat(this.userDetails[0].expiryDate));
 
           if (this.rightList.length > 0) {
+            debugger;
             const formArray = <FormArray>this.userForm.get("userRights");
-            const tabFormArray = <FormArray>this.userForm.get("userRights[0].UserRightTabModelList");
-            console.log('sdfsdf', tabFormArray.value);
+            var tabFormArray;
+            for (let i = 0; i < this.rightList.length; i++) {
+              // this.getUserTabDetails(this.userId, this.rightList[i].userRightID);
+
+              formArray.push(
+                this.fb.group({
+                  userRightID: [this.rightList[i].userRightID],
+                  userRightMenuName: [this.rightList[i].userRightMenuName],
+                  userRightCode: [this.rightList[i].userRightCode],
+                  menuStatus: [this.rightList[i].menuStatus]
+                })
+              );
+              tabFormArray = <FormArray>formArray.controls[i].get('UserRightTabModelList');
+
+              this.userTabDetails = [];
+              this.userService.getUserTabDetails(this.userId, this.rightList[i].userRightID).subscribe(val => {
+                if (val.status === "200") {
+                  this.userTabDetails = val.data;
+                }
+              });
+              tabFormArray.push(
+                this.fb.group({
+                  userRightID: [this.userTabDetails[0].userRightID],
+                  TabStatus: [this.userTabDetails[0].TabStatus],
+                })
+              );
+            }
+
             // if (formArray.length > 0) {
             //   formArray.removeAt(0);
-            // }
-            // for (let i = 0; i < this.rightList.length; i++) {
-            //   this.getUserTabDetails( this.userId, this.rightList[i].userRightID);
-
-            //   formArray.push(
-            //     this.fb.group({
-            //       userRightID: [this.rightList[i].userRightID],
-            //       userRightMenuName: [this.rightList[i].userRightMenuName],
-            //       userRightCode: [this.rightList[i].userRightCode],
-            //       menuStatus: [this.rightList[i].menuStatus]
-            //     })
-            //   );
-
-            //   tabFormArray.push(
-            //     this.fb.group({
-            //       userRightID: [this.userTabDetails[0].userRightID],
-            //       TabStatus: [this.userTabDetails[0].TabStatus],
-            //     })
-            //   );
             // }
           }
         }
       }
     });
-  }
+  }*/
 
   get name() {
     return this.userForm.get("name");

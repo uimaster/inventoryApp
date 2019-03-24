@@ -46,8 +46,35 @@
       </div>
     </div>
 
+    <ng-container *ngIf="userMasterData">
 
-    <div formArrayName="userRights">
+      <ng-container *ngFor="let firstLevel of userMasterData; let idx = index">
+        <div>
+          <p-accordion>
+            <p-accordionTab [header]="firstLevel.userRightMenuName">
+              <!-- <input type="text" formControlName="userRightID" />
+              <input type="text" formControlName="userRightMenuName" #data />
+              <input type="text" formControlName="userRightCode" />
+              <input type="text" formControlName="menuStatus" />
+              -->
+              <p-tabView>
+                <p-tabPanel *ngFor="let secondLevel of firstLevel.userRightTabModelList; let i = index"
+                  [header]="secondLevel.userRightTabName" [selected]="i == 0">
+                  sf{{secondLevel[i].userRightActionModelList.createStatus}}
+                  <label *ngIf="createStatus">Create: <p-inputSwitch [checked]="secondLevel[i].userRightActionModelList.createStatus"></p-inputSwitch></label>
+                  <label *ngIf="createStatus">Edit: <p-inputSwitch [checked]="secondLevel[i].userRightActionModelList.createStatus"></p-inputSwitch></label>
+                  <label *ngIf="createStatus">Read: <p-inputSwitch [checked]="secondLevel[i].userRightActionModelList.createStatus"></p-inputSwitch></label>
+                  <label *ngIf="createStatus">Delete: <p-inputSwitch [checked]="secondLevel[i].userRightActionModelList.createStatus"></p-inputSwitch></label>
+                </p-tabPanel>
+              </p-tabView>
+            </p-accordionTab>
+          </p-accordion>
+        </div>
+      </ng-container>
+    </ng-container>
+
+
+    <!-- <div formArrayName="userRights">
       <p-accordion *ngFor="let flevel of userForm.get('userRights').controls; let i = index;" [formGroupName]="i">
         <p-accordionTab [header]="data.value">
 
@@ -69,7 +96,7 @@
           </p-tabView>
         </p-accordionTab>
       </p-accordion>
-    </div>
+    </div> -->
 
     <input type="submit" value="submit" />
   </form>

@@ -2,10 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsersService } from '../../users/service/user.service';
 
-import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
-import { UsersService } from "../../users/service/user.service";
-
 @Component({
   selector: "app-navbar",
   templateUrl: "./navbar.component.html",

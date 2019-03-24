@@ -93,3 +93,6 @@ export const GETSHIPPINGLEDGERS = BASEURL + 'Ledger/getTransporterList';
 export const USERLIST = BASEURL + 'Users/GetUsersList';
 export const GETUSERDETAILS = BASEURL + 'Users/GetUsersDetails';
 export const GETUSERTABDETAILS = BASEURL + 'Users/GetUserTabDetails';
+export const GETUSERMASTER = BASEURL + '/Users/GetUsersRightsMaster';
+export const GETUSERTYPE = BASEURL + '/Users/GetUsersTypes';
+
