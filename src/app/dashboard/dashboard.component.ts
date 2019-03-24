@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UsersService } from '../users/service/user.service';
 
 
 @Component({
@@ -15,8 +16,8 @@ export class DashboardComponent implements OnInit {
   public barChartLegend = true;
 
   public barChartData = [
-    {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
-    {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
+    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
+    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' }
   ];
 
   public lineChartData: Array<any> = [
@@ -33,9 +34,9 @@ export class DashboardComponent implements OnInit {
 
 
   public lineChartDataLine: Array<any> = [
-    {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
-    {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'},
-    {data: [18, 48, 77, 9, 100, 27, 40], label: 'Series C'}
+    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
+    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' },
+    { data: [18, 48, 77, 9, 100, 27, 40], label: 'Series C' }
   ];
   public lineChartLabelsLine: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
   public lineChartOptions: any = {
@@ -68,7 +69,6 @@ export class DashboardComponent implements OnInit {
     }
   ];
   public lineChartLegend = true;
-
   constructor() { }
 
   public randomizeType(): void {
@@ -83,7 +83,6 @@ export class DashboardComponent implements OnInit {
   public chartHovered(e: any): void {
     console.log(e);
   }
-
 
   public randomize(): void {
     // Only Change 3 values
@@ -103,5 +102,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
   }
+
+
 
 }
