@@ -96,3 +96,5 @@ export const GETUSERTABDETAILS = BASEURL + 'Users/GetUserTabDetails';
 export const GETUSERMASTER = BASEURL + '/Users/GetUsersRightsMaster';
 export const GETUSERTYPE = BASEURL + '/Users/GetUsersTypes';
 
+export const GETPROCESSREQUEST = BASEURL + '/planning/GetProcessRequest';
+
