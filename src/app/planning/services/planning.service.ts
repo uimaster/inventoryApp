@@ -10,6 +10,26 @@ export class PlanningService {
 
     constructor(private http: HttpClient) {}
 
+
+
+    generatePo(planId) {
+      const params = new HttpParams().set('RequestRefID', planId).set('ProcessID', '1');
+      return this.http.get(urls.GETPROCESSREQUEST, {params}).pipe(
+          map(res => {
+              return res;
+          })
+      );
+    }
+
+    generateRm(Rqmid) {
+      const params = new HttpParams().set('RequestRefID', Rqmid).set('ProcessID', '2');
+      return this.http.get(urls.GETPROCESSREQUEST, {params}).pipe(
+          map(res => {
+              return res;
+          })
+      );
+    }
+
     getFGList(FromDate,ToDate): Observable<any> {
       const params = new HttpParams().set('CompanyID', '1').set('FromDate', FromDate).set('ToDate', ToDate);
       return this.http.get(urls.GETFGLIST, {params}).pipe(
@@ -31,8 +51,8 @@ export class PlanningService {
 
     updateFG(payload: any): Observable<any> {
       return this.http.post(urls.UPDATEFG, payload);
-    }  
-    
+    }
+
     getRMQList(FromDate,ToDate): Observable<any> {
         const params = new HttpParams().set('CompanyID', '1').set('FromDate', FromDate).set('ToDate', ToDate);
         return this.http.get(urls.GETRMQLIST, {params}).pipe(
@@ -54,9 +74,9 @@ export class PlanningService {
 
     updateRMQ(payload: any): Observable<any> {
         return this.http.post(urls.UPDATERMQ, payload);
-    }  
+    }
 
-    // getBomTypes(): Observable<any> {  
+    // getBomTypes(): Observable<any> {
     //     const params = new HttpParams().set('CompanyID', '1');
     //     return this.http.get(urls.GETBOMTYPES, {params}).pipe(
     //         map(res => {
@@ -65,7 +85,7 @@ export class PlanningService {
     //     );
     // }
 
-    // getBomLevels(): Observable<any> {  
+    // getBomLevels(): Observable<any> {
     //     const params = new HttpParams().set('CompanyID', '1');
     //     return this.http.get(urls.GETBOMLEVELS, {params}).pipe(
     //         map(res => {
@@ -74,7 +94,7 @@ export class PlanningService {
     //     );
     // }
 
-    // getBomComponentTypes(): Observable<any> {  
+    // getBomComponentTypes(): Observable<any> {
     //     const params = new HttpParams().set('CompanyID', '1');
     //     return this.http.get(urls.GETBOMCOMTYPES, {params}).pipe(
     //         map(res => {
@@ -83,7 +103,7 @@ export class PlanningService {
     //     );
     // }
 
-    // getParameterTypes(): Observable<any> {  
+    // getParameterTypes(): Observable<any> {
     //     const params = new HttpParams().set('CompanyID', '1');
     //     return this.http.get(urls.GETBOMPARATYPES, {params}).pipe(
     //         map(res => {

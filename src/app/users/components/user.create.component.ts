@@ -16,6 +16,7 @@ export class CreateUsersComponent implements OnInit {
   public expiryDateModel: Date = new Date();
   public userTabDetails: any[];
   public userMasterData: any[] = [];
+  checked: boolean;
   // public createStatus = false;
   // public deleteStatus = false;
   // public modifyStatus = false;
@@ -127,6 +128,14 @@ export class CreateUsersComponent implements OnInit {
     return this.userForm.get("activeStatus");
   }
 
+  get menuStatus() {
+    return this.userForm.get("menuStatus");
+  }
+
+  get TabStatus() {
+    return this.userForm.get("TabStatus");
+  }
+
   createUser() {
     this.userForm = this.fb.group({
       name: [""],
@@ -144,8 +153,6 @@ export class CreateUsersComponent implements OnInit {
   createUserRights() {
     return this.fb.group({
       userRightID: [0],
-      userRightMenuName: [""],
-      userRightCode: [""],
       menuStatus: [""],
       UserRightTabModelList: this.fb.array([this.createTabList()])
     });
