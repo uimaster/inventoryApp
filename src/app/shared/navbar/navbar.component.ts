@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsersService } from '../../users/service/user.service';
+import { OverlayPanel } from 'primeng/primeng';
+import { NotificationService } from './navbar.service';
 
 @Component({
   selector: "app-navbar",
@@ -10,10 +12,11 @@ import { UsersService } from '../../users/service/user.service';
 export class NavbarComponent implements OnInit {
   public userDetails: any[] = [];
 
-  constructor(private router: Router, private userService: UsersService) {}
+  constructor(private router: Router, private userService: UsersService, private notificationService: NotificationService) {}
 
   ngOnInit() {
     this.getUserDetails();
+    this.getNotification();
   }
 
   getUserDetails() {
@@ -31,4 +34,14 @@ export class NavbarComponent implements OnInit {
     localStorage.clear();
     this.router.navigate(["/login"]);
   }
+  showNotification(event, overlaypanel: OverlayPanel) {
+    overlaypanel.toggle(event);
+  }
+
+  getNotification() {
+    this.notificationService.getNotification().subscribe( res => {
+      console.log(res);
+    })
+  }
+
 }

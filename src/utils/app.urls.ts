@@ -97,4 +97,6 @@ export const GETUSERMASTER = BASEURL + '/Users/GetUsersRightsMaster';
 export const GETUSERTYPE = BASEURL + '/Users/GetUsersTypes';
 
 export const GETPROCESSREQUEST = BASEURL + '/planning/GetProcessRequest';
+export const GETNOTIFICATION = BASEURL + 'GetNotificationMessages';
+export const UPDATENOTIFICATION = BASEURL + 'GetUpdateNotificationStatus';
 

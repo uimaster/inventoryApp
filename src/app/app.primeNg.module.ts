@@ -21,6 +21,7 @@ import { FieldsetModule } from "primeng/fieldset";
 import {TooltipModule} from 'primeng/tooltip';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {AccordionModule} from 'primeng/accordion';
+import {OverlayPanelModule} from 'primeng/overlaypanel';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import {AccordionModule} from 'primeng/accordion';
     FieldsetModule,
     TooltipModule,
     MultiSelectModule,
-    AccordionModule
+    AccordionModule,
+    OverlayPanelModule
   ],
   exports: [
     SidebarModule,
@@ -70,7 +72,8 @@ import {AccordionModule} from 'primeng/accordion';
     FieldsetModule,
     TooltipModule,
     MultiSelectModule,
-    AccordionModule
+    AccordionModule,
+    OverlayPanelModule
   ]
 })
 export class PrimeNGModule {}

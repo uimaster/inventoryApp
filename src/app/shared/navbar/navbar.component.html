@@ -16,13 +16,29 @@
               <span class="icon-bar"></span>
             </button> -->
           </div>
+          <p-overlayPanel #op [dismissable]="true">
+            <h5 class="nofih5">Notification List</h5>
+            <ul class="notificationlist">
+              <li>
+                  By default the target component to align the overlay is the event target,
+              </li>
+              <li>
+                  you'd like to align it to another element, provide it as the second parameter
+              </li>
+              <li>
+                  clicking the button displays the overlayPanel aligned
+              </li>
+              <li>
+                  you'd like to align it to another element, provide it as the second parameter
+              </li>
+            </ul>
+          </p-overlayPanel>
           <div class="userprofile">
             <ul>
               <li>
-                <a href="#">
+                <a href="javascript:void(0);" (click)="showNotification($event, op)">
                   <i class="fa fa-bell" aria-hidden="true"></i>
                 </a>
-
               </li>
               <li>
                 <span>
@@ -45,7 +61,7 @@
             <li>
               <a routerLink="/dashboard" routerLinkActive="active"><i class="fa fa-tachometer" aria-hidden="true"></i>
                 <span>Dashboard</span></a>
-                <!-- sdf{{userList | json}} -->
+              <!-- sdf{{userList | json}} -->
             </li>
             <li *ngIf="userDetails[0].menuStatus">
               <a routerLink="/masters" routerLinkActive="active"><i class="fa fa-address-book" aria-hidden="true"></i>
@@ -64,10 +80,12 @@
                 <span>Purchase</span></a>
             </li>
             <li *ngIf="userDetails[4].menuStatus">
-              <a routerLink="/stores" routerLinkActive="active"><i class="fa fa-archive" aria-hidden="true"></i> <span>Stores</span></a>
+              <a routerLink="/stores" routerLinkActive="active"><i class="fa fa-archive" aria-hidden="true"></i>
+                <span>Stores</span></a>
             </li>
             <li *ngIf="userDetails[5].menuStatus">
-              <a routerLink="/production" routerLinkActive="active"><i class="fa fa-product-hunt" aria-hidden="true"></i>
+              <a routerLink="/production" routerLinkActive="active"><i class="fa fa-product-hunt"
+                  aria-hidden="true"></i>
                 <span>Production</span></a>
             </li>
             <li *ngIf="userDetails[6].menuStatus">
@@ -78,7 +96,8 @@
               <a routerLink="/utilities" routerLinkActive="active"><i class="fa fa-sliders" aria-hidden="true"></i> <span>Utilities</span></a>
             </li> -->
             <li *ngIf="userDetails[7].menuStatus">
-              <a routerLink="/reports" routerLinkActive="active"><i class="fa fa-file" aria-hidden="true"></i> <span>Reports</span></a>
+              <a routerLink="/reports" routerLinkActive="active"><i class="fa fa-file" aria-hidden="true"></i>
+                <span>Reports</span></a>
             </li>
             <!-- <li *ngIf="userDetails[8].menuStatus"> -->
             <li>

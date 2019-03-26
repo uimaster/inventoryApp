@@ -17,6 +17,7 @@ import { SharedModule} from './shared/shared.module';
 // import { TransactionFormModule } from './transactions-form/transaction.module';
 import { FiltersModule } from './transFilters/transFilter.Module';
 import { UsersService } from './users/service/user.service';
+import { NotificationService } from './shared/navbar/navbar.service';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { UsersService } from './users/service/user.service';
   ],
   providers: [
     UsersService,
+    NotificationService,
     AuthService,
     {
       provide: HTTP_INTERCEPTORS,
