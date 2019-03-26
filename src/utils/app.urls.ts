@@ -96,3 +96,8 @@ export const GETUSERTABDETAILS = BASEURL + 'Users/GetUserTabDetails';
 export const GETUSERMASTER = BASEURL + '/Users/GetUsersRightsMaster';
 export const GETUSERTYPE = BASEURL + '/Users/GetUsersTypes';
 
+//Assembly
+export const GETASSEMBLYINSTRUCTIONLIST = BASEURL + 'Assembly/GetAssemblyInstructionList';
+export const GETASSEMBLYINSTRUCTIONDETAILS = BASEURL + 'Assembly/GetAssemblyInstructionDetails';
+export const POSTASSEMBLYINSTRUCTIONDETAILS = BASEURL + 'Assembly/POSTAssemblyInstructionDetails';
+export const GETFGITEMBOMLIST = BASEURL + 'Assembly/GetFGItemBOMList';
