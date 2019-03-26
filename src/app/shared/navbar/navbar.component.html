@@ -19,17 +19,8 @@
           <p-overlayPanel #op [dismissable]="true">
             <h5 class="nofih5">Notification List</h5>
             <ul class="notificationlist">
-              <li>
-                  By default the target component to align the overlay is the event target,
-              </li>
-              <li>
-                  you'd like to align it to another element, provide it as the second parameter
-              </li>
-              <li>
-                  clicking the button displays the overlayPanel aligned
-              </li>
-              <li>
-                  you'd like to align it to another element, provide it as the second parameter
+              <li *ngFor="let item of notificationList" (click)="updateNotification(item.notificationUserID)">
+                  {{item.notificationMessage}}
               </li>
             </ul>
           </p-overlayPanel>

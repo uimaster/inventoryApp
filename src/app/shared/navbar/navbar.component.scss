@@ -2,26 +2,30 @@
 @import "./src/assets/scss/mixing";
 
 
-  .nofih5{ border-bottom: 1px solid #ccc; padding:8px 10px;}
-  .notificationlist {
-    width: 250px;
-    min-height: 150px;
-    margin: 0;
-    padding: 0;
+.nofih5 {
+  border-bottom: 1px solid #ccc;
+  padding: 8px 10px;
+}
 
-    li {
-      display: block;
-      list-style: none;
-      border-bottom: 1px solid #ccc;
-      background-color: #fff;
-      font-size: 12px;
-      padding: 5px 8px;
-      cursor: pointer;
-      &:last-child{
-        border-bottom: 0;
-      }
-    }
+.notificationlist {
+  width: 250px;
+  min-height: 150px;
+  margin: 0;
+  padding: 0;
+
+  li {
+    display: block;
+    list-style: none;
+    border: 1px solid #cbe8fb;
+    background-color: #f6fbff;
+    font-size: 12px;
+    padding: 5px;
+    min-height: 30px;
+    cursor: pointer;
+    margin: 2px 1px;
+    &:hover{ text-decoration: underline}
   }
+}
 
 
 .main-nav {

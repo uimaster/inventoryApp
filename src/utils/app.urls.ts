@@ -93,10 +93,10 @@ export const GETSHIPPINGLEDGERS = BASEURL + 'Ledger/getTransporterList';
 export const USERLIST = BASEURL + 'Users/GetUsersList';
 export const GETUSERDETAILS = BASEURL + 'Users/GetUsersDetails';
 export const GETUSERTABDETAILS = BASEURL + 'Users/GetUserTabDetails';
-export const GETUSERMASTER = BASEURL + '/Users/GetUsersRightsMaster';
-export const GETUSERTYPE = BASEURL + '/Users/GetUsersTypes';
+export const GETUSERMASTER = BASEURL + 'Users/GetUsersRightsMaster';
+export const GETUSERTYPE = BASEURL + 'Users/GetUsersTypes';
 
-export const GETPROCESSREQUEST = BASEURL + '/planning/GetProcessRequest';
-export const GETNOTIFICATION = BASEURL + 'GetNotificationMessages';
-export const UPDATENOTIFICATION = BASEURL + 'GetUpdateNotificationStatus';
+export const GETPROCESSREQUEST = BASEURL + 'planning/GetProcessRequest';
+export const GETNOTIFICATION = BASEURL + 'dashboard/GetNotificationMessages';
+export const UPDATENOTIFICATION = BASEURL + 'dashboard/GetUpdateNotificationStatus';
 
