@@ -15,6 +15,7 @@ export class NavbarComponent implements OnInit{
   public userDetails: any[] = [];
   public notificationList: any[] = [];
   public getNotiSub: Subscription;
+  public notiCount: number;
 
   constructor(
     private router: Router,
@@ -28,7 +29,7 @@ export class NavbarComponent implements OnInit{
     this.getNotification();
     setInterval(() => {
       this.getNotification();
-    }, 60000);
+    }, 90000);
   }
 
   getUserDetails() {
@@ -54,6 +55,7 @@ export class NavbarComponent implements OnInit{
     this.notificationService.getNotification().subscribe(res => {
       if (res.status === "200") {
         this.notificationList = res.data;
+        this.notiCount = res.message;
       }
     });
   }

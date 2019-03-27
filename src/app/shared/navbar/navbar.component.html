@@ -20,7 +20,7 @@
             <h5 class="nofih5">Notification List</h5>
             <ul class="notificationlist">
               <li *ngFor="let item of notificationList" (click)="updateNotification(item.notificationUserID)">
-                  {{item.notificationMessage}}
+                {{item.notificationMessage}}
               </li>
             </ul>
           </p-overlayPanel>
@@ -28,6 +28,18 @@
             <ul>
               <li>
                 <a href="javascript:void(0);" (click)="showNotification($event, op)">
+                  <span *ngIf="notiCount" style="
+                    position: absolute;
+                    padding: 3px;
+                    background: #d80027;
+                    font-size: 10px;
+                    line-height: 10px;
+                    border-radius: 50%;
+                    top: 0;
+                    min-width: 15px;
+                    text-align: center;
+                    color: #fff;
+                    width: auto;">{{notiCount}}</span>
                   <i class="fa fa-bell" aria-hidden="true"></i>
                 </a>
               </li>
@@ -47,51 +59,55 @@
             </ul>
           </div>
         </nav>
-        <div class="sideBar" *ngIf="userDetails.length > 0">
+        <div class="sideBar">
           <ul>
             <li>
               <a routerLink="/dashboard" routerLinkActive="active"><i class="fa fa-tachometer" aria-hidden="true"></i>
                 <span>Dashboard</span></a>
-              <!-- sdf{{userList | json}} -->
             </li>
-            <li *ngIf="userDetails[0].menuStatus">
+            <!-- <li *ngIf="userDetails[0].menuStatus">
+              <a routerLink="/masters" routerLinkActive="active"><i class="fa fa-address-book" aria-hidden="true"></i>
+                <span>Masters</span></a>
+            </li> -->
+
+            <li>
               <a routerLink="/masters" routerLinkActive="active"><i class="fa fa-address-book" aria-hidden="true"></i>
                 <span>Masters</span></a>
             </li>
-            <li *ngIf="userDetails[1].menuStatus">
+
+            <li >
               <a routerLink="/bill-material" routerLinkActive="active"><i class="fa fa-tasks" aria-hidden="true"></i>
                 <span>Bill Of Material</span></a>
             </li>
-            <li *ngIf="userDetails[2].menuStatus">
+            <li >
               <a routerLink="/planning" routerLinkActive="active"><i class="fa fa-address-card" aria-hidden="true"></i>
                 <span>Planning</span></a>
             </li>
-            <li *ngIf="userDetails[3].menuStatus">
+            <li >
               <a routerLink="/purchase" routerLinkActive="active"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
                 <span>Purchase</span></a>
             </li>
-            <li *ngIf="userDetails[4].menuStatus">
+            <li>
               <a routerLink="/stores" routerLinkActive="active"><i class="fa fa-archive" aria-hidden="true"></i>
                 <span>Stores</span></a>
             </li>
-            <li *ngIf="userDetails[5].menuStatus">
+            <li >
               <a routerLink="/production" routerLinkActive="active"><i class="fa fa-product-hunt"
                   aria-hidden="true"></i>
                 <span>Production</span></a>
             </li>
-            <li *ngIf="userDetails[6].menuStatus">
+            <li >
               <a routerLink="/sales" routerLinkActive="active"><i class="fa fa-balance-scale" aria-hidden="true"></i>
                 <span>Sales</span></a>
             </li>
             <!-- <li>
               <a routerLink="/utilities" routerLinkActive="active"><i class="fa fa-sliders" aria-hidden="true"></i> <span>Utilities</span></a>
             </li> -->
-            <li *ngIf="userDetails[7].menuStatus">
+            <li >
               <a routerLink="/reports" routerLinkActive="active"><i class="fa fa-file" aria-hidden="true"></i>
                 <span>Reports</span></a>
             </li>
-            <!-- <li *ngIf="userDetails[8].menuStatus"> -->
-            <li>
+            <li >
               <a routerLink="/users" routerLinkActive="active">
                 <i class="fa fa-user-o" aria-hidden="true"></i>
                 <span>Users</span>

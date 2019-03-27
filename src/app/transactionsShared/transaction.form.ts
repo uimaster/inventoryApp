@@ -95,6 +95,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
   public selectedSeries;
   public eqlQty = false;
   public equalQtyList = [];
+  public ItemBarCodeLength: any;
 
   @ViewChild("itemBarCode") itemBarCode: ElementRef;
   @ViewChild("itemQtyGnr") itemQtyGnr: ElementRef;
@@ -104,7 +105,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
   @ViewChild("barCode1") barCode1: ElementRef;
   @ViewChild("itemDesc") itemDesc: ElementRef;
 
-  public grnBarcodeTitle = "";
+  public grnBarcodeTitle: any;
   public grnValidationMsg = "";
   public plValidationMsg = "";
   public grnItemIndex = 0;
@@ -531,6 +532,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
         packingBoxStockItemID: [0],
         transactionItemSerialNo: [0],
         itemBarCodeApplicableStatus: [false],
+        itemBarCodeLength: [0],
         boxCode: [""]
       });
     } else {
@@ -563,6 +565,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
         packingBoxStockItemID: [0],
         transactionItemSerialNo: [0],
         itemBarCodeApplicableStatus: [false],
+        itemBarCodeLength: [0],
         boxCode: [""]
       })
     );
@@ -826,7 +829,11 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
             );
             formArray.removeAt(0);
             this.barCodeApplicableStatus = [];
-            for (let i = 0; i < this.detailsData[0].transItemDetails.length; i++ ) {
+            for (
+              let i = 0;
+              i < this.detailsData[0].transItemDetails.length;
+              i++
+            ) {
               formArray.push(
                 this.fb.group({
                   transactionID: [
@@ -884,6 +891,10 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
                   itemBarCodeApplicableStatus: [
                     this.detailsData[0].transItemDetails[i]
                       .itemBarCodeApplicableStatus
+                  ],
+                  itemBarCodeLength: [
+                    this.detailsData[0].transItemDetails[i]
+                      .itemBarCodeLength
                   ]
                 })
               );
@@ -1434,7 +1445,11 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
                     boxCode: [this.ItemData[i].boxCode],
                     itemBarCodeApplicableStatus: [
                       this.ItemData[i].itemBarCodeApplicableStatus
-                    ]
+                    ],
+                    itemBarCodeLength: [
+                      this.ItemData[i].itemBarCodeLength
+                    ],
+
                   })
                 );
                 this.barCodeApplicableStatus.push({
@@ -1531,7 +1546,8 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
                     boxCode: [this.ItemData[i].boxCode],
                     itemBarCodeApplicableStatus: [
                       this.ItemData[i].itemBarCodeApplicableStatus
-                    ]
+                    ],
+                    itemBarCodeLength: [this.ItemData[i].itemBarCodeLength]
                   })
                 );
                 this.barCodeApplicableStatus.push({
@@ -1932,7 +1948,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
           for (var i = 0; i < controlArray.length; i++) {
             listItemcode = controlArray.controls[i].get("stockItemDesc").value;
 
-            if (listItemcode == itemcode) {
+            if (listItemcode === itemcode) {
               let qty = controlArray.controls[i].get("itemQty").value;
               controlArray.controls[i].get("itemQty").setValue(qty + 1);
               // listItemStockId = controlArray.controls[i].get('stockitemID').value;
@@ -1971,7 +1987,8 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
               itemBatchApplicable: [0],
               packingBoxStockItemID: [0],
               transactionItemSerialNo: [0],
-              itemBarCodeApplicableStatus: ["false"]
+              itemBarCodeApplicableStatus: ["false"],
+              itemBarCodeLength: [0]
             })
           );
 
@@ -1990,8 +2007,9 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
     const controlArray = <FormArray>(
       this.transactionForm.get("transItemDetails")
     );
-    this.grnBarcodeTitle = controlArray.controls[index].get(
-      "stockItemDesc"
+    this.grnBarcodeTitle = controlArray.controls[index].get("stockItemDesc").value;
+    this.ItemBarCodeLength = controlArray.controls[index].get(
+      "itemBarCodeLength"
     ).value;
     this.itemBarCode.nativeElement.value = "";
     this.itemQtyGnr.nativeElement.value = "";
@@ -2008,6 +2026,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
   addGrnBarcode() {
     const itemBarCodeVal = this.itemBarCode.nativeElement.value;
     const itemQtyGnrVal = this.itemQtyGnr.nativeElement.value;
+
     var itemCode = this.grnBarcodeTitle.split("|");
     var sptItemCode = itemCode[0];
     if (itemBarCodeVal == null || itemBarCodeVal == "") {
@@ -2022,6 +2041,9 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
       this.grnValidationMsg = "Quantity should be greater than 0.";
       this.barCode1.nativeElement.value = "";
       return false;
+    } else if (itemBarCodeVal.length < this.ItemBarCodeLength) {
+      this.grnValidationMsg = "Barcode length should not be less than " + this.ItemBarCodeLength;
+      return false;
     } else {
       this.grnValidationMsg = "";
     }
@@ -2033,8 +2055,8 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
       for (var i = 0; i < formArray.length; i++) {
         if (itemBarCodeVal) {
           const listBarCode = formArray.controls[i].get("batchNo").value;
-          let listItemcode = formArray.controls[i].get("itemCode").value;
-          if (sptItemCode == listItemcode) {
+          const listItemcode = formArray.controls[i].get("itemCode").value;
+          if (sptItemCode === listItemcode) {
             if (listBarCode === itemBarCodeVal) {
               this.grnValidationMsg = "Batch already exist (Duplicate Batch)";
               this.barCode1.nativeElement.value = "";
@@ -2050,9 +2072,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
         this.transactionForm.get("transBatchDetails")
       );
       let transactionId = localStorage.getItem("transactionID");
-      let stockItemId = controlArray.controls[this.grnItemIndex].get(
-        "stockitemID"
-      ).value;
+      let stockItemId = controlArray.controls[this.grnItemIndex].get("stockitemID").value;
 
       batchArray.push(
         this.fb.group({
@@ -2067,18 +2087,10 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
       if (batchArray.controls[0].get("batchNo").value === 0) {
         batchArray.removeAt(0);
       }
-      const existingQty = controlArray.controls[this.grnItemIndex].get(
-        "itemQty"
-      ).value;
-      const existingQtyRec = controlArray.controls[this.grnItemIndex].get(
-        "itemReceived_Qty"
-      ).value;
-      controlArray.controls[this.grnItemIndex]
-        .get("itemQty")
-        .setValue(JSON.parse(itemQtyGnrVal) + existingQty);
-      controlArray.controls[this.grnItemIndex]
-        .get("itemReceived_Qty")
-        .setValue(JSON.parse(itemQtyGnrVal) + existingQtyRec);
+      const existingQty = controlArray.controls[this.grnItemIndex].get("itemQty").value;
+      const existingQtyRec = controlArray.controls[this.grnItemIndex].get("itemReceived_Qty").value;
+      controlArray.controls[this.grnItemIndex].get("itemQty").setValue(JSON.parse(itemQtyGnrVal) + existingQty);
+      controlArray.controls[this.grnItemIndex].get("itemReceived_Qty").setValue(JSON.parse(itemQtyGnrVal) + existingQtyRec);
       // this.displayGrnBarcodeDialog = false;
       this.itemBarCode.nativeElement.value = "";
       this.BarcodeSuccessMsg = "Barcode added Successfully.";
@@ -2181,9 +2193,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
     const formArray = <FormArray>this.transactionForm.get("transItemDetails");
     this.trasactionService.getItemRate(itemId, ledgerId).subscribe(res => {
       if (res && res.status === "200") {
-        formArray.controls[index]
-          .get("itemRate")
-          .setValue(res.data[0].itemRate);
+        formArray.controls[index].get("itemRate").setValue(res.data[0].itemRate);
       }
     });
   }

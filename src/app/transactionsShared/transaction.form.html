@@ -500,10 +500,11 @@
     </p>
 </form>
 
-
+<div class="lengthModal">
 <p-dialog [header]="grnBarcodeTitle" [(visible)]="displayGrnBarcodeDialog" [modal]="true" [responsive]="true" [style]="{width: '350px', minWidth: '200px'}" [minY]="70" [maximizable]="true" [baseZIndex]="10000">
 
     <div>
+      <p style="border-radius:4px; color:#18722b; margin-bottom: 0"><small>This item's Bar Code Length is {{ItemBarCodeLength}}.</small></p>
         <p style="background-color:#ffcaca; padding:0 5px; line-height:34px; border-radius:4px;">{{grnValidationMsg}}</p>
         <p style="background-color:#beefc8; padding:0 5px; line-height:34px; border-radius:4px; color:#18722b;">{{BarcodeSuccessMsg}}</p><br />
         <div class="form-group">
@@ -526,8 +527,10 @@
         <button type="button" pButton (click)="addGrnBarcode()" label="Add"></button>
     </p-footer>
 </p-dialog>
+</div>
 
-<p-dialog header="Barcode Scan Dialog" [(visible)]="displayLengthDialog" position="top right" [modal]="true" [responsive]="true" [style]="{width: '350px', minWidth: '200px'}" [minY]="70" [maximizable]="true" [baseZIndex]="10000">
+<div class="lengthModal">
+<p-dialog header="Barcode Scan Dialog" [(visible)]="displayLengthDialog" [modal]="true" [responsive]="true" [style]="{width: '350px', minWidth: '200px'}" [minY]="70" [maximizable]="true" [baseZIndex]="10000">
 
     <p style="background-color:#ffcaca; padding:0 5px; line-height:34px; border-radius:4px;">{{plValidationMsg}}</p>
     <p style="background-color:#beefc8; padding:0 5px; line-height:34px; border-radius:4px; color:#18722b;">{{BarcodeSuccessMsg}}</p><br />
@@ -564,3 +567,4 @@
         <button type="button" pButton (click)="getBarcodeFg()" label="Update" *ngIf="showBarcode4Fg" [disabled]="!enableNumberTxt"></button>
     </p-footer>
 </p-dialog>
+</div>

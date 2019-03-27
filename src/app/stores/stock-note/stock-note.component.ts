@@ -19,7 +19,7 @@ export class StockNoteComponent implements OnInit {
     localStorage.setItem('transLedgerDetails', 'false');
     localStorage.setItem('transPOTerms', 'false');
     localStorage.setItem('transBoxDetails', 'false');
-    localStorage.setItem('transBatchDetails', 'false');
+    localStorage.setItem('transBatchDetails', 'true');
     localStorage.setItem('transGRNTerms', 'false');
     localStorage.setItem('transInvoiceTerms', 'false');
     localStorage.setItem('transWorkCompletionDetails', 'false');
@@ -30,6 +30,9 @@ export class StockNoteComponent implements OnInit {
     localStorage.setItem('FormHeader', 'Stock Issue Note Edit/Create Form');
     localStorage.setItem('transationLinkRef', 'false');
     localStorage.setItem('showLocation', 'false');
+    localStorage.setItem('showBarcode4Grn', 'true');
+    localStorage.setItem('GrnInput', 'true');
+    localStorage.setItem('showBarcode', 'true');
   }
 
   getTransactionList(dates) {
