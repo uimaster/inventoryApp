@@ -22,6 +22,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
     public listData: any;
     public showLoader: boolean = false;
     public reportsListDataSubscription: Subscription;
+    public filter = 'false';
 
     constructor(
         private _reportsService: ReportsService,
@@ -29,45 +30,49 @@ export class ReportsListComponent implements OnInit, OnDestroy {
         private _route: ActivatedRoute,
         private datePipe: DatePipe,
         private _formBuilder: FormBuilder,
-    ) { }
+    ) { 
+        this.filter=localStorage.getItem('r_rf'); 
+    }
 
     ngOnInit() {
-        this.showLoader = true;
-        this._route.params.subscribe((params) => {
-            this.type = params.type;
-            switch (this.type) {
-                case 'po-report':
-                    this.getList('getPOReportList');
-                    break;
-                case 'so-report':
-                    this.getList('getSOReportList');
-                    break;
-                // case 'so-detail-report':
-                //     this.getList('getSODetailsReportList');
-                //     break;
-                case 'despatch-details-report':
-                    this.getList('getDespatchDetailsReportList');
-                    break;        
-                case 'stock-summary':
-                    this.getList('getStockSummaryList');
-                    break;
-                case 'msl-report':
-                    this.getList('getMSLReportList');
-                    break;
-                case 'sales-register':
-                    this.getList('getSalesRegisterList');
-                    break;
-                case 'grn-register':
-                    this.getList('getGRNRegisterList');
-                    break;
-                case 'stock-issue-register':
-                    this.getList('getStockIssueRegisterList');
-                    break;
+        if(this.filter == 'true'){
+            this.showLoader = true;
+            this._route.params.subscribe((params) => {
+                this.type = params.type;
+                switch (this.type) {
+                    case 'po-report':
+                        this.getList('getPOReportList');
+                        break;
+                    case 'so-report':
+                        this.getList('getSOReportList');
+                        break;
+                    // case 'so-detail-report':
+                    //     this.getList('getSODetailsReportList');
+                    //     break;
+                    case 'despatch-details-report':
+                        this.getList('getDespatchDetailsReportList');
+                        break;        
+                    case 'stock-summary':
+                        this.getList('getStockSummaryList');
+                        break;
+                    case 'msl-report':
+                        this.getList('getMSLReportList');
+                        break;
+                    case 'sales-register':
+                        this.getList('getSalesRegisterList');
+                        break;
+                    case 'grn-register':
+                        this.getList('getGRNRegisterList');
+                        break;
+                    case 'stock-issue-register':
+                        this.getList('getStockIssueRegisterList');
+                        break;
 
-                default:
-                    break;
-            }
-        });
+                    default:
+                        break;
+                }
+            });
+        }
     }
 
     getList(fName){

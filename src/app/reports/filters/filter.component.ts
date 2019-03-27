@@ -45,6 +45,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
       localStorage.removeItem('r_reportsTypeID');
       localStorage.removeItem('r_stockItemID');
       localStorage.removeItem('r_ledgerID');
+      localStorage.removeItem('r_rf');
       // localStorage.removeItem('r_ledgerName');
     }
   }
@@ -125,9 +126,9 @@ export class FiltersComponent implements OnInit, OnDestroy {
   }
 
   getTransactionList() {
-
+    localStorage.setItem('r_rf', JSON.stringify(true));
     this.router.routeReuseStrategy.shouldReuseRoute = function() { return false; };
-
+    
     let currentUrl = this.router.url + '?';
 
     this.router.navigateByUrl(currentUrl)

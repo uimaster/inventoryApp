@@ -1,11 +1,11 @@
 <p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
 <app-reports-filter></app-reports-filter>
 
-<p-panel header="PO Report" class="Tabledata" *ngIf="type=='po-report'">
+<p-panel header="PO Report" class="Tabledata" *ngIf="type=='po-report' && filter =='true'">
     <p-header>
         <button pButton type="button" style="float:right" icon="fa fa-file-excel-o" label="Export" class="ui-button-success" (click)="exportAsXLSX()"></button>
     </p-header>
-    <!-- <div class="ui-g"><div class="ui-g-12"><div class="form-group"><span class="ui-float-label"><input type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)"></span></div></div></div>     -->
+    <div class="ui-g"><div class="ui-g-12"><div><span class="ui-float-label"><input style="width:100%" type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)"></span></div></div></div>    
         
     <div class="table-responsive">
         <table class="table">
@@ -50,11 +50,11 @@
     </div>
 </p-panel>
 
-<p-panel header="SO Report" class="Tabledata" *ngIf="type=='so-report' && sub_type=='pending-list'">
+<p-panel header="SO Report" class="Tabledata" *ngIf="type=='so-report' && sub_type=='pending-list' && filter =='true'">
     <p-header>
         <button pButton type="button" style="float:right" icon="fa fa-file-excel-o" label="Export" class="ui-button-success" (click)="exportAsXLSX()"></button>
     </p-header>
-    <!-- <div class="ui-g"><div class="ui-g-12"><div class="form-group"><span class="ui-float-label"><input type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)"></span></div></div></div>     -->
+    <div class="ui-g"><div class="ui-g-12"><div><span class="ui-float-label"><input style="width:100%" type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)"></span></div></div></div>    
         
     <div class="table-responsive">
         <table class="table">
@@ -76,7 +76,7 @@
                     <td>{{report.sono}}</td>
                     <td>{{report.soDate | date:'dd/MM/yyyy'}}</td>
                     <td>{{report.customerName}}</td>
-                    <td>{{report.commissionNo}}</td>
+                    <td>{{report.commissionNO}}</td>
                     <td>{{report.pono}}</td>
                     <td>{{report.totalAmount}}</td>
                     <td>{{report.soDueDate}}</td>
@@ -91,11 +91,11 @@
     </div>
 </p-panel>
 
-<p-panel header="SO Details Report" class="Tabledata" *ngIf="type=='so-report' && sub_type=='sales-order-details'">
+<p-panel header="SO Details Report" class="Tabledata" *ngIf="type=='so-report' && sub_type=='sales-order-details' && filter =='true'">
     <p-header>
         <button pButton type="button" style="float:right" icon="fa fa-file-excel-o" label="Export" class="ui-button-success" (click)="exportAsXLSX()"></button>
     </p-header>
-    <!-- <div class="ui-g"><div class="ui-g-12"><div class="form-group"><span class="ui-float-label"><input type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)"></span></div></div></div>     -->
+    <div class="ui-g"><div class="ui-g-12"><div><span class="ui-float-label"><input style="width:100%"  type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)"></span></div></div></div>    
         
     <div class="table-responsive">
         <table class="table">
@@ -106,8 +106,10 @@
                 <th width="5%">PO No</th>
                 <th width="5%">JOB NO</th>
                 <th width="5%">Item Code</th>
-                <th width="15%">Description</th>
-                <th width="5%">Qty</th>
+                <th width="16%">Description</th>
+                <th width="3%">Qty</th>
+                <th width="3%">UOM</th>
+                <th width="3%">Length</th>
                 <th width="5%">Rate</th>
                 <th width="5%">Amount</th>
                 <th width="5%">Order Amount</th>
@@ -127,6 +129,8 @@
                     <td>{{report.itemCode}}</td>
                     <td>{{report.itemDesc}}</td>
                     <td>{{report.itemQty}}</td>
+                    <td>{{report.uom}}</td>
+                    <td>{{report.itemLength}}</td>
                     <td>{{report.itemRate}}</td>
                     <td>{{report.itemAmount}}</td>
                     <td>{{report.totalAmount}}</td>
@@ -144,11 +148,11 @@
     </div>
 </p-panel>
 
-<p-panel header="Despatch Details Report" class="Tabledata" *ngIf="type=='despatch-details-report'">
+<p-panel header="Despatch Details Report" class="Tabledata" *ngIf="type=='despatch-details-report' && filter =='true'">
     <p-header>
         <button pButton type="button" style="float:right" icon="fa fa-file-excel-o" label="Export" class="ui-button-success" (click)="exportAsXLSX()"></button>
     </p-header>
-    <!-- <div class="ui-g"><div class="ui-g-12"><div class="form-group"><span class="ui-float-label"><input type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)"></span></div></div></div>     -->
+    <div class="ui-g"><div class="ui-g-12"><div><span class="ui-float-label"><input style="width:100%" type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)"></span></div></div></div>    
         
     <div class="table-responsive">
         <table class="table">
@@ -190,11 +194,11 @@
     </div>
 </p-panel>
 
-<p-panel header="Stock Summary" class="Tabledata" *ngIf="type=='stock-summary'">
+<p-panel header="Stock Summary" class="Tabledata" *ngIf="type=='stock-summary' && filter =='true'">
     <p-header>
         <button pButton type="button" style="float:right" icon="fa fa-file-excel-o" label="Export" class="ui-button-success" (click)="exportAsXLSX()"></button>
     </p-header>
-    <!-- <div class="ui-g"><div class="ui-g-12"><div class="form-group"><span class="ui-float-label"><input type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)"></span></div></div></div>     -->
+    <div class="ui-g"><div class="ui-g-12"><div ><span class="ui-float-label"><input style="width:100%" type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)"></span></div></div></div>    
         
     <div class="table-responsive">
         <table class="table">
@@ -234,11 +238,11 @@
     </div>
 </p-panel>
 
-<p-panel header="MSL Report" class="Tabledata" *ngIf="type=='msl-report'">
+<p-panel header="MSL Report" class="Tabledata" *ngIf="type=='msl-report' && filter =='true'">
     <p-header>
         <button pButton type="button" style="float:right" icon="fa fa-file-excel-o" label="Export" class="ui-button-success" (click)="exportAsXLSX()"></button>
     </p-header>
-    <div class="ui-g"><div class="ui-g-12"><div class="form-group"><span class="ui-float-label"><input type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)"></span></div></div></div>    
+    <div class="ui-g"><div class="ui-g-12"><div><span class="ui-float-label"><input style="width:100%" type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)"></span></div></div></div>    
         
     <div class="table-responsive">
         <table class="table">
@@ -266,11 +270,11 @@
     </div>
 </p-panel>
 
-<p-panel header="Sales Register" class="Tabledata" *ngIf="type=='sales-register'">
+<p-panel header="Sales Register" class="Tabledata" *ngIf="type=='sales-register' && filter =='true'">
     <p-header>
         <button pButton type="button" style="float:right" icon="fa fa-file-excel-o" label="Export" class="ui-button-success" (click)="exportAsXLSX()"></button>
     </p-header>
-    <div class="ui-g"><div class="ui-g-12"><div class="form-group"><span class="ui-float-label"><input type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)"></span></div></div></div>    
+    <div class="ui-g"><div class="ui-g-12"><div><span class="ui-float-label"><input style="width:100%" type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)"></span></div></div></div>    
 
     <div class="table-responsive">
         <table class="table">
@@ -307,11 +311,11 @@
 </p-panel>
 
 
-<p-panel header="GRN Register" class="Tabledata" *ngIf="type=='grn-register'">
+<p-panel header="GRN Register" class="Tabledata" *ngIf="type=='grn-register' && filter =='true'">
     <p-header>
         <button pButton type="button" style="float:right" icon="fa fa-file-excel-o" label="Export" class="ui-button-success" (click)="exportAsXLSX()"></button>
     </p-header>
-    <div class="ui-g"><div class="ui-g-12"><div class="form-group"><span class="ui-float-label"><input type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)"></span></div></div></div>    
+    <div class="ui-g"><div class="ui-g-12"><div><span class="ui-float-label"><input style="width:100%" type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)"></span></div></div></div>    
 
     <div class="table-responsive">
         <table class="table">
@@ -352,11 +356,11 @@
 </p-panel>
 
 
-<p-panel header="Stock Issue Register" class="Tabledata" *ngIf="type=='stock-issue-register'">
+<p-panel header="Stock Issue Register" class="Tabledata" *ngIf="type=='stock-issue-register' && filter =='true'">
     <p-header>
         <button pButton type="button" style="float:right" icon="fa fa-file-excel-o" label="Export" class="ui-button-success" (click)="exportAsXLSX()"></button>
     </p-header>
-    <div class="ui-g"><div class="ui-g-12"><div class="form-group"><span class="ui-float-label"><input type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)"></span></div></div></div>    
+    <div class="ui-g"><div class="ui-g-12"><div><span class="ui-float-label"><input style="width:100%" type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)"></span></div></div></div>    
     <div class="table-responsive">
         <table class="table">
             <thead>
