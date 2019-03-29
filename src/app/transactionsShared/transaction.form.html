@@ -533,7 +533,7 @@
         {{BarcodeSuccessMsg}}</p><br />
       <div class="form-group">
         <span class="ui-float-label">
-          <input type="number" pInputText #itemBarCode (input)="clearErrorBox();">
+          <input type="text" pInputText #itemBarCode (input)="clearErrorBox(); callGRNBarcode();">
           <label for="barCode">Enter Barcode</label>
         </span>
       </div><br />
