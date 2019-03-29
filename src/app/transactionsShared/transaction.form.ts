@@ -893,8 +893,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
                       .itemBarCodeApplicableStatus
                   ],
                   itemBarCodeLength: [
-                    this.detailsData[0].transItemDetails[i]
-                      .itemBarCodeLength
+                    this.detailsData[0].transItemDetails[i].itemBarCodeLength
                   ]
                 })
               );
@@ -1446,10 +1445,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
                     itemBarCodeApplicableStatus: [
                       this.ItemData[i].itemBarCodeApplicableStatus
                     ],
-                    itemBarCodeLength: [
-                      this.ItemData[i].itemBarCodeLength
-                    ],
-
+                    itemBarCodeLength: [this.ItemData[i].itemBarCodeLength]
                   })
                 );
                 this.barCodeApplicableStatus.push({
@@ -2004,10 +2000,14 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
   }
 
   showGrnBarcodeDialog(index) {
+    this.grnValidationMsg = "";
+    this.BarcodeSuccessMsg = "";
     const controlArray = <FormArray>(
       this.transactionForm.get("transItemDetails")
     );
-    this.grnBarcodeTitle = controlArray.controls[index].get("stockItemDesc").value;
+    this.grnBarcodeTitle = controlArray.controls[index].get(
+      "stockItemDesc"
+    ).value;
     this.ItemBarCodeLength = controlArray.controls[index].get(
       "itemBarCodeLength"
     ).value;
@@ -2026,74 +2026,103 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
   addGrnBarcode() {
     const itemBarCodeVal = this.itemBarCode.nativeElement.value;
     const itemQtyGnrVal = this.itemQtyGnr.nativeElement.value;
-
+    var trtType = 0;
+    const grnBatch = localStorage.getItem("transGRNTerms");
+    if (grnBatch === "true") {
+      trtType = 3;
+    } else {
+      trtType = 2;
+    }
     var itemCode = this.grnBarcodeTitle.split("|");
     var sptItemCode = itemCode[0];
-    if (itemBarCodeVal == null || itemBarCodeVal == "") {
-      this.grnValidationMsg = "Barcode is required.";
-      return false;
-    } else if (itemQtyGnrVal == null || itemQtyGnrVal == "") {
-      this.grnValidationMsg = "Quantity is required.";
-      this.barCode1.nativeElement.value = "";
-
-      return false;
-    } else if (itemQtyGnrVal < 1) {
-      this.grnValidationMsg = "Quantity should be greater than 0.";
-      this.barCode1.nativeElement.value = "";
-      return false;
-    } else if (itemBarCodeVal.length < this.ItemBarCodeLength) {
-      this.grnValidationMsg = "Barcode length should not be less than " + this.ItemBarCodeLength;
-      return false;
-    } else {
-      this.grnValidationMsg = "";
-    }
-
-    if (itemBarCodeVal !== "") {
-      const formArray = <FormArray>(
-        this.transactionForm.get("transBatchDetails")
-      );
-      for (var i = 0; i < formArray.length; i++) {
-        if (itemBarCodeVal) {
-          const listBarCode = formArray.controls[i].get("batchNo").value;
-          const listItemcode = formArray.controls[i].get("itemCode").value;
-          if (sptItemCode === listItemcode) {
-            if (listBarCode === itemBarCodeVal) {
+    if (sptItemCode !== null && sptItemCode !== undefined) {
+      if (itemBarCodeVal !== null || itemBarCodeVal !== "") {
+        this.trasactionService
+          .validateBatch(sptItemCode, itemBarCodeVal, trtType)
+          .subscribe(res => {
+            if (res.status === "200") {
+              return true;
+            } else {
               this.grnValidationMsg = "Batch already exist (Duplicate Batch)";
-              this.barCode1.nativeElement.value = "";
               return false;
+            }
+          });
+      } else if (itemBarCodeVal == null || itemBarCodeVal === "") {
+        this.grnValidationMsg = "Barcode is required.";
+        return false;
+      } else if (itemQtyGnrVal == null || itemQtyGnrVal === "") {
+        this.grnValidationMsg = "Quantity is required.";
+        this.barCode1.nativeElement.value = "";
+        return false;
+      } else if (itemQtyGnrVal < 1) {
+        this.grnValidationMsg = "Quantity should be greater than 0.";
+        this.barCode1.nativeElement.value = "";
+        return false;
+      } else if (itemBarCodeVal.length < this.ItemBarCodeLength) {
+        this.grnValidationMsg =
+          "Barcode length should not be less than " + this.ItemBarCodeLength;
+        return false;
+      } else {
+        this.grnValidationMsg = "";
+      }
+    };
+    if (sptItemCode !== null && sptItemCode !== undefined) {
+      if (itemBarCodeVal !== "") {
+        const formArray = <FormArray>(
+          this.transactionForm.get("transBatchDetails")
+        );
+        for (var i = 0; i < formArray.length; i++) {
+          if (itemBarCodeVal) {
+            const listBarCode = formArray.controls[i].get("batchNo").value;
+            const listItemcode = formArray.controls[i].get("itemCode").value;
+            if (sptItemCode === listItemcode) {
+              if (listBarCode === itemBarCodeVal) {
+                this.grnValidationMsg = "Batch already exist (Duplicate Batch)";
+                return false;
+              }
             }
           }
         }
-      }
-      const controlArray = <FormArray>(
-        this.transactionForm.get("transItemDetails")
-      );
-      const batchArray = <FormArray>(
-        this.transactionForm.get("transBatchDetails")
-      );
-      let transactionId = localStorage.getItem("transactionID");
-      let stockItemId = controlArray.controls[this.grnItemIndex].get("stockitemID").value;
+        const controlArray = <FormArray>(
+          this.transactionForm.get("transItemDetails")
+        );
+        const batchArray = <FormArray>(
+          this.transactionForm.get("transBatchDetails")
+        );
+        let transactionId = localStorage.getItem("transactionID");
+        let stockItemId = controlArray.controls[this.grnItemIndex].get(
+          "stockitemID"
+        ).value;
 
-      batchArray.push(
-        this.fb.group({
-          batchNo: [itemBarCodeVal],
-          stockitemID: [stockItemId],
-          batchID: [0],
-          itemCode: [sptItemCode],
-          qty: [itemQtyGnrVal],
-          transactionID: [JSON.parse(transactionId)]
-        })
-      );
-      if (batchArray.controls[0].get("batchNo").value === 0) {
-        batchArray.removeAt(0);
+        batchArray.push(
+          this.fb.group({
+            batchNo: [itemBarCodeVal],
+            stockitemID: [stockItemId],
+            batchID: [0],
+            itemCode: [sptItemCode],
+            qty: [itemQtyGnrVal],
+            transactionID: [JSON.parse(transactionId)]
+          })
+        );
+        if (batchArray.controls[0].get("batchNo").value === 0) {
+          batchArray.removeAt(0);
+        }
+        const existingQty = controlArray.controls[this.grnItemIndex].get(
+          "itemQty"
+        ).value;
+        const existingQtyRec = controlArray.controls[this.grnItemIndex].get(
+          "itemReceived_Qty"
+        ).value;
+        controlArray.controls[this.grnItemIndex]
+          .get("itemQty")
+          .setValue(JSON.parse(itemQtyGnrVal) + existingQty);
+        controlArray.controls[this.grnItemIndex]
+          .get("itemReceived_Qty")
+          .setValue(JSON.parse(itemQtyGnrVal) + existingQtyRec);
+        // this.displayGrnBarcodeDialog = false;
+        this.itemBarCode.nativeElement.value = "";
+        this.BarcodeSuccessMsg = "Barcode added Successfully.";
       }
-      const existingQty = controlArray.controls[this.grnItemIndex].get("itemQty").value;
-      const existingQtyRec = controlArray.controls[this.grnItemIndex].get("itemReceived_Qty").value;
-      controlArray.controls[this.grnItemIndex].get("itemQty").setValue(JSON.parse(itemQtyGnrVal) + existingQty);
-      controlArray.controls[this.grnItemIndex].get("itemReceived_Qty").setValue(JSON.parse(itemQtyGnrVal) + existingQtyRec);
-      // this.displayGrnBarcodeDialog = false;
-      this.itemBarCode.nativeElement.value = "";
-      this.BarcodeSuccessMsg = "Barcode added Successfully.";
     }
   }
   getTransactionTypeSeries() {
@@ -2193,7 +2222,9 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
     const formArray = <FormArray>this.transactionForm.get("transItemDetails");
     this.trasactionService.getItemRate(itemId, ledgerId).subscribe(res => {
       if (res && res.status === "200") {
-        formArray.controls[index].get("itemRate").setValue(res.data[0].itemRate);
+        formArray.controls[index]
+          .get("itemRate")
+          .setValue(res.data[0].itemRate);
       }
     });
   }
