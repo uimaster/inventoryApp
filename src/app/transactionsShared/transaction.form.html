@@ -191,6 +191,7 @@
                 [disabled]="showActionBtn" [dropdown]="true">
                 {{itemName}}
               </p-autoComplete>
+
               <input type="text" formControlName="stockitemID" pInputText
                 style="visibility: hidden; height: 0; width: 0; font-size: 0;">
             </td>
@@ -229,28 +230,38 @@
 
             <td *ngIf="GrnInput"><input type="text" formControlName="itemPending_Qty" pInputText disabled="disabled">
             </td>
+
             <td *ngIf="GrnInput"><input type="text" formControlName="itemChallan_Qty" pInputText></td>
+
             <td><input type="text" formControlName="itemQty" pInputText (keyup)="getAmount()"
                 [class.verified]="equalQtyList[i]===i && showScannedQty"
                 [class.pending]="equalQtyList[i]!==i && showScannedQty"></td>
+
             <td *ngIf="showBoxCode"><input type="text" formControlName="boxCode" pInputText
                 [attr.disabled]="showActionBtn == true? true : null"></td>
+
             <td *ngIf="!showScannedQty"><input type="text" formControlName="itemRate" pInputText (keyup)="getAmount()"
                 [attr.disabled]="showActionBtn == true? true : null"></td>
+
             <td *ngIf="!showScannedQty"><input type="text" formControlName="itemAmount" pInputText (keyup)="getAmount()"
                 [attr.disabled]="showActionBtn == true? true : null"></td>
+
             <td style="text-align:center">
               <button pButton type="button" *ngIf="!showActionBtn" icon="fa fa-plus" class="ui-button-success"
                 (click)="addItemDetails()"></button>
+
               <button pButton type="button" *ngIf="!showActionBtn" icon="fa fa-trash-o" class="ui-button-danger"
                 [disabled]="i < 1" (click)="deleteItemDetails(i)"></button>
+
               <input type="hidden" formControlName="itemBarCodeApplicableStatus" />
+
               <!-- <i class="fa fa-hourglass-end" aria-hidden="true" *ngIf="!ctrl.itemBarCodeApplicableStatus && showActionBtn"></i> -->
               <!-- <button pButton type="button" *ngIf="ctrl.itemBarCodeApplicableStatus && showActionBtn" disabled="disabled" icon="fa fa-check" title="Verified" class="ui-button-success"></button> -->
               <button pButton type="button" *ngIf="barCodeApplicableStatus.length > 0"
                 [disabled]="!barCodeApplicableStatus[i].status" (click)="showGrnBarcodeDialog(i)"
                 icon="fa fa fa-barcode" title="Scan Barcode" class="ui-button-success barcodeBtn"></button>
             </td>
+
           </tr>
         </tbody>
       </table>

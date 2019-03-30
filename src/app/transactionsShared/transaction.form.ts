@@ -96,7 +96,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
   public eqlQty = false;
   public equalQtyList = [];
   public ItemBarCodeLength: any;
-  public GRNvalidateStatus: boolean;
+  public GRNvalidateStatus = false;
 
   @ViewChild("itemBarCode") itemBarCode: ElementRef;
   @ViewChild("itemQtyGnr") itemQtyGnr: ElementRef;
@@ -1292,8 +1292,6 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
   getLedgers() {
     this.ledgerService.getAllLedgers().subscribe(res => {
       if (res && res.status === "200") {
-        // this.ledgerList = res.data;
-
         let data = res.data;
         for (let key in data) {
           if (data.hasOwnProperty(key)) {
@@ -1310,8 +1308,6 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
   getCustomers() {
     this.customerService.getAllCustomers().subscribe(res => {
       if (res && res.status === "200") {
-        // this.ledgerList = res.data;
-
         let data = res.data;
         for (let key in data) {
           if (data.hasOwnProperty(key)) {
@@ -1328,8 +1324,6 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
   getPOPendingList() {
     this.trasactionService.getPendingPOList().subscribe(res => {
       if (res && res.status === "200") {
-        // this.ledgerList = res.data;
-
         let data = res.data;
         for (let key in data) {
           if (data.hasOwnProperty(key)) {
@@ -1359,7 +1353,6 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
       this.transactionForm.get("transItemDetails")
     );
     var itemTotalAmount = 0;
-
     for (let i = 0; i < itemfrmArray.length; i++) {
       const itemRate = itemfrmArray.controls[i].get("itemRate").value;
       const itemQnt = itemfrmArray.controls[i].get("itemQty").value;
@@ -2055,6 +2048,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
             this.grnFunctionAfterValidate();
           } else {
             this.GRNvalidateStatus = false;
+            this.grnFunctionAfterValidate();
           }
         });
     }
@@ -2243,11 +2237,14 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
     const formArray = <FormArray>this.transactionForm.get("transItemDetails");
     this.trasactionService.getItemRate(itemId, ledgerId).subscribe(res => {
       if (res && res.status === "200") {
-        formArray.controls[index]
-          .get("itemRate")
-          .setValue(res.data[0].itemRate);
+        formArray.controls[index].get("itemRate").setValue(res.data[0].itemRate);
+        formArray.controls[index].get("itemBarCodeApplicableStatus").setValue(res.data[0].barcodeapplicable);
+        this.barCodeApplicableStatus.push({
+          status: res.data[0].barcodeapplicable
+        });
       }
     });
+
   }
 
   getLedgerLocation(ledgerId) {
@@ -2263,7 +2260,6 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
             });
           }
         }
-        console.log(this.ledgerLocationList);
       }
     });
   }
