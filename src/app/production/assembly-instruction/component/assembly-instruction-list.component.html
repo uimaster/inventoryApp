@@ -1,0 +1,56 @@
+<p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
+<!-- <ng-template 
+    *ngIf="!loadingList;then showBlock; else loading">
+</ng-template>
+
+<ng-template #showBlock> -->
+<p-panel header="Assembly Instruction List" class="Tabledata">
+    <p-header>
+        <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addAI()"></button>
+    </p-header>
+<!--     
+    <div class="ui-g">
+        <div class="ui-g-12">
+            <div class="form-group">
+            <span class="ui-float-label">
+                <input type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)">
+            </span>
+            </div>
+        </div>
+    </div>     -->
+        
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Instruction No</th>
+                <!-- <th>Name</th> -->
+                <th>Date</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container *ngIf="aiList">
+                <tr *ngFor="let ai of aiList; index as i;">
+                    <td>{{ai.assemblyInstructionNO}}</td>
+                    <!-- <td>{{ai.instructionName}}</td> -->
+                    <td>{{ai.asemblyInstructionDate}}</td>
+                    <td>{{ai.itemDesc}}</td>
+                    <td>
+                        <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="setBom(ai.assemblyInstructionId)"></button>
+                        <button pButton type="button" label="Delete" class="ui-button-danger" ></button>
+                    </td>
+                </tr>
+            </ng-container>
+            </tbody>
+        </table>
+    </div>
+</p-panel>
+<!-- </ng-template>
+
+<ng-template #loading>
+    <p-panel>
+        <img class="img-center" src="assets/images/spinner.gif" />
+    </p-panel>
+</ng-template>  --> 

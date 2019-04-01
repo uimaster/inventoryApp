@@ -39,6 +39,7 @@ export class StockDetailComponent implements OnInit, OnDestroy {
   public currencyList = [];
   public supplierlist = [];
   public showLoader = false;
+  filteredItems= [];
 
   errorMsg = '';
   successMsg = '';
@@ -472,6 +473,24 @@ export class StockDetailComponent implements OnInit, OnDestroy {
         }
       }
     });
+  }
+
+  filterItems(event) {
+    this.filteredItems = [];
+    for (let i = 0; i < this.supplierlist.length; i++) {
+        let itemName = this.supplierlist[i].label;
+        if (itemName.toLowerCase().indexOf(event.query.toLowerCase()) == 0) {
+            this.filteredItems.push(itemName);
+        }
+    }
+  }
+
+  getSelectedVal(event, elem,index) {
+    for ( var i = 0; i < this.supplierlist.length; i++) {
+      if (this.supplierlist[i].label === event) {
+        this.sForm.get(elem).controls[index].get('ledgerName').setValue(this.supplierlist[i].value);
+      }
+    }
   }
 
 }

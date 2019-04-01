@@ -16,6 +16,7 @@ import { FiltersModule } from "../transFilters/transFilter.Module";
 import { WorkInstructionService } from "./work-instruction/work-instruction.service";
 import { CreateWorkInstructionComponent } from "./work-instruction/create/create.component";
 import { ReactiveFormsModule } from "@angular/forms";
+import { AssemblyInstructionModule } from './assembly-instruction/assembly-instruction.module';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { ReactiveFormsModule } from "@angular/forms";
     FiltersModule,
     ReactiveFormsModule,
     FormsModule,
-    PrimeNGModule
+    PrimeNGModule,
+    AssemblyInstructionModule
   ],
   declarations: [
     ProductionComponent,

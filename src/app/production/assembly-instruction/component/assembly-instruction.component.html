@@ -1,0 +1,162 @@
+<app-navbar> </app-navbar>
+<p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
+<p-panel header="Assembly Instruction Add/Edit Form" class="Tabledata">
+  <form [formGroup]="cForm" (ngSubmit)="saveAI(cForm.value)" class="formData">
+    <div class="message error" *ngIf="showError">Updatation/creation failed .</div>
+    <div class="message success" *ngIf="showSuccess">You have Updated/created successfully.</div>
+
+    <div class="ui-g">
+        <div class="ui-g-2">
+            <div class="form-group">
+                <span class="ui-float-label">
+                    <input [attr.disabled]="true" type="text" formControlName="assemblyInstructionNO" pInputText id="assemblyInstructionNO" >
+                    <label for="assemblyInstructionNO">Assembly Instruction NO</label>
+                </span>
+                <div *ngIf="assemblyInstructionNO.invalid && (assemblyInstructionNO.dirty || assemblyInstructionNO.touched)" class="alert alert-danger">
+                    <div *ngIf="assemblyInstructionNO.errors.required">
+                    This field is required.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui-g-3">
+            <div class="form-group">
+                <span class="ui-float-label">
+                <p-calendar formControlName="asemblyInstructionDate" dateFormat="dd-mm-yy" [(ngModel)]="date1" [showIcon]="true"></p-calendar>
+                <label for="asemblyInstructionDate">Date</label>
+                </span>
+    
+                <div *ngIf="asemblyInstructionDate.invalid && (asemblyInstructionDate.dirty || asemblyInstructionDate.touched)" class="alert alert-danger">
+                <div *ngIf="asemblyInstructionDate.errors.required">
+                    This field is required.
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui-g-3">
+            <div class="form-group">
+                <span class="ui-float-label">
+                    <input type="text" formControlName="instructionName" pInputText id="instructionName">
+                    <label for="instructionName">Instruction Name</label>
+                </span>
+                <div *ngIf="instructionName.invalid && (instructionName.dirty || instructionName.touched)" class="alert alert-danger">
+                    <div *ngIf="instructionName.errors.required">
+                    This field is required.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+      <div class="ui-g-3">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <!-- <p-dropdown [options]="allStockItems" formControlName="stockItemID" filter="true" [style]="{'width':'95%'}">
+            </p-dropdown> -->
+            <p-autoComplete
+                formControlName="itemCode"
+                [suggestions]="filteredItems"
+                (completeMethod)="filterItems($event)"
+                (onSelect)="getSelectedVal($event, 'stockitemID')"
+                [size]="30"
+                [minLength]="1"
+                styleClass="wid100"
+            >
+            <input type="text" formControlName="stockitemID" pInputText style="visibility: hidden; height: 0; width: 0; font-size: 0;">
+                {{itemCode}}
+            </p-autoComplete>
+            <label for="stockitemID">Finish Good ID</label>
+          </span>
+          <!-- <div *ngIf="stockItemID.invalid && (stockItemID.dirty || stockItemID.touched)" class="alert alert-danger">
+            <div *ngIf="stockItemID.errors.required">
+              This field is required.
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+
+    <fieldset formArrayName="assemblyInstructionDetails" style="overflow-x:auto; min-height:300px" >
+      <legend>Instruction Details</legend>
+      <div *ngFor="let ctrl of cForm.get('assemblyInstructionDetails').controls; let i = index;">
+        <div [formGroupName]="i" style="width:100%;">
+          <div class="ui-g">
+          <!-- <div class="ui-g-3">
+              <div class="form-group">
+                <span class="ui-float-label">
+                <p-autoComplete
+                    formControlName="itemCode"
+                    [suggestions]="filteredItems"
+                    (completeMethod)="filterItems($event)"
+                    (onSelect)="getSelectedValInner($event, 'assemblyInstructionDetails',i)"
+                    [size]="30"
+                    [minLength]="1"
+                    [style]="{'width':'100%'}"
+                >
+                <input type="text" formControlName="stockItemID" pInputText style="visibility: hidden; height: 0; width: 0; font-size: 0;">
+                    {{itemCode}}
+                </p-autoComplete>
+                <label for="stockItemID">Stock Item</label>
+                </span>
+              </div>
+            </div> -->
+            <div class="ui-g-1">
+              <div class="form-group">
+                <span class="ui-float-label">
+                  <input class="ui-inputwrapper-filled" type="number" formControlName="instructionSRNo" pInputText id="instructionSRNo">
+                  <label for="instructionSRNo">Instruction No</label>
+                </span>
+              </div>
+            </div>
+            <div class="ui-g-3">
+                <div class="form-group">
+                    <span class="ui-float-label">
+                    <input class="ui-inputwrapper-filled" type="text" formControlName="instructiondescription" pInputText id="instructiondescription">
+                    <label for="instructiondescription">Instruction Description</label>
+                    </span>
+                </div>
+            </div>
+
+            <div class="ui-g-3">
+                <div class="form-group">
+                    <span class="ui-float-label">
+                    <input class="ui-inputwrapper-filled" type="text" formControlName="itemCode" pInputText id="itemCode">
+                    <label for="itemCode">Item Code</label>
+                    </span>
+                </div>
+            </div>
+
+            <div class="ui-g-3">
+                <div class="form-group">
+                    <span class="ui-float-label">
+                    <input class="ui-inputwrapper-filled" type="text" formControlName="itemDesc" pInputText id="itemDesc">
+                    <label for="itemDesc">Item Desc</label>
+                    </span>
+                </div>
+            </div>
+            <div class="ui-g-1">
+                <div class="form-group">
+                    <span class="ui-float-label">
+                    <input class="ui-inputwrapper-filled" type="number" formControlName="qty" pInputText id="qty">
+                    <label for="qty">Qty</label>
+                    </span>
+                </div>
+            </div>
+            <div class="ui-g-1">
+              <button pButton type="button" icon="fa fa-plus" class="ui-button-success" (click)="addItems()"></button>
+              <button pButton type="button" icon="fa fa-trash-o" class="ui-button-danger" [disabled]="i<1" (click)="removeItems(i)"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </fieldset>
+
+    <br/>
+    <p style="text-align: center">
+      <button pButton type="submit" label="Submit" class="ui-button-success" [disabled]="!cForm.valid" style="margin-right: 10px;"></button>
+      <button pButton type="button" label="Cancel" class="ui-button-secondary"></button>
+    </p>
+  </form>
+</p-panel>

@@ -8,6 +8,8 @@ import { FGInwardComponent } from './fginward/fginward.component';
 import { CreateProdComponent } from './create/create.component';
 import { WorkInstructionComponent } from './work-instruction/work-instruction.component';
 import { CreateWorkInstructionComponent } from './work-instruction/create/create.component';
+import { AssemblyInstructionComponent } from './assembly-instruction/component/assembly-instruction.component';
+import { AssemblyInstructionListComponent } from './assembly-instruction/component/assembly-instruction-list.component';
 
 export const routes: Routes = [
   { path: '',  component: ProductionComponent,
@@ -18,8 +20,11 @@ export const routes: Routes = [
           { path: 'prodEntry', component: ProdEntryComponent },
           { path: 'FGInward', component: FGInwardComponent },
           { path: 'workInstruction', component: WorkInstructionComponent },
-          { path: 'addEditProduction', component: CreateProdComponent},
           { path: 'addworkInstruction', component: CreateWorkInstructionComponent}
+          { path: 'addEditProduction', component: CreateProdComponent},
+          { path: 'AssemblyInstruction/list', component: AssemblyInstructionListComponent },
+          { path: 'AssemblyInstruction/add', component: AssemblyInstructionComponent },
+          { path: 'AssemblyInstruction/edit/:id', component: AssemblyInstructionComponent },
         ]
       }
     ]
