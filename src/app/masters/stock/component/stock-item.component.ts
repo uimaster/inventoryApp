@@ -16,6 +16,8 @@ export class StockItemComponent implements OnInit {
   stockListResponse: Observable<any>;
   stockListResponseFailed: Observable<boolean>;
   public stockList;
+  public listData;
+  
   constructor( private stockService: StockService, private router: Router) { }
 
   ngOnInit() {
@@ -27,6 +29,7 @@ export class StockItemComponent implements OnInit {
     this.stockService.getAllStocks().subscribe((res: StockResponse) => {
       if (res && res.status === '200')  {
         this.stockList = res.data;
+        this.listData = res.data;
       }
       this.showLoader = false;
     });
@@ -44,4 +47,18 @@ export class StockItemComponent implements OnInit {
     this.router.navigate(['/masters/stock-item', stockItemID]);
   }
 
+  applyFilter(filterValue: string){
+        this.stockList = this.listData.filter(
+            row => {
+                for (var key in row) {
+                    if (row.hasOwnProperty(key)) {
+                        if(row[key].toString().toLowerCase().includes(filterValue.toLowerCase())){
+                            return true;
+                        }
+                       // console.log(key + " -> " + row[key]);
+                    }
+                }
+            }
+        );
+    }
 }

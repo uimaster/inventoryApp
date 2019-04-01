@@ -12,6 +12,7 @@ import {CustomerResponse} from '../models/customer.model';
 })
 export class CustomerListComponent implements OnInit, OnDestroy {
     public customerList: any;
+    public listData: any;
     public customerListDataSubscription: Subscription;
     constructor(private customerService: CustomerService, private router: Router) { }
 
@@ -24,6 +25,7 @@ export class CustomerListComponent implements OnInit, OnDestroy {
             if (res && res.status === '200')  {
 
                 this.customerList = res.data;
+                this.listData = res.data;
                 // console.log(this.unitList);
 
             }
@@ -43,6 +45,19 @@ export class CustomerListComponent implements OnInit, OnDestroy {
     }
 
 
-
+    applyFilter(filterValue: string){
+        this.customerList = this.listData.filter(
+            row => {
+                for (var key in row) {
+                    if (row.hasOwnProperty(key)) {
+                        if(row[key].toString().toLowerCase().includes(filterValue.toLowerCase())){
+                            return true;
+                        }
+                       // console.log(key + " -> " + row[key]);
+                    }
+                }
+            }
+        );
+    }
 
 }

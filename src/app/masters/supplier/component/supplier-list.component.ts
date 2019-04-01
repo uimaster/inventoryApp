@@ -12,6 +12,7 @@ import {SupplierResponse} from "../models/supplier.model";
 })
 export class SupplierListComponent implements OnInit, OnDestroy {
     public supplierList: any;
+    public listData: any;
     public supplierListDataSubscription: Subscription;
     constructor(private supplierService:SupplierService, private router: Router) { }
 
@@ -24,6 +25,7 @@ export class SupplierListComponent implements OnInit, OnDestroy {
             if (res && res.status === '200')  {
 
                 this.supplierList = res.data;
+                this.listData = res.data;
                 // console.log(this.unitList);
 
             }
@@ -45,7 +47,20 @@ export class SupplierListComponent implements OnInit, OnDestroy {
         this.supplierListDataSubscription.unsubscribe();
     }
 
-
+    applyFilter(filterValue: string){
+        this.supplierList = this.listData.filter(
+            row => {
+                for (var key in row) {
+                    if (row.hasOwnProperty(key)) {
+                        if(row[key].toString().toLowerCase().includes(filterValue.toLowerCase())){
+                            return true;
+                        }
+                       // console.log(key + " -> " + row[key]);
+                    }
+                }
+            }
+        );
+    }
 
 
 }

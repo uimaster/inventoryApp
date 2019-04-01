@@ -2,6 +2,7 @@
     <p-header>
         <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addCustomer()"></button>
     </p-header>
+    <div class="ui-g"><div class="ui-g-12"><div><span class="ui-float-label"><input style="width:100%" type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)"></span></div></div></div>  
     <div class="table-responsive">
         <table class="table">
             <thead>

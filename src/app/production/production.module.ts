@@ -10,6 +10,7 @@ import { FGInwardComponent } from './fginward/fginward.component';
 import { TransactionCommonModule } from '../transactionsShared/transaction.module';
 import { TransactionServices } from '../transactionsShared/transaction.service';
 import { FiltersModule } from '../transFilters/transFilter.Module';
+import { AssemblyInstructionModule } from './assembly-instruction/assembly-instruction.module';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { FiltersModule } from '../transFilters/transFilter.Module';
     SharedModule,
     ProductionRouteModule,
     TransactionCommonModule,
-    FiltersModule
+    FiltersModule,
+    AssemblyInstructionModule
   ],
   declarations: [ ProductionComponent, CreateProdComponent, ProdOrderComponent, ProdEntryComponent, FGInwardComponent],
   providers : [ TransactionServices ]

@@ -297,7 +297,20 @@
             <div class="ui-g-4">
               <div class="form-group">
                 <span class="ui-float-label">
-                  <p-dropdown [options]="supplierlist" formControlName="ledgerName"></p-dropdown>
+                   <p-autoComplete
+                    formControlName="ledgerName"
+                    [suggestions]="filteredItems"
+                    (completeMethod)="filterItems($event)"
+                    (onSelect)="getSelectedVal($event, 'stockItemSuppliers',i)"
+                    [size]="30"
+                    placeholder=""
+                    [minLength]="1"
+                    styleClass="wid100"
+                  >
+                  <!-- <input type="text" formControlName="stockitemID" pInputText style="visibility: hidden; height: 0; width: 0; font-size: 0;"> -->
+                  {{ledgerName}}
+                  </p-autoComplete>
+                  <!-- <p-dropdown [options]="supplierlist" formControlName="ledgerName"></p-dropdown> -->
                 </span>
 
                 <div *ngIf="ledgerName.invalid && (ledgerName.dirty || ledgerName.touched)" class="alert alert-danger">
