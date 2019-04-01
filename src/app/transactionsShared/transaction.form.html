@@ -1,5 +1,5 @@
 <p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
-<form [formGroup]="transactionForm" (submit)="saveTransation(transactionForm.value)" class="formData">
+<form [formGroup]="transactionForm" class="formData">
   <div class="message error" *ngIf="showError">{{errorMsg}}</div>
   <div class="message success" *ngIf="showSuccess">{{successMsg}}</div>
 
@@ -162,110 +162,107 @@
     <legend>
       Item Details
     </legend>
-    <div style="max-height: 450px; min-height: 300px; overflow: auto">
+    <table width="100%" class="fieldTable">
+      <thead>
+        <th width="4%">S.No.</th>
+        <th width="30%">Item Name</th>
+        <th width="3%">&nbsp;</th>
+        <th width="10%" *ngIf="showLength4So">Length</th>
+        <th width="10%" *ngIf="showLength4So">Stops</th>
+        <th width="10%" *ngIf="showScannedQty">Scanned Qty</th>
+        <th width="10%" *ngIf="GrnInput">Order Qty.</th>
+        <th width="10%" *ngIf="GrnInput">Challan Qty.</th>
+        <th width="10%">Qty</th>
+        <th width="10%" *ngIf="showBoxCode">Box Code</th>
+        <th width="10%" *ngIf="!showScannedQty">Rate</th>
+        <th width="10%" *ngIf="!showScannedQty">Amount</th>
+        <th width="10%" style="text-align:center; min-width: 130px;">Actions</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ctrl of transactionForm.get('transItemDetails').controls; let i = index;" [formGroupName]="i">
+          <td>{{i+1}}</td>
+          <td class="specialDropdown" style="text-align: left;">
 
-      <table width="100%" class="fieldTable">
-        <thead>
-          <th width="4%">S.No.</th>
-          <th width="30%">Item Name</th>
-          <th width="3%">&nbsp;</th>
-          <th width="10%" *ngIf="showLength4So">Length</th>
-          <th width="10%" *ngIf="showLength4So">Stops</th>
-          <th width="10%" *ngIf="showScannedQty">Scanned Qty</th>
-          <th width="10%" *ngIf="GrnInput">Order Qty.</th>
-          <th width="10%" *ngIf="GrnInput">Challan Qty.</th>
-          <th width="10%">Qty</th>
-          <th width="10%" *ngIf="showBoxCode">Box Code</th>
-          <th width="10%" *ngIf="!showScannedQty">Rate</th>
-          <th width="10%" *ngIf="!showScannedQty">Amount</th>
-          <th width="10%" style="text-align:center; min-width: 130px;">Actions</th>
-        </thead>
-        <tbody>
-          <tr *ngFor="let ctrl of transactionForm.get('transItemDetails').controls; let i = index;" [formGroupName]="i">
-            <td>{{i+1}}</td>
-            <td class="specialDropdown" style="text-align: left;">
+            <p-autoComplete formControlName="stockItemDesc" [suggestions]="filteredItems"
+              (completeMethod)="filterItems($event)" (onSelect)="getSelectedVal($event, 'transItemDetails', i)"
+              [size]="30" placeholder="Enter ItemCode To Search" [minLength]="1" styleClass="wid100"
+              [disabled]="showActionBtn" [dropdown]="true">
+              {{itemName}}
+            </p-autoComplete>
 
-              <p-autoComplete formControlName="stockItemDesc" [suggestions]="filteredItems"
-                (completeMethod)="filterItems($event)" (onSelect)="getSelectedVal($event, 'transItemDetails', i)"
-                [size]="30" placeholder="Enter ItemCode To Search" [minLength]="1" styleClass="wid100"
-                [disabled]="showActionBtn" [dropdown]="true">
-                {{itemName}}
-              </p-autoComplete>
+            <input type="text" formControlName="stockitemID" pInputText
+              style="visibility: hidden; height: 0; width: 0; font-size: 0;">
+          </td>
+          <td style="text-align: left;">
+            <button pButton type="button" class="ui-button-success" label="..." (click)="displayItemDescDialog=true"
+              pTooltip="Click to fill Items Additional Description." tooltipPosition="top"></button>
 
-              <input type="text" formControlName="stockitemID" pInputText
-                style="visibility: hidden; height: 0; width: 0; font-size: 0;">
-            </td>
-            <td style="text-align: left;">
-              <button pButton type="button" class="ui-button-success" label="..." (click)="displayItemDescDialog=true"
-                pTooltip="Click to fill Items Additional Description." tooltipPosition="top"></button>
+            <p-dialog header="Add Item Description" [(visible)]="displayItemDescDialog" [modal]="true"
+              [responsive]="true" [style]="{width: '350px', minWidth: '200px'}" [minY]="70" [maximizable]="true"
+              [baseZIndex]="10000">
+              <div class="form-group">
+                <span class="ui-float-label">
+                  <textarea [rows]="4" style="width:100%" pInputTextarea
+                    formControlName="transactionItem_AdditionalDesciption"></textarea>
+                  <label for="itemDesc">Enter Additional Desc.</label>
+                </span>
+              </div>
+              <p-footer>
+                <button type="button" pButton (click)="displayItemDescDialog=false" label="Cancel"
+                  class="ui-button-secondary"></button>
+                <button type="button" pButton (click)="displayItemDescDialog=false" label="Add"></button>
+              </p-footer>
+            </p-dialog>
 
-              <p-dialog header="Add Item Description" [(visible)]="displayItemDescDialog" [modal]="true"
-                [responsive]="true" [style]="{width: '350px', minWidth: '200px'}" [minY]="70" [maximizable]="true"
-                [baseZIndex]="10000">
-                <div class="form-group">
-                  <span class="ui-float-label">
-                    <textarea [rows]="4" style="width:100%" pInputTextarea
-                      formControlName="transactionItem_AdditionalDesciption"></textarea>
-                    <label for="itemDesc">Enter Additional Desc.</label>
-                  </span>
-                </div>
-                <p-footer>
-                  <button type="button" pButton (click)="displayItemDescDialog=false" label="Cancel"
-                    class="ui-button-secondary"></button>
-                  <button type="button" pButton (click)="displayItemDescDialog=false" label="Add"></button>
-                </p-footer>
-              </p-dialog>
+            <!-- <textarea [rows]="2" style="width:98%" pInputTextarea  formControlName="transactionItem_AdditionalDesciption" placeholder="Additional Desc."></textarea> -->
+          </td>
 
-              <!-- <textarea [rows]="2" style="width:98%" pInputTextarea  formControlName="transactionItem_AdditionalDesciption" placeholder="Additional Desc."></textarea> -->
-            </td>
+          <td *ngIf="showLength4So"><input type="text" formControlName="itemLength" pInputText disabled="disabled">
+          </td>
+          <td *ngIf="showLength4So"><input type="text" formControlName="itemStops" pInputText disabled="disabled">
+          </td>
 
-            <td *ngIf="showLength4So"><input type="text" formControlName="itemLength" pInputText disabled="disabled">
-            </td>
-            <td *ngIf="showLength4So"><input type="text" formControlName="itemStops" pInputText disabled="disabled">
-            </td>
+          <td *ngIf="showScannedQty"><input type="text" formControlName="itemReceived_Qty" pInputText
+              disabled="disabled" [class.verified]="equalQtyList[i]===i && showScannedQty"
+              [class.pending]="equalQtyList[i]!==i && showScannedQty"></td>
 
-            <td *ngIf="showScannedQty"><input type="text" formControlName="itemReceived_Qty" pInputText
-                disabled="disabled" [class.verified]="equalQtyList[i]===i && showScannedQty"
-                [class.pending]="equalQtyList[i]!==i && showScannedQty"></td>
+          <td *ngIf="GrnInput"><input type="text" formControlName="itemPending_Qty" pInputText disabled="disabled">
+          </td>
 
-            <td *ngIf="GrnInput"><input type="text" formControlName="itemPending_Qty" pInputText disabled="disabled">
-            </td>
+          <td *ngIf="GrnInput"><input type="text" formControlName="itemChallan_Qty" pInputText></td>
 
-            <td *ngIf="GrnInput"><input type="text" formControlName="itemChallan_Qty" pInputText></td>
+          <td><input type="text" formControlName="itemQty" pInputText (keyup)="getAmount()"
+              [class.verified]="equalQtyList[i]===i && showScannedQty"
+              [class.pending]="equalQtyList[i]!==i && showScannedQty"></td>
 
-            <td><input type="text" formControlName="itemQty" pInputText (keyup)="getAmount()"
-                [class.verified]="equalQtyList[i]===i && showScannedQty"
-                [class.pending]="equalQtyList[i]!==i && showScannedQty"></td>
+          <td *ngIf="showBoxCode"><input type="text" formControlName="boxCode" pInputText
+              [attr.disabled]="showActionBtn == true? true : null"></td>
 
-            <td *ngIf="showBoxCode"><input type="text" formControlName="boxCode" pInputText
-                [attr.disabled]="showActionBtn == true? true : null"></td>
+          <td *ngIf="!showScannedQty"><input type="text" formControlName="itemRate" pInputText (keyup)="getAmount()"
+              [attr.disabled]="showActionBtn == true? true : null"></td>
 
-            <td *ngIf="!showScannedQty"><input type="text" formControlName="itemRate" pInputText (keyup)="getAmount()"
-                [attr.disabled]="showActionBtn == true? true : null"></td>
+          <td *ngIf="!showScannedQty"><input type="text" formControlName="itemAmount" pInputText (keyup)="getAmount()"
+              [attr.disabled]="showActionBtn == true? true : null"></td>
 
-            <td *ngIf="!showScannedQty"><input type="text" formControlName="itemAmount" pInputText (keyup)="getAmount()"
-                [attr.disabled]="showActionBtn == true? true : null"></td>
+          <td style="text-align:center">
+            <button pButton type="button" *ngIf="!showActionBtn" icon="fa fa-plus" class="ui-button-success"
+              (click)="addItemDetails()"></button>
 
-            <td style="text-align:center">
-              <button pButton type="button" *ngIf="!showActionBtn" icon="fa fa-plus" class="ui-button-success"
-                (click)="addItemDetails()"></button>
+            <button pButton type="button" *ngIf="!showActionBtn" icon="fa fa-trash-o" class="ui-button-danger"
+              [disabled]="i < 1" (click)="deleteItemDetails(i)"></button>
 
-              <button pButton type="button" *ngIf="!showActionBtn" icon="fa fa-trash-o" class="ui-button-danger"
-                [disabled]="i < 1" (click)="deleteItemDetails(i)"></button>
+            <input type="hidden" formControlName="itemBarCodeApplicableStatus" />
 
-              <input type="hidden" formControlName="itemBarCodeApplicableStatus" />
+            <!-- <i class="fa fa-hourglass-end" aria-hidden="true" *ngIf="!ctrl.itemBarCodeApplicableStatus && showActionBtn"></i> -->
+            <!-- <button pButton type="button" *ngIf="ctrl.itemBarCodeApplicableStatus && showActionBtn" disabled="disabled" icon="fa fa-check" title="Verified" class="ui-button-success"></button> -->
+            <button pButton type="button" *ngIf="barCodeApplicableStatus.length > 0"
+              [disabled]="!barCodeApplicableStatus[i].status" (click)="showGrnBarcodeDialog(i)" icon="fa fa fa-barcode"
+              title="Scan Barcode" class="ui-button-success barcodeBtn"></button>
+          </td>
 
-              <!-- <i class="fa fa-hourglass-end" aria-hidden="true" *ngIf="!ctrl.itemBarCodeApplicableStatus && showActionBtn"></i> -->
-              <!-- <button pButton type="button" *ngIf="ctrl.itemBarCodeApplicableStatus && showActionBtn" disabled="disabled" icon="fa fa-check" title="Verified" class="ui-button-success"></button> -->
-              <button pButton type="button" *ngIf="barCodeApplicableStatus.length > 0"
-                [disabled]="!barCodeApplicableStatus[i].status" (click)="showGrnBarcodeDialog(i)"
-                icon="fa fa fa-barcode" title="Scan Barcode" class="ui-button-success barcodeBtn"></button>
-            </td>
-
-          </tr>
-        </tbody>
-      </table>
-    </div>
+        </tr>
+      </tbody>
+    </table>
   </fieldset>
   <fieldset *ngIf="transLedgerDetails" formArrayName="transLedgerDetails">
     <legend>
@@ -373,7 +370,6 @@
           <th width="12%">Box Serial No</th>
           <th width="12%">Box Position</th>
           <th width="12%">SCHREF</th>
-          <!-- <th width="10%" style="text-align:center" >Actions</th> -->
         </thead>
         <tbody>
           <tr *ngFor="let ctrl of transactionForm.get('transBoxDetails').controls; let i = index;" [formGroupName]="i">
@@ -410,7 +406,7 @@
     <legend>
       Batch Details
     </legend>
-    <div>
+    <div style="max-height:200px; overflow:auto">
       <table width="100%" class="fieldTable">
         <thead>
           <th>Batch No.</th>
@@ -418,7 +414,7 @@
           <th>Quantity</th>
           <th width="10%" style="text-align:center" *ngIf="!showActionBtn">Actions</th>
         </thead>
-        <tbody>
+        <tbody >
           <tr *ngFor="let ctrl of transactionForm.get('transBatchDetails').controls; let i = index;"
             [formGroupName]="i">
             <td><input type="text" formControlName="batchNo" pInputText disabled="disabled"></td>
@@ -526,7 +522,7 @@
   </fieldset>
 
   <p style="text-align: center">
-    <button pButton type="submit" label="Submit" class="ui-button-success" [disabled]="!transactionForm.valid"
+    <button pButton type="button" (click)="saveTransation(transactionForm.value)" label="Submit" class="ui-button-success" [disabled]="!transactionForm.valid"
       style="margin-right: 10px;"></button>
     <button pButton type="button" label="Cancel" class="ui-button-secondary"></button>
   </p>

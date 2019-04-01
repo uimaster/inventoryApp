@@ -1,44 +1,45 @@
-
 <p-panel header="Sales Invoice Generation List" class="Tabledata">
-    <p-header>
-        <button pButton type="button" style="float:right" icon="pi pi-plus" label="Authorise" class="ui-button-success" (click)="authoriseInvoice()"></button>
-        <!-- <button pButton type="button" style="float:right" icon="fa fa-trash-o" label="Delete" class="ui-button-danger"></button> -->
-      <!-- <button pButton type="button" style="float:right" icon="fa fa-print" label="Print" class="ui-button-info"></button> -->
-    </p-header>
-    <div *ngIf="generationList" class="table-responsive">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>S. No.</th>
-                <th>Doc Date</th>
-                <th>Doc No </th>
-                <th>Customer</th>
-                <th>Due Date</th>
-                <th>Amount</th>
-                <th>Status</th>
-                <th width="10%"><p-checkbox name="groupname" value="" ></p-checkbox> Select All</th>
-
-            </tr>
-            </thead>
-            <tbody>
-            <ng-container *ngIf="generationList">
-                <tr *ngFor="let item of generationList; index as i;">
-                    <td>{{i+1}}</td>
-                    <td>{{item.transactionDate}}</td>
-                    <td>{{item.transactionNo}}</td>
-                    <td>{{item.ledgerName}}</td>
-                    <td>{{item.transactionDueDate}}</td>
-                    <td>{{item.transaction_Amount}}</td>
-                    <td>{{item.veificationStatus}}</td>
-                    <td><p-checkbox name="" value="" (onChange)="getAuthCheckList(item.transactionID)"></p-checkbox></td>
-                </tr>
-            </ng-container>
-            </tbody>
-        </table>
-    </div>
-    <div  *ngIf="!generationList || generationList.length < 1" style="text-align: center">
-      <br/>
-      No Records available !
-      <br/><br/>
-    </div>
-  </p-panel>
+  <p-header>
+    <button pButton type="button" style="float:right" icon="pi pi-plus" label="Authorise" class="ui-button-success"
+      (click)="authoriseInvoice()"></button>
+    <!-- <button pButton type="button" style="float:right" icon="fa fa-trash-o" label="Delete" class="ui-button-danger"></button> -->
+    <!-- <button pButton type="button" style="float:right" icon="fa fa-print" label="Print" class="ui-button-info"></button> -->
+  </p-header>
+  <div *ngIf="generationList" class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>S. No.</th>
+          <th>Doc Date</th>
+          <th>PL No</th>
+          <th>Order Ref No </th>
+          <th>Custome Name</th>
+          <th>Location</th>
+          <th width="10%">
+            <p-checkbox name="groupname" value=""></p-checkbox> Select All
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="generationList">
+          <tr *ngFor="let item of generationList; index as i;">
+            <td>{{i+1}}</td>
+            <td>{{item.transactionDate}}</td>
+            <td>{{item.packingListNo}}</td>
+            <td>{{item.transactionNo}}</td>
+            <td>{{item.ledgerName}}</td>
+            <td>{{item.customerLocationName}}</td>
+            <td>
+              <p-checkbox name="" value="" (onChange)="getAuthCheckList(item.transactionID)"></p-checkbox>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="!generationList || generationList.length < 1" style="text-align: center">
+    <br />
+    No Records available !
+    <br /><br />
+  </div>
+</p-panel>

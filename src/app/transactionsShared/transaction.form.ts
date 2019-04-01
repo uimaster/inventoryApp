@@ -179,9 +179,6 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
     this.showBarcode4Grn = JSON.parse(localStorage.getItem("showBarcode4Grn"));
     this.showLength4So = JSON.parse(localStorage.getItem("showLength4So"));
 
-    // console.log('sdfsdf', this.barCodeApplicableStatus);
-
-    // setTimeout(() => {
     this.showLoader = true;
     this.getItemList();
     this.getCurrency();
@@ -1898,6 +1895,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
           this.endtLength.nativeElement.value = "";
           this.itemStops.nativeElement.value = "";
         } else {
+          alert(res.message);
           this.plValidationMsg = res.message;
           this.barCode1.nativeElement.value = "";
         }

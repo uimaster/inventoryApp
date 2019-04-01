@@ -100,8 +100,9 @@ export const GETPROCESSREQUEST = BASEURL + 'planning/GetProcessRequest';
 export const GETNOTIFICATION = BASEURL + 'dashboard/GetNotificationMessages';
 export const UPDATENOTIFICATION = BASEURL + 'dashboard/GetUpdateNotificationStatus';
 
-//Assembly
+// Instructions urls
 export const GETASSEMBLYINSTRUCTIONLIST = BASEURL + 'Assembly/GetAssemblyInstructionList';
 export const GETASSEMBLYINSTRUCTIONDETAILS = BASEURL + 'Assembly/GetAssemblyInstructionDetails';
 export const POSTASSEMBLYINSTRUCTIONDETAILS = BASEURL + 'Assembly/POSTAssemblyInstructionDetails';
 export const GETFGITEMBOMLIST = BASEURL + 'Assembly/GetFGItemBOMList';
+export const GETWORKINSTRUCTIONDETAILSFORITEM = BASEURL + 'Assembly/GetWorkInstructionDetailsForItem';

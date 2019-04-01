@@ -1,0 +1,109 @@
+<p-panel header="Assembly Work Instruction" class="Tabledata">
+  <p-header>
+      <button pButton type="button" style="float:right" label="Start Scan" class="ui-button-success" (click)="getOpenBarcodeModal()"></button>
+  </p-header>
+  <p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
+
+  <form [formGroup]="workInstructionForm" (submit)="saveTransation(workInstructionForm.value)" class="formData">
+    <div class="message error" *ngIf="showError">{{errorMsg}}</div>
+    <div class="message success" *ngIf="showSuccess">{{successMsg}}</div>
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <div class="ui-g-3">
+          <div class="form-group" style="margin:0">
+            <span class="ui-float-label">
+              <input type="text" formControlName="serialNo" pInputText>
+              <label for="transactionNo">Serial No.</label>
+            </span>
+          </div>
+        </div>
+        <div class="ui-g-3" style="margin:0">
+          <div class="form-group">
+            <span class="ui-float-label">
+              <input type="text" pInputText formControlName="finishgoodId">
+              <label for="transactionNo">Finish Good Id</label>
+            </span>
+          </div>
+        </div>
+
+        <div class="ui-g-3">
+            <div class="form-group" style="margin:0">
+              <span class="ui-float-label">
+                <input type="text" pInputText>
+                <label for="transactionNo">Assembly Code</label>
+              </span>
+            </div>
+          </div>
+          <div class="ui-g-3" style="margin:0">
+            <div class="form-group">
+              <span class="ui-float-label">
+                <input type="text" pInputText >
+                <label for="transactionNo">Assembly Name</label>
+              </span>
+            </div>
+          </div>
+
+      </div>
+    </div>
+  </form>
+</p-panel>
+
+<p-panel header="Item Work Details" class="Tabledata">
+    <!-- <p-header>
+        <button pButton type="button" style="float:right" icon="pi pi-plus"  label="Add Work Instruction" class="ui-button-success" routerLink="/production/addworkInstruction"></button>
+
+    </p-header> -->
+    <div class="table-responsive" *ngIf="workInstructionItemList">
+        <table class="table">
+            <thead>
+              <tr>
+                <th>Instruction SR. No.</th>
+                <th>Instruction Description</th>
+                <th>Item Desc.</th>
+                <th>stockItemID</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container>
+                <tr *ngFor="let item of workInstructionItemList; index as i;">
+                    <td style="text-align: center">{{item.instructionSRNo}}</td>
+                    <td>{{item.instructiondescription}}</td>
+                    <td>{{item.itemDesc}}</td>
+                    <td>{{item.stockItemID}}</td>
+                    <td>
+                        <a pButton type="button" label="View Details" style="opacity: 0.2" class="ui-button-info" target="_blank" (click)="generateReport(item.transactionID)"></a>
+                    </td>
+                </tr>
+            </ng-container>
+            </tbody>
+        </table>
+    </div>
+    <div  *ngIf="!workInstructionItemList || workInstructionItemList.length < 1" style="text-align: center">
+      <br/>
+      No Records available !
+      <br/><br/>
+    </div>
+  </p-panel>
+
+
+
+    <p-dialog header="Barcode Scan Dialog" [(visible)]="displayworksModal" [modal]="true" [responsive]="true"
+      [style]="{width: '350px', minWidth: '200px'}" [minY]="70" [maximizable]="true" [baseZIndex]="10000">
+
+      <p style="background-color:#ffcaca; padding:0 5px; line-height:34px; border-radius:4px;">{{plValidationMsg}}</p>
+      <p style="background-color:#beefc8; padding:0 5px; line-height:34px; border-radius:4px; color:#18722b;">
+        {{BarcodeSuccessMsg}}</p><br />
+      <div class="form-group">
+        <span class="ui-float-label">
+          <input type="text" pInputText id="barCode" #barCode />
+          <label for="barCode">Barcode</label>
+        </span>
+      </div>
+
+      <p-footer class="text-center">
+        <button type="button" pButton (click)="displayworksModal=false" label="Cancel"
+          class="ui-button-secondary"></button>
+        <button type="button" pButton (click)="startScan()" label="Scan"></button>
+      </p-footer>
+    </p-dialog>

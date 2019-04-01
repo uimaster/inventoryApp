@@ -6,6 +6,8 @@ import { ProdOrderComponent } from './prod-order/prod-order.component';
 import { ProdEntryComponent } from './prod-entry/prod-entry.component';
 import { FGInwardComponent } from './fginward/fginward.component';
 import { CreateProdComponent } from './create/create.component';
+import { WorkInstructionComponent } from './work-instruction/work-instruction.component';
+import { CreateWorkInstructionComponent } from './work-instruction/create/create.component';
 
 export const routes: Routes = [
   { path: '',  component: ProductionComponent,
@@ -15,7 +17,9 @@ export const routes: Routes = [
           { path: 'prodOrder', component: ProdOrderComponent },
           { path: 'prodEntry', component: ProdEntryComponent },
           { path: 'FGInward', component: FGInwardComponent },
-          { path: 'addEditProduction', component: CreateProdComponent}
+          { path: 'workInstruction', component: WorkInstructionComponent },
+          { path: 'addEditProduction', component: CreateProdComponent},
+          { path: 'addworkInstruction', component: CreateWorkInstructionComponent}
         ]
       }
     ]
