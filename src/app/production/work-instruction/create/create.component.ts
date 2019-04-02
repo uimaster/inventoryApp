@@ -13,8 +13,11 @@ export class CreateWorkInstructionComponent implements OnInit {
   public workInstructionForm: FormGroup;
   public displayworksModal = false;
   @ViewChild("barCode") barCode: ElementRef;
+  @ViewChild("serialNo") serialNo: ElementRef;
+  @ViewChild("quantity") quantity: ElementRef;
   public plValidationMsg = "";
   public workInstructionItemList = [];
+  public currentIndex = 1;
 
   constructor(
     private fb: FormBuilder,
@@ -66,8 +69,12 @@ export class CreateWorkInstructionComponent implements OnInit {
       .subscribe(res => {
         if (res.status === "200") {
           this.getWorkInstructionDetailsForItem(res.data[0].stockItemID);
-          this.workInstructionForm.controls['serialNo'].setValue(res.data[0].itemCode);
-          this.workInstructionForm.controls['finishgoodId'].setValue(res.data[0].batchno);
+          this.workInstructionForm.controls["serialNo"].setValue(
+            res.data[0].itemCode
+          );
+          this.workInstructionForm.controls["finishgoodId"].setValue(
+            res.data[0].batchno
+          );
         }
       });
   }
@@ -78,7 +85,18 @@ export class CreateWorkInstructionComponent implements OnInit {
       .subscribe(res => {
         if (res.status === "200") {
           this.workInstructionItemList = res.data;
+          this.getValidateItems();
         }
       });
+  }
+
+  getValidateItems() {
+    debugger;
+    var serialData = this.serialNo.nativeElement.value;
+    var quantityData = this.quantity.nativeElement.value;
+    const currentRowData = this.workInstructionItemList[this.currentIndex];
+    if (currentRowData.batchStatus === false) {
+      this.serialNo.nativeElement.setValue({value: '', disabled: true});
+    }
   }
 }

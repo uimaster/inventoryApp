@@ -20,7 +20,7 @@ export const routes: Routes = [
           { path: 'prodEntry', component: ProdEntryComponent },
           { path: 'FGInward', component: FGInwardComponent },
           { path: 'workInstruction', component: WorkInstructionComponent },
-          { path: 'addworkInstruction', component: CreateWorkInstructionComponent}
+          { path: 'addworkInstruction', component: CreateWorkInstructionComponent},
           { path: 'addEditProduction', component: CreateProdComponent},
           { path: 'AssemblyInstruction/list', component: AssemblyInstructionListComponent },
           { path: 'AssemblyInstruction/add', component: AssemblyInstructionComponent },

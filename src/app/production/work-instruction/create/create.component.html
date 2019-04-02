@@ -61,19 +61,33 @@
                 <th>Instruction Description</th>
                 <th>Item Desc.</th>
                 <th>stockItemID</th>
-                <th>Action</th>
             </tr>
             </thead>
             <tbody>
             <ng-container>
-                <tr *ngFor="let item of workInstructionItemList; index as i;">
+                <tr *ngFor="let item of workInstructionItemList | slice: 0:currentIndex; index as i;">
                     <td style="text-align: center">{{item.instructionSRNo}}</td>
                     <td>{{item.instructiondescription}}</td>
                     <td>{{item.itemDesc}}</td>
                     <td>{{item.stockItemID}}</td>
-                    <td>
-                        <a pButton type="button" label="View Details" style="opacity: 0.2" class="ui-button-info" target="_blank" (click)="generateReport(item.transactionID)"></a>
-                    </td>
+                </tr>
+                <tr *ngIf="workInstructionItemList.length > 0">
+                  <td colspan="5" class="text-right" style="background:#f6f6f6; padding-top:20px;">
+                    <a pButton type="button" label="Update" style="width:100px; padding:5px; float:right; font-size:16px; margin-right:10px; "
+                     class="ui-button-success right" (click)="generateReport(item.transactionID)"></a>
+                    <div class="form-group" style="width:100px; float:right; margin-right:10px; margin-bottom:0">
+                      <span class="ui-float-label">
+                        <input type="text" pInputText #quantity >
+                        <label for="transactionNo">Quantity</label>
+                      </span>
+                    </div>
+                    <div class="form-group" style="width:250px; float:right; margin-right:10px; margin-bottom:0">
+                      <span class="ui-float-label">
+                        <input type="text" pInputText #serialNo >
+                        <label for="transactionNo">Serial No.</label>
+                      </span>
+                    </div>
+                  </td>
                 </tr>
             </ng-container>
             </tbody>

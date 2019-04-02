@@ -1,9 +1,16 @@
 <p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
 <p-panel header="Stock Items" class="Tabledata">
     <p-header>
-        <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addStockItem(0)"></button>
-    </p-header>
-    <div class="ui-g"><div class="ui-g-12"><div><span class="ui-float-label"><input style="width:100%" type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)"></span></div></div></div>  
+        
+        <button pButton type="button" style="float:right; margin-top: 5px;" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addStockItem(0)"></button>
+        <div style="float:right; width: 250px;">
+            <span class="ui-float-label">
+              <input style="width:100%" type="text" pInputText placeholder="Search.." 
+              (keyup)="applyFilter($event.target.value)">
+            </span>
+        </div>
+      </p-header>
+      
     <div class="table-responsive">
         <table class="table">
             <thead>
