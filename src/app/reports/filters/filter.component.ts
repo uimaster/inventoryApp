@@ -19,11 +19,13 @@ export class FiltersComponent implements OnInit, OnDestroy {
   public selectedReportType = 1;
   public selectedSOReportType = 1;
   public reportTypeList = [ {label: 'All', value: 1}, {label: 'Pending', value: 2}];
-  public statusList = [{label:'All', value:1},{label:'Pending', value:2}]
-  public SOreportTypeList = [{label:'Order Summary', value:1},{label:'Order Details', value:2}]
+  public statusList = [{label:'All', value:1},{label:'Pending', value:2}];
+  public SOreportTypeList = [{label:'Order Summary', value:1},{label:'Order Details', value:2}];
   public SSreportTypeList = [ {label: 'Raw Materials', value: 1}, {label: 'Finished Goods', value: 2}];
   public poTypeList = [{label: 'COS', value: 10},{label: 'Claim', value: 22},{label: 'Spare', value: 23}];
   public selectedPOType = 10;
+  public despatchReportTypeList = [{label:'Details', value:1},{label:'Summary', value:2}];
+  public selectedDespatchReportType = 1;
   public searchText = '';
   public stockItemList = [];
   public filteredItems = [];
@@ -55,6 +57,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
       localStorage.removeItem('r_rf');
       localStorage.removeItem('r_transactionSeriesID');
       localStorage.removeItem('r_searchText');
+      localStorage.removeItem('r_DespatchReportsTypeID');
       // localStorage.removeItem('r_ledgerName');
     }
   }
@@ -108,6 +111,9 @@ export class FiltersComponent implements OnInit, OnDestroy {
     if (localStorage.getItem('r_searchText')) { this.searchText = JSON.parse(localStorage.getItem('r_searchText')); }
     else{ localStorage.setItem('r_searchText', JSON.stringify(this.searchText)); }
 
+    if (localStorage.getItem('r_DespatchReportsTypeID')) { this.selectedDespatchReportType = JSON.parse(localStorage.getItem('r_DespatchReportsTypeID')); }
+    else{ localStorage.setItem('r_DespatchReportsTypeID', JSON.stringify(this.selectedDespatchReportType)); }
+
     //if(localStorage.getItem('r_ledgerID')){  this.ledgerID = JSON.parse(localStorage.getItem('r_ledgerID')); }
     //else{ localStorage.setItem('r_ledgerID', JSON.stringify(this.ledgerID)); }
     //if(localStorage.getItem('r_ledgerName')){  this.ledgerName = JSON.parse(localStorage.getItem('r_ledgerName')); }
@@ -149,6 +155,10 @@ export class FiltersComponent implements OnInit, OnDestroy {
 
   onChangePOType(){
     localStorage.setItem('r_transactionSeriesID', JSON.stringify(this.selectedPOType));
+  }
+
+  onChangeDespatchReportType(){
+    localStorage.setItem('r_DespatchReportsTypeID', JSON.stringify(this.selectedDespatchReportType));
   }
 
   getTransactionList() {

@@ -132,27 +132,32 @@
         <div class="col-sm-12 no-padding dashboardlscol">
         <div class="dashboard-volumn">
             <div class="row">
-            <div class="col-sm-3"><div class="form-group"><span class="ui-float-label">
-                    <p-calendar [(ngModel)]="dateValue1" dateFormat="dd/mm/yy" id="startDate" (onSelect)="getFromDate($event)" [showIcon]="true"></p-calendar><label for="startDate">Start Date</label></span></div></div>
+                <div class="col-sm-4"><div class="form-group"><span class="ui-float-label">
+                <p-calendar [(ngModel)]="dateValue1" dateFormat="dd/mm/yy" id="startDate" (onSelect)="getFromDate($event)" [showIcon]="true"></p-calendar><label for="startDate">Start Date</label></span></div></div>
     
-            <div class="col-sm-3"><div class="form-group"><span class="ui-float-label">
+                <div class="col-sm-4"><div class="form-group"><span class="ui-float-label">
                 <p-calendar [(ngModel)]="dateValue2" dateFormat="dd/mm/yy" id="toDate" (onSelect)="getToDate($event)" [showIcon]="true"></p-calendar>
                 <label for="toDate">To Date</label></span></div></div>
             
-            <div class="col-sm-3"><div class="form-group"><span class="ui-float-label">
-              <p-dropdown  id="poTypeID" [(ngModel)]="selectedPOType"  [options]="poTypeList" [style]="{'width':'95%'}"  
+                <div class="col-sm-4"><div class="form-group"><span class="ui-float-label">
+                <p-dropdown  id="poTypeID" [(ngModel)]="selectedPOType"  [options]="poTypeList" [style]="{'width':'95%'}"  
                 (onChange)="onChangePOType()"></p-dropdown>
-            <label for="poTypeID">PO Type</label></span></div></div>
-
-            <div class="col-sm-3"><div class="form-group"><span class="ui-float-label">
-                <input  id="searchText" type="text" pInputText [(ngModel)]="searchText">
-                <label for="searchText">Search</label></span></div></div>
+                <label for="poTypeID">PO Type</label></span></div></div>
             </div>
             <div class="row">
-            <div class="col-sm-4 pull-right">
+                <div class="col-sm-4"><div class="form-group"><span class="ui-float-label">
+                <p-dropdown  id="reportTypeID" [(ngModel)]="selectedDespatchReportType"  [options]="despatchReportTypeList" [style]="{'width':'95%'}"  
+                    (onChange)="onChangeDespatchReportType()"></p-dropdown>
+                <label for="reportTypeID">Report Type</label></span></div></div>
+
+                <div class="col-sm-4"><div class="form-group"><span class="ui-float-label">
+                <input  id="searchText" type="text" pInputText [(ngModel)]="searchText">
+                <label for="searchText">Search</label></span></div></div>
+
+                <div class="col-sm-4 pull-right">
                 <button pButton type="button" label="Go" (click)="getTransactionList();" class="ui-button-success go-btn"></button>
             </div>
-            </div>
+        </div>
         </div>
         </div>
     </div>

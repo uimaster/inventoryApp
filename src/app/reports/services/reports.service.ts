@@ -34,10 +34,11 @@ export class ReportsService {
         );
     }
 
-    getDespatchDetailsReportList(FromDate,ToDate,TransactionSeriesID,searchText): Observable<any> {
+    getDespatchDetailsReportList(FromDate,ToDate,TransactionSeriesID,searchText,DespatchReportsTypeID): Observable<any> {
         const params = new HttpParams().set('FromDate', FromDate).set('ToDate', ToDate)
             .set('TransactionSeriesID', TransactionSeriesID)
-            .set('SearchText', searchText);
+            .set('SearchText', searchText)
+            .set('ReportTypeID',DespatchReportsTypeID);
         return this.http.get(urls.DESPATCHDETAILSREPORT, {params}).pipe(
             map(res => {
                 return res;

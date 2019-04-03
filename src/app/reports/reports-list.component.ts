@@ -99,6 +99,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
         let SOReportsTypeID = 1;
         let TransactionSeriesID = 10;
         let searchText = '';
+        let DespatchReportsTypeID = 1;
 
         if(localStorage.getItem('r_reportsTypeID') && localStorage.getItem('r_reportsTypeID') !== '') {
             ReportsTypeID = JSON.parse(localStorage.getItem('r_reportsTypeID'));
@@ -119,6 +120,10 @@ export class ReportsListComponent implements OnInit, OnDestroy {
 
         if(localStorage.getItem('r_searchText') && localStorage.getItem('r_searchText') !== '') {
             searchText = JSON.parse(localStorage.getItem('r_searchText'));
+        }
+
+        if(localStorage.getItem('r_DespatchReportsTypeID') && localStorage.getItem('r_DespatchReportsTypeID') !== '') {
+            DespatchReportsTypeID = JSON.parse(localStorage.getItem('r_DespatchReportsTypeID'));
         }
 
         if(this.type=='po-report'){
@@ -162,7 +167,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
         }
 
         if(this.type=='despatch-details-report'){
-            this.reportsListDataSubscription = this._reportsService[fName](fromDate,toDate,TransactionSeriesID,searchText).subscribe(
+            this.reportsListDataSubscription = this._reportsService[fName](fromDate,toDate,TransactionSeriesID,searchText,DespatchReportsTypeID).subscribe(
                 result => {
                     if (result && result.status === '200')  {
                         this.reportsList = result.data;
