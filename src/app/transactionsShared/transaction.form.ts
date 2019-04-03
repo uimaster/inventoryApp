@@ -204,12 +204,14 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
         ) {
           this.getSelectedDate(this.date3, "transactionDate");
         }
-        if (this.transPOTerms) {
-          if (
-            this.POData[0].transactionDueDate == "" ||
-            this.POData[0].transactionDueDate == null
-          ) {
-            this.getSelectedDate(this.date5, "transactionDueDate");
+        if (this.transPOTerms !== undefined) {
+          if (this.POData.length > 0) {
+            if (
+              this.POData[0].transactionDueDate == "" ||
+              this.POData[0].transactionDueDate == null
+            ) {
+              this.getSelectedDate(this.date5, "transactionDueDate");
+            }
           }
         }
       } else {
@@ -539,6 +541,10 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
   }
 
   addItemDetails() {
+    // if (this.barCodeApplicableStatus.length < 1) {
+    //   this.barCodeApplicableStatus.push({ status: false });
+    // }
+    // console.log(this.barCodeApplicableStatus);
     const stockItemArray = <FormArray>(
       this.transactionForm.get("transItemDetails")
     );
@@ -2016,8 +2022,8 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
   }
 
   callGRNBarcode() {
-    this.grnValidationMsg = '';
-    this.BarcodeSuccessMsg ='';
+    this.grnValidationMsg = "";
+    this.BarcodeSuccessMsg = "";
     const itemBarCodeVal = this.itemBarCode.nativeElement.value;
     if (itemBarCodeVal.length === this.ItemBarCodeLength) {
       this.addGrnBarcode();
@@ -2052,7 +2058,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  grnFunctionAfterValidate () {
+  grnFunctionAfterValidate() {
     const itemBarCodeVal = this.itemBarCode.nativeElement.value;
     const itemQtyGnrVal = this.itemQtyGnr.nativeElement.value;
     var itemCode = this.grnBarcodeTitle.split("|");
@@ -2235,14 +2241,17 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
     const formArray = <FormArray>this.transactionForm.get("transItemDetails");
     this.trasactionService.getItemRate(itemId, ledgerId).subscribe(res => {
       if (res && res.status === "200") {
-        formArray.controls[index].get("itemRate").setValue(res.data[0].itemRate);
-        formArray.controls[index].get("itemBarCodeApplicableStatus").setValue(res.data[0].barcodeapplicable);
+        formArray.controls[index]
+          .get("itemRate")
+          .setValue(res.data[0].itemRate);
+        formArray.controls[index]
+          .get("itemBarCodeApplicableStatus")
+          .setValue(res.data[0].barcodeapplicable);
         this.barCodeApplicableStatus.push({
           status: res.data[0].barcodeapplicable
         });
       }
     });
-
   }
 
   getLedgerLocation(ledgerId) {

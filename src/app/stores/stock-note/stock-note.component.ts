@@ -31,7 +31,7 @@ export class StockNoteComponent implements OnInit {
     localStorage.setItem('transationLinkRef', 'false');
     localStorage.setItem('showLocation', 'false');
     localStorage.setItem('showBarcode4Grn', 'true');
-    localStorage.setItem('GrnInput', 'true');
+    localStorage.setItem('GrnInput', 'false');
     localStorage.setItem('showBarcode', 'true');
   }
 

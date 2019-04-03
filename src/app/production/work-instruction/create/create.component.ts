@@ -91,7 +91,6 @@ export class CreateWorkInstructionComponent implements OnInit {
   }
 
   getValidateItems() {
-    debugger;
     var serialData = this.serialNo.nativeElement.value;
     var quantityData = this.quantity.nativeElement.value;
     const currentRowData = this.workInstructionItemList[this.currentIndex];

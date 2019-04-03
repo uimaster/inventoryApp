@@ -119,7 +119,6 @@ export class StockDetailComponent implements OnInit, OnDestroy {
     this.stockItemSubscription = this.stockService
       .getStock(stockId)
       .subscribe((res: StockDetailResponse) => {
-        debugger;
         this.stock = res.data[0];
         this.showLoader = false;
 
