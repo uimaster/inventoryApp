@@ -93,24 +93,51 @@ export class ReportsListComponent implements OnInit, OnDestroy {
             toDate = this.datePipe.transform(new Date(date.getFullYear(), date.getMonth() + 1, 0), 'dd/MM/yyyy');
         }
 
-        if(this.type=='po-report' || this.type=='so-report'){
-            let  ReportsTypeID = 1;
-            let StockItemID = 0;
-            let LedgerID = 0;
-            if(localStorage.getItem('r_reportsTypeID') && localStorage.getItem('r_reportsTypeID') !== '') {
-                ReportsTypeID = JSON.parse(localStorage.getItem('r_reportsTypeID'));
-            }
-            if(localStorage.getItem('r_stockItemID') && localStorage.getItem('r_stockItemID') !== '') {
-                StockItemID = JSON.parse(localStorage.getItem('r_stockItemID'));
-            }
-            if(localStorage.getItem('r_ledgerID') && localStorage.getItem('r_ledgerID') !== '') {
-                LedgerID = JSON.parse(localStorage.getItem('r_ledgerID'));
-            }
+        let ReportsTypeID = 1;
+        let StockItemID = 0;
+        let LedgerID = 0;
+        let SOReportsTypeID = 1;
+        let TransactionSeriesID = 10;
+        let searchText = '';
 
-            if(this.type=='so-report' && ReportsTypeID == 3){
+        if(localStorage.getItem('r_reportsTypeID') && localStorage.getItem('r_reportsTypeID') !== '') {
+            ReportsTypeID = JSON.parse(localStorage.getItem('r_reportsTypeID'));
+        }
+        if(localStorage.getItem('r_SOreportsTypeID') && localStorage.getItem('r_SOreportsTypeID') !== '') {
+            SOReportsTypeID = JSON.parse(localStorage.getItem('r_SOreportsTypeID'));
+        }
+        if(localStorage.getItem('r_stockItemID') && localStorage.getItem('r_stockItemID') !== '') {
+            StockItemID = JSON.parse(localStorage.getItem('r_stockItemID'));
+        }
+        if(localStorage.getItem('r_ledgerID') && localStorage.getItem('r_ledgerID') !== '') {
+            LedgerID = JSON.parse(localStorage.getItem('r_ledgerID'));
+        }
+
+        if(localStorage.getItem('r_transactionSeriesID') && localStorage.getItem('r_transactionSeriesID') !== '') {
+            TransactionSeriesID = JSON.parse(localStorage.getItem('r_transactionSeriesID'));
+        }
+
+        if(localStorage.getItem('r_searchText') && localStorage.getItem('r_searchText') !== '') {
+            searchText = JSON.parse(localStorage.getItem('r_searchText'));
+        }
+
+        if(this.type=='po-report'){
+            this.reportsListDataSubscription = this._reportsService[fName](ReportsTypeID,StockItemID,LedgerID,fromDate,toDate).subscribe(
+                result => {
+                    if (result && result.status === '200')  {
+                        this.reportsList = result.data;
+                        this.listData = result.data;
+                    }
+                    this.showLoader = false;
+                }
+            );
+        }
+
+         if(this.type=='so-report'){
+            if(SOReportsTypeID == 2){
                 fName = 'getSODetailsReportList';
-                this.sub_type = 'sales-order-details';
-                this.reportsListDataSubscription = this._reportsService[fName](fromDate,toDate).subscribe(
+                this.sub_type = 'order-details';
+                this.reportsListDataSubscription = this._reportsService[fName](fromDate,toDate,ReportsTypeID,TransactionSeriesID,searchText).subscribe(
                     result => {
                         if (result && result.status === '200')  {
                             this.reportsList = result.data;
@@ -121,8 +148,8 @@ export class ReportsListComponent implements OnInit, OnDestroy {
                 );
             }
             else{
-                this.sub_type = 'pending-list';
-                this.reportsListDataSubscription = this._reportsService[fName](ReportsTypeID,StockItemID,LedgerID,fromDate,toDate).subscribe(
+                this.sub_type = 'order-summary';
+                this.reportsListDataSubscription = this._reportsService[fName](ReportsTypeID,StockItemID,LedgerID,fromDate,toDate,TransactionSeriesID,searchText).subscribe(
                     result => {
                         if (result && result.status === '200')  {
                             this.reportsList = result.data;
@@ -135,7 +162,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
         }
 
         if(this.type=='despatch-details-report'){
-            this.reportsListDataSubscription = this._reportsService[fName](fromDate,toDate).subscribe(
+            this.reportsListDataSubscription = this._reportsService[fName](fromDate,toDate,TransactionSeriesID,searchText).subscribe(
                 result => {
                     if (result && result.status === '200')  {
                         this.reportsList = result.data;

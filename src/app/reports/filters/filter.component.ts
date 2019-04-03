@@ -17,8 +17,14 @@ export class FiltersComponent implements OnInit, OnDestroy {
   public toDate = '';
   public currentUrl = '';
   public selectedReportType = 1;
-  public reportTypeList = [ {label: 'All', value: 1}, {label: 'Pending List', value: 2}, {label: 'Sales Order Details', value: 3}];
+  public selectedSOReportType = 1;
+  public reportTypeList = [ {label: 'All', value: 1}, {label: 'Pending', value: 2}];
+  public statusList = [{label:'All', value:1},{label:'Pending', value:2}]
+  public SOreportTypeList = [{label:'Order Summary', value:1},{label:'Order Details', value:2}]
   public SSreportTypeList = [ {label: 'Raw Materials', value: 1}, {label: 'Finished Goods', value: 2}];
+  public poTypeList = [{label: 'COS', value: 10},{label: 'Claim', value: 22},{label: 'Spare', value: 23}];
+  public selectedPOType = 10;
+  public searchText = '';
   public stockItemList = [];
   public filteredItems = [];
   public ledgerList = [];
@@ -43,9 +49,12 @@ export class FiltersComponent implements OnInit, OnDestroy {
       localStorage.removeItem('r_fromDate');
       localStorage.removeItem('r_toDate');
       localStorage.removeItem('r_reportsTypeID');
+      localStorage.removeItem('r_SOreportsTypeID');
       localStorage.removeItem('r_stockItemID');
       localStorage.removeItem('r_ledgerID');
       localStorage.removeItem('r_rf');
+      localStorage.removeItem('r_transactionSeriesID');
+      localStorage.removeItem('r_searchText');
       // localStorage.removeItem('r_ledgerName');
     }
   }
@@ -90,16 +99,25 @@ export class FiltersComponent implements OnInit, OnDestroy {
     if (localStorage.getItem('r_reportsTypeID')) { this.selectedReportType = JSON.parse(localStorage.getItem('r_reportsTypeID')); }
     else{ localStorage.setItem('r_reportsTypeID', JSON.stringify(this.selectedReportType)); }
 
+    if (localStorage.getItem('r_SOreportsTypeID')) { this.selectedSOReportType = JSON.parse(localStorage.getItem('r_SOreportsTypeID')); }
+    else{ localStorage.setItem('r_SOreportsTypeID', JSON.stringify(this.selectedSOReportType)); }
+
+    if (localStorage.getItem('r_transactionSeriesID')) { this.selectedPOType = JSON.parse(localStorage.getItem('r_transactionSeriesID')); }
+    else{ localStorage.setItem('r_transactionSeriesID', JSON.stringify(this.selectedPOType)); }
+
+    if (localStorage.getItem('r_searchText')) { this.searchText = JSON.parse(localStorage.getItem('r_searchText')); }
+    else{ localStorage.setItem('r_searchText', JSON.stringify(this.searchText)); }
+
     //if(localStorage.getItem('r_ledgerID')){  this.ledgerID = JSON.parse(localStorage.getItem('r_ledgerID')); }
     //else{ localStorage.setItem('r_ledgerID', JSON.stringify(this.ledgerID)); }
     //if(localStorage.getItem('r_ledgerName')){  this.ledgerName = JSON.parse(localStorage.getItem('r_ledgerName')); }
     //else{ localStorage.setItem('r_ledgerName', JSON.stringify(this.ledgerName)); }
-    if(this.type=='po-report'){
-        this.reportTypeList = this.reportTypeList.filter(function( obj ) {
-            return obj.value !== 3;
-        });
-        this.selectedReportType = 1;
-    }
+    // if(this.type=='po-report'){
+    //     this.reportTypeList = this.reportTypeList.filter(function( obj ) {
+    //         return obj.value !== 3;
+    //     });
+    //     this.selectedReportType = 1;
+    // }
   }
 
   convertDate(data) {
@@ -125,8 +143,17 @@ export class FiltersComponent implements OnInit, OnDestroy {
     localStorage.setItem('r_reportsTypeID', JSON.stringify(this.selectedReportType));
   }
 
+  onChangeSOReportType(){
+    localStorage.setItem('r_SOreportsTypeID', JSON.stringify(this.selectedSOReportType));
+  }
+
+  onChangePOType(){
+    localStorage.setItem('r_transactionSeriesID', JSON.stringify(this.selectedPOType));
+  }
+
   getTransactionList() {
     localStorage.setItem('r_rf', JSON.stringify(true));
+    localStorage.setItem('r_searchText', JSON.stringify(this.searchText));
     this.router.routeReuseStrategy.shouldReuseRoute = function() { return false; };
     
     let currentUrl = this.router.url + '?';

@@ -21,9 +21,11 @@ export class ReportsService {
       );
     }
 
-    getSOReportList(ReportTypeID,StockItemID,LedgerID,FromDate,ToDate): Observable<any> {
+    getSOReportList(ReportTypeID,StockItemID,LedgerID,FromDate,ToDate,TransactionSeriesID,searchText): Observable<any> {
         const params = new HttpParams().set('ReportTypeID', ReportTypeID)
             .set('StockitemID', StockItemID).set('LedgerID', LedgerID)
+            .set('TransactionSeriesID', TransactionSeriesID)
+            .set('SearchText', searchText)
             .set('FromDate', FromDate).set('ToDate', ToDate);
         return this.http.get(urls.SOREPORT, {params}).pipe(
             map(res => {
@@ -32,8 +34,10 @@ export class ReportsService {
         );
     }
 
-    getDespatchDetailsReportList(FromDate,ToDate): Observable<any> {
-        const params = new HttpParams().set('FromDate', FromDate).set('ToDate', ToDate);
+    getDespatchDetailsReportList(FromDate,ToDate,TransactionSeriesID,searchText): Observable<any> {
+        const params = new HttpParams().set('FromDate', FromDate).set('ToDate', ToDate)
+            .set('TransactionSeriesID', TransactionSeriesID)
+            .set('SearchText', searchText);
         return this.http.get(urls.DESPATCHDETAILSREPORT, {params}).pipe(
             map(res => {
                 return res;
@@ -41,8 +45,11 @@ export class ReportsService {
         );
     }
 
-    getSODetailsReportList(FromDate,ToDate): Observable<any> {
-        const params = new HttpParams().set('FromDate', FromDate).set('ToDate', ToDate);
+    getSODetailsReportList(FromDate,ToDate,ReportTypeID,TransactionSeriesID,searchText): Observable<any> {
+        const params = new HttpParams().set('FromDate', FromDate).set('ToDate', ToDate)
+            .set('ReportTypeID', ReportTypeID)
+            .set('TransactionSeriesID', TransactionSeriesID)
+            .set('SearchText', searchText);
         return this.http.get(urls.SODETAILSREPORT, {params}).pipe(
             map(res => {
                 return res;

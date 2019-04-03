@@ -50,7 +50,7 @@
     </div>
 </p-panel>
 
-<p-panel header="SO Report" class="Tabledata" *ngIf="type=='so-report' && sub_type=='pending-list' && filter =='true'">
+<p-panel header="SO Report" class="Tabledata" *ngIf="type=='so-report' && sub_type=='order-summary' && filter =='true'">
     <p-header>
         <button pButton type="button" style="float:right" icon="fa fa-file-excel-o" label="Export" class="ui-button-success" (click)="exportAsXLSX()"></button>
     </p-header>
@@ -60,30 +60,39 @@
         <table class="table">
             <thead>
             <tr>
-                <th width="10%">SO No</th>
-                <th width="15%">SO Date</th>
-                <th width="20%">Customer</th>
-                <th width="10%">Commission No</th>
-                <th width="10%">PO No</th>
-                <th width="10%">Total Amount</th>
-                <th width="15%">Due Date</th>
-                <th width="10%">Status</th>
+                <th width="5%">Date</th>
+                <th width="15%">DOC No</th>
+                <th width="10%">Order Ref</th>
+                <th width="5%">Due Date</th>
+                <th width="5%">Despatch Date</th>
+                <th width="15%">Customer Location</th>
+                <th width="10%">Product Type</th>
+                <th width="10%">TR Status</th>
+                <th width="5%">PO No</th>
+                <th width="5%">Box Nos</th>
+                <th width="15%">Customer</th>
+                <!-- <th width="10%">Amount</th> -->
             </tr>
             </thead>
             <tbody>
             <ng-container *ngIf="reportsList">
                 <tr *ngFor="let report of reportsList; index as i;">
-                    <td>{{report.sono}}</td>
                     <td>{{report.soDate | date:'dd/MM/yyyy'}}</td>
-                    <td>{{report.customerName}}</td>
+                    <td>{{report.sono}}</td>
                     <td>{{report.commissionNO}}</td>
-                    <td>{{report.pono}}</td>
-                    <td>{{report.totalAmount}}</td>
                     <td>{{report.soDueDate}}</td>
+                    <td>{{report.despatchDate | date:'dd/MM/yyyy'}}</td>
+                    <td>{{report.customerLocation}}</td>
+                    <td>{{report.productType}}</td>
+                    <td>{{report.trstatus}}</td>
+                    <td>{{report.pono}}</td>
+                    <td>{{report.boxNos}}</td>
+                    <td>{{report.customerName}}</td>
+                    <!-- <td>{{report.totalAmount}}</td>
                     <td>
                         <span *ngIf="report.trstatus == 1"><i style="color:orange" class="fa fa-clock-o fa-2x"></i></span>
                         <span *ngIf="report.trstatus == 2"><i style="color:green" class="fa fa-check-square-o fa-2x"></i></span>
-                    </td>
+                    </td> -->
                 </tr>
             </ng-container>
             </tbody>
@@ -91,7 +100,7 @@
     </div>
 </p-panel>
 
-<p-panel header="SO Details Report" class="Tabledata" *ngIf="type=='so-report' && sub_type=='sales-order-details' && filter =='true'">
+<p-panel header="SO Details Report" class="Tabledata" *ngIf="type=='so-report' && sub_type=='order-details' && filter =='true'">
     <p-header>
         <button pButton type="button" style="float:right" icon="fa fa-file-excel-o" label="Export" class="ui-button-success" (click)="exportAsXLSX()"></button>
     </p-header>
@@ -101,46 +110,50 @@
         <table class="table">
             <thead>
             <tr>
-                <th width="5%">Order No</th>
-                <th width="5%">Date</th>
-                <th width="5%">PO No</th>
-                <th width="5%">JOB NO</th>
-                <th width="5%">Item Code</th>
-                <th width="16%">Description</th>
+                <th width="10%">PO No</th>
+                <th width="9%">JOB NO</th>
+                <th width="5%">BOX ID</th>
+                <th width="5%">Code</th>
+                <th width="20%">Description</th>
                 <th width="3%">Qty</th>
                 <th width="3%">UOM</th>
-                <th width="3%">Length</th>
+                <th width="10%">Location</th>
+                <th width="5%">Date</th>
+                <th width="5%">Due Date</th>
                 <th width="5%">Rate</th>
                 <th width="5%">Amount</th>
-                <th width="5%">Order Amount</th>
-                <th width="5%">Due Date</th>
                 <th width="15%">Customer</th>
-                <th width="10%">Despatch Location</th>
-                <th width="5%">Status</th>
+                
+                <!-- <th width="5%">Order No</th>
+                <th width="3%">Length</th>
+                <th width="5%">Order Amount</th>
+                <th width="5%">Status</th> -->
             </tr>
             </thead>
             <tbody>
             <ng-container *ngIf="reportsList">
                 <tr *ngFor="let report of reportsList; index as i;">
-                    <td>{{report.sono}}</td>
-                    <td>{{report.soDate | date:'dd/MM/yyyy'}}</td>
                     <td>{{report.pono}}</td>
                     <td>{{report.jobno}}</td>
+                    <td>{{report.boxid}}</td>
                     <td>{{report.itemCode}}</td>
                     <td>{{report.itemDesc}}</td>
                     <td>{{report.itemQty}}</td>
                     <td>{{report.uom}}</td>
-                    <td>{{report.itemLength}}</td>
+                    <td>{{report.customerLocation}}</td>
+                    <td>{{report.soDate | date:'dd/MM/yyyy'}}</td>
+                    <td>{{report.soDueDate}}</td>
                     <td>{{report.itemRate}}</td>
                     <td>{{report.itemAmount}}</td>
-                    <td>{{report.totalAmount}}</td>
-                    <td>{{report.soDueDate}}</td>
                     <td>{{report.customerName}}</td>
-                    <td>{{report.customerLocation}}</td>
+
+                   <!--  <td>{{report.sono}}</td>
+                    <td>{{report.itemLength}}</td>
+                    <td>{{report.totalAmount}}</td>
                     <td>
                         <span *ngIf="report.trstatus == 1"><i style="color:orange" class="fa fa-clock-o fa-2x"></i></span>
                         <span *ngIf="report.trstatus == 2"><i style="color:green" class="fa fa-check-square-o fa-2x"></i></span>
-                    </td>
+                    </td> -->
                 </tr>
             </ng-container>
             </tbody>
@@ -158,35 +171,40 @@
         <table class="table">
             <thead>
             <tr>
-                <th width="5%">DOC No</th>
-                <th width="5%">Date</th>
-                <th width="5%">PO No</th>
-                <th width="5%">PO Date</th>
+                <th width="5%">Despatch Date</th>
+                <th width="15%">DOC No</th>
+                <th width="10%">PO No</th>
+                <!-- <th width="5%">PO Date</th> -->
                 <th width="5%">JOB NO</th>
+                <th width="10%">Location</th>
+                <th width="5%">Due Date</th>
                 <th width="5%">Item Code</th>
                 <th width="15%">Description</th>
                 <th width="5%">Qty</th>
-                <th width="5%">Stops</th>
+                <!-- <th width="5%">Stops</th> -->
                 <th width="5%">UOM</th>
+                <th width="5%">Length</th> 
                 <th width="15%">Customer</th>
-                <th width="10%">Despatch Location</th>
+                
             </tr>
             </thead>
             <tbody>
             <ng-container *ngIf="reportsList">
                 <tr *ngFor="let report of reportsList; index as i;">
-                    <td>{{report.plno}}</td>
                     <td>{{report.plDate | date:'dd/MM/yyyy'}}</td>
+                    <td>{{report.plno}}</td>
                     <td>{{report.pono}}</td>
-                    <td>{{report.poDate}}</td>
+                    <!-- <td>{{report.poDate}}</td> -->
                     <td>{{report.jobno}}</td>
+                    <td>{{report.customerLocation}}</td>
+                    <td>{{report.dueDate}}</td>
                     <td>{{report.itemCode}}</td>
                     <td>{{report.itemDesc}}</td>
                     <td>{{report.itemQty}}</td>
-                    <td>{{report.itemStops}}</td>
+                    <!-- <td>{{report.itemStops}}</td> -->
                     <td>{{report.itemUOM}}</td>
+                    <td>{{report.itemLength}}</td>
                     <td>{{report.customerName}}</td>
-                    <td>{{report.customerLocation}}</td>
                 </tr>
             </ng-container>
             </tbody>
