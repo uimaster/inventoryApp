@@ -119,12 +119,27 @@
             </div>
 
             <div class="ui-g-3">
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <span class="ui-float-label">
                     <input class="ui-inputwrapper-filled" type="text" formControlName="itemCode" pInputText id="itemCode">
                     <label for="itemCode">Item Code</label>
                     </span>
-                </div>
+                </div> -->
+                <div class="form-group">
+                <span class="ui-float-label">
+                <p-autoComplete
+                    formControlName="itemCode"
+                    [suggestions]="filteredItemsInner"
+                    (completeMethod)="filterItemsInner($event)"
+                    (onSelect)="getSelectedValInner($event, 'assemblyInstructionDetails',i)"
+                    [size]="30"
+                    [minLength]="1"
+                    [style]="{'width':'100%'}"
+                >
+                </p-autoComplete>
+                <label>Item Code</label>
+                </span>
+              </div>
             </div>
 
             <div class="ui-g-3">

@@ -32,8 +32,8 @@ export class AssemblyInstructionService {
       return this.http.post(urls.POSTASSEMBLYINSTRUCTIONDETAILS, payload);
     }   
 
-    getAllStocks() {
-        const params = new HttpParams().set('CompanyID', '1').set('StockGroupID', '2');
+    getAllStocks(StockGroupID) {
+        const params = new HttpParams().set('CompanyID', '1').set('StockGroupID', StockGroupID);
         return this.http.get(urls.GETSTOCKITEMGROUP, {params})
         .map((res: any) => {
             return res;
