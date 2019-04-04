@@ -135,7 +135,7 @@ export class StockDetailComponent implements OnInit, OnDestroy {
           //   this.stock['stockGroup_ID']
           // );
           this.sForm.controls["unit_ID"].setValue(this.stock["unit_ID"]);
-          this.sForm.controls["unitName"].setValue(this.stock["unitName"]);
+          // this.sForm.controls["unitName"].setValue(this.stock["unitName"]);
           this.sForm.controls["minimum_Order_Level"].setValue(
             this.stock["minimum_Order_Level"]
           );
@@ -159,21 +159,26 @@ export class StockDetailComponent implements OnInit, OnDestroy {
           this.sForm.controls["company_ID"].setValue(this.stock["company_ID"]);
           this.sForm.controls["userID"].setValue(this.stock["userID"]);
           this.sForm.controls["unit_ID"].setValue(this.stock["unit_ID"]);
-          this.sForm.controls["unitName"].setValue(this.stock["unitName"]);
+          // this.sForm.controls["unitName"].setValue(this.stock["unitName"]);
 
-          const arrstockItemBoxList = <FormArray>this.sForm.get("stockItemBoxList");
+          const arrstockItemBoxList = <FormArray>(
+            this.sForm.get("stockItemBoxList")
+          );
 
-          for (var i = 0; i > this.stock.stockItemBoxList.length; i++) {
-            arrstockItemBoxList.controls[i].get("stockItemID").setValue(this.stock["stockItemOpeningBal"][i].stockItemID);
-            arrstockItemBoxList.controls[i].get("itemDesc").setValue(this.stock["stockItemOpeningBal"][i].itemDesc);
+          for (var i = 0; i < this.stock.stockItemBoxList.length; i++) {
+            arrstockItemBoxList.controls[i]
+              .get("stockItemID")
+              .setValue(this.stock["stockItemBoxList"][i].stockItemID);
+            arrstockItemBoxList.controls[i]
+              .get("itemDesc")
+              .setValue(this.stock["stockItemBoxList"][i].itemDesc);
           }
-
 
           const controlArray = <FormArray>this.sForm.get("stockItemOpeningBal");
-          if (controlArray.length > 0) {
-            controlArray.removeAt(0);
-          }
-          for (var i = 0; i > this.stock.stockItemOpeningBal.length; i++) {
+          // if (controlArray.length > 0) {
+          //   controlArray.removeAt(0);
+          // }
+          for (var i = 0; i < this.stock.stockItemOpeningBal.length; i++) {
             controlArray.controls[i]
               .get("stockItemOPID")
               .setValue(this.stock["stockItemOpeningBal"][i].stockItemOPID);
@@ -200,10 +205,10 @@ export class StockDetailComponent implements OnInit, OnDestroy {
           const ControlStockItemSupplier = <FormArray>(
             this.sForm.get("stockItemSuppliers")
           );
-          if (ControlStockItemSupplier.length > 0) {
-            ControlStockItemSupplier.removeAt(0);
-          }
-          for (var i = 0; i > this.stock.stockItemSuppliers.length; i++) {
+          // if (ControlStockItemSupplier.length > 0) {
+          //   ControlStockItemSupplier.removeAt(0);
+          // }
+          for (var i = 0; i < this.stock.stockItemSuppliers.length; i++) {
             ControlStockItemSupplier.controls[i]
               .get("stokItemSupplierID")
               .setValue(this.stock["stockItemSuppliers"][i].stokItemSupplierID);
@@ -262,7 +267,7 @@ export class StockDetailComponent implements OnInit, OnDestroy {
   createStockItemBoxList() {
     return this._formBuilder.group({
       stockItemID: [0],
-      itemDesc: ['']
+      itemDesc: [""]
     });
   }
 
@@ -431,7 +436,6 @@ export class StockDetailComponent implements OnInit, OnDestroy {
       .getAllLedgers()
       .subscribe((res: LedgerResponse) => {
         let data = res.data;
-
         for (let key in data) {
           if (data.hasOwnProperty(key)) {
             this.ledgerData.push({
@@ -476,16 +480,15 @@ export class StockDetailComponent implements OnInit, OnDestroy {
   }
 
   saveStockItem(formData) {
-    console.log(formData);
     if (this.sForm.valid) {
       this.stockService
         .updateStock(formData)
         .subscribe((res: StockResponse) => {
-          if (res.status === '200') {
+          if (res.status === "200") {
             this.showSuccess = true;
             this.successMsg = res.message;
             setTimeout(() => {
-              this.router.navigate(['/masters/stockItems']);
+              this.router.navigate(["/masters/stockItems"]);
             }, 3000);
           } else {
             this.errorMsg = res.message;
