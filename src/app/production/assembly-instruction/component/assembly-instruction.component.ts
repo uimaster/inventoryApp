@@ -24,6 +24,8 @@ export class AssemblyInstructionComponent implements OnInit, OnDestroy {
     showSuccess = false;
     companyId = localStorage.getItem('companyID');
     userId = localStorage.getItem('userID');
+    public allStockItemsInner = [];
+
     constructor(
       private assemblyInstructionService: AssemblyInstructionService,
       private _route: ActivatedRoute,
@@ -35,6 +37,7 @@ export class AssemblyInstructionComponent implements OnInit, OnDestroy {
     public cForm;
     date1 = new Date();
     filteredItems = [];
+    filteredItemsInner = [];
     showLoader = false;
     itemName: string;
 
@@ -49,6 +52,7 @@ export class AssemblyInstructionComponent implements OnInit, OnDestroy {
       // }, 4000);
 
       this.getStockItems();
+      this.getStockItemsInner();
     }
 
     convertToDateFormat(Datestr) {
@@ -153,7 +157,7 @@ export class AssemblyInstructionComponent implements OnInit, OnDestroy {
     }
 
     getStockItems() {
-      this.assemblyInstructionService.getAllStocks().subscribe( res => {
+      this.assemblyInstructionService.getAllStocks(2).subscribe( res => {
         if (res && res.status === '200') {
           // this.itemMasterList = res.data;
           let data = res.data;
@@ -170,12 +174,40 @@ export class AssemblyInstructionComponent implements OnInit, OnDestroy {
       });
     }
 
+    getStockItemsInner() {
+      this.assemblyInstructionService.getAllStocks(1).subscribe( res => {
+        if (res && res.status === '200') {
+          let data = res.data;
+          for (let key in data) {
+            if (data.hasOwnProperty(key)) {
+                this.allStockItemsInner.push({
+                  label: data[key].itemCode, 
+                  value: data[key].stockItemID, 
+                  desc:data[key].stockItemDesc.split("|").slice(1).join("|").trim()});
+            }
+          }
+        }
+        this.getAiData(this.aiID);
+        this.showLoader = false;
+      });
+    }
+
     filterItems(event) {
         this.filteredItems = [];
         for (let i = 0; i < this.allStockItems.length; i++) {
             let itemName = this.allStockItems[i].label;
             if (itemName.toLowerCase().indexOf(event.query.toLowerCase()) == 0) {
                 this.filteredItems.push(itemName);
+            }
+        }
+    }
+
+    filterItemsInner(event) {
+        this.filteredItemsInner = [];
+        for (let i = 0; i < this.allStockItemsInner.length; i++) {
+            let itemName = this.allStockItemsInner[i].label;
+            if (itemName.toLowerCase().indexOf(event.query.toLowerCase()) == 0) {
+                this.filteredItemsInner.push(itemName);
             }
         }
     }
@@ -211,9 +243,10 @@ export class AssemblyInstructionComponent implements OnInit, OnDestroy {
     }
 
     getSelectedValInner(event, elem,index) {
-        for ( var i = 0; i < this.allStockItems.length; i++) {
-          if (this.allStockItems[i].label === event) {
-            this.cForm.get(elem).controls[index].get('stockItemID').setValue(this.allStockItems[i].value);
+        for ( var i = 0; i < this.allStockItemsInner.length; i++) {
+          if (this.allStockItemsInner[i].label === event) {
+            this.cForm.get(elem).controls[index].get('stockItemID').setValue(this.allStockItemsInner[i].value);
+            this.cForm.get(elem).controls[index].get('itemDesc').setValue(this.allStockItemsInner[i].desc);
           }
         }
     }
