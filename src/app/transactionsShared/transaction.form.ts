@@ -1593,15 +1593,20 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
       var inputItemCode = 0;
       var batchCode = "";
       if ((barcode !== 0 && barcode !== undefined) || barcode !== "") {
-        if (barcode[0].trim() !== null) {
-          inputItemCode = barcode[0].trim();
+        if (barcode[0] !== undefined) {
+          if (barcode[0].trim() !== null) {
+            inputItemCode = barcode[0].trim();
+          }
         }
-        if (barcode[1].trim() !== null) {
-          batchCode = barcode[1].trim();
+
+        if (barcode[1] !== undefined) {
+          if (barcode[1].trim() !== null) {
+            batchCode = barcode[1].trim();
+          }
         }
       } else {
-        this.plValidationMsg = "Please enter correct data.";
-        // alert('Please enter correct data.');
+        // this.plValidationMsg = "Please enter correct data.";
+        alert("Please enter correct data.");
       }
       if (batchCode.length === 7) {
         const formArray = <FormArray>(
@@ -1612,11 +1617,10 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
             let listBarCode = formArray.controls[i].get("batchNo").value;
             let listItemcode = formArray.controls[i].get("itemCode").value;
 
-            if (inputItemCode == listItemcode) {
-              if (listBarCode == batchCode) {
-                this.plValidationMsg =
-                  "Batch already scanned (Duplicate Batch)";
-                // alert('Batch already scanned (Duplicate Batch)');
+            if (inputItemCode === listItemcode) {
+              if (listBarCode === batchCode) {
+                // this.plValidationMsg = "Batch already scanned (Duplicate Batch)";
+                alert("Batch already scanned (Duplicate Batch)");
                 this.barCode1.nativeElement.value = "";
 
                 return false;
@@ -1648,7 +1652,8 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
               this.calculateLength();
               if (this.lengthCalcStatus !== true) {
                 this.enableNumberTxt = true;
-                this.plValidationMsg = "Please fill Correct Length and Stops";
+                // this.plValidationMsg = "Please fill Correct Length and Stops";
+                alert("Please fill Correct Length and Stops.");
                 return false;
               }
             }
@@ -1656,9 +1661,8 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
               .value;
             let qty = controlArray.controls[i].get("itemQty").value;
             if (scanQty >= qty) {
-              this.plValidationMsg =
-                "Scanned quantity can not be greater quantity.";
-              // alert('Scanned quantity can not be greater quantity.');
+              // this.plValidationMsg = "Scanned quantity can not be greater quantity.";
+              alert("Scanned quantity can not be greater quantity.");
               this.barCode1.nativeElement.value = "";
 
               return false;
@@ -1678,15 +1682,13 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
 
         if (itemCode !== undefined || itemCode != null || itemCode !== "") {
           if (inputItemCode !== stockItem) {
-            this.plValidationMsg =
-              "This Item is not available in Item List, Please try again.";
-            // alert('This Item are not available in the Item List, Please add Item before scan.');
+            // this.plValidationMsg = "This Item is not available in Item List, Please try again.";
+            alert("This Item is not available in Item List, Please try again.");
             this.barCode1.nativeElement.value = "";
           }
         } else {
-          this.plValidationMsg =
-            "This Item is not available in Item List, Please try again.";
-          // alert('This Item are not available in the Item List, Please add Item before scan.');
+          // this.plValidationMsg = "This Item is not available in Item List, Please try again.";
+          alert("This Item is not available in Item List, Please try again.");
           this.barCode1.nativeElement.value = "";
         }
       } else {
@@ -1694,8 +1696,8 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
         return false;
       }
     } else {
-      // alert('Please enter correct Barcode.');
-      this.plValidationMsg = "Please enter correct Barcode.";
+      alert("Please enter correct Barcode.");
+      // this.plValidationMsg = "Please enter correct Barcode.";
     }
 
     this.enableNumberTxt = false;
@@ -1740,13 +1742,13 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
       this.lengthCalcStatus = false;
       return false;
     } else if (finalLength != currentItemLength) {
-      this.plValidationMsg =
-        "Length is not matching with Item's Length, Please try again.";
+      // this.plValidationMsg = "Length is not matching with Item's Length, Please try again.";
+      alert("Length is not matching with Item's Length, Please try again.");
       this.lengthCalcStatus = false;
       return false;
     } else if (itemStops != currentItemStops) {
-      this.plValidationMsg =
-        "Stop is not matching with Item's Stops, Please try again";
+      // this.plValidationMsg = "Stop is not matching with Item's Stops, Please try again";
+      alert("Stop is not matching with Item's Stops, Please try again.");
       this.lengthCalcStatus = false;
       return false;
     } else {
@@ -1772,15 +1774,19 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
       var inputItemCode = "";
       var batchCode = "";
       if ((barcode !== 0 && barcode !== undefined) || barcode !== "") {
-        if (barcode[0].trim() !== null) {
-          inputItemCode = barcode[0].trim();
+        if (barcode[0] !== undefined) {
+          if (barcode[0].trim() !== null) {
+            inputItemCode = barcode[0].trim();
+          }
         }
-        if (barcode[1].trim() !== null) {
-          batchCode = barcode[1].trim();
+        if (barcode[1] !== undefined) {
+          if (barcode[1].trim() !== null) {
+            batchCode = barcode[1].trim();
+          }
         }
       } else {
-        this.plValidationMsg = "Please enter correct data.";
-        // alert('Please enter correct data.');
+        // this.plValidationMsg = "Please enter correct data.";
+        alert("Please enter correct data.");
       }
       if (batchCode.length === 7) {
         const formArray = <FormArray>(
@@ -1793,9 +1799,8 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
 
             if (inputItemCode == listItemcode) {
               if (listBarCode == batchCode) {
-                this.plValidationMsg =
-                  "Batch already scanned (Duplicate Batch)";
-                // alert('Batch already scanned (Duplicate Batch)');
+                // this.plValidationMsg = "Batch already scanned (Duplicate Batch)";
+                alert("Batch already scanned (Duplicate Batch)");
                 this.barCode1.nativeElement.value = "";
 
                 return false;
@@ -1809,9 +1814,8 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
         return false;
       }
     } else {
-      this.plValidationMsg = "Please enter correct Barcode.";
-
-      // alert('Please enter correct Barcode.');
+      // this.plValidationMsg = "Please enter correct Barcode.";
+      alert("Please enter correct Barcode.");
     }
   }
 
