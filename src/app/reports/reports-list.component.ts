@@ -93,6 +93,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
             toDate = this.datePipe.transform(new Date(date.getFullYear(), date.getMonth() + 1, 0), 'dd/MM/yyyy');
         }
 
+        let CompanyID = 1;
         let ReportsTypeID = 1;
         let StockItemID = 0;
         let LedgerID = 0;
@@ -127,7 +128,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
         }
 
         if(this.type=='po-report'){
-            this.reportsListDataSubscription = this._reportsService[fName](ReportsTypeID,StockItemID,LedgerID,fromDate,toDate).subscribe(
+            this.reportsListDataSubscription = this._reportsService[fName](ReportsTypeID,StockItemID,LedgerID,fromDate,toDate,searchText).subscribe(
                 result => {
                     if (result && result.status === '200')  {
                         this.reportsList = result.data;
@@ -179,12 +180,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
         }
 
         if(this.type=='stock-summary'){
-            let ReportsTypeID = 1;
-            let CompanyID = 1;
-            if (localStorage.getItem('r_reportsTypeID')  && localStorage.getItem('r_reportsTypeID') !== '') {
-                ReportsTypeID = JSON.parse(localStorage.getItem('r_reportsTypeID'));
-            }
-            this.reportsListDataSubscription = this._reportsService[fName](ReportsTypeID,CompanyID,fromDate,toDate).subscribe(
+            this.reportsListDataSubscription = this._reportsService[fName](ReportsTypeID,CompanyID,fromDate,toDate,StockItemID).subscribe(
                 result => {
                     if (result && result.status === '200')  {
                         this.reportsList = result.data;
@@ -196,7 +192,6 @@ export class ReportsListComponent implements OnInit, OnDestroy {
         }
 
         if(this.type=='msl-report'){
-            let CompanyID = 1;
             this.reportsListDataSubscription = this._reportsService[fName](CompanyID).subscribe(
                 result => {
                     if (result && result.status === '200')  {
@@ -208,9 +203,32 @@ export class ReportsListComponent implements OnInit, OnDestroy {
             );
         }
 
-        if(this.type=='sales-register' || this.type=='grn-register' || this.type=='stock-issue-register'){
-            let CompanyID = 1;
-            this.reportsListDataSubscription = this._reportsService[fName](CompanyID,fromDate,toDate).subscribe(
+        if(this.type=='sales-register'){
+            this.reportsListDataSubscription = this._reportsService[fName](CompanyID,fromDate,toDate,LedgerID,searchText).subscribe(
+                result => {
+                    if (result && result.status === '200')  {
+                        this.reportsList = result.data;
+                        this.listData = result.data;
+                    }
+                    this.showLoader = false;
+                },
+            );
+        }
+
+        if(this.type=='grn-register'){
+            this.reportsListDataSubscription = this._reportsService[fName](CompanyID,fromDate,toDate,StockItemID,LedgerID,searchText).subscribe(
+                result => {
+                    if (result && result.status === '200')  {
+                        this.reportsList = result.data;
+                        this.listData = result.data;
+                    }
+                    this.showLoader = false;
+                },
+            );
+        }
+
+        if(this.type=='stock-issue-register'){
+            this.reportsListDataSubscription = this._reportsService[fName](CompanyID,fromDate,toDate,StockItemID,searchText).subscribe(
                 result => {
                     if (result && result.status === '200')  {
                         this.reportsList = result.data;

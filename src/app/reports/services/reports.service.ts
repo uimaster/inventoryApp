@@ -10,10 +10,10 @@ export class ReportsService {
 
     constructor(private http: HttpClient) {}
 
-    getPOReportList(ReportTypeID,StockItemID,LedgerID,FromDate,ToDate): Observable<any> {
+    getPOReportList(ReportTypeID,StockItemID,LedgerID,FromDate,ToDate,SearchText): Observable<any> {
       const params = new HttpParams().set('ReportTypeID', ReportTypeID)
         .set('StockitemID', StockItemID).set('LedgerID', LedgerID)
-        .set('FromDate', FromDate).set('ToDate', ToDate);
+        .set('FromDate', FromDate).set('ToDate', ToDate).set('SearchText', SearchText);
       return this.http.get(urls.POREPORT, {params}).pipe(
           map(res => {
               return res;
@@ -21,11 +21,11 @@ export class ReportsService {
       );
     }
 
-    getSOReportList(ReportTypeID,StockItemID,LedgerID,FromDate,ToDate,TransactionSeriesID,searchText): Observable<any> {
+    getSOReportList(ReportTypeID,StockItemID,LedgerID,FromDate,ToDate,TransactionSeriesID,SearchText): Observable<any> {
         const params = new HttpParams().set('ReportTypeID', ReportTypeID)
             .set('StockitemID', StockItemID).set('LedgerID', LedgerID)
             .set('TransactionSeriesID', TransactionSeriesID)
-            .set('SearchText', searchText)
+            .set('SearchText', SearchText)
             .set('FromDate', FromDate).set('ToDate', ToDate);
         return this.http.get(urls.SOREPORT, {params}).pipe(
             map(res => {
@@ -34,10 +34,10 @@ export class ReportsService {
         );
     }
 
-    getDespatchDetailsReportList(FromDate,ToDate,TransactionSeriesID,searchText,DespatchReportsTypeID): Observable<any> {
+    getDespatchDetailsReportList(FromDate,ToDate,TransactionSeriesID,SearchText,DespatchReportsTypeID): Observable<any> {
         const params = new HttpParams().set('FromDate', FromDate).set('ToDate', ToDate)
             .set('TransactionSeriesID', TransactionSeriesID)
-            .set('SearchText', searchText)
+            .set('SearchText', SearchText)
             .set('ReportTypeID',DespatchReportsTypeID);
         return this.http.get(urls.DESPATCHDETAILSREPORT, {params}).pipe(
             map(res => {
@@ -46,11 +46,11 @@ export class ReportsService {
         );
     }
 
-    getSODetailsReportList(FromDate,ToDate,ReportTypeID,TransactionSeriesID,searchText): Observable<any> {
+    getSODetailsReportList(FromDate,ToDate,ReportTypeID,TransactionSeriesID,SearchText): Observable<any> {
         const params = new HttpParams().set('FromDate', FromDate).set('ToDate', ToDate)
             .set('ReportTypeID', ReportTypeID)
             .set('TransactionSeriesID', TransactionSeriesID)
-            .set('SearchText', searchText);
+            .set('SearchText', SearchText);
         return this.http.get(urls.SODETAILSREPORT, {params}).pipe(
             map(res => {
                 return res;
@@ -58,9 +58,11 @@ export class ReportsService {
         );
     }
 
-    getStockSummaryList(ReportTypeID,CompanyID,FromDate,ToDate): Observable<any> {
+    getStockSummaryList(ReportTypeID,CompanyID,FromDate,ToDate,StockItemID): Observable<any> {
         const params = new HttpParams().set('REPORTTYPE', ReportTypeID)
-            .set('CompanyID', CompanyID).set('FromDate', FromDate).set('ToDate', ToDate);
+            .set('CompanyID', CompanyID).set('FromDate', FromDate)
+            .set('ToDate', ToDate)
+            .set('StockItemID', StockItemID);
         return this.http.get(urls.STOCKSUMMARYREPORT, {params}).pipe(
             map(res => {
                 return res;
@@ -77,8 +79,12 @@ export class ReportsService {
         );
     }
 
-    getSalesRegisterList(CompanyID,FromDate,ToDate): Observable<any> {
-        const params = new HttpParams().set('CompanyID', CompanyID).set('FromDate', FromDate).set('ToDate', ToDate);
+    getSalesRegisterList(CompanyID,FromDate,ToDate,LedgerID,SearchText): Observable<any> {
+        const params = new HttpParams().set('CompanyID', CompanyID)
+            .set('FromDate', FromDate)
+            .set('ToDate', ToDate)
+            .set('LedgerID', LedgerID)
+            .set('SearchText', SearchText);
         return this.http.get(urls.SALESREPORT, {params}).pipe(
             map(res => {
                 return res;
@@ -86,8 +92,12 @@ export class ReportsService {
         );
     }
 
-    getGRNRegisterList(CompanyID,FromDate,ToDate): Observable<any> {
-        const params = new HttpParams().set('CompanyID', CompanyID).set('FromDate', FromDate).set('ToDate', ToDate);
+    getGRNRegisterList(CompanyID,FromDate,ToDate,StockItemID,LedgerID,SearchText): Observable<any> {
+        const params = new HttpParams().set('CompanyID', CompanyID)
+            .set('FromDate', FromDate).set('ToDate', ToDate)
+            .set('StockItemID', StockItemID)
+            .set('LedgerID', LedgerID)
+            .set('SearchText', SearchText);
         return this.http.get(urls.GRNREGISTER, {params}).pipe(
             map(res => {
                 return res;
@@ -95,8 +105,11 @@ export class ReportsService {
         );
     }
     
-    getStockIssueRegisterList(CompanyID,FromDate,ToDate): Observable<any> {
-        const params = new HttpParams().set('CompanyID', CompanyID).set('FromDate', FromDate).set('ToDate', ToDate);
+    getStockIssueRegisterList(CompanyID,FromDate,ToDate,StockItemID,SearchText): Observable<any> {
+        const params = new HttpParams().set('CompanyID', CompanyID).set('FromDate', FromDate)
+            .set('ToDate', ToDate)
+            .set('StockItemID', StockItemID)
+            .set('SearchText', SearchText);
         return this.http.get(urls.STOCKISSUEREGISTER, {params}).pipe(
             map(res => {
                 return res;

@@ -53,6 +53,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
       localStorage.removeItem('r_reportsTypeID');
       localStorage.removeItem('r_SOreportsTypeID');
       localStorage.removeItem('r_stockItemID');
+      localStorage.removeItem('r_stockItemName');
       localStorage.removeItem('r_ledgerID');
       localStorage.removeItem('r_rf');
       localStorage.removeItem('r_transactionSeriesID');
@@ -73,11 +74,17 @@ export class FiltersComponent implements OnInit, OnDestroy {
             case 'so-report':
                 this.getLedgers('getAllCustomers');
                 break;
-
+            case 'sales-register':
+                this.getLedgers('getAllCustomers');
+                break;    
+            case 'grn-register':
+                this.getLedgers('getAllSuppliers');
+                break;    
             default:
                 break;
         }
-        if(this.type=='po-report' || this.type=='so-report'){
+        if(this.type=='po-report' || this.type=='so-report' || this.type=='grn-register'
+          || this.type=='stock-issue-register' || this.type=='stock-summary'){
             this.getStockItemList();
             if (localStorage.getItem('r_stockItemID')) { this.stockItemID = JSON.parse(localStorage.getItem('r_stockItemID'));}
             else{ localStorage.setItem('r_stockItemID', JSON.stringify(this.stockItemID)); }
@@ -212,6 +219,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
   clearValue(){
     localStorage.setItem('r_stockItemID',JSON.stringify(0));
     localStorage.setItem('r_stockItemName','');
+    this.stockItemName = null;
   }
 
   getLedgers(fName) {
@@ -220,10 +228,10 @@ export class FiltersComponent implements OnInit, OnDestroy {
             // this.ledgerList = res.data;
             let data = res.data;
             for (let key in data) {
-              if (data.hasOwnProperty(key) && this.type=='po-report') {
+              if (data.hasOwnProperty(key) && (this.type=='po-report' || this.type=='grn-register')) {
                   this.ledgerList.push({label: data[key].supplierName, value: data[key].supplier_ID});
               }
-              if (data.hasOwnProperty(key) && this.type=='so-report') {
+              if (data.hasOwnProperty(key) && (this.type=='so-report' || this.type=='sales-register')) {
                   this.ledgerList.push({label: data[key].customerName, value: data[key].customer_ID});
               }
             }
