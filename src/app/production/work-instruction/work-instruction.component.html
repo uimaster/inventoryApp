@@ -10,20 +10,20 @@
               <tr>
                 <th>Asembly Instruction Date</th>
                 <th>Assembly Instruction NO.</th>
-                <th>Instruction Name</th>
-                <th>Item Desc.</th>
+                <th>Assembler Name</th>
+                <th>Batch No.</th>
                 <th>Action</th>
             </tr>
             </thead>
             <tbody>
             <ng-container>
                 <tr *ngFor="let item of workInstructionList; index as i ;">
-                    <td>{{item.asemblyInstructionDate}}</td>
-                    <td>{{item.assemblyInstructionNO}}</td>
-                    <td>{{item.instructionName}}</td>
-                    <td>{{item.itemDesc}}</td>
+                    <td>{{item.assemblyWorkInstructionDate}}</td>
+                    <td>{{item.assemblyWorkInstructionNo}}</td>
+                    <td>{{item.assemblerName}}</td>
+                    <td>{{item.batchNo}}</td>
                     <td>
-                        <a pButton type="button" label="View Details"  class="ui-button-info" target="_blank" (click)="generateReport(item.transactionID)" style="opacity: 0.2"></a>
+                        <a pButton type="button" label="View Details"  class="ui-button-info" target="_blank" (click)="getItemDetails(item.assemblyWorkInstructionID)"></a>
                     </td>
                 </tr>
             </ng-container>

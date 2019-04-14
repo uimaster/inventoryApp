@@ -1,6 +1,8 @@
+<p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
 <p-panel header="Assembly Work Instruction" class="Tabledata">
   <p-header>
-      <button pButton type="button" style="float:right" label="Start Scan" class="ui-button-success" (click)="getOpenBarcodeModal()"></button>
+      <button pButton type="button" style="float:right" label="Start Scan" class="ui-button-success"
+      (click)="getOpenBarcodeModal()"></button>
   </p-header>
   <p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
 
@@ -12,7 +14,7 @@
         <div class="ui-g-3">
           <div class="form-group" style="margin:0">
             <span class="ui-float-label">
-              <input type="text" formControlName="serialNo" pInputText>
+              <input type="text" formControlName="StockItemID" pInputText>
               <label for="transactionNo">Serial No.</label>
             </span>
           </div>
@@ -20,7 +22,7 @@
         <div class="ui-g-3" style="margin:0">
           <div class="form-group">
             <span class="ui-float-label">
-              <input type="text" pInputText formControlName="finishgoodId">
+              <input type="text" pInputText formControlName="BatchNo">
               <label for="transactionNo">Finish Good Id</label>
             </span>
           </div>
@@ -45,6 +47,29 @@
 
       </div>
     </div>
+
+    <fieldset formArrayName="AssemblyBatchDetails">
+      <legend>
+        Batch Details
+      </legend>
+      <div style="max-height:200px; overflow:auto">
+        <table width="100%" class="fieldTable">
+          <thead>
+            <th>Batch No.</th>
+            <th>Item Name</th>
+            <th>Quantity</th>
+          </thead>
+          <tbody >
+            <tr *ngFor="let ctrl of workInstructionForm.get('AssemblyBatchDetails').controls; let i = index;"
+              [formGroupName]="i">
+              <td><input type="text" formControlName="batchno" pInputText disabled="disabled"></td>
+              <td><input type="text" formControlName="stockItemID" pInputText disabled="disabled"></td>
+              <td><input type="text" formControlName="qty" pInputText disabled="disabled"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </fieldset>
   </form>
 </p-panel>
 
@@ -60,30 +85,32 @@
                 <th>Instruction SR. No.</th>
                 <th>Instruction Description</th>
                 <th>Item Desc.</th>
+                <th>Item Code</th>
                 <th>stockItemID</th>
             </tr>
             </thead>
             <tbody>
             <ng-container>
-                <tr *ngFor="let item of workInstructionItemList | slice: 0:currentIndex; index as i;">
+                <tr *ngFor="let item of workInstructionItemList | slice: 0:currentIndex+1; index as i;">
                     <td style="text-align: center">{{item.instructionSRNo}}</td>
                     <td>{{item.instructiondescription}}</td>
                     <td>{{item.itemDesc}}</td>
+                    <td>{{item.itemCode}}</td>
                     <td>{{item.stockItemID}}</td>
                 </tr>
                 <tr *ngIf="workInstructionItemList.length > 0">
                   <td colspan="5" class="text-right" style="background:#f6f6f6; padding-top:20px;">
-                    <a pButton type="button" label="Update" style="width:100px; padding:5px; float:right; font-size:16px; margin-right:10px; "
-                     class="ui-button-success right" (click)="generateReport(item.transactionID)"></a>
+                    <a pButton type="button" label="Save" style="width:100px; padding:5px; float:right; font-size:16px; margin-right:10px; "
+                     class="ui-button-success right"  (click)="saveWorkInstruction(workInstructionForm.value)"></a>
                     <div class="form-group" style="width:100px; float:right; margin-right:10px; margin-bottom:0">
                       <span class="ui-float-label">
-                        <input type="text" pInputText #quantity >
+                        <input type="text" pInputText #quantity [disabled]="!disabledSerial" (input)="getValidateQty($event)">
                         <label for="transactionNo">Quantity</label>
                       </span>
                     </div>
                     <div class="form-group" style="width:250px; float:right; margin-right:10px; margin-bottom:0">
                       <span class="ui-float-label">
-                        <input type="text" pInputText #serialNo >
+                        <input type="text" pInputText #serialNum [disabled]="disabledSerial" (input)="startScanSerial($event)">
                         <label for="transactionNo">Serial No.</label>
                       </span>
                     </div>

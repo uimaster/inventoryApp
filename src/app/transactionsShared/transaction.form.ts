@@ -542,7 +542,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
 
   addItemDetails() {
     // if (this.barCodeApplicableStatus.length < 1) {
-    //   this.barCodeApplicableStatus.push({ status: false });
+      this.barCodeApplicableStatus.push({ status: false });
     // }
     // console.log(this.barCodeApplicableStatus);
     const stockItemArray = <FormArray>(

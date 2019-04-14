@@ -17,6 +17,7 @@ import { WorkInstructionService } from "./work-instruction/work-instruction.serv
 import { CreateWorkInstructionComponent } from "./work-instruction/create/create.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { AssemblyInstructionModule } from './assembly-instruction/assembly-instruction.module';
+import { DetailsComponent } from './work-instruction/details/details.component';
 
 @NgModule({
   imports: [
@@ -37,7 +38,8 @@ import { AssemblyInstructionModule } from './assembly-instruction/assembly-instr
     ProdEntryComponent,
     FGInwardComponent,
     WorkInstructionComponent,
-    CreateWorkInstructionComponent
+    CreateWorkInstructionComponent,
+    DetailsComponent
   ],
   providers: [TransactionServices, WorkInstructionService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

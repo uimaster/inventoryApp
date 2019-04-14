@@ -254,8 +254,7 @@
             <input type="hidden" formControlName="itemBarCodeApplicableStatus" />
             <!-- <i class="fa fa-hourglass-end" aria-hidden="true" *ngIf="!ctrl.itemBarCodeApplicableStatus && showActionBtn"></i> -->
             <!-- <button pButton type="button" *ngIf="ctrl.itemBarCodeApplicableStatus && showActionBtn" disabled="disabled" icon="fa fa-check" title="Verified" class="ui-button-success"></button> -->
-            <button pButton type="button" *ngIf="barCodeApplicableStatus.length > 0"
-              [disabled]="itemBarCodeApplicableStatus && !barCodeApplicableStatus[i].status" (click)="showGrnBarcodeDialog(i)" icon="fa fa fa-barcode"
+            <button pButton type="button" *ngIf="barCodeApplicableStatus.length > 0"  (click)="showGrnBarcodeDialog(i)" icon="fa fa fa-barcode"
               title="Scan Barcode" class="ui-button-success barcodeBtn"></button>
           </td>
 

@@ -1,5 +1,6 @@
 import { WorkInstructionService } from "./work-instruction.service";
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-work-instruction",
@@ -8,10 +9,15 @@ import { Component, OnInit } from "@angular/core";
 })
 export class WorkInstructionComponent implements OnInit {
   public workInstructionList = [];
-  constructor(private workInstructionService: WorkInstructionService) {}
+  constructor(private workInstructionService: WorkInstructionService, private router: Router) {}
 
   ngOnInit() {
     this.getWorkInstructionList();
+  }
+
+  getItemDetails(id){
+    localStorage.setItem('AssemblyWorkInstructionID', id);
+    this.router.navigate(['production/workInstructionDetails']);
   }
 
   getWorkInstructionList() {
@@ -21,7 +27,6 @@ export class WorkInstructionComponent implements OnInit {
           this.workInstructionList = res.data;
         }
       }
-      console.log(this.workInstructionList);
     });
   }
 }
