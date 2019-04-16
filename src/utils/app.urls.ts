@@ -113,4 +113,4 @@ export const POSTWORKINSTRUCTIONDETAILS = BASEURL + 'Assembly/POSTWorkInstructio
 
 export const GETFGITEMBOMLIST = BASEURL + 'Assembly/GetFGItemBOMList';
 export const GETWORKINSTRUCTIONDETAILSFORITEM = BASEURL + 'Assembly/GetWorkInstructionDetailsForItem';
-
+export const GETBARCODESTATUS = BASEURL + 'StockItem/GetStockItemRateByItemCode';

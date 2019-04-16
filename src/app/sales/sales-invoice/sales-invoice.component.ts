@@ -45,7 +45,7 @@ export class SalesInvoiceComponent implements OnInit {
     localStorage.setItem('showLocation', 'false');
     localStorage.setItem('showTransactionSeries', 'true');
     localStorage.setItem('showPO', 'true');
-    
+
     this.createShipppingForm();
     this.getShippingLedgers();
     // this.veiwShipDetails();
@@ -114,8 +114,8 @@ export class SalesInvoiceComponent implements OnInit {
           this.shippingForm.controls['transactioneWayBillNo'].setValue(this.shippingDetailList[0].transactioneWayBillNo);
           this.shippingForm.controls['transporterLRDate'].setValue(new Date(this.shippingDetailList[0].transporterLRDate));
           this.shippingForm.controls['transactioneWayBillDate'].setValue(new Date(this.shippingDetailList[0].transactioneWayBillDate));
-          this.shippingForm.controls['distanceKMS'].setValue(new Date(this.shippingDetailList[0].distanceKMS));
-          this.shippingForm.controls['vehicleNo'].setValue(new Date(this.shippingDetailList[0].vehicleNo));
+          this.shippingForm.controls['distanceKMS'].setValue(this.shippingDetailList[0].distanceKMS);
+          this.shippingForm.controls['vehicleNo'].setValue(this.shippingDetailList[0].vehicleNo);
         }
         // this.formData.push(this.shippingForm.value);
       }

@@ -418,8 +418,8 @@
             <td><input type="text" formControlName="batchNo" pInputText disabled="disabled"></td>
             <td><input type="text" formControlName="itemCode" pInputText disabled="disabled"></td>
             <td><input type="text" formControlName="qty" pInputText disabled="disabled"></td>
-            <td align="center" *ngIf="!showActionBtn">
-              <button pButton type="button" icon="fa fa-plus" class="ui-button-success" (click)="addBatch()"></button>
+            <td align="center">
+              <button pButton type="button" icon="fa fa-plus" *ngIf="!showActionBtn" class="ui-button-success" (click)="addBatch()"></button>
               <button pButton type="button" icon="fa fa-trash-o" class="ui-button-danger" [disabled]="i < 1"
                 (click)="removeBatch(i)"></button>
             </td>
