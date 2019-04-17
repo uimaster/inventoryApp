@@ -2266,7 +2266,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
           .get("itemBarCodeApplicableStatus")
           .setValue(res.data[0].barcodeapplicable);
         formArray.controls[index]
-          .get("itemLength")
+          .get("itemBarCodeLength")
           .setValue(res.data[0].barcodelength);
         this.barCodeApplicableStatus.push({
           status: res.data[0].barcodeapplicable
