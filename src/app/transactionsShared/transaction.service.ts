@@ -150,6 +150,17 @@ export class TransactionServices {
     );
   }
 
+  getItemBarcodeStatus(ItemCode, ledgerId) {
+    const params = new HttpParams().set('LedgerID', ledgerId).set('ItemCode', ItemCode);
+    return this.http.get(urls.GETBARCODESTATUS, {params}).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+
+
+
   getLedgerLocation(ledgerId) {
     const params = new HttpParams().set('LedgerID', ledgerId);
     return this.http.get(urls.GETLEDGERLOCATION, {params}).pipe(

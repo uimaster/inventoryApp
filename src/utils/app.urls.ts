@@ -102,7 +102,15 @@ export const UPDATENOTIFICATION = BASEURL + 'dashboard/GetUpdateNotificationStat
 
 // Instructions urls
 export const GETASSEMBLYINSTRUCTIONLIST = BASEURL + 'Assembly/GetAssemblyInstructionList';
+export const GETWORKINSTRUCTIONLIST = BASEURL + 'Assembly/GetWorkInstructionList';
 export const GETASSEMBLYINSTRUCTIONDETAILS = BASEURL + 'Assembly/GetAssemblyInstructionDetails';
+export const GETWORKINSTRUCTIONDETAILS = BASEURL + 'Assembly/GetWorkInstructionDetails';
+
+
 export const POSTASSEMBLYINSTRUCTIONDETAILS = BASEURL + 'Assembly/POSTAssemblyInstructionDetails';
+export const POSTWORKINSTRUCTIONDETAILS = BASEURL + 'Assembly/POSTWorkInstructionDetails';
+
+
 export const GETFGITEMBOMLIST = BASEURL + 'Assembly/GetFGItemBOMList';
 export const GETWORKINSTRUCTIONDETAILSFORITEM = BASEURL + 'Assembly/GetWorkInstructionDetailsForItem';
+export const GETBARCODESTATUS = BASEURL + 'StockItem/GetStockItemRateByItemCode';

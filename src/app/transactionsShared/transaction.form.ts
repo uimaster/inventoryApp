@@ -542,7 +542,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
 
   addItemDetails() {
     // if (this.barCodeApplicableStatus.length < 1) {
-    //   this.barCodeApplicableStatus.push({ status: false });
+    this.barCodeApplicableStatus.push({ status: false });
     // }
     // console.log(this.barCodeApplicableStatus);
     const stockItemArray = <FormArray>(
@@ -2004,9 +2004,11 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
   showGrnBarcodeDialog(index) {
     this.grnValidationMsg = "";
     this.BarcodeSuccessMsg = "";
+    var stockItemId = 0;
     const controlArray = <FormArray>(
       this.transactionForm.get("transItemDetails")
     );
+    stockItemId = controlArray.controls[index].get("stockitemID").value;
     this.grnBarcodeTitle = controlArray.controls[index].get(
       "stockItemDesc"
     ).value;
@@ -2018,11 +2020,23 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
 
     this.itemQtyGnr.nativeElement.value = 1;
     this.grnItemIndex = index;
-    if (this.grnBarcodeTitle !== "") {
-      this.displayGrnBarcodeDialog = true;
-    } else {
+    if (this.grnBarcodeTitle === "") {
       alert("Please select Item before start scan.");
     }
+
+    this.trasactionService.getItemRate(stockItemId, 0).subscribe(res => {
+      if (res.status === "200") {
+        if (res.data !== undefined) {
+          if (res.data[0].barcodeapplicable === true) {
+            this.displayGrnBarcodeDialog = true;
+          } else {
+            alert("This Stock Item is not applicable for Barcode Scan.");
+            this.displayGrnBarcodeDialog = false;
+            return false;
+          }
+        }
+      }
+    });
   }
 
   callGRNBarcode() {
@@ -2251,6 +2265,9 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
         formArray.controls[index]
           .get("itemBarCodeApplicableStatus")
           .setValue(res.data[0].barcodeapplicable);
+        formArray.controls[index]
+          .get("itemBarCodeLength")
+          .setValue(res.data[0].barcodelength);
         this.barCodeApplicableStatus.push({
           status: res.data[0].barcodeapplicable
         });

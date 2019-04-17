@@ -1,0 +1,36 @@
+<!-- <app-filters (filterDates)='getTransactionList($event)'></app-filters> -->
+<p-panel header="Work Istruction Item Details" class="Tabledata">
+  <p-header>
+      <!-- <button pButton type="button" style="float:right" icon="pi pi-plus"  label="Add Work Instruction" class="ui-button-success" routerLink="/production/addworkInstruction"></button> -->
+
+  </p-header>
+  <div class="table-responsive" *ngIf="workInstructionDetails">
+      <table class="table">
+          <thead>
+            <tr>
+              <th>Asembly Instruction Date</th>
+              <th>Assembly Instruction NO.</th>
+              <th>Assembler Name</th>
+              <th>Item Desc.</th>
+              <th>Batch No.</th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container>
+              <tr *ngFor="let item of workInstructionDetails; index as i ;">
+                  <td>{{item.assemblyWorkInstructionDate}}</td>
+                  <td>{{item.assemblyWorkInstructionNo}}</td>
+                  <td>{{item.assemblerName}}</td>
+                  <td>{{item.itemDesc}}</td>
+                  <td>{{item.batchNo}}</td>
+              </tr>
+          </ng-container>
+          </tbody>
+      </table>
+  </div>
+  <div  *ngIf="!workInstructionDetails || workInstructionDetails.length < 1" style="text-align: center">
+    <br/>
+    No Records available !
+    <br/><br/>
+  </div>
+</p-panel>
