@@ -5,6 +5,14 @@
     <div class="message success" *ngIf="showSuccess">You have Updated/created successfully.</div>
 
     <div class="ui-g">
+      <div class="ui-g-1" *ngIf="priceListID">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <input type="text" pInputText value="{{priceListID}}" disabled="disabled">
+            <label for="priceListID">Price List ID</label>
+          </span>
+        </div>
+      </div>    
       <div class="ui-g-4">
         <div class="form-group">
             <span class="ui-float-label">
@@ -28,21 +36,30 @@
             </span>
         </div>
       </div>
+
+      <div class="ui-g-3" *ngIf="typeID==2">
+        <div class="form-group">
+          <button pButton type="button" label="Load Items" class="ui-button-info" [disabled]="!showLoad"></button>
+        </div>
+      </div>
+
     </div>
 
+    <div style="text-align: right;margin-bottom: -10px;">
+      <button pButton type="button" icon="fa fa-file-excel-o" label="Export" class="ui-button-success" (click)="exportAsXLSX()"></button>
+    </div>
     <fieldset formArrayName="priceListItems">
       <legend>Items</legend>
       <div *ngFor="let ctrl of cForm.get('priceListItems').controls; let i = index;" [formGroupName]="i">
         <div >
           <div class="ui-g">
-            <div class="ui-g-1">
+            <!--<div class="ui-g-1">
                 <div class="form-group">
                     <span class="ui-float-label">
                     <input type="text" pInputText value="{{i+1}}" disabled="disabled">
-                    <!-- <label for="itemSerialNo">Item Serial No.</label> -->
                     </span>
                 </div>
-            </div>
+            </div> -->
             <div class="ui-g-4" >
               <div class="form-group">
                 <span class="ui-float-label">
@@ -97,7 +114,7 @@
                 </span>
               </div>
             </div>
-            <div class="ui-g-1">
+            <div class="ui-g-2">
               <button pButton type="button" icon="fa fa-plus" class="ui-button-success" (click)="addItems()"></button>
               <button pButton type="button" icon="fa fa-trash-o" class="ui-button-danger" [disabled]="i<1" (click)="removeItems(i)"></button>
             </div>

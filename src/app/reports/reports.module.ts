@@ -9,7 +9,7 @@ import { DatePipe } from '@angular/common';
 import {ReactiveFormsModule,FormsModule} from '@angular/forms';
 import { FiltersModule } from './filters/filter.Module';
 import { PrimeNGModule } from '../app.primeNg.module';
-
+import {NgxPaginationModule} from 'ngx-pagination';
 @NgModule({
   imports: [
     PrimeNGModule,
@@ -18,7 +18,8 @@ import { PrimeNGModule } from '../app.primeNg.module';
     ReportsRouteModule,
     ReactiveFormsModule,
     FormsModule,
-    FiltersModule
+    FiltersModule,
+    NgxPaginationModule
   ],
   declarations: [ ReportsComponent, ReportsListComponent ],
   providers: [ ReportsService,DatePipe ],

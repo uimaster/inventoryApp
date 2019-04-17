@@ -58,11 +58,12 @@ export class ReportsService {
         );
     }
 
-    getStockSummaryList(ReportTypeID,CompanyID,FromDate,ToDate,StockItemID): Observable<any> {
+    getStockSummaryList(ReportTypeID,CompanyID,FromDate,ToDate,StockItemID,LocationID): Observable<any> {
         const params = new HttpParams().set('REPORTTYPE', ReportTypeID)
             .set('CompanyID', CompanyID).set('FromDate', FromDate)
             .set('ToDate', ToDate)
-            .set('StockItemID', StockItemID);
+            .set('StockItemID', StockItemID)
+            .set('LocationID', LocationID);
         return this.http.get(urls.STOCKSUMMARYREPORT, {params}).pipe(
             map(res => {
                 return res;
@@ -138,6 +139,15 @@ export class ReportsService {
     getAllCustomers(): Observable<any> {
         const params = new HttpParams().set('CompanyID', '1');
         return this.http.get(urls.GETCUSTOMERLIST, {params}).pipe(
+            map(res => {
+                return res;
+            })
+        );
+    }
+
+    getAllLocations(): Observable<any> {
+        const params = new HttpParams().set('CompanyID', '1');
+        return this.http.get(urls.LOCATIONURL, {params}).pipe(
             map(res => {
                 return res;
             })

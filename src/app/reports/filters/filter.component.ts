@@ -28,6 +28,8 @@ export class FiltersComponent implements OnInit, OnDestroy {
   public selectedDespatchReportType = 1;
   public searchText = '';
   public stockItemList = [];
+  public locationList = [];
+  public selectedLocationID = 0;
   public filteredItems = [];
   public ledgerList = [];
   public ledgerID = 0;
@@ -59,6 +61,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
       localStorage.removeItem('r_transactionSeriesID');
       localStorage.removeItem('r_searchText');
       localStorage.removeItem('r_DespatchReportsTypeID');
+      localStorage.removeItem('r_locationID');
       // localStorage.removeItem('r_ledgerName');
     }
   }
@@ -91,6 +94,10 @@ export class FiltersComponent implements OnInit, OnDestroy {
             if (localStorage.getItem('r_stockItemName')) { this.stockItemName = JSON.parse(localStorage.getItem('r_stockItemName')); }
             else{ localStorage.setItem('r_stockItemName', JSON.stringify(this.stockItemName)); }
         }
+
+        if(this.type=='stock-summary'){
+          this.getAllLocations();
+        }
     });
 
     var date = new Date();
@@ -121,6 +128,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
     if (localStorage.getItem('r_DespatchReportsTypeID')) { this.selectedDespatchReportType = JSON.parse(localStorage.getItem('r_DespatchReportsTypeID')); }
     else{ localStorage.setItem('r_DespatchReportsTypeID', JSON.stringify(this.selectedDespatchReportType)); }
 
+    
     //if(localStorage.getItem('r_ledgerID')){  this.ledgerID = JSON.parse(localStorage.getItem('r_ledgerID')); }
     //else{ localStorage.setItem('r_ledgerID', JSON.stringify(this.ledgerID)); }
     //if(localStorage.getItem('r_ledgerName')){  this.ledgerName = JSON.parse(localStorage.getItem('r_ledgerName')); }
@@ -154,6 +162,10 @@ export class FiltersComponent implements OnInit, OnDestroy {
 
   onChangeReportType(){
     localStorage.setItem('r_reportsTypeID', JSON.stringify(this.selectedReportType));
+  }
+
+  onChangeLocation(){
+    localStorage.setItem('r_locationID', JSON.stringify(this.selectedLocationID));
   }
 
   onChangeSOReportType(){
@@ -253,5 +265,23 @@ export class FiltersComponent implements OnInit, OnDestroy {
     else{
         localStorage.setItem('r_ledgerID', JSON.stringify(0));
     }
+  }
+
+  getAllLocations(){
+    this.reportsService.getAllLocations().subscribe(
+        result => {
+            if (result && result.status === '200')  {
+                let data = result.data;
+                for (let key in data) {
+                    if (data.hasOwnProperty(key)) {
+                      this.locationList.push({label: data[key].locationName, value: data[key].locationID});
+                    }
+                }
+              if (localStorage.getItem('r_locationID')) { this.selectedLocationID = JSON.parse(localStorage.getItem('r_locationID'));}
+              else{ localStorage.setItem('r_locationID', JSON.stringify(this.selectedLocationID)); }
+        
+            }
+        },
+    );
   }
 }

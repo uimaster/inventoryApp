@@ -42,7 +42,7 @@
             <thead>
             <tr>
                 <th>RMQ Date</th>
-                <th>Plan ID</th>
+                <!-- <th>Plan ID</th> -->
                 <th>Actions</th>
             </tr>
             </thead>
@@ -50,7 +50,7 @@
             <ng-container *ngIf="planningList">
                 <tr *ngFor="let plan of planningList; index as i;">
                     <td>{{plan.rmqDate}}</td>
-                    <td>{{plan.planID}}</td>
+                    <!-- <td>{{plan.planID}}</td> -->
                     <td>
                         <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="set('rmq',plan.rmqid)"></button>
                         <button pButton type="button" label="Generate PO" class="ui-button-success" (click)="generatePo(plan.rmqid)"></button>

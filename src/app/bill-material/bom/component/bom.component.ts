@@ -6,6 +6,11 @@ import {FormBuilder, Validators, FormArray} from '@angular/forms';
 import {BomService} from '../services/bom.service';
 import {BomResponse} from '../models/bom.model';
 import { DatePipe } from '@angular/common';
+import * as FileSaver from 'file-saver';
+import * as XLSX from 'xlsx';
+const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+const EXCEL_EXTENSION = '.xlsx';
+
 @Component({
     selector: 'app-bom',
     templateUrl: './bom.component.html',
@@ -124,13 +129,14 @@ export class BomComponent implements OnInit, OnDestroy {
 
     createbomDetail() {
         return this._formBuilder.group({
-            stockItemID: [0],
-            qty: [''],
-            bmlid: [0],
-            bomcomtypeid: [0],
-            parameterid:[0],
-            itemName:[''],
-            parameterval:['']
+          bomsrno: [{value: 0, disabled: true}],
+          stockItemID: [0],
+          qty: [''],
+          bmlid: [0],
+          bomcomtypeid: [0],
+          parameterid:[0],
+          itemName:[''],
+          parameterval:['']
         });
     }
 
@@ -138,13 +144,14 @@ export class BomComponent implements OnInit, OnDestroy {
       const stockItemArray = <FormArray>this.cForm.get('bomDetail');
       stockItemArray.push(
         this._formBuilder.group({
-            stockItemID: ['0'],
-            qty: [''],
-            bmlid: [0],
-            bomcomtypeid: [0],
-            parameterid:[0],
-            itemName:[''],
-            parameterval:['']
+          bomsrno: [{value: 0, disabled: true}],
+          stockItemID: ['0'],
+          qty: [''],
+          bmlid: [0],
+          bomcomtypeid: [0],
+          parameterid:[0],
+          itemName:[''],
+          parameterval:['']
         })
       );
     }
@@ -272,5 +279,39 @@ export class BomComponent implements OnInit, OnDestroy {
             this.cForm.get(elem).controls[index].get('stockItemID').setValue(this.allStockItems[i].value);
           }
         }
+    }
+
+    capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+    formatDate(dateStr){
+        if(dateStr){
+            let myDate = dateStr.replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")
+            return this.datePipe.transform(myDate, 'dd/MM/yyyy', 'es-ES');
+        }        
+    }
+
+    exportAsXLSX():void {
+       // // console.log(this.reportsList);
+       // for (let index = 0; index < this.bom['bomDetail'].length; index++) {
+       //     const element = this.bom['bomDetail'][index];
+       //     element.bomDate = this.convertToDateFormat(element.bomDate);
+       // }
+       this.exportAsExcelFile(this.bom['bomDetail'], this.capitalizeFirstLetter('Bill Of Material'));
+    }
+
+    public exportAsExcelFile(json: any[], excelFileName: string): void {
+
+        const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
+        const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+        const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+        this.saveAsExcelFile(excelBuffer, excelFileName);
+    }
+
+    private saveAsExcelFile(buffer: any, fileName: string): void {
+        const data: Blob = new Blob([buffer], {
+            type: EXCEL_TYPE
+        });
+        FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
     }
 }

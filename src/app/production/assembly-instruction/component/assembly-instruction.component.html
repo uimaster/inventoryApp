@@ -77,6 +77,10 @@
       </div>
     </div>
 
+    <div style="text-align: right;margin-bottom: -10px;">
+        <button pButton type="button" icon="fa fa-file-excel-o" label="Export" class="ui-button-success" (click)="exportAsXLSX()"></button>
+        <button pButton type="button" icon="fa fa-plus" class="ui-button-success" (click)="addItems()" label="Add Row"></button>
+    </div>
     <fieldset formArrayName="assemblyInstructionDetails" style="overflow-x:auto; min-height:300px" >
       <legend>Instruction Details</legend>
       <div *ngFor="let ctrl of cForm.get('assemblyInstructionDetails').controls; let i = index;">
@@ -159,7 +163,7 @@
                 </div>
             </div>
             <div class="ui-g-1">
-              <button pButton type="button" icon="fa fa-plus" class="ui-button-success" (click)="addItems()"></button>
+              <!-- <button pButton type="button" icon="fa fa-plus" class="ui-button-success" (click)="addItems()"></button> -->
               <button pButton type="button" icon="fa fa-trash-o" class="ui-button-danger" [disabled]="i<1" (click)="removeItems(i)"></button>
             </div>
           </div>

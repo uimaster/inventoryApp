@@ -23,7 +23,8 @@ export class ReportsListComponent implements OnInit, OnDestroy {
     public showLoader: boolean = false;
     public reportsListDataSubscription: Subscription;
     public filter = 'false';
-
+    p: number = 1;
+    
     constructor(
         private _reportsService: ReportsService,
         private router: Router,
@@ -101,6 +102,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
         let TransactionSeriesID = 10;
         let searchText = '';
         let DespatchReportsTypeID = 1;
+        let LocationID = 0;
 
         if(localStorage.getItem('r_reportsTypeID') && localStorage.getItem('r_reportsTypeID') !== '') {
             ReportsTypeID = JSON.parse(localStorage.getItem('r_reportsTypeID'));
@@ -125,6 +127,10 @@ export class ReportsListComponent implements OnInit, OnDestroy {
 
         if(localStorage.getItem('r_DespatchReportsTypeID') && localStorage.getItem('r_DespatchReportsTypeID') !== '') {
             DespatchReportsTypeID = JSON.parse(localStorage.getItem('r_DespatchReportsTypeID'));
+        }
+
+        if(localStorage.getItem('r_locationID') && localStorage.getItem('r_locationID') !== '') {
+            LocationID = JSON.parse(localStorage.getItem('r_locationID'));
         }
 
         if(this.type=='po-report'){
@@ -180,7 +186,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
         }
 
         if(this.type=='stock-summary'){
-            this.reportsListDataSubscription = this._reportsService[fName](ReportsTypeID,CompanyID,fromDate,toDate,StockItemID).subscribe(
+            this.reportsListDataSubscription = this._reportsService[fName](ReportsTypeID,CompanyID,fromDate,toDate,StockItemID,LocationID).subscribe(
                 result => {
                     if (result && result.status === '200')  {
                         this.reportsList = result.data;

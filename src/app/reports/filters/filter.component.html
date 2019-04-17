@@ -97,7 +97,15 @@
             <div class="col-sm-4"><div class="form-group"><span class="ui-float-label">
                 <p-calendar [(ngModel)]="dateValue2" dateFormat="dd/mm/yy" id="toDate" (onSelect)="getToDate($event)" [showIcon]="true"></p-calendar>
                 <label for="toDate">To Date</label></span></div></div>
+               
+            <div class="col-sm-4"><div class="form-group"><span class="ui-float-label">
+                <p-dropdown id="locationID" [(ngModel)]="selectedLocationID"  [options]="locationList" [style]="{'width':'95%'}" (onChange)="onChangeLocation()"></p-dropdown>
+                <label for="locationID">Location</label></span></div></div>
+                    
             </div>
+
+            
+
             <div class="row">
             <div class="col-sm-4"><div class="form-group"><span class="ui-float-label">
                 <p-dropdown  id="reportTypeID" [(ngModel)]="selectedReportType"  [options]="SSreportTypeList" [style]="{'width':'95%'}"  

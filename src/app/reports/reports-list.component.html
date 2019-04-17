@@ -27,7 +27,7 @@
             </thead>
             <tbody>
             <ng-container *ngIf="reportsList">
-                <tr *ngFor="let report of reportsList; index as i;">
+                <tr *ngFor="let report of reportsList| paginate: { itemsPerPage: 10, currentPage: p }; index as i;">
                     <td>{{report.pono}}</td>
                     <td>{{report.poDate | date:'dd/MM/yyyy'}}</td>
                     <td>{{report.supplierName}}</td>
@@ -47,6 +47,9 @@
             </ng-container>
             </tbody>
         </table>
+        <div style="text-align: center;margin: 10px;padding: 10px;">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
     </div>
 </p-panel>
 
@@ -76,7 +79,7 @@
             </thead>
             <tbody>
             <ng-container *ngIf="reportsList">
-                <tr *ngFor="let report of reportsList; index as i;">
+                <tr *ngFor="let report of reportsList| paginate: { itemsPerPage: 10, currentPage: p }; index as i;">
                     <td>{{report.soDate | date:'dd/MM/yyyy'}}</td>
                     <td>{{report.sono}}</td>
                     <td>{{report.commissionNO}}</td>
@@ -97,6 +100,9 @@
             </ng-container>
             </tbody>
         </table>
+        <div style="text-align: center;margin: 10px;padding: 10px;">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
     </div>
 </p-panel>
 
@@ -110,6 +116,7 @@
         <table class="table">
             <thead>
             <tr>
+                <th width="5%">SR No</th>
                 <th width="10%">PO No</th>
                 <th width="9%">JOB NO</th>
                 <th width="5%">BOX ID</th>
@@ -132,7 +139,8 @@
             </thead>
             <tbody>
             <ng-container *ngIf="reportsList">
-                <tr *ngFor="let report of reportsList; index as i;">
+                <tr *ngFor="let report of reportsList| paginate: { itemsPerPage: 10, currentPage: p }; index as i;">
+                    <td>{{(p - 1) * 10 + i +1}}</td>
                     <td>{{report.pono}}</td>
                     <td>{{report.jobno}}</td>
                     <td>{{report.boxid}}</td>
@@ -158,6 +166,9 @@
             </ng-container>
             </tbody>
         </table>
+        <div style="text-align: center;margin: 10px;padding: 10px;">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
     </div>
 </p-panel>
 
@@ -190,7 +201,7 @@
             </thead>
             <tbody>
             <ng-container *ngIf="reportsList">
-                <tr *ngFor="let report of reportsList; index as i;">
+                <tr *ngFor="let report of reportsList| paginate: { itemsPerPage: 10, currentPage: p }; index as i;">
                     <td>{{report.plDate | date:'dd/MM/yyyy'}}</td>
                     <td>{{report.plno}}</td>
                     <td>{{report.pono}}</td>
@@ -209,6 +220,9 @@
             </ng-container>
             </tbody>
         </table>
+        <div style="text-align: center;margin: 10px;padding: 10px;">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
     </div>
 </p-panel>
 
@@ -237,8 +251,8 @@
             </thead>
             <tbody>
             <ng-container *ngIf="reportsList">
-                <tr *ngFor="let report of reportsList; index as i;">
-                    <td>{{i+1}}</td>
+                <tr *ngFor="let report of reportsList| paginate: { itemsPerPage: 10, currentPage: p }; index as i;">
+                    <td>{{(p - 1) * 10 + i +1}}</td>
                     <td>{{report.itemCode}}</td>
                     <td>{{report.itemName}}</td>
                     <td>{{report.opBalQty}}</td>
@@ -253,6 +267,9 @@
             </ng-container>
             </tbody>
         </table>
+        <div style="text-align: center;margin: 10px;padding: 10px;">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
     </div>
 </p-panel>
 
@@ -275,7 +292,7 @@
             </thead>
             <tbody>
             <ng-container *ngIf="reportsList">
-                <tr *ngFor="let report of reportsList; index as i;">
+                <tr *ngFor="let report of reportsList| paginate: { itemsPerPage: 10, currentPage: p }; index as i;">
                     <td>{{i+1}}</td>
                     <td>{{report.itemCode}}</td>
                     <td>{{report.itemName}}</td>
@@ -285,6 +302,9 @@
             </ng-container>
             </tbody>
         </table>
+        <div style="text-align: center;margin: 10px;padding: 10px;">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
     </div>
 </p-panel>
 
@@ -311,7 +331,7 @@
             </thead>
             <tbody>
             <ng-container *ngIf="reportsList">
-                <tr *ngFor="let report of reportsList; index as i;">
+                <tr *ngFor="let report of reportsList| paginate: { itemsPerPage: 10, currentPage: p }; index as i;">
                     <td>{{i+1}}</td>
                     <td>{{report.transactionNO}}</td>
                     <td>{{report.transactionDate|date:'dd/MM/yyyy'}}</td>
@@ -325,6 +345,9 @@
             </ng-container>
             </tbody>
         </table>
+        <div style="text-align: center;margin: 10px;padding: 10px;">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
     </div>
 </p-panel>
 
@@ -354,7 +377,7 @@
             </thead>
             <tbody>
             <ng-container *ngIf="reportsList">
-                <tr *ngFor="let report of reportsList; index as i;">
+                <tr *ngFor="let report of reportsList| paginate: { itemsPerPage: 10, currentPage: p }; index as i;">
                     <td>{{report.transactionNO}}</td>
                     <td>{{report.transactionDate|date:'dd/MM/yyyy'}}</td>
                     <td>{{report.supplierName}}</td>
@@ -370,6 +393,9 @@
             </ng-container>
             </tbody>
         </table>
+        <div style="text-align: center;margin: 10px;padding: 10px;">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
     </div>
 </p-panel>
 
@@ -392,7 +418,7 @@
             </thead>
             <tbody>
             <ng-container *ngIf="reportsList">
-                <tr *ngFor="let report of reportsList; index as i;">
+                <tr *ngFor="let report of reportsList| paginate: { itemsPerPage: 10, currentPage: p }; index as i;">
                     <td>{{report.transactionNO}}</td>
                     <td>{{report.transactionDate|date:'dd/MM/yyyy'}}</td>
                     <td>{{report.itemCode}}</td>
@@ -402,5 +428,8 @@
             </ng-container>
             </tbody>
         </table>
+        <div style="text-align: center;margin: 10px;padding: 10px;">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
     </div>
 </p-panel>

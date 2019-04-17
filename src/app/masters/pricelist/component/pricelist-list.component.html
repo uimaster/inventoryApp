@@ -7,11 +7,13 @@
 <p-panel header="Price List" class="Tabledata">
     <p-header>
         <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addPricelist()"></button>
+        <!-- <button pButton type="button" style="float:right" icon="fa fa-file-excel-o" label="Export" class="ui-button-success" (click)="exportAsXLSX()"></button> -->
     </p-header>
     <div class="table-responsive">
         <table class="table">
             <thead>
             <tr>
+                <th>PL No</th>
                 <th>Date</th>
                 <th>Ledger</th>
                 <th>Item Count</th>
@@ -21,6 +23,7 @@
             <tbody>
             <ng-container *ngIf="priceList">
                 <tr *ngFor="let price of priceList; index as i;">
+                    <td>{{price.priceListID}}</td>
                     <td>{{price.priceListDate}}</td>
                     <td>{{price.ledgerName}}</td>
                     <td>{{price.itemCount}}</td>

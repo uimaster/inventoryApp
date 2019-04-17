@@ -56,6 +56,11 @@
         </div>
       </div>
 
+      <div style="text-align: right;margin-bottom: -10px;"> 
+        <button pButton type="button" icon="fa fa-file-excel-o" label="Export" class="ui-button-success" (click)="exportAsXLSX()"></button>
+        <button pButton type="button" icon="fa fa-plus" class="ui-button-success" (click)="addFGItems()" label="Add Row"></button>
+      </div>
+
     <fieldset  formArrayName="fgPlanDetails" style="overflow-x:auto; min-height:300px">
         <legend>Item Details</legend>    
         <div style="width:200%;" >
@@ -111,7 +116,7 @@
                 <td><input type="number" formControlName="cumulativeLength" pInputText id="cumulativeLength"></td>
                 <td><input type="number" formControlName="cumulativeStops" pInputText id="cumulativeStops"></td>
                 <td style="text-align:center" >
-                    <button pButton type="button" icon="fa fa-plus" class="ui-button-success" (click)="addFGItems()"></button>
+                   <!--  <button pButton type="button" icon="fa fa-plus" class="ui-button-success" (click)="addFGItems()"></button> -->
                     <button pButton type="button" icon="fa fa-trash-o" class="ui-button-danger" [disabled]="i<1" (click)="removeFGItems(i)"></button>
                 </td>
             </tr>
@@ -169,6 +174,10 @@
         
       </div>
      
+        <div style="text-align: right;margin-bottom: -10px;">
+            <button pButton type="button" icon="fa fa-file-excel-o" label="Export" class="ui-button-success" (click)="exportAsXLSX()"></button>
+            <button pButton type="button" style="margin-right: 5px;" icon="fa fa-plus" class="ui-button-success" (click)="addRMQItems()" label="Add Row"></button>
+        </div>
       <fieldset formArrayName="rmqDetail" style="overflow-x:auto; min-height:300px">
         <legend>Item Details</legend>    
         <div style="width:200%;">
@@ -224,7 +233,7 @@
                 <!-- <td><input type="number" formControlName="ledgerID" pInputText id="ledgerID"></td>
                 <td><input type="number" formControlName="supplierName" pInputText id="supplierName"></td> -->
                 <td style="text-align:center">
-                    <button pButton type="button" style="margin-right: 5px;" icon="fa fa-plus" class="ui-button-success" (click)="addRMQItems()"></button>
+                    <!-- <button pButton type="button" style="margin-right: 5px;" icon="fa fa-plus" class="ui-button-success" (click)="addRMQItems()"></button> -->
                     <button pButton type="button" icon="fa fa-trash-o" class="ui-button-danger" [disabled]="i<1" (click)="removeRMQItems(i)"></button>
                 </td>
             </tr>

@@ -7,7 +7,9 @@
 <p-panel header="Bom List" class="Tabledata">
     <p-header>
         <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addBom()"></button>
+        <!-- <button pButton type="button" style="float:right" icon="fa fa-file-excel-o" label="Export" class="ui-button-success" (click)="exportAsXLSX()"></button> -->
     </p-header>
+
 <!--     
     <div class="ui-g">
         <div class="ui-g-12">
@@ -23,6 +25,7 @@
         <table class="table">
             <thead>
             <tr>
+                <th>SR No</th>
                 <th>Item Code</th>
                 <th>Item Name</th>
                 <th>Bom Type</th>
@@ -33,6 +36,7 @@
             <tbody>
             <ng-container *ngIf="bomList">
                 <tr *ngFor="let bom of bomList; index as i;">
+                    <td>{{bom.bomid}}</td>
                     <td>
                         <a (click)="setBom(bom.bomid)"> {{bom.itemCode}}</a>
                     </td>
