@@ -1,3 +1,4 @@
+import { Router } from "@angular/router";
 import { WorkInstructionService } from "./../work-instruction.service";
 import { FormBuilder, FormArray, Validators } from "@angular/forms";
 import { FormGroup } from "@angular/forms";
@@ -20,11 +21,13 @@ export class CreateWorkInstructionComponent implements OnInit {
   public currentIndex = 0;
   public disabledSerial = true;
   public showLoader = false;
+  public rowLength = 0;
 
   constructor(
     private fb: FormBuilder,
     private transactionService: TransactionServices,
-    private workInstructionService: WorkInstructionService
+    private workInstructionService: WorkInstructionService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -61,9 +64,9 @@ export class CreateWorkInstructionComponent implements OnInit {
     this.workInstructionForm = this.fb.group({
       AssemblyWorkInstructionID: [0],
       AssemblyWorkInstructionDate: [date],
-      BatchNo: [0, Validators.required],
+      BatchNo: [, Validators.required],
       BatchID: [0],
-      StockItemID: [0, Validators.required],
+      StockItemID: [, Validators.required],
       AssemblerID: [1],
       AssemblyWorkInstructionDetails: this.fb.array([]),
       AssemblyBatchDetails: this.fb.array([])
@@ -72,9 +75,9 @@ export class CreateWorkInstructionComponent implements OnInit {
 
   instructionDetailsForm() {
     return this.fb.group({
-      InstructionSRNo: [0],
-      StockitemId: [0],
-      Qty: [0]
+      InstructionSRNo: [],
+      StockitemId: [],
+      Qty: []
     });
   }
 
@@ -165,6 +168,8 @@ export class CreateWorkInstructionComponent implements OnInit {
 
   getValidateItems() {
     const currentRowData = this.workInstructionItemList[this.currentIndex];
+    this.rowLength = currentRowData.batchLength;
+    console.log(this.rowLength);
     if (currentRowData.batchStatus === false) {
       this.disabledSerial = true;
     } else {
@@ -172,7 +177,7 @@ export class CreateWorkInstructionComponent implements OnInit {
     }
   }
 
-  getValidateQty(event) {
+  getValidateQty() {
     this.showLoader = true;
     const currentRowData = this.workInstructionItemList[this.currentIndex];
     var quantityData = this.quantity.nativeElement;
@@ -180,7 +185,7 @@ export class CreateWorkInstructionComponent implements OnInit {
       this.workInstructionForm.controls["AssemblyWorkInstructionDetails"]
     );
     // setTimeout(() => {
-    if (currentRowData.qty == event.target.value) {
+    if (currentRowData.qty == quantityData.value.trim()) {
       quantityData.value = "";
       formArray.push(
         this.fb.group({
@@ -202,10 +207,22 @@ export class CreateWorkInstructionComponent implements OnInit {
   }
 
   startScanSerial(event) {
-    this.showLoader = true;
     var barCode;
-    setTimeout(() => {
-      barCode = event.target.value;
+    barCode = event.target.value;
+    if (barCode.length === this.rowLength) {
+      this.showLoader = true;
+
+      const BatchFormArray = <FormArray>(
+        this.workInstructionForm.controls["AssemblyBatchDetails"]
+      );
+      for (var i = 0; i < BatchFormArray.length; i++) {
+        if (barCode === BatchFormArray.controls[i].get("batchno").value) {
+          alert('This Serial aleady exist. Please try again.');
+          this.showLoader = false;
+          return false;
+        }
+      }
+
       var stockItem = this.workInstructionItemList[this.currentIndex].itemCode;
       if (barCode !== "" && barCode !== undefined && stockItem !== undefined) {
         this.getBatchValidateForSerial(stockItem, barCode, 2);
@@ -216,8 +233,8 @@ export class CreateWorkInstructionComponent implements OnInit {
         this.plValidationMsg = "Please enter correct data.";
         this.showLoader = false;
       }
-    }, 1000);
-    this.showLoader = false;
+      this.showLoader = false;
+    }
   }
 
   getBatchValidateForSerial(itemcode, batchcode, type) {
@@ -262,6 +279,9 @@ export class CreateWorkInstructionComponent implements OnInit {
       .subscribe(val => {
         alert(val.message);
         this.showLoader = false;
+        setTimeout(() => {
+          this.router.navigate(["/production/workInstruction"]);
+        }, 2000);
       });
     this.showLoader = false;
   }

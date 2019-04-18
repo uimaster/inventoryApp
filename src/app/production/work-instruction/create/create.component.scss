@@ -1,8 +1,36 @@
-.formData{padding: 30px  20px 0;}
-.fieldTable tr td, .fieldTable tr th{ padding: 5px 2px;}
-.fieldTable tr td input{ width: 100%;}
-.fieldTable td .ui-calendar input.ui-inputtext { width: 70%; text-align: left;}
-fieldset { margin-bottom: 20px;}
-.ui-widget-header{ font-size: 18px!important; }
-.Tabledata table tr td{ text-align: left;}
-input:disabled{ cursor: not-allowed!important; opacity: 0.5;}
+.formData {
+    padding: 30px 20px 0;
+}
+
+.fieldTable tr td,
+.fieldTable tr th {
+    padding: 5px 2px;
+}
+
+.fieldTable tr td input {
+    width: 100%;
+}
+
+.fieldTable td .ui-calendar input.ui-inputtext {
+    width: 70%;
+    text-align: left;
+}
+
+fieldset {
+    margin-bottom: 20px;
+}
+
+.ui-widget-header {
+    font-size: 18px!important;
+}
+
+.Tabledata table tr td {
+    text-align: left;
+}
+
+input:disabled,
+button:disabled,
+.ui-button-text:disabled {
+    cursor: not-allowed!important;
+    opacity: 0.5;
+}
