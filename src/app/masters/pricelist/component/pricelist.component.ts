@@ -10,6 +10,8 @@ import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
+import { NotificationsService } from '../../../notifications/notifications.service';
+
 
 @Component({
     selector: 'app-pricelist',
@@ -28,8 +30,8 @@ export class PricelistComponent implements OnInit, OnDestroy {
     public allStockItems = [];
     public allStockItemsData = [];
     public priceListDataSubscription: Subscription;
-    showError = false;
-    showSuccess = false;
+   // showError = false;
+   // showSuccess = false;
     companyId = localStorage.getItem('companyID');
     userId = localStorage.getItem('userID');
     constructor(
@@ -37,7 +39,8 @@ export class PricelistComponent implements OnInit, OnDestroy {
       private _route: ActivatedRoute,
       private _formBuilder: FormBuilder,
       private router: Router,
-      private datePipe: DatePipe
+      private datePipe: DatePipe,
+      private notificationsService: NotificationsService
     ) { }
     public priceList;
     public cForm;
@@ -159,12 +162,14 @@ export class PricelistComponent implements OnInit, OnDestroy {
         form.priceListDate = this.datePipe.transform(form.priceListDate, 'yyyy-MM-dd');
         this.priceListService.updatePricelist(form).subscribe((res: PricelistResponse) => {
             if (res.status === '200') {
-                this.showSuccess = true;
+                //this.showSuccess = true;
+                this.notificationsService.notify('success','Success','You have Updated/created successfully.');
                 setTimeout(() => {
                   this.router.navigate(['/masters/pricelist',this.typeID]);
                 }, 3000);
             } else {
-              this.showError = true;
+             // this.showError = true;
+              this.notificationsService.notify('error','Error','Updatation/creation failed.')
             }
         });
     }
