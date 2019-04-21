@@ -2067,16 +2067,16 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
         .subscribe(res => {
           if (res.status === "200") {
             this.GRNvalidateStatus = true;
-            this.grnFunctionAfterValidate();
+            this.grnFunctionAfterValidate(res.data);
           } else {
             this.GRNvalidateStatus = false;
-            this.grnFunctionAfterValidate();
+            this.grnFunctionAfterValidate(res.data);
           }
         });
     }
   }
 
-  grnFunctionAfterValidate() {
+  grnFunctionAfterValidate(data) {
     const itemBarCodeVal = this.itemBarCode.nativeElement.value;
     const itemQtyGnrVal = this.itemQtyGnr.nativeElement.value;
     var itemCode = this.grnBarcodeTitle.split("|");
@@ -2135,7 +2135,7 @@ export class TransactionFormComponent implements OnInit, OnDestroy {
         this.fb.group({
           batchNo: [itemBarCodeVal],
           stockitemID: [stockItemId],
-          batchID: [0],
+          batchID: [data[0].batchid],
           itemCode: [sptItemCode],
           qty: [itemQtyGnrVal],
           transactionID: [JSON.parse(transactionId)]

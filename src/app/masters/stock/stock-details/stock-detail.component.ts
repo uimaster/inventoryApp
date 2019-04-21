@@ -53,6 +53,9 @@ export class StockDetailComponent implements OnInit, OnDestroy {
   // public stockItemGroup: SelectItem[];
   public stockItemGroup = [];
   public selectedBarcodeApplicable;
+  public selectedlengthAPPLICABLE;
+  public selectedstopsAPPLICABLE;
+  public selectedshowInRMReport;
   public selectedActiveStatus;
   public selectedUnit;
   public selectedLocation;
@@ -80,6 +83,9 @@ export class StockDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.selectedBarcodeApplicable = this.barCodeApplicable[0].value;
+    this.selectedlengthAPPLICABLE = this.barCodeApplicable[0].value;
+    this.selectedstopsAPPLICABLE = this.barCodeApplicable[0].value;
+    this.selectedshowInRMReport = this.barCodeApplicable[0].value;
     this.selectedActiveStatus = this.statusList[0].value;
     setTimeout(() => {
       this._route.params.subscribe(params => {
@@ -131,11 +137,12 @@ export class StockDetailComponent implements OnInit, OnDestroy {
           this.sForm.controls["stockGroup_ID"].setValue(
             this.stock["stockGroup_ID"]
           );
-          // this.sForm.controls['stockGroupName'].setValue(
-          //   this.stock['stockGroup_ID']
-          // );
           this.sForm.controls["unit_ID"].setValue(this.stock["unit_ID"]);
-          // this.sForm.controls["unitName"].setValue(this.stock["unitName"]);
+          this.sForm.controls["lengthAPPLICABLE"].setValue(this.stock["lengthAPPLICABLE"]);
+          this.sForm.controls["stopsAPPLICABLE"].setValue(this.stock["stopsAPPLICABLE"]);
+          this.sForm.controls["showInRMReport"].setValue(this.stock["showInRMReport"]);
+          this.sForm.controls["mainBox"].setValue(this.stock["mainBox"]);
+          this.sForm.controls["subBox"].setValue(this.stock["subBox"]);
           this.sForm.controls["minimum_Order_Level"].setValue(
             this.stock["minimum_Order_Level"]
           );
@@ -252,6 +259,11 @@ export class StockDetailComponent implements OnInit, OnDestroy {
       barcodelength: [0],
       branchName: [""],
       activeStatus: ["false"],
+      lengthAPPLICABLE: ["true", Validators.required],
+      stopsAPPLICABLE: ["true", Validators.required],
+      showInRMReport: ["true", Validators.required],
+      mainBox: [""],
+      subBox: [""],
       company_ID: [JSON.parse(this.companyId) || 0],
       userID: [JSON.parse(this.userId) || 0],
       stockItemOpeningBal: this._formBuilder.array([
@@ -314,15 +326,6 @@ export class StockDetailComponent implements OnInit, OnDestroy {
     });
   }
 
-  // selectLocationName() {
-  //   const stockItemSuppliers = <FormArray>this.sForm.get('stockItemOpeningBal');
-  //   stockItemSuppliers.controls[0].get('locationName').setValue(this.locationModel.locationName);
-  // }
-  // selectLedgerName() {
-  //   const stockItemSuppliers = <FormArray>this.sForm.get('stockItemSuppliers');
-  //   stockItemSuppliers.controls[0].get('ledgerName').setValue(this.ledgerModel.supplierName);
-  // }
-
   addSupplier() {
     const stockItemArray = <FormArray>this.sForm.get("stockItemSuppliers");
     stockItemArray.push(
@@ -375,11 +378,24 @@ export class StockDetailComponent implements OnInit, OnDestroy {
   get taxrate() {
     return this.sForm.get("taxrate");
   }
-
   get gstUnit() {
     return this.sForm.get("gstUnit");
   }
-
+  get lengthAPPLICABLE() {
+    return this.sForm.get("lengthAPPLICABLE");
+  }
+  get stopsAPPLICABLE() {
+    return this.sForm.get("stopsAPPLICABLE");
+  }
+  get showInRMReport() {
+    return this.sForm.get("showInRMReport");
+  }
+  get mainBox() {
+    return this.sForm.get("mainBox");
+  }
+  get subBox() {
+    return this.sForm.get("subBox");
+  }
   get barcodeapplicable() {
     return this.sForm.get("barcodeapplicable");
   }
