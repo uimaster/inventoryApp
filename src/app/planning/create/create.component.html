@@ -12,6 +12,14 @@
   
       <div class="ui-g">
         <div class="ui-g-4">
+            <div class="form-group">
+                <span class="ui-float-label">
+                <input type="number" formControlName="planID" pInputText id="planID">
+                <label for="planID">Plan ID</label>
+                </span>
+            </div>
+        </div>
+        <div class="ui-g-4">
           <div class="form-group">
             <span class="ui-float-label">
               <p-calendar formControlName="planDate" dateFormat="dd-mm-yy" [(ngModel)]="date1" [showIcon]="true"></p-calendar>
@@ -145,6 +153,14 @@
       <div class="message success" *ngIf="showSuccess">You have Updated/created successfully.</div> -->
   
       <div class="ui-g">
+        <div class="ui-g-2">
+            <div class="form-group">
+                <span class="ui-float-label">
+                <input type="number" formControlName="rmqid" pInputText id="rmqid">
+                <label for="rmqid">RMQ ID</label>
+                </span>
+            </div>
+        </div>
         <div class="ui-g-4">
           <div class="form-group">
             <span class="ui-float-label">
@@ -159,7 +175,7 @@
             </div>
           </div>
         </div>
-        <div class="ui-g-4">
+        <div class="ui-g-2">
             <div class="form-group">
                 <span class="ui-float-label">
                 <input type="number" formControlName="planID" pInputText id="planID">

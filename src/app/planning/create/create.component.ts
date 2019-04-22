@@ -142,7 +142,7 @@ export class CreateComponent implements OnInit {
 
     fgForm() {
         this.cForm = this._formBuilder.group({
-            planID: [0],
+            planID: [{value:0,disabled:true},Validators.required],
             planDate: ['', [Validators.required]],
             periodFromDate: ['', [Validators.required]],
             periodToDate: ['', [Validators.required]],
@@ -198,7 +198,7 @@ export class CreateComponent implements OnInit {
 
     rmqForm() {
         this.cForm = this._formBuilder.group({
-            rmqid: [0],
+            rmqid: [{value:0,disabled:true},Validators.required],
             rmqDate: ['', [Validators.required]],
             planID: [0],
             companyID: [JSON.parse(this.companyId)],
