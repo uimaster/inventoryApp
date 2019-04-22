@@ -34,7 +34,7 @@
     "ngrx-store-freeze": "^0.2.4",
     "ngx-pagination": "^3.2.1",
     "primeicons": "^1.0.0-beta.7",
-    "primeng": "^6.0.0-beta.1",
+    "primeng": "^6.1.6",
     "rxjs": "^5.5.6",
     "xlsx": "^0.14.1",
     "zone.js": "^0.8.19"
