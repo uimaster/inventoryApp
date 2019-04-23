@@ -24,6 +24,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
     public reportsListDataSubscription: Subscription;
     public filter = 'false';
     p: number = 1;
+    stockItemID = 0;
     
     constructor(
         private _reportsService: ReportsService,
@@ -36,10 +37,18 @@ export class ReportsListComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this._route.params.subscribe((params) => {
+            this.stockItemID = params.stockItemID;
+            this.type = params.type;
+            if(this.type == 'stockitem-details-report' && this.stockItemID){
+                this.getList('getStockItemDetailsList');
+            }
+        });
         if(this.filter == 'true'){
             this.showLoader = true;
             this._route.params.subscribe((params) => {
-                this.type = params.type;
+                //this.stockItemID = params.stockItemID;
+                //this.type = params.type;
                 switch (this.type) {
                     case 'po-report':
                         this.getList('getPOReportList');
@@ -68,10 +77,18 @@ export class ReportsListComponent implements OnInit, OnDestroy {
                     case 'stock-issue-register':
                         this.getList('getStockIssueRegisterList');
                         break;
+                    // case 'stockitem-details-report':
+                    //     this.getList('getStockItemDetailsList');
+                    //     break;
+                    case 'batch-details-report':
+                        this.getList('getBatchDetailsList');
+                        break;    
+
 
                     default:
                         break;
                 }
+                
             });
         }
     }
@@ -244,6 +261,28 @@ export class ReportsListComponent implements OnInit, OnDestroy {
                 },
             );
         }
+        if(this.type=='stockitem-details-report'){
+            this.reportsListDataSubscription = this._reportsService[fName](CompanyID,fromDate,toDate,this.stockItemID,ReportsTypeID,searchText).subscribe(
+                result => {
+                    if (result && result.status === '200')  {
+                        this.reportsList = result.data;
+                        this.listData = result.data;
+                    }
+                    this.showLoader = false;
+                },
+            );
+        }
+        if(this.type=='batch-details-report'){
+            this.reportsListDataSubscription = this._reportsService[fName](CompanyID,fromDate,toDate,StockItemID,ReportsTypeID,searchText).subscribe(
+                result => {
+                    if (result && result.status === '200')  {
+                        this.reportsList = result.data;
+                        this.listData = result.data;
+                    }
+                    this.showLoader = false;
+                },
+            );
+        }
     }
 
     set(type,planID){
@@ -326,4 +365,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
         FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
     }
 
+    openStockItemDetails(stockItemID){
+        this.router.navigate(['/reports/list/stockitem-details-report/', stockItemID]);
+    }
 }
