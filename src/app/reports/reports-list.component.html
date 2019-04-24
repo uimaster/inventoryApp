@@ -473,7 +473,7 @@
                 <tr *ngFor="let report of reportsList| paginate: { itemsPerPage: 10, currentPage: p }; index as i;">
                     <!-- <td>{{report.transDate | date:'dd/MM/yyyy'}}</td> -->
                     <td>{{report.transDocNo}}</td>
-                    <td>{{report.transDate | date:'dd/MM/yyyy'}}</td>
+                    <td>{{report.transDate}}</td>
                     <td>{{report.transType}}</td>
                     <td>{{report.inwardQty}}</td>
                     <td>{{report.outwardQty}}</td>
