@@ -31,7 +31,7 @@
                 <input  id="searchText" type="text" pInputText [(ngModel)]="searchText">
                 <label for="searchText">Search</label></span></div></div>
 
-            <div class="col-sm-3 pull-right"><button pButton type="button" label="Go" (click)="getTransactionList();" class="ui-button-success go-btn"></button></div>
+            <div class="col-sm-3 pull-right form-group"><button pButton type="button" label="Go" (click)="getTransactionList();" class="ui-button-success go-btn"></button></div>
         </div>
         
       </div>
@@ -78,7 +78,7 @@
                 <label for="ledgerID" *ngIf="type=='po-report'">Supplier</label><label for="ledgerID" *ngIf="type=='so-report'">Customer</label>
                 </span>
             </div></div> -->
-            <div class="col-sm-3 pull-right"><button pButton type="button" label="Go" (click)="getTransactionList();" class="ui-button-success go-btn"></button></div>
+            <div class="col-sm-3 pull-right form-group"><button pButton type="button" label="Go" (click)="getTransactionList();" class="ui-button-success go-btn"></button></div>
         </div>
         
       </div>
@@ -118,7 +118,7 @@
             </p-autoComplete>
             <i class="ui-dropdown-clear-icon pi pi-times" (click)="clearValue()"></i><label for="stockItemID">Stock Item</label> </span> </div> </div>
 
-            <div class="col-sm-4">
+            <div class="col-sm-4 form-group">
                 <button pButton type="button" label="Go" (click)="getTransactionList();" class="ui-button-success go-btn"></button>
             </div>
             </div>
@@ -150,7 +150,7 @@
             <input  id="searchText" type="text" pInputText [(ngModel)]="searchText">
             <label for="searchText">Search</label></span></div></div>
 
-            <div class="col-sm-4">
+            <div class="col-sm-4 form-group">
                 <button pButton type="button" label="Go" (click)="getTransactionList();" class="ui-button-success go-btn"></button>
             </div>
             </div>
@@ -190,7 +190,7 @@
             <input  id="searchText" type="text" pInputText [(ngModel)]="searchText">
             <label for="searchText">Search</label></span></div></div>
 
-            <div class="col-sm-4">
+            <div class="col-sm-4 form-group">
                 <button pButton type="button" label="Go" (click)="getTransactionList();" class="ui-button-success go-btn"></button>
             </div>
             </div>
@@ -223,7 +223,7 @@
             <input  id="searchText" type="text" pInputText [(ngModel)]="searchText">
             <label for="searchText">Search</label></span></div></div>
 
-            <div class="col-sm-4">
+            <div class="col-sm-4 form-group">
                 <button pButton type="button" label="Go" (click)="getTransactionList();" class="ui-button-success go-btn"></button>
             </div>
             </div>
@@ -243,7 +243,7 @@
             <div class="col-sm-4"><div class="form-group"><span class="ui-float-label">
                 <p-calendar [(ngModel)]="dateValue2" dateFormat="dd/mm/yy" id="toDate" (onSelect)="getToDate($event)" [showIcon]="true"></p-calendar>
                 <label for="toDate">To Date</label></span></div></div>
-            <div class="col-sm-4">
+            <div class="col-sm-4 form-group">
                 <button pButton type="button" label="Go" (click)="getTransactionList();" class="ui-button-success go-btn"></button>
             </div>
             </div>
@@ -279,7 +279,7 @@
                 <input  id="searchText" type="text" pInputText [(ngModel)]="searchText">
                 <label for="searchText">Search</label></span></div></div>
 
-                <div class="col-sm-4 pull-right">
+                <div class="col-sm-4 pull-right form-group">
                 <button pButton type="button" label="Go" (click)="getTransactionList();" class="ui-button-success go-btn"></button>
             </div>
         </div>
@@ -350,7 +350,7 @@
                 <input  id="searchText" type="text" pInputText [(ngModel)]="searchText">
                 <label for="searchText">BatchNo</label></span></div></div>
 
-                <div class="col-sm-4 pull-right">
+                <div class="col-sm-4 pull-right form-group">
                 <button pButton type="button" label="Go" (click)="getTransactionList();" class="ui-button-success go-btn"></button>
             </div>
         </div>

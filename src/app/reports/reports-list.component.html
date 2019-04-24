@@ -367,15 +367,21 @@
             <tr>
                 <th width="10%">GRN No</th>
                 <th width="10%">GRN Date</th>
-                <th width="15%">Supplier</th>
-                <th width="10%">Item Code</th>
-                <th width="15%">Item Desc</th>
-                <th width="10%">Order Qty</th>
+                <th width="10%">Supplier</th>
+                <th width="5%">Item Code</th>
+                <th width="10%">Item Desc</th>
+                <th width="5%">Order Qty</th>
                 <th width="5%">Received Qty</th>
                 <th width="5%">Rate</th>
                 <th width="5%">Amount</th>
                 <th width="5%">Total Amount</th>
                 <th width="10%">PO No</th>
+                <th width="10%">Inward No</th>
+                <th width="10%">Inward Date</th>
+                <th width="10%">Invoice  No</th>
+                <th width="10%">Invoice  Date</th>
+                <th width="10%">DC No</th>
+                <th width="10%">DC Date</th>
             </tr>
             </thead>
             <tbody>
@@ -392,6 +398,12 @@
                     <td>{{report.itemAmount}}</td>
                     <td>{{report.totalAmount}}</td>
                     <td>{{report.pono}}</td>
+                    <td>{{report.inwardNo}}</td>
+                    <td>{{report.inwardDate}}</td>
+                    <td>{{report.invno}}</td>
+                    <td>{{report.invDate}}</td>
+                    <td>{{report.dcNo}}</td>
+                    <td>{{report.dcDate}}</td>
                 </tr>
             </ng-container>
             </tbody>
