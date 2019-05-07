@@ -1,0 +1,5 @@
+{
+    "files.autoSaveDelay": 0,
+    "editor.formatOnSaveTimeout": 0,
+    "editor.defaultFormatter": "lonefy.vscode-JS-CSS-HTML-formatter"
+}

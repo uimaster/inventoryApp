@@ -28,8 +28,8 @@
     "interface-over-type-literal": true,
     "label-position": true,
     "max-line-length": [
-      true,
-      200
+      false,
+      140
     ],
     "member-access": false,
     "member-ordering": [
@@ -97,7 +97,7 @@
       "allow-null-check"
     ],
     "typedef-whitespace": [
-      true,
+      false,
       {
         "call-signature": "nospace",
         "index-signature": "nospace",

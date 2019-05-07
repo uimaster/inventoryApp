@@ -1,5 +1,5 @@
-
-export const BASEURL = 'http://apietrax.iflotech.in/api/'; // Dev base url
+export const BASEURL = 'http://apietrax.iflotech.in/api/';
+// Dev base url
 // export const BASEURL = 'http://192.168.1.60:90/api/'; // Live base url
 
 
@@ -105,12 +105,9 @@ export const GETASSEMBLYINSTRUCTIONLIST = BASEURL + 'Assembly/GetAssemblyInstruc
 export const GETWORKINSTRUCTIONLIST = BASEURL + 'Assembly/GetWorkInstructionList';
 export const GETASSEMBLYINSTRUCTIONDETAILS = BASEURL + 'Assembly/GetAssemblyInstructionDetails';
 export const GETWORKINSTRUCTIONDETAILS = BASEURL + 'Assembly/GetWorkInstructionDetails';
-
-
 export const POSTASSEMBLYINSTRUCTIONDETAILS = BASEURL + 'Assembly/POSTAssemblyInstructionDetails';
 export const POSTWORKINSTRUCTIONDETAILS = BASEURL + 'Assembly/POSTWorkInstructionDetails';
-
-
 export const GETFGITEMBOMLIST = BASEURL + 'Assembly/GetFGItemBOMList';
 export const GETWORKINSTRUCTIONDETAILSFORITEM = BASEURL + 'Assembly/GetWorkInstructionDetailsForItem';
 export const GETBARCODESTATUS = BASEURL + 'StockItem/GetStockItemRateByItemCode';
+export const GETASSEMBLER = BASEURL + 'Masters/GetAssemblerByCode';
