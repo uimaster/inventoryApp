@@ -1,9 +1,9 @@
 <p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
 <p-panel header="PriceList Add/Edit Form" class="Tabledata">
   <form [formGroup]="cForm" (ngSubmit)="savePricelist(cForm.value)" class="formData">
-    <div class="message error" *ngIf="showError">Updatation/creation failed .</div>
-    <div class="message success" *ngIf="showSuccess">You have Updated/created successfully.</div>
-
+    <!-- <div class="message error" *ngIf="showError">Updatation/creation failed .</div> -->
+    <!-- <div class="message success" *ngIf="showSuccess">You have Updated/created successfully.</div> -->
+    
     <div class="ui-g">
       <div class="ui-g-1" *ngIf="priceListID">
         <div class="form-group">
@@ -128,7 +128,7 @@
 
 
     <br/>
-    <p style="text-align: center">
+    <p class="fixed-footer">
       <button pButton type="submit" label="Submit" class="ui-button-success" [disabled]="!cForm.valid" style="margin-right: 10px;"></button>
       <button pButton type="button" label="Cancel" class="ui-button-secondary"></button>
     </p>

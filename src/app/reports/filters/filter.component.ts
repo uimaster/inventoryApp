@@ -87,7 +87,8 @@ export class FiltersComponent implements OnInit, OnDestroy {
                 break;
         }
         if(this.type=='po-report' || this.type=='so-report' || this.type=='grn-register'
-          || this.type=='stock-issue-register' || this.type=='stock-summary'){
+          || this.type=='stock-issue-register' || this.type=='stock-summary' 
+          || this.type=='batch-details-report'){
             this.getStockItemList();
             if (localStorage.getItem('r_stockItemID')) { this.stockItemID = JSON.parse(localStorage.getItem('r_stockItemID'));}
             else{ localStorage.setItem('r_stockItemID', JSON.stringify(this.stockItemID)); }

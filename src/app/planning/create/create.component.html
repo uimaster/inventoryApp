@@ -7,10 +7,18 @@
         <button (click)="loadPrevPlan()" pButton type="button" style="float:right" icon="pi pi-plus" label="Load Prev FG Plan" class="ui-button-success"></button>
     </p-header>
     <form [formGroup]="cForm" (ngSubmit)="saveFg(cForm.value)" class="formData">
-      <div class="message error" *ngIf="showError">Updatation/creation failed .</div>
-      <div class="message success" *ngIf="showSuccess">You have Updated/created successfully.</div>
+      <!-- <div class="message error" *ngIf="showError">Updatation/creation failed .</div>
+      <div class="message success" *ngIf="showSuccess">You have Updated/created successfully.</div> -->
   
       <div class="ui-g">
+        <div class="ui-g-4">
+            <div class="form-group">
+                <span class="ui-float-label">
+                <input type="number" formControlName="planID" pInputText id="planID">
+                <label for="planID">Plan ID</label>
+                </span>
+            </div>
+        </div>
         <div class="ui-g-4">
           <div class="form-group">
             <span class="ui-float-label">
@@ -63,23 +71,24 @@
 
     <fieldset  formArrayName="fgPlanDetails" style="overflow-x:auto; min-height:300px">
         <legend>Item Details</legend>    
-        <div style="width:200%;" >
+        <div style="width:150%;" >
         <table class="fieldTable">
             <thead>
             <th width="20%">Stock Item</th>
             <!-- <th>Prev Plan ID</th> -->
-            <th width="7%">Current Plan Qty</th>
-            <th width="7%">Current Month Qty</th>
-            <th width="6%">Next Month Qty</th>
-            <th width="6%">Order Month Qty</th>
-            <th width="7%">Future Required Qty</th>
-            <th width="7%">Future Required Length</th>
-            <th width="7%">Future Required Stops</th>
             <th width="5%">Priority</th>
-            <th width="7%">Net Required Qty</th>
-            <th width="4%">FG Stock Qty</th>
-            <th width="6%">Cumulative Length</th>
-            <th width="6%">Cumulative Stops</th>
+            <!-- <th width="7%">Current Plan Qty</th> -->
+            <th width="10%">Current Month Qty</th>
+            <th width="10%">Next Month Qty</th>
+            <th width="10%">Order Month Qty</th>
+            <!-- <th width="7%">Future Required Qty</th> -->
+            <th width="10%">Future Required Length</th>
+            <th width="10%">Future Required Stops</th>
+            <th width="10%">FG Stock Qty</th>
+            <th width="10%">Net Required Qty</th>
+            
+            <!-- <th width="6%">Cumulative Length</th> -->
+            <!-- <th width="6%">Cumulative Stops</th> -->
             <th width="5%" style="text-align:center">Actions</th>
             </thead>
             <tbody>
@@ -102,19 +111,19 @@
                         {{stockItemDesc}}
                 </p-autoComplete>            
                 </td>
+                <td><input type="number" formControlName="priority" pInputText id="priority"></td>
                 <!-- <td><input type="number" formControlName="prevPlanID" pInputText id="prevPlanID"></td> -->
-                <td><input type="number" formControlName="currentPlanQty" pInputText id="currentPlanQty"></td>
+                <!-- <td><input type="number" formControlName="currentPlanQty" pInputText id="currentPlanQty"></td> -->
                 <td><input type="number" formControlName="currentMonthQty" pInputText id="currentMonthQty"></td>
                 <td><input type="number" formControlName="nextMonthQty" pInputText id="nextMonthQty"></td>
                 <td><input type="number" formControlName="orderMonthQty" pInputText id="orderMonthQty"></td>
-                <td><input type="number" formControlName="futureRequiredQty" pInputText id="futureRequiredQty"></td>
+                <!-- <td><input type="number" formControlName="futureRequiredQty" pInputText id="futureRequiredQty"></td> -->
                 <td><input type="number" formControlName="futureRequiredLength" pInputText id="futureRequiredLength"></td>
                 <td><input type="number" formControlName="futureRequiredStops" pInputText id="futureRequiredStops"></td>
-                <td><input type="number" formControlName="priority" pInputText id="priority"></td>
-                <td><input type="number" formControlName="netRequiredQty" pInputText id="netRequiredQty"></td>
                 <td><input type="number" formControlName="fgStockQty" pInputText id="fgStockQty"></td>
-                <td><input type="number" formControlName="cumulativeLength" pInputText id="cumulativeLength"></td>
-                <td><input type="number" formControlName="cumulativeStops" pInputText id="cumulativeStops"></td>
+                <td><input type="number" formControlName="netRequiredQty" pInputText id="netRequiredQty"></td>
+                <!-- <td><input type="number" formControlName="cumulativeLength" pInputText id="cumulativeLength"></td>
+                <td><input type="number" formControlName="cumulativeStops" pInputText id="cumulativeStops"></td> -->
                 <td style="text-align:center" >
                    <!--  <button pButton type="button" icon="fa fa-plus" class="ui-button-success" (click)="addFGItems()"></button> -->
                     <button pButton type="button" icon="fa fa-trash-o" class="ui-button-danger" [disabled]="i<1" (click)="removeFGItems(i)"></button>
@@ -126,7 +135,7 @@
     </fieldset>
     <br/>
 
-      <p style="text-align: center">
+      <p class="fixed-footer">
         <button pButton type="submit" label="Submit" class="ui-button-success" [disabled]="!cForm.valid" style="margin-right: 10px;"></button>
         <button pButton type="button" label="Cancel" class="ui-button-secondary"></button>
       </p>
@@ -140,10 +149,18 @@
         <button pButton type="button" style="float:right" icon="pi pi-plus" label="Load Prev FG Plan" class="ui-button-success"></button> -->
     </p-header>
     <form [formGroup]="cForm" (ngSubmit)="saveRmq(cForm.value)" class="formData">
-      <div class="message error" *ngIf="showError">Updatation/creation failed .</div>
-      <div class="message success" *ngIf="showSuccess">You have Updated/created successfully.</div>
+      <!-- <div class="message error" *ngIf="showError">Updatation/creation failed .</div>
+      <div class="message success" *ngIf="showSuccess">You have Updated/created successfully.</div> -->
   
       <div class="ui-g">
+        <div class="ui-g-2">
+            <div class="form-group">
+                <span class="ui-float-label">
+                <input type="number" formControlName="rmqid" pInputText id="rmqid">
+                <label for="rmqid">RMQ ID</label>
+                </span>
+            </div>
+        </div>
         <div class="ui-g-4">
           <div class="form-group">
             <span class="ui-float-label">
@@ -158,7 +175,7 @@
             </div>
           </div>
         </div>
-        <div class="ui-g-4">
+        <div class="ui-g-2">
             <div class="form-group">
                 <span class="ui-float-label">
                 <input type="number" formControlName="planID" pInputText id="planID">
@@ -243,7 +260,7 @@
     </fieldset>
     <br/>
 
-      <p style="text-align: center">
+      <p class="fixed-footer">
         <button pButton type="submit" label="Submit" class="ui-button-success" [disabled]="!cForm.valid" style="margin-right: 10px;"></button>
         <button pButton type="button" label="Cancel" class="ui-button-secondary"></button>
       </p>

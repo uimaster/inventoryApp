@@ -9,7 +9,8 @@ export const routes: Routes = [
     children: [
         {
             path: '', children: [
-                { path: 'list/:type', component: ReportsListComponent }
+                { path: 'list/:type', component: ReportsListComponent },
+                { path: 'list/:type/:stockItemID', component: ReportsListComponent }
             ]
         }
     ]

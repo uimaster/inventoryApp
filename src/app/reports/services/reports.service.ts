@@ -105,6 +105,33 @@ export class ReportsService {
             })
         );
     }
+
+    getStockItemDetailsList(CompanyID,FromDate,ToDate,StockItemID,ReportTypeID,SearchText): Observable<any> {
+        const params = new HttpParams().set('CompanyID', CompanyID)
+            .set('FromDate', FromDate).set('ToDate', ToDate)
+            .set('StockItemID', StockItemID)
+            .set('ReportType', ReportTypeID)
+            .set('SearchText', SearchText);
+        return this.http.get(urls.STOCKITEMDETAILSREPORT, {params}).pipe(
+            map(res => {
+                return res;
+            })
+        );
+    }
+
+    getBatchDetailsList(CompanyID,FromDate,ToDate,StockItemID,ReportTypeID,SearchText): Observable<any> {
+        const params = new HttpParams().set('CompanyID', CompanyID)
+            .set('FromDate', FromDate).set('ToDate', ToDate)
+            .set('StockItemID', StockItemID)
+            .set('ReportType', ReportTypeID)
+            .set('BatchNo', SearchText);
+           // .set('SearchText', SearchText);
+        return this.http.get(urls.BATCHDETAILSREPORT, {params}).pipe(
+            map(res => {
+                return res;
+            })
+        );
+    }
     
     getStockIssueRegisterList(CompanyID,FromDate,ToDate,StockItemID,SearchText): Observable<any> {
         const params = new HttpParams().set('CompanyID', CompanyID).set('FromDate', FromDate)

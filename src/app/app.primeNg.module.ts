@@ -22,7 +22,8 @@ import {TooltipModule} from 'primeng/tooltip';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {AccordionModule} from 'primeng/accordion';
 import {OverlayPanelModule} from 'primeng/overlaypanel';
-
+import {ToastModule} from 'primeng/toast';
+import {MessageService} from 'primeng/api';
 
 @NgModule({
   imports: [
@@ -48,7 +49,8 @@ import {OverlayPanelModule} from 'primeng/overlaypanel';
     TooltipModule,
     MultiSelectModule,
     AccordionModule,
-    OverlayPanelModule
+    OverlayPanelModule,
+    ToastModule
   ],
   exports: [
     SidebarModule,
@@ -73,7 +75,11 @@ import {OverlayPanelModule} from 'primeng/overlaypanel';
     TooltipModule,
     MultiSelectModule,
     AccordionModule,
-    OverlayPanelModule
+    OverlayPanelModule,
+    ToastModule
+  ],
+  providers: [
+      MessageService
   ]
 })
 export class PrimeNGModule {}

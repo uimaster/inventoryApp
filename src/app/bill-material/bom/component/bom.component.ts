@@ -10,6 +10,7 @@ import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
+import { NotificationsService } from '../../../notifications/notifications.service';
 
 @Component({
     selector: 'app-bom',
@@ -26,8 +27,8 @@ export class BomComponent implements OnInit, OnDestroy {
     public allStockItems = [];
     public allParameterTypes = [];
     public bomDataSubscription: Subscription;
-    showError = false;
-    showSuccess = false;
+    // showError = false;
+    // showSuccess = false;
     companyId = localStorage.getItem('companyID');
     userId = localStorage.getItem('userID');
     constructor(
@@ -35,7 +36,8 @@ export class BomComponent implements OnInit, OnDestroy {
       private _route: ActivatedRoute,
       private _formBuilder: FormBuilder,
       private router: Router,
-      private datePipe: DatePipe
+      private datePipe: DatePipe,
+      private notificationsService: NotificationsService
     ) { }
     public bom;
     public cForm;
@@ -171,12 +173,14 @@ export class BomComponent implements OnInit, OnDestroy {
         form.bomDate = this.datePipe.transform(form.bomDate, 'yyyy-MM-dd');
         this.bomService.updateBom(form).subscribe((res: BomResponse) => {
             if (res.status === '200') {
-                this.showSuccess = true;
+                //this.showSuccess = true;
+                this.notificationsService.notify('success','Success','You have Updated/created successfully.');
                 setTimeout(() => {
                   this.router.navigate(['/bill-material/list']);
                 }, 3000);
             } else {
-              this.showError = true;
+              //this.showError = true;
+              this.notificationsService.notify('error','Error','Updatation/creation failed.')
             }
         });
     }

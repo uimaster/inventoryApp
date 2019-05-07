@@ -18,12 +18,15 @@ import { SharedModule} from './shared/shared.module';
 import { FiltersModule } from './transFilters/transFilter.Module';
 import { UsersService } from './users/service/user.service';
 import { NotificationService } from './shared/navbar/navbar.service';
+import { NotificationsComponent } from './notifications/notifications.component';
+import { NotificationsService } from './notifications/notifications.service';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
+    NotificationsComponent,
     // RestPasswordComponent,
     FooterComponent
   ],
@@ -41,6 +44,7 @@ import { NotificationService } from './shared/navbar/navbar.service';
   providers: [
     UsersService,
     NotificationService,
+    NotificationsService,
     AuthService,
     {
       provide: HTTP_INTERCEPTORS,

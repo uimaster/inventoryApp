@@ -8,6 +8,7 @@ import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
+import { NotificationsService } from '../../notifications/notifications.service';
 
 @Component({
   selector: 'app-create',
@@ -22,6 +23,7 @@ export class CreateComponent implements OnInit {
     private _route: ActivatedRoute,
     private datePipe: DatePipe,
     private _formBuilder: FormBuilder,
+    private notificationsService: NotificationsService
   ) { }
   showLoader = false;
   public type:any;
@@ -32,8 +34,8 @@ export class CreateComponent implements OnInit {
   public cForm;
   public fg;
   public rmq;
-  showError = false;
-  showSuccess = false;
+  // showError = false;
+  // showSuccess = false;
   companyId = localStorage.getItem('companyID');
   date1 = new Date();
   date2 = new Date();
@@ -140,7 +142,7 @@ export class CreateComponent implements OnInit {
 
     fgForm() {
         this.cForm = this._formBuilder.group({
-            planID: [0],
+            planID: [{value:0,disabled:true},Validators.required],
             planDate: ['', [Validators.required]],
             periodFromDate: ['', [Validators.required]],
             periodToDate: ['', [Validators.required]],
@@ -196,7 +198,7 @@ export class CreateComponent implements OnInit {
 
     rmqForm() {
         this.cForm = this._formBuilder.group({
-            rmqid: [0],
+            rmqid: [{value:0,disabled:true},Validators.required],
             rmqDate: ['', [Validators.required]],
             planID: [0],
             companyID: [JSON.parse(this.companyId)],
@@ -261,12 +263,14 @@ export class CreateComponent implements OnInit {
        form.periodToDate = this.datePipe.transform(form.periodToDate, 'yyyy-MM-dd'); 
         this._planningService.updateFG(form).subscribe(res => {
             if (res.status === '200') {
-                this.showSuccess = true;
+                //this.showSuccess = true;
+                this.notificationsService.notify('success','Success','You have Updated/created successfully.');
                 setTimeout(() => {
                   this.router.navigate(['/planning/list/fg']);
                 }, 3000);
             } else {
-              this.showError = true;
+              //this.showError = true;
+              this.notificationsService.notify('error','Error','Updatation/creation failed.')
             }
         });
     }
@@ -275,12 +279,14 @@ export class CreateComponent implements OnInit {
         form.rmqDate = this.datePipe.transform(form.rmqDate, 'yyyy-MM-dd'); 
         this._planningService.updateRMQ(form).subscribe(res => {
             if (res.status === '200') {
-                this.showSuccess = true;
+                //this.showSuccess = true;
+                this.notificationsService.notify('success','Success','You have Updated/created successfully.');
                 setTimeout(() => {
                   this.router.navigate(['/planning/list/rmq']);
                 }, 3000);
             } else {
-              this.showError = true;
+            //  this.showError = true;
+              this.notificationsService.notify('error','Error','Updatation/creation failed.')
             }
         });
     }
