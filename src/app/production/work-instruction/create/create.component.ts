@@ -18,10 +18,12 @@ export class CreateWorkInstructionComponent implements OnInit {
     public disabledSerial = true;
     public showLoader = false;
     public rowLength = 0;
+    public disableAll : boolean;
 
     constructor(private fb : FormBuilder, private transactionService : TransactionServices, private workInstructionService : WorkInstructionService, private router : Router) {}
 
     ngOnInit() {
+        this.disableAll = false;
         this.createForm();
     }
 
@@ -95,6 +97,21 @@ export class CreateWorkInstructionComponent implements OnInit {
         this.plValidationMsg = "";
     }
 
+    getStartScan() { // setTimeout(() => {
+        var inputData = this.barCode.nativeElement.value;
+        if (inputData !== "") {
+            var barcodeVal = inputData.trim().split("-");
+            if (barcodeVal[1]) {
+                if (barcodeVal[1].length === 7) {
+                    this.startScan();
+                }
+            }
+        } else {
+            alert("Please enter correct Barcode.");
+        }
+        // }, 1000);
+    }
+
     startScan() {
         var inputData = this.barCode.nativeElement.value;
         this.currentIndex = 0;
@@ -116,19 +133,22 @@ export class CreateWorkInstructionComponent implements OnInit {
                 }
                 this.getBatchValidate(splitBarcode, splitBatchCode, 1);
             } else {
-                this.plValidationMsg = "Please enter correct data.";
+                alert("Please enter correct data.");
             }
         }
-        this.displayworksModal = false;
     }
 
     getBatchValidate(itemcode, batchcode, type) {
         this.transactionService.validateBatch(itemcode, batchcode, type).subscribe(res => {
             if (res.status === "200") {
                 this.getWorkInstructionDetailsForItem(res.data[0].stockItemID);
-                this.workInstructionForm.controls["StockItemID"].setValue(res.data[0].stockItemID);
+                this.workInstructionForm.controls["StockItemID"].setValue(batchcode);
                 this.workInstructionForm.controls["BatchID"].setValue(res.data[0].batchid);
-                this.workInstructionForm.controls["BatchNo"].setValue(res.data[0].batchno);
+                this.workInstructionForm.controls["BatchNo"].setValue(itemcode);
+                this.displayworksModal = false;
+            } else {
+                alert(res.message);
+                this.barCode.nativeElement.value = '';
             }
         });
     }
@@ -161,6 +181,7 @@ export class CreateWorkInstructionComponent implements OnInit {
         const currentRowData = this.workInstructionItemList[this.currentIndex];
         var quantityData = this.quantity.nativeElement;
         const formArray = <FormArray>(this.workInstructionForm.controls["AssemblyWorkInstructionDetails"]);
+
         if (this.workInstructionItemList.length > this.currentIndex) {
             if (currentRowData.qty == quantityData.value.trim()) {
                 quantityData.value = "";
@@ -205,7 +226,7 @@ export class CreateWorkInstructionComponent implements OnInit {
                 this.showLoader = false;
                 this.serialNum.nativeElement.value = "";
             } else {
-                this.plValidationMsg = "Please enter correct data.";
+                alert("Please enter correct data.");
                 this.showLoader = false;
             }
             this.showLoader = false;
@@ -237,6 +258,9 @@ export class CreateWorkInstructionComponent implements OnInit {
                 alert(res.message);
             }
         });
+        if (this.workInstructionItemList.length === this.currentIndex) {
+          this.disableAll = true;
+        }
     }
 
     saveWorkInstruction(data) {
@@ -257,9 +281,11 @@ export class CreateWorkInstructionComponent implements OnInit {
         let id = event.target.value;
         if (id.length >= 4) {
             this.workInstructionService.getAssembler(id).subscribe(res => {
-                if(res.status === '200') {
-                  this.workInstructionForm.controls['AssemblerName'].setValue(res.data[0].assemblerName);
-                  this.workInstructionForm.controls['AssemblerID'].setValue(res.data[0].assemblerID);
+                if (res.status === '200') {
+                    if (res.data[0] !== null && res.data[0] !== undefined) {
+                        this.workInstructionForm.controls['AssemblerName'].setValue(res.data[0].assemblerName);
+                        this.workInstructionForm.controls['AssemblerID'].setValue(res.data[0].assemblerID);
+                    }
                 }
             });
         }

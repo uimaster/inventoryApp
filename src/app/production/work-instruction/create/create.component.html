@@ -11,25 +11,25 @@
                 <div class="ui-g-3">
                     <div class="form-group" style="margin:0">
                         <span class="ui-float-label">
-              <input type="text" formControlName="StockItemID" pInputText>
-              <label for="transactionNo">Serial No.</label>
-            </span>
+                          <input type="text" formControlName="StockItemID" pInputText disabled>
+                          <label for="transactionNo">Serial No.</label>
+                        </span>
                     </div>
                 </div>
                 <div class="ui-g-3" style="margin:0">
                     <div class="form-group">
                         <span class="ui-float-label">
-              <input type="text" pInputText formControlName="BatchNo">
-              <label for="transactionNo">Finish Good Id</label>
-            </span>
+                          <input type="text" pInputText formControlName="BatchNo" disabled>
+                          <label for="transactionNo">Finish Good Id</label>
+                        </span>
                     </div>
                 </div>
                 <div class="ui-g-3">
                     <div class="form-group" style="margin:0">
                         <span class="ui-float-label">
-              <input type="text" pInputText formControlName="AssemblerID" (input)="getAssembler($event)">
-              <label for="transactionNo">Assembly Code</label>
-            </span>
+                          <input type="text" pInputText (input)="getAssembler($event)">
+                          <label for="transactionNo">Assembly Code</label>
+                        </span>
                     </div>
                 </div>
                 <div class="ui-g-3" style="margin:0">
@@ -56,7 +56,7 @@
                         <th>Instruction Description</th>
                         <th>Item Desc.</th>
                         <th>Item Code</th>
-                        <th>stockItemID</th>
+                        <!-- <th>stockItemID</th> -->
                     </tr>
                 </thead>
                 <tbody>
@@ -66,21 +66,21 @@
                             <td>{{item.instructiondescription}}</td>
                             <td>{{item.itemDesc}}</td>
                             <td>{{item.itemCode}}</td>
-                            <td>{{item.stockItemID}}</td>
+                            <!-- <td>{{item.stockItemID}}</td> -->
                         </tr>
                         <tr *ngIf="workInstructionItemList.length > 0">
                             <td colspan="5" class="text-right" style="background:#f6f6f6; padding-top:20px;">
-                                <button pButton type="button" [disabled]="rowLength > 0" label="Next" style="width:100px; padding:5px; float:right; font-size:16px; margin-right:10px; " class="ui-button-success right" (click)="getValidateQty()"></button>
+                                <button pButton type="button" [disabled]="rowLength > 0 " label="Next" style="width:100px; padding:5px; float:right; font-size:16px; margin-right:10px; " class="ui-button-success right" (click)="getValidateQty()" [hidden]="disableAll === true"></button>
                                 <div class="form-group" style="width:100px; float:right; margin-right:10px; margin-bottom:0">
                                     <span class="ui-float-label">
-                    <input type="text" pInputText #quantity [disabled]="!disabledSerial">
+                    <input type="text" pInputText #quantity [disabled]="!disabledSerial" [hidden]="disableAll === true">
                     <label for="transactionNo">Quantity</label>
                   </span>
                                 </div>
                                 <div class="form-group" style="width:250px; float:right; margin-right:10px; margin-bottom:0">
                                     <span class="ui-float-label">
                     <input type="text" pInputText #serialNum [disabled]="disabledSerial"
-                      (input)="startScanSerial($event)">
+                      (input)="startScanSerial($event)" [hidden]="disableAll === true" >
                     <label for="transactionNo">Serial No.</label>
                   </span>
                                 </div>
@@ -129,12 +129,12 @@
         {{BarcodeSuccessMsg}}</p><br />
     <div class="form-group">
         <span class="ui-float-label">
-      <input type="text" pInputText id="barCode" #barCode />
+      <input type="text" pInputText id="barCode" #barCode (input)="getStartScan()" />
       <label for="barCode">Barcode</label>
     </span>
     </div>
     <p-footer class="text-center">
         <button type="button" pButton (click)="displayworksModal=false" label="Cancel" class="ui-button-secondary"></button>
-        <button type="button" pButton (click)="startScan()" label="Scan"></button>
+        <!-- <button type="button" pButton (click)="startScan()" label="Scan"></button> -->
     </p-footer>
 </p-dialog>

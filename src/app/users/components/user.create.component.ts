@@ -19,8 +19,7 @@ export class CreateUsersComponent implements OnInit {
     // public viewStatus = false;
     constructor(private userService : UsersService, private activeRoute : ActivatedRoute, private fb : FormBuilder) {}
 
-    ngOnInit() {
-        this.getUserMaster();
+    ngOnInit() { // this.getUserMaster();
         this.activeRoute.params.subscribe(params => {
             this.userId = params.id;
         });
@@ -28,17 +27,73 @@ export class CreateUsersComponent implements OnInit {
         this.createUser();
     }
 
-    getUserTabDetails(userId, rightId) {
+    getUserTabDetails(userId, rightId, formArray, index) {
         this.userTabDetails = [];
         this.userService.getUserTabDetails(userId, rightId).subscribe(res => {
             if (res.status === "200") {
                 if (res && res.data !== undefined && res.data !== null) {
+                    const tabFormArray = <FormArray> formArray.controls[index].get('UserRightTabModelList');
+
+                    if (tabFormArray.length > 0) {
+                        tabFormArray.removeAt(0);
+                    }
+
                     this.userTabDetails = res.data;
+                    for (var i = 0; i < this.userTabDetails.length; i++) {
+                        tabFormArray.push(this.fb.group({
+                            userRightID: [this.userTabDetails[i].userRightID],
+                            tabStatus: [this.userTabDetails[i].tabStatus],
+                            actionStatus: [this.userTabDetails[i].actionStatus],
+                            userRightCode: [this.userTabDetails[i].userRightCode],
+                            userRightParentID: [this.userTabDetails[i].userRightParentID],
+                            userRightTabName: [this.userTabDetails[i].userRightTabName]
+                        }));
+                        debugger;
+                        const actionArray = <FormArray>tabFormArray.controls[i].get('userRightActionModelList');
+                        for (var k = 0; k < this.userTabDetails[i].userRightActionModelList.length; k++) {
+                            actionArray.push(this.fb.group({createStatus: [true], modifyStatus: [true], viewStatus: [true], deleteStatus: [true]}))
+                        }
+                        if (actionArray.length > 0) {
+                            actionArray.removeAt(0);
+                        }
+                    }
                 }
             }
-            console.log(res);
         });
     }
+
+    getUserDetails(id) {
+        this.userService.getUserDetails(id).subscribe(res => {
+            if (res && res.status === "200") {
+                const data = res.data;
+                this.userForm.controls["name"].setValue(data[0].name);
+                this.userForm.controls["activeStatus"].setValue(data[0].activeStatus);
+                this.userForm.controls["userID"].setValue(data[0].userID);
+                this.userForm.controls["userTypeID"].setValue(data[0].userTypeID);
+                this.userForm.controls["userPassword"].setValue(data[0].userPassword);
+                this.userForm.controls["company_ID"].setValue(data[0].company_ID);
+
+                if (data[0].userRights.length > 0) {
+                    const formArray = <FormArray> this.userForm.get("userRights");
+                    if (formArray.length > 0) {
+                        formArray.removeAt(0);
+                    }
+                    for (var i = 0; i < data[0].userRights.length; i++) {
+                        formArray.push(this.fb.group({
+                            userRightID: [data[0].userRights[i].userRightID],
+                            userRightMenuName: [data[0].userRights[i].userRightMenuName],
+                            userRightCode: [data[0].userRights[i].userRightCode],
+                            menuStatus: [data[0].userRights[i].menuStatus],
+                            UserRightTabModelList: this.fb.array(
+                                [this.getUserTabDetails(data[0].userID, data[0].userRights[i].userRightID, formArray, i)]
+                            )
+                        }));
+                    }
+                }
+            }
+        });
+    }
+
 
     /*getUserDetails(id) {
     this.userService.getUserDetails(id).subscribe(res => {
@@ -166,85 +221,78 @@ export class CreateUsersComponent implements OnInit {
         return this.fb.group({createStatus: [true], modifyStatus: [true], viewStatus: [true], deleteStatus: [true]});
     }
 
-    getUserMaster() {
-        this.userService.getUserMaster().subscribe(res => {
-            if (res.status === '200') {
-                this.userMasterData = res.data;
-                const firstArray = <FormArray>(this.userForm.get("userRights"));
-                debugger;
-                if (this.userMasterData !== undefined) {
-                    this.userForm.controls["name"].setValue(this.userMasterData[0].name);
-                    this.userForm.controls["activeStatus"].setValue(this.userMasterData[0].activeStatus);
-                    this.userForm.controls["company_ID"].setValue(this.userMasterData[0].company_ID);
-                    this.userForm.controls["expiryDate"].setValue(this.userMasterData[0].expiryDate);
-                    this.userForm.controls["userID"].setValue(this.userMasterData[0].userID);
-                    this.userForm.controls["userName"].setValue(this.userMasterData[0].userName);
-                    this.userForm.controls["userPassword"].setValue(this.userMasterData[0].userPassword);
-                    this.userForm.controls["userTypeID"].setValue(this.userMasterData[0].userTypeID);
-                    // this.userForm.controls["userRights"].setValue(this.userMasterData[0].userRights);
-                    // this.userForm.controls["userRights"].setValue(firstArray);
+    // getUserMaster() {
+    //     this.userService.getUserMaster().subscribe(res => {
+    //         if (res.status === '200') {
+    //             this.userMasterData = res.data;
+    //             const firstArray = <FormArray>(this.userForm.get("userRights"));
+    //             debugger;
+    //             if (this.userMasterData !== undefined) {
+    //                 this.userForm.controls["name"].setValue(this.userMasterData[0].name);
+    //                 this.userForm.controls["activeStatus"].setValue(this.userMasterData[0].activeStatus);
+    //                 this.userForm.controls["company_ID"].setValue(this.userMasterData[0].company_ID);
+    //                 this.userForm.controls["expiryDate"].setValue(this.userMasterData[0].expiryDate);
+    //                 this.userForm.controls["userID"].setValue(this.userMasterData[0].userID);
+    //                 this.userForm.controls["userName"].setValue(this.userMasterData[0].userName);
+    //                 this.userForm.controls["userPassword"].setValue(this.userMasterData[0].userPassword);
+    //                 this.userForm.controls["userTypeID"].setValue(this.userMasterData[0].userTypeID);
+    //                 // this.userForm.controls["userRights"].setValue(this.userMasterData[0].userRights);
+    //                 // this.userForm.controls["userRights"].setValue(firstArray);
 
-                    const userRights = this.userMasterData[0].userRights;
-                    var thirdArray;
-                    var secondArray;
+    //                 const userRights = this.userMasterData[0].userRights;
+    //                 var thirdArray;
+    //                 var secondArray;
 
-                    if (userRights && userRights.length > 0) {
+    //                 if (userRights && userRights.length > 0) {
 
-                        for (var i = 0; i < userRights.length; i++) {
-
-
-                            firstArray.push(this.fb.group({
-                                menuStatus: [userRights[i].menuStatus],
-                                transactionID: [userRights[i].transactionID],
-                                userRightCode: [userRights[i].userRightCode],
-                                userRightID: [userRights[i].userRightID],
-                                userRightMenuName: [userRights[i].userRightMenuName],
-                                userRightTabModelList: [secondArray]
-                            }));
-
-                            const userRightTabModelList = this.userMasterData[0].userRights[i].userRightTabModelList;
-                            secondArray = <FormArray>(firstArray.controls[i].get("userRightTabModelList"));
-                            for (var j = 0; j < userRightTabModelList.length; j++) {
-                                secondArray.push(this.fb.group({
-                                    actionStatus: [userRightTabModelList[j].actionStatus],
-                                    tabStatus: [userRightTabModelList[j].tabStatus],
-                                    userRightCode: [userRightTabModelList[j].userRightCode],
-                                    userRightID: [userRightTabModelList[j].userRightID],
-                                    userRightParentID: [userRightTabModelList[j].userRightParentID],
-                                    userRightTabName: [userRightTabModelList[j].userRightTabName],
-                                    userRightActionModelList: [thirdArray]
-                                }));
-
-                                const userRightActionModelList = this.userMasterData[0].userRights[i].userRightTabModelList[j].userRightActionModelList;
-                                thirdArray = <FormArray>(secondArray.controls[i].get("userRightActionModelList"));
-                                for (var k = 0; k < userRightActionModelList.length; k++) {
-                                    thirdArray.push(this.fb.group({
-                                        createStatus: [userRightActionModelList[k].createStatus],
-                                        deleteStatus: [userRightActionModelList[k].deleteStatus],
-                                        modifyStatus: [userRightActionModelList[k].modifyStatus],
-                                        viewStatus: [userRightActionModelList[k].viewStatus]
-                                    }));
-                                    console.log(firstArray);
-                                }
-                            }
-
-                        }
+    //                     for (var i = 0; i < userRights.length; i++) {
 
 
-                        // if (firstArray.length > 0) {
-                        //     while (firstArray.length !== 0) {
-                        //         firstArray.removeAt(0);
-                        //     }
-                        // }
-                    }
+    //                         firstArray.push(this.fb.group({
+    //                             menuStatus: [userRights[i].menuStatus],
+    //                             transactionID: [userRights[i].transactionID],
+    //                             userRightCode: [userRights[i].userRightCode],
+    //                             userRightID: [userRights[i].userRightID],
+    //                             userRightMenuName: [userRights[i].userRightMenuName],
+    //                             userRightTabModelList: [secondArray]
+    //                         }));
 
-                }
-            }
-        });
-    }
+    //                         const userRightTabModelList = this.userMasterData[0].userRights[i].userRightTabModelList;
+    //                         secondArray = <FormArray>(firstArray.controls[i].get("userRightTabModelList"));
+    //                         for (var j = 0; j < userRightTabModelList.length; j++) {
+    //                             secondArray.push(this.fb.group({
+    //                                 actionStatus: [userRightTabModelList[j].actionStatus],
+    //                                 tabStatus: [userRightTabModelList[j].tabStatus],
+    //                                 userRightCode: [userRightTabModelList[j].userRightCode],
+    //                                 userRightID: [userRightTabModelList[j].userRightID],
+    //                                 userRightParentID: [userRightTabModelList[j].userRightParentID],
+    //                                 userRightTabName: [userRightTabModelList[j].userRightTabName],
+    //                                 userRightActionModelList: [thirdArray]
+    //                             }));
+
+    //                             const userRightActionModelList = this.userMasterData[0].userRights[i].userRightTabModelList[j].userRightActionModelList;
+    //                             thirdArray = <FormArray>(secondArray.controls[i].get("userRightActionModelList"));
+    //                             for (var k = 0; k < userRightActionModelList.length; k++) {
+    //                                 thirdArray.push(this.fb.group({
+    //                                     createStatus: [userRightActionModelList[k].createStatus],
+    //                                     deleteStatus: [userRightActionModelList[k].deleteStatus],
+    //                                     modifyStatus: [userRightActionModelList[k].modifyStatus],
+    //                                     viewStatus: [userRightActionModelList[k].viewStatus]
+    //                                 }));
+    //                                 console.log(firstArray);
+    //                             }
+    //                         }
+
+    //                     }
+    //                 }
+
+    //             }
+    //         }
+    //     });
+    // }
 
     saveUser(data) {
-        console.log(JSON.stringify(data));
+        console.log(data);
     }
 
     convertToDateFormat(Datestr) {
