@@ -11,25 +11,25 @@
                 <div class="ui-g-3">
                     <div class="form-group" style="margin:0">
                         <span class="ui-float-label">
-                          <input type="text" formControlName="StockItemID" pInputText disabled>
-                          <label for="transactionNo">Serial No.</label>
-                        </span>
+              <input type="text" formControlName="StockItemID" pInputText disabled>
+              <label for="transactionNo">Serial No.</label>
+            </span>
                     </div>
                 </div>
                 <div class="ui-g-3" style="margin:0">
                     <div class="form-group">
                         <span class="ui-float-label">
-                          <input type="text" pInputText formControlName="BatchNo" disabled>
-                          <label for="transactionNo">Finish Good Id</label>
-                        </span>
+              <input type="text" pInputText formControlName="BatchNo" disabled>
+              <label for="transactionNo">Finish Good Id</label>
+            </span>
                     </div>
                 </div>
                 <div class="ui-g-3">
                     <div class="form-group" style="margin:0">
                         <span class="ui-float-label">
-                          <input type="text" pInputText (input)="getAssembler($event)">
-                          <label for="transactionNo">Assembly Code</label>
-                        </span>
+              <input type="text" pInputText (input)="getAssembler($event)">
+              <label for="transactionNo">Assembly Code</label>
+            </span>
                     </div>
                 </div>
                 <div class="ui-g-3" style="margin:0">
@@ -70,17 +70,17 @@
                         </tr>
                         <tr *ngIf="workInstructionItemList.length > 0">
                             <td colspan="5" class="text-right" style="background:#f6f6f6; padding-top:20px;">
-                                <button pButton type="button" [disabled]="rowLength > 0 " label="Next" style="width:100px; padding:5px; float:right; font-size:16px; margin-right:10px; " class="ui-button-success right" (click)="getValidateQty()" [hidden]="disableAll === true"></button>
+                                <button pButton type="button" [disabled]="rowLength > 0 || disableAll" label="Next" style="width:100px; padding:5px; float:right; font-size:16px; margin-right:10px; " class="ui-button-success right" (click)="getValidateQty()"></button>
                                 <div class="form-group" style="width:100px; float:right; margin-right:10px; margin-bottom:0">
                                     <span class="ui-float-label">
-                    <input type="text" pInputText #quantity [disabled]="!disabledSerial" [hidden]="disableAll === true">
+                    <input type="text" pInputText #quantity [disabled]="!disabledSerial || disableAll" >
                     <label for="transactionNo">Quantity</label>
                   </span>
                                 </div>
                                 <div class="form-group" style="width:250px; float:right; margin-right:10px; margin-bottom:0">
                                     <span class="ui-float-label">
-                    <input type="text" pInputText #serialNum [disabled]="disabledSerial"
-                      (input)="startScanSerial($event)" [hidden]="disableAll === true" >
+                    <input type="text" pInputText #serialNum [disabled]="disabledSerial || disableAll"
+                      (input)="startScanSerial($event)" >
                     <label for="transactionNo">Serial No.</label>
                   </span>
                                 </div>
@@ -119,7 +119,7 @@
     <br />
     <p class="text-center" style="margin-bottom:10px;">
         <a pButton type="button" label="Cancel" class="ui-button-secondary" (click)="cancel()"></a>
-        <button pButton type="button" label="Save" [disabled]="!workInstructionForm.valid" class="ui-button-success" (click)="saveWorkInstruction(workInstructionForm.value)">
+        <button pButton type="button" label="Save" [disabled]="!disableAll" class="ui-button-success" (click)="saveWorkInstruction(workInstructionForm.value)">
     </button>
     </p>
 </form>

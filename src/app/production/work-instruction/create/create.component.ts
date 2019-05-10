@@ -194,6 +194,10 @@ export class CreateWorkInstructionComponent implements OnInit {
                 if (this.workInstructionItemList.length > this.currentIndex) {
                     this.getValidateItems();
                 }
+                if (this.workInstructionItemList.length === this.currentIndex) {
+                  this.disableAll = true;
+                  alert('All items are completed.');
+                }
                 this.showLoader = false;
             } else {
                 alert("Enter valid Quantity.");
@@ -222,7 +226,7 @@ export class CreateWorkInstructionComponent implements OnInit {
 
             var stockItem = this.workInstructionItemList[this.currentIndex].itemCode;
             if (barCode !== "" && barCode !== undefined && stockItem !== undefined) {
-                this.getBatchValidateForSerial(stockItem, barCode, 2);
+                this.getBatchValidateForSerial(stockItem, barCode, 4);
                 this.showLoader = false;
                 this.serialNum.nativeElement.value = "";
             } else {
@@ -254,13 +258,14 @@ export class CreateWorkInstructionComponent implements OnInit {
                 if (this.workInstructionItemList.length > this.currentIndex) {
                     this.getValidateItems();
                 }
+                if (this.workInstructionItemList.length === this.currentIndex) {
+                  this.disableAll = true;
+                  alert('All items are completed.');
+                }
             } else {
                 alert(res.message);
             }
         });
-        if (this.workInstructionItemList.length === this.currentIndex) {
-          this.disableAll = true;
-        }
     }
 
     saveWorkInstruction(data) {
