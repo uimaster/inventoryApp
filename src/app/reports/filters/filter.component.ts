@@ -49,9 +49,13 @@ export class FiltersComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    var prevPath = this.currentUrl.split('/');
+    var currentPath = window.location.pathname.split('/');
     if (window.location.href !== this.currentUrl) {
-      localStorage.removeItem('r_fromDate');
-      localStorage.removeItem('r_toDate');
+      if(currentPath[3] != 'stockitem-details-report' && prevPath[3] != 'stock-summary'){
+        localStorage.removeItem('r_fromDate');
+        localStorage.removeItem('r_toDate');
+      }
       localStorage.removeItem('r_reportsTypeID');
       localStorage.removeItem('r_SOreportsTypeID');
       localStorage.removeItem('r_stockItemID');
