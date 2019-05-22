@@ -1559,6 +1559,8 @@ OnDestroy {
         const itemBarCodeVal = this.itemBarCode.nativeElement.value;
         if (itemBarCodeVal.length === this.ItemBarCodeLength) {
             this.addGrnBarcode();
+        } else {
+          this.grnValidationMsg = "Barcode length should be equal of " + this.ItemBarCodeLength;
         }
     }
 
@@ -1606,7 +1608,8 @@ OnDestroy {
             this.barCode1.nativeElement.value = "";
             return false;
         } else if (itemBarCodeVal.length < this.ItemBarCodeLength) {
-            this.grnValidationMsg = "Barcode length should not be less than " + this.ItemBarCodeLength;
+            // this.grnValidationMsg = "Barcode length should not be less than " + this.ItemBarCodeLength;
+            this.grnValidationMsg = "Barcode length should be equal of " + this.ItemBarCodeLength;
             return false;
         } else if (this.GRNvalidateStatus === false) {
             this.grnValidationMsg = "Batch already exist (Duplicate Batch)";
