@@ -195,8 +195,8 @@ export class CreateWorkInstructionComponent implements OnInit {
                     this.getValidateItems();
                 }
                 if (this.workInstructionItemList.length === this.currentIndex) {
-                  this.disableAll = true;
-                  alert('All items are completed.');
+                    this.disableAll = true;
+                    alert('All items are completed.');
                 }
                 this.showLoader = false;
             } else {
@@ -259,8 +259,8 @@ export class CreateWorkInstructionComponent implements OnInit {
                     this.getValidateItems();
                 }
                 if (this.workInstructionItemList.length === this.currentIndex) {
-                  this.disableAll = true;
-                  alert('All items are completed.');
+                    this.disableAll = true;
+                    alert('All items are completed.');
                 }
             } else {
                 alert(res.message);
