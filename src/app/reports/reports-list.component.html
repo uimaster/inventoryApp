@@ -172,7 +172,7 @@
     </div>
 </p-panel>
 
-<p-panel header="Despatch Details Report" class="Tabledata" *ngIf="type=='despatch-details-report' && filter =='true'">
+<p-panel header="Despatch Details Report" class="Tabledata" *ngIf="type=='despatch-details-report'  && sub_type=='despatch-details' && filter =='true'">
     <p-header>
         <button pButton type="button" style="float:right" icon="fa fa-file-excel-o" label="Export" class="ui-button-success" (click)="exportAsXLSX()"></button>
     </p-header>
@@ -182,40 +182,91 @@
         <table class="table">
             <thead>
             <tr>
-                <th width="5%">Despatch Date</th>
-                <th width="15%">DOC No</th>
                 <th width="10%">PO No</th>
-                <!-- <th width="5%">PO Date</th> -->
-                <th width="5%">JOB NO</th>
+                <th width="15%">Commision NO</th>
+                <th width="10%">PO Date</th>
+                <th width="10%">Item Code</th>
+                <th width="20%">Item Desc</th>
+                <th width="5%">Qty</th>
+                <th width="5%">Stops</th> 
+                <th width="5%">UOM</th>
+                <th width="10%">Due Date</th>
+                <th width="10%">Destination</th>
+
+                <!-- <th width="5%">Despatch Date</th>
+                <th width="15%">DOC No</th>
+                <th width="5%">PO Date</th>
                 <th width="10%">Location</th>
                 <th width="5%">Due Date</th>
-                <th width="5%">Item Code</th>
-                <th width="15%">Description</th>
                 <th width="5%">Qty</th>
-                <!-- <th width="5%">Stops</th> -->
+                <th width="5%">Stops</th>
                 <th width="5%">UOM</th>
                 <th width="5%">Length</th> 
-                <th width="15%">Customer</th>
+                <th width="15%">Customer</th> -->
                 
             </tr>
             </thead>
             <tbody>
             <ng-container *ngIf="reportsList">
                 <tr *ngFor="let report of reportsList| paginate: { itemsPerPage: 10, currentPage: p }; index as i;">
-                    <td>{{report.plDate | date:'dd/MM/yyyy'}}</td>
-                    <td>{{report.plno}}</td>
                     <td>{{report.pono}}</td>
-                    <!-- <td>{{report.poDate}}</td> -->
                     <td>{{report.jobno}}</td>
+                    <td>{{report.poDate}}</td>
+                    <td>{{report.itemCode}}</td>
+                    <td>{{report.itemDesc}}</td>
+                    <td>{{report.itemQty}}</td>
+                    <td>{{report.itemStops}}</td>
+                    <td>{{report.itemUOM}}</td>
+                    <td>{{report.dueDate}}</td>
+                    <td>{{report.customerLocation}}</td>
+
+                    <!-- <td>{{report.plDate | date:'dd/MM/yyyy'}}</td>
+                    <td>{{report.plno}}</td>
+                    <td>{{report.poDate}}</td>
                     <td>{{report.customerLocation}}</td>
                     <td>{{report.dueDate}}</td>
                     <td>{{report.itemCode}}</td>
                     <td>{{report.itemDesc}}</td>
                     <td>{{report.itemQty}}</td>
-                    <!-- <td>{{report.itemStops}}</td> -->
+                    <td>{{report.itemStops}}</td>
                     <td>{{report.itemUOM}}</td>
                     <td>{{report.itemLength}}</td>
-                    <td>{{report.customerName}}</td>
+                    <td>{{report.customerName}}</td> -->
+                </tr>
+            </ng-container>
+            </tbody>
+        </table>
+        <div style="text-align: center;margin: 10px;padding: 10px;">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+    </div>
+</p-panel>
+
+<p-panel header="Despatch Details Report" class="Tabledata" *ngIf="type=='despatch-details-report'  && sub_type=='despatch-summary' && filter =='true'">
+    <p-header>
+        <button pButton type="button" style="float:right" icon="fa fa-file-excel-o" label="Export" class="ui-button-success" (click)="exportAsXLSX()"></button>
+    </p-header>
+    <div class="ui-g"><div class="ui-g-12"><div><span class="ui-float-label"><input style="width:100%" type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)"></span></div></div></div>    
+        
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th width="5%">SR No</th>
+                <th width="5%">Item Code</th>
+                <th width="15%">Item Desc</th>
+                <th width="5%">Sales Qty</th>
+                <th width="5%">Sales Amount</th> 
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container *ngIf="reportsList">
+                <tr *ngFor="let report of reportsList| paginate: { itemsPerPage: 10, currentPage: p }; index as i;">
+                    <td>{{(p - 1) * 10 + i +1}}</td>
+                    <td>{{report.itemCode}}</td>
+                    <td>{{report.itemDesc}}</td>
+                    <td>{{report.itemQty}}</td>
+                    <td>{{report.itemAmount}}</td>
                 </tr>
             </ng-container>
             </tbody>
@@ -322,14 +373,25 @@
             <thead>
             <tr>
                 <th width="10%">SNo</th>
-                <th width="10%">Invoice Number</th>
+                <th width="10%">Invoice No</th>
                 <th width="10%">Invoice Date</th>
                 <th width="20%">Customer Name</th>
+                <th width="20%">Customer Location</th>
+                <th width="10%">Commision No</th>
+                <th width="10%">Net Amount</th>
+                <th width="10%">CGST%</th>
+                <th width="10%">CGST Amount</th>
+                <th width="10%">SGST%</th>
+                <th width="10%">SGST Amount</th>
+                <th width="10%">IGST%</th>
+                <th width="10%">IGST Amount</th>
+                <th width="10%">Total Amount</th>
+<!--                 
                 <th width="10%">Total Amount</th>
                 <th width="10%">Commission No</th>
                 <th width="10%">PO No</th>
                 <th width="10%">EWayBillNo</th>
-                <th width="10%">EwayBillDate</th>
+                <th width="10%">EwayBillDate</th> -->
             </tr>
             </thead>
             <tbody>
@@ -337,13 +399,23 @@
                 <tr *ngFor="let report of reportsList| paginate: { itemsPerPage: 10, currentPage: p }; index as i;">
                     <td>{{i+1}}</td>
                     <td>{{report.transactionNO}}</td>
-                    <td>{{report.transactionDate|date:'dd/MM/yyyy'}}</td>
+                    <td>{{report.transactionDate}}</td>
                     <td>{{report.customerName}}</td>
+                    <td>{{report.customerLocation}}</td>
+                    <td>{{report.commissionNO}}</td>
+                    <td>{{report.netAmount}}</td>
+                    <td>{{report.cgstPer}}</td>
+                    <td>{{report.cgstAmount}}</td>
+                    <td>{{report.sgstPer}}</td>
+                    <td>{{report.sgstAmount}}</td>
+                    <td>{{report.igstPer}}</td>
+                    <td>{{report.igstAmount}}</td>
                     <td>{{report.totalAmount}}</td>
+                    <!-- <td>{{report.totalAmount}}</td>
                     <td></td>
                     <td>{{report.pono}}</td>
                     <td>{{report.eWayBillNo}}</td>
-                    <td>{{report.eWayBillDate|date:'dd/MM/yyyy'}}</td>
+                    <td>{{report.eWayBillDate|date:'dd/MM/yyyy'}}</td> -->
                 </tr>
             </ng-container>
             </tbody>
@@ -517,6 +589,47 @@
                     <td>{{report.inWardDate}}</td>
                     <td>{{report.outwardNo}}</td>
                     <td>{{report.outwardDate}}</td>
+                </tr>
+            </ng-container>
+            </tbody>
+        </table>
+        <div style="text-align: center;margin: 10px;padding: 10px;">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+    </div>
+</p-panel>
+
+<p-panel header="Batch Details Report" class="Tabledata" *ngIf="type=='pcb-details-report' && filter =='true'">
+    <p-header>
+        <button pButton type="button" style="float:right" icon="fa fa-file-excel-o" label="Export" class="ui-button-success" (click)="exportAsXLSX()"></button>
+    </p-header>
+    <div class="ui-g"><div class="ui-g-12"><div><span class="ui-float-label"><input style="width:100%" type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)"></span></div></div></div>    
+        
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th width="10%">Date</th>
+                <th width="10%">Contract No</th>
+                <th width="10%">FG Code</th>
+                <th width="10%">FG Desc</th>
+                <th width="10%">FG Serial No</th>
+                <th width="10%">PCB Code</th>
+                <th width="10%">PCB Desc</th>
+                <th width="10%">PCB Serial No</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container *ngIf="reportsList">
+                <tr *ngFor="let report of reportsList| paginate: { itemsPerPage: 10, currentPage: p }; index as i;">
+                    <td>{{report.transactionDate | date:'dd/MM/yyyy' }}</td>
+                    <td>{{report.contractNO}}</td>
+                    <td>{{report.fgItemCode}}</td>
+                    <td>{{report.fgItemDesc}}</td>
+                    <td>{{report.fgItemSerial}}</td>
+                    <td>{{report.pcbItemCode}}</td>
+                    <td>{{report.pcbItemDesc}}</td>
+                    <td>{{report.pcbItemSerial}}</td>
                 </tr>
             </ng-container>
             </tbody>

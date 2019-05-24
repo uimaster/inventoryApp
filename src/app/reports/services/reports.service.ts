@@ -46,6 +46,27 @@ export class ReportsService {
         );
     }
 
+    getDespatchSummaryReportList(FromDate,ToDate,TransactionSeriesID,SearchText,DespatchReportsTypeID): Observable<any> {
+        const params = new HttpParams().set('FromDate', FromDate).set('ToDate', ToDate)
+            .set('TransactionSeriesID', TransactionSeriesID)
+            .set('SearchText', SearchText)
+            .set('ReportTypeID',DespatchReportsTypeID);
+        return this.http.get(urls.DESPATCHSUMMARYREPORT, {params}).pipe(
+            map(res => {
+                return res;
+            })
+        );
+    }
+
+    getPCBDetailsReportList(FromDate,ToDate): Observable<any> {
+        const params = new HttpParams().set('FromDate', FromDate).set('ToDate', ToDate);
+        return this.http.get(urls.PCBDETAILSREPORT, {params}).pipe(
+            map(res => {
+                return res;
+            })
+        );
+    }
+
     getSODetailsReportList(FromDate,ToDate,ReportTypeID,TransactionSeriesID,SearchText): Observable<any> {
         const params = new HttpParams().set('FromDate', FromDate).set('ToDate', ToDate)
             .set('ReportTypeID', ReportTypeID)

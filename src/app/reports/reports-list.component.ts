@@ -82,9 +82,10 @@ export class ReportsListComponent implements OnInit, OnDestroy {
                     //     break;
                     case 'batch-details-report':
                         this.getList('getBatchDetailsList');
-                        break;    
-
-
+                        break;  
+                    case 'pcb-details-report':
+                        this.getList('getPCBDetailsReportList');
+                        break; 
                     default:
                         break;
                 }
@@ -191,6 +192,11 @@ export class ReportsListComponent implements OnInit, OnDestroy {
         }
 
         if(this.type=='despatch-details-report'){
+            this.sub_type = 'despatch-details';
+            if(DespatchReportsTypeID == 2){
+                fName = 'getDespatchSummaryReportList';
+                this.sub_type = 'despatch-summary';
+            }
             this.reportsListDataSubscription = this._reportsService[fName](fromDate,toDate,TransactionSeriesID,searchText,DespatchReportsTypeID).subscribe(
                 result => {
                     if (result && result.status === '200')  {
@@ -274,6 +280,17 @@ export class ReportsListComponent implements OnInit, OnDestroy {
         }
         if(this.type=='batch-details-report'){
             this.reportsListDataSubscription = this._reportsService[fName](CompanyID,fromDate,toDate,StockItemID,ReportsTypeID,searchText).subscribe(
+                result => {
+                    if (result && result.status === '200')  {
+                        this.reportsList = result.data;
+                        this.listData = result.data;
+                    }
+                    this.showLoader = false;
+                },
+            );
+        }
+        if(this.type=='pcb-details-report'){
+            this.reportsListDataSubscription = this._reportsService[fName](fromDate,toDate).subscribe(
                 result => {
                     if (result && result.status === '200')  {
                         this.reportsList = result.data;
