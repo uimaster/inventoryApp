@@ -142,9 +142,10 @@ export class CreateWorkInstructionComponent implements OnInit {
         this.transactionService.validateBatch(itemcode, batchcode, type).subscribe(res => {
             if (res.status === "200") {
                 this.getWorkInstructionDetailsForItem(res.data[0].stockItemID);
-                this.workInstructionForm.controls["StockItemID"].setValue(batchcode);
+                this.workInstructionForm.controls["StockItemID"].setValue(res.data[0].stockItemID);
                 this.workInstructionForm.controls["BatchID"].setValue(res.data[0].batchid);
-                this.workInstructionForm.controls["BatchNo"].setValue(itemcode);
+                this.workInstructionForm.controls["BatchNo"].setValue(batchcode);
+                // this.workInstructionForm.controls["BatchNo"].setValue(itemcode);
                 this.displayworksModal = false;
             } else {
                 alert(res.message);
