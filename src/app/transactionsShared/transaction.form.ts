@@ -1560,7 +1560,7 @@ OnDestroy {
         if (itemBarCodeVal.length === this.ItemBarCodeLength) {
             this.addGrnBarcode();
         } else {
-          this.grnValidationMsg = "Barcode length should be equal of " + this.ItemBarCodeLength;
+            alert("Barcode length should be equal of " + this.ItemBarCodeLength);
         }
     }
 
@@ -1597,22 +1597,21 @@ OnDestroy {
         var sptItemCode = itemCode[0].trim();
 
         if (itemBarCodeVal == null || itemBarCodeVal === "") {
-            this.grnValidationMsg = "Barcode is required.";
+            alert("Barcode is required.");
             return false;
         } else if (itemQtyGnrVal == null || itemQtyGnrVal === "") {
-            this.grnValidationMsg = "Quantity is required.";
+            alert("Quantity is required.");
             this.barCode1.nativeElement.value = "";
             return false;
         } else if (itemQtyGnrVal < 1) {
-            this.grnValidationMsg = "Quantity should be greater than 0.";
+            alert("Quantity should be greater than 0.");
             this.barCode1.nativeElement.value = "";
             return false;
-        } else if (itemBarCodeVal.length < this.ItemBarCodeLength) {
-            // this.grnValidationMsg = "Barcode length should not be less than " + this.ItemBarCodeLength;
-            this.grnValidationMsg = "Barcode length should be equal of " + this.ItemBarCodeLength;
+        } else if (itemBarCodeVal.length < this.ItemBarCodeLength) { // this.grnValidationMsg = "Barcode length should not be less than " + this.ItemBarCodeLength;
+            alert("Barcode length should be equal of " + this.ItemBarCodeLength);
             return false;
         } else if (this.GRNvalidateStatus === false) {
-            this.grnValidationMsg = "Batch already exist (Duplicate Batch)";
+            alert("Batch already exist (Duplicate Batch)");
             return false;
         } else {
             this.grnValidationMsg = "";
@@ -1626,7 +1625,7 @@ OnDestroy {
                     const listItemcode = formArray.controls[i].get("itemCode").value;
                     if (sptItemCode === listItemcode) {
                         if (listBarCode === itemBarCodeVal) {
-                            this.grnValidationMsg = "Batch already exist (Duplicate Batch)";
+                            alert("Batch already exist (Duplicate Batch)");
                             return false;
                         }
                     }
@@ -1654,7 +1653,7 @@ OnDestroy {
             controlArray.controls[this.grnItemIndex].get("itemReceived_Qty").setValue(JSON.parse(itemQtyGnrVal) + existingQtyRec);
             // this.displayGrnBarcodeDialog = false;
             this.itemBarCode.nativeElement.value = "";
-            this.BarcodeSuccessMsg = "Barcode added Successfully.";
+            alert("Barcode added Successfully.");
         }
     }
 

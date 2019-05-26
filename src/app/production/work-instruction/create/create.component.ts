@@ -60,13 +60,12 @@ export class CreateWorkInstructionComponent implements OnInit {
                 , Validators.required
             ],
             BatchID: [0],
-            StockItemID: [
-                , Validators.required
+            serialNumber: [],
+            StockItemID: [],
+            AssemblerID: [0],
+            AssemblerName: [
+                '', Validators.required
             ],
-            AssemblerID: [
-                0, Validators.required
-            ],
-            AssemblerName: [''],
             AssemblyWorkInstructionDetails: this.fb.array([]),
             AssemblyBatchDetails: this.fb.array([])
         });
@@ -78,6 +77,9 @@ export class CreateWorkInstructionComponent implements OnInit {
 
     instructionBatchDetailsForm() {
         return this.fb.group({batchid: [0], batchno: [""], stockItemID: [0], qty: [0]});
+    }
+    get serialNumber() {
+        return this.workInstructionForm.get("serialNumber");
     }
 
     get BatchNo() {
@@ -141,11 +143,12 @@ export class CreateWorkInstructionComponent implements OnInit {
     getBatchValidate(itemcode, batchcode, type) {
         this.transactionService.validateBatch(itemcode, batchcode, type).subscribe(res => {
             if (res.status === "200") {
+                debugger;
                 this.getWorkInstructionDetailsForItem(res.data[0].stockItemID);
                 this.workInstructionForm.controls["StockItemID"].setValue(res.data[0].stockItemID);
                 this.workInstructionForm.controls["BatchID"].setValue(res.data[0].batchid);
-                this.workInstructionForm.controls["BatchNo"].setValue(batchcode);
-                // this.workInstructionForm.controls["BatchNo"].setValue(itemcode);
+                this.workInstructionForm.controls["BatchNo"].setValue(res.data[0].itemCode);
+                this.workInstructionForm.controls["serialNumber"].setValue(res.data[0].batchno);
                 this.displayworksModal = false;
             } else {
                 alert(res.message);
