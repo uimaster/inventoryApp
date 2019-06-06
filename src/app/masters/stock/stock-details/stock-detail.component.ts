@@ -147,7 +147,7 @@ OnDestroy {
                 this.sForm.controls["activeStatus"].setValue(this.stock["activeStatus"]);
                 this.sForm.controls["company_ID"].setValue(this.stock["company_ID"]);
                 this.sForm.controls["userID"].setValue(this.stock["userID"]);
-                this.sForm.controls["unit_ID"].setValue(this.stock["unit_ID"]);
+                // this.sForm.controls["unit_ID"].setValue(this.stock["unit_ID"]);
                 // this.sForm.controls["unitName"].setValue(this.stock["unitName"]);
 
                 const arrstockItemBoxList = <FormArray>(this.sForm.get("stockItemBoxList"));
@@ -438,6 +438,7 @@ OnDestroy {
     }
 
     saveStockItem(formData) {
+        //console.log(formData);
         if (this.sForm.valid) {
             this.stockService.updateStock(formData).subscribe((res : StockResponse) => {
                 if (res.status === "200") {
@@ -490,7 +491,7 @@ OnDestroy {
                 let data = res.data;
                 for (let key in data) {
                     if (data.hasOwnProperty(key)) {
-                        this.supplierlist.push({label: data[key].supplierName, value: data[key].supplierName});
+                        this.supplierlist.push({label: data[key].supplierName, value: data[key].supplier_ID});
                     }
                 }
             }
@@ -510,7 +511,7 @@ OnDestroy {
     getSelectedVal(event, elem, index) {
         for (var i = 0; i < this.supplierlist.length; i++) {
             if (this.supplierlist[i].label === event) {
-                this.sForm.get(elem).controls[index].get("ledgerName").setValue(this.supplierlist[i].value);
+                this.sForm.get(elem).controls[index].get("ledger_ID").setValue(this.supplierlist[i].value);
             }
         }
     }

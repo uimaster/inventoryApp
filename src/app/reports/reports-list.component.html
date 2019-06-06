@@ -340,8 +340,9 @@
                 <th width="10%">SNo</th>
                 <th width="20%">Item Code</th>
                 <th width="30%">Item Name</th>
-                <th width="20%">MSL Qty</th>
-                <th width="20%">Closing Qty</th>
+                <th width="10%">MSL Qty</th>
+                <th width="10%">Closing Qty</th>
+                <th width="20%">Supplier</th>
             </tr>
             </thead>
             <tbody>
@@ -352,6 +353,7 @@
                     <td>{{report.itemName}}</td>
                     <td>{{report.mslQty}}</td>
                     <td>{{report.currentSTKQty}}</td>
+                    <td>{{report.supplierName}}</td>
                 </tr>
             </ng-container>
             </tbody>
