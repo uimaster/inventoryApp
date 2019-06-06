@@ -225,7 +225,8 @@
                         <div class="ui-g-4">
                             <div class="form-group">
                               <span class="ui-float-label">
-                                  <p-dropdown [options]="currencyList" formControlName="currency"></p-dropdown>
+                                  <p-dropdown [options]="currencyList" placeholder="Currency" formControlName="currency"></p-dropdown>
+                                  <!-- <label for="transporters">Currency</label> -->
                               </span>
 
                                 <div *ngIf="currency.invalid && (currency.dirty || currency.touched)" class="alert alert-danger">
