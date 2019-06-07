@@ -295,7 +295,7 @@ export class SupplierComponent implements OnInit, OnDestroy {
           let data = res.data;
           for ( let key in data) {
             if(data.hasOwnProperty(key)) {
-              this.currencyList.push({label: data[key].currencyName, value: data[key].currencyID});
+              this.currencyList.push({label: data[key].currencyName, value: data[key].currencyName});
             }
           }
         }
