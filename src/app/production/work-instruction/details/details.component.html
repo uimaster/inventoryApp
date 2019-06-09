@@ -1,36 +1,126 @@
-<!-- <app-filters (filterDates)='getTransactionList($event)'></app-filters> -->
-<p-panel header="Work Istruction Item Details" class="Tabledata">
-  <p-header>
-      <!-- <button pButton type="button" style="float:right" icon="pi pi-plus"  label="Add Work Instruction" class="ui-button-success" routerLink="/production/addworkInstruction"></button> -->
-
-  </p-header>
-  <div class="table-responsive" *ngIf="workInstructionDetails">
+<p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
+<form [formGroup]="workInstructionForm" (submit)="saveTransation(workInstructionForm.value)" class="formData">
+  <p-panel header="Assembly Work Instruction" class="Tabledata">
+    <p-header>
+      <!-- <button pButton type="button" style="float:right" label="Start Scan" class="ui-button-success"
+        (click)="getOpenBarcodeModal()"></button> -->
+    </p-header><br />
+    <div class="message error" *ngIf="showError">{{errorMsg}}</div>
+    <div class="message success" *ngIf="showSuccess">{{successMsg}}</div>
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <div class="ui-g-3">
+          <div class="form-group" style="margin:0">
+            <span class="ui-float-label">
+              <input type="text" formControlName="serialNumber" pInputText disabled>
+              <label for="transactionNo">Serial No.</label>
+            </span>
+          </div>
+        </div>
+        <div class="ui-g-3" style="margin:0">
+          <div class="form-group">
+            <span class="ui-float-label">
+              <input type="text" pInputText formControlName="BatchNo" disabled>
+              <label for="transactionNo">Finish Good Id</label>
+            </span>
+          </div>
+        </div>
+        <div class="ui-g-3">
+          <div class="form-group" style="margin:0">
+            <span class="ui-float-label">
+              <input type="text" pInputText formControlName="AssemblerID" disabled>
+              <label for="transactionNo">Assembly Code</label>
+            </span>
+          </div>
+        </div>
+        <div class="ui-g-3" style="margin:0">
+          <div class="form-group">
+            <span class="ui-float-label">
+              <input type="text" pInputText formControlName="AssemblerName" disabled>
+              <label for="transactionNo">Assembly Name</label>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </p-panel>
+  <p-panel header="Item Work Details" class="Tabledata">
+    <div class="table-responsive" *ngIf="workInstructionDetails">
       <table class="table">
-          <thead>
-            <tr>
-              <th>Asembly Instruction Date</th>
-              <th>Assembly Instruction NO.</th>
-              <th>Assembler Name</th>
-              <th>Item Desc.</th>
-              <th>Batch No.</th>
+        <thead>
+          <tr>
+            <th>Instruction SR. No.</th>
+            <th>Instruction Description</th>
+            <th>Item Desc.</th>
+            <th>Qty</th>
+            <!-- <th>stockItemID</th> -->
           </tr>
-          </thead>
-          <tbody>
-          <ng-container>
-              <tr *ngFor="let item of workInstructionDetails; index as i ;">
-                  <td>{{item.assemblyWorkInstructionDate}}</td>
-                  <td>{{item.assemblyWorkInstructionNo}}</td>
-                  <td>{{item.assemblerName}}</td>
-                  <td>{{item.itemDesc}}</td>
-                  <td>{{item.batchNo}}</td>
-              </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngIf="workInstructionDetails">
+            <tr *ngFor="let item of workInstructionDetails[0]?.assemblyWorkInstructionDetails;">
+              <td style="text-align: center">{{item.instructionSRNo}}</td>
+              <td>{{item.instructiondescription || '-'}}</td>
+              <td>{{item.itemDesc  || '-'}}</td>
+              <td>{{item.qty  || '0'}}</td>
+              <!-- <td>{{item.stockItemID}}</td> -->
+            </tr>
+            <!-- <tr *ngIf="workInstructionDetails.length > 0">
+              <td colspan="5" class="text-right" style="background:#f6f6f6; padding-top:20px;">
+                <button pButton type="button" [disabled]="rowLength > 0 || disableAll" label="Next"
+                  style="width:100px; padding:5px; float:right; font-size:16px; margin-right:10px; "
+                  class="ui-button-success right" (click)="getValidateQty()"></button>
+                <div class="form-group" style="width:100px; float:right; margin-right:10px; margin-bottom:0">
+                  <span class="ui-float-label">
+                    <input type="text" pInputText #quantity [disabled]="!disabledSerial || disableAll">
+                    <label for="transactionNo">Quantity</label>
+                  </span>
+                </div>
+                <div class="form-group" style="width:250px; float:right; margin-right:10px; margin-bottom:0">
+                  <span class="ui-float-label">
+                    <input type="text" pInputText #serialNum [disabled]="disabledSerial || disableAll"
+                      (input)="startScanSerial($event)">
+                    <label for="transactionNo">Serial No.</label>
+                  </span>
+                </div>
+                <small [hidden]="rowLength === 0" style=" float: right;
+                                margin-right: 10px; margin-bottom: 0; margin-top: 1px;
+                                font-size: 11px; width: 170px;">Serial Length is: <b>{{rowLength}}</b>, Please enter
+                  same length serial to start scan.</small>
+              </td>
+            </tr> -->
           </ng-container>
-          </tbody>
+        </tbody>
       </table>
-  </div>
-  <div  *ngIf="!workInstructionDetails || workInstructionDetails.length < 1" style="text-align: center">
-    <br/>
-    No Records available !
-    <br/><br/>
-  </div>
-</p-panel>
+    </div>
+    <div *ngIf="!workInstructionDetails || workInstructionDetails.length < 1" style="text-align: center">
+      <br /> No Records available ! <br /><br />
+    </div>
+  </p-panel>
+  <p-panel header="Batch Details" class="Tabledata" formArrayName="AssemblyBatchDetails">
+    <div style="max-height:200px; overflow:auto; padding: 15px;">
+      <table width="100%" class="fieldTable">
+        <thead>
+          <th>Batch No.</th>
+          <th>Item Name</th>
+          <th>Quantity</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ctrl of workInstructionForm.get('AssemblyBatchDetails').controls; let i = index;"
+            [formGroupName]="i">
+            <td><input type="text" formControlName="batchno" pInputText disabled="disabled"></td>
+            <td><input type="text" formControlName="stockItemID" pInputText disabled="disabled"></td>
+            <td><input type="text" formControlName="qty" pInputText disabled="disabled"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </p-panel>
+  <!-- <br />
+  <p class="text-center" style="margin-bottom:10px;">
+    <a pButton type="button" label="Cancel" class="ui-button-secondary" (click)="cancel()"></a>
+    <button pButton type="button" label="Save" [disabled]="!disableAll" class="ui-button-success"
+      (click)="saveWorkInstruction(workInstructionForm.value)">
+    </button>
+  </p> -->
+</form>

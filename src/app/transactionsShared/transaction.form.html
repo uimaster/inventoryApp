@@ -1,4 +1,6 @@
-<p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
+<div *ngIf="showLoader" style="background: rgba(10,20,14,0.5); z-index: 1; position: fixed; left: 0; top: 0; right: 0; bottom: 0;">
+  <p-progressSpinner></p-progressSpinner>
+</div>
 <form [formGroup]="transactionForm" class="formData">
     <div class="message error" *ngIf="showError">{{errorMsg}}</div>
     <div class="message success" *ngIf="showSuccess">{{successMsg}}</div>
