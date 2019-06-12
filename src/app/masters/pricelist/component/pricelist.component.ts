@@ -167,7 +167,12 @@ export class PricelistComponent implements OnInit, OnDestroy {
                 setTimeout(() => {
                   this.router.navigate(['/masters/pricelist',this.typeID]);
                 }, 3000);
-            } else {
+            } 
+            else if(res.status === '500') {
+              // this.showError = true;
+              this.notificationsService.notify('error','Error',res.message)
+            }
+            else {
              // this.showError = true;
               this.notificationsService.notify('error','Error','Updatation/creation failed.')
             }
