@@ -33,7 +33,7 @@ export class DelieveryChallanComponent implements OnInit {
   }
 
   getTransactionList(dates) {
-    this.transactionSerivices.getTransactionList(6, dates).subscribe ( res => {
+    this.transactionSerivices.getTransactionList(5, dates).subscribe ( res => {
       if (res) {
         if (res.status === '200') {
           this.challanList = res.data;
