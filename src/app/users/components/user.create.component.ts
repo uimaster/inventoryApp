@@ -1,7 +1,8 @@
 import {Component, OnInit} from "@angular/core";
-import {UsersService} from "../service/user.service";
 import {ActivatedRoute} from "@angular/router";
 import {FormGroup, FormBuilder, FormArray} from "@angular/forms";
+
+import {UsersService} from "../service/user.service";
 
 @Component({selector: "app-create-users", templateUrl: "./user.create.component.html", styleUrls: ["./user.create.component.scss"]})
 export class CreateUsersComponent implements OnInit {
@@ -20,11 +21,11 @@ export class CreateUsersComponent implements OnInit {
     constructor(private userService : UsersService, private activeRoute : ActivatedRoute, private fb : FormBuilder) {}
 
     ngOnInit() { // this.getUserMaster();
+      this.createUser();
         this.activeRoute.params.subscribe(params => {
             this.userId = params.id;
         });
-        // this.getUserDetails(this.userId);
-        this.createUser();
+        this.getUserDetails(this.userId);
     }
 
     getUserTabDetails(userId, rightId, formArray, index) {
@@ -33,11 +34,6 @@ export class CreateUsersComponent implements OnInit {
             if (res.status === "200") {
                 if (res && res.data !== undefined && res.data !== null) {
                     const tabFormArray = <FormArray> formArray.controls[index].get('UserRightTabModelList');
-
-                    if (tabFormArray.length > 0) {
-                        tabFormArray.removeAt(0);
-                    }
-
                     this.userTabDetails = res.data;
                     for (var i = 0; i < this.userTabDetails.length; i++) {
                         tabFormArray.push(this.fb.group({
@@ -48,15 +44,15 @@ export class CreateUsersComponent implements OnInit {
                             userRightParentID: [this.userTabDetails[i].userRightParentID],
                             userRightTabName: [this.userTabDetails[i].userRightTabName]
                         }));
-                        debugger;
-                        const actionArray = <FormArray>tabFormArray.controls[i].get('userRightActionModelList');
-                        for (var k = 0; k < this.userTabDetails[i].userRightActionModelList.length; k++) {
-                            actionArray.push(this.fb.group({createStatus: [true], modifyStatus: [true], viewStatus: [true], deleteStatus: [true]}))
-                        }
-                        if (actionArray.length > 0) {
-                            actionArray.removeAt(0);
-                        }
+                        // const actionArray = <FormArray>tabFormArray.controls[i].get('userRightActionModelList');
+                        // for (var k = 0; k < this.userTabDetails[i].userRightActionModelList.length; k++) {
+                        //     actionArray.push(this.fb.group({createStatus: [true], modifyStatus: [true], viewStatus: [true], deleteStatus: [true]}))
+                        // }
+                        // if (actionArray.length > 0) {
+                        //     actionArray.removeAt(0);
+                        // }
                     }
+
                 }
             }
         });
@@ -89,73 +85,14 @@ export class CreateUsersComponent implements OnInit {
                             )
                         }));
                     }
+                    if (formArray.length > 0) {
+                      formArray.removeAt(0);
+                    }
                 }
+                console.log(this.userForm);
             }
         });
     }
-
-
-    /*getUserDetails(id) {
-    this.userService.getUserDetails(id).subscribe(res => {
-      if (res && res.status === "200") {
-        this.userDetails = res.data;
-        this.rightList = res.data[0].userRights;
-        if (this.userDetails.length > 0) {
-          this.userForm.controls["name"].setValue(this.userDetails[0].name);
-          this.userForm.controls["activeStatus"].setValue(
-            this.userDetails[0].activeStatus
-          );
-          this.userForm.controls["userID"].setValue(this.userDetails[0].userID);
-          this.userForm.controls["userTypeID"].setValue(
-            this.userDetails[0].userTypeID
-          );
-          this.userForm.controls["userPassword"].setValue(
-            this.userDetails[0].userPassword
-          );
-          this.userForm.controls["company_ID"].setValue(
-            this.userDetails[0].company_ID
-          );
-          // this.userForm.controls['expiryDate'].setValue(this.convertToDateFormat(this.userDetails[0].expiryDate));
-
-          if (this.rightList.length > 0) {
-            debugger;
-            const formArray = <FormArray>this.userForm.get("userRights");
-            var tabFormArray;
-            for (let i = 0; i < this.rightList.length; i++) {
-              // this.getUserTabDetails(this.userId, this.rightList[i].userRightID);
-
-              formArray.push(
-                this.fb.group({
-                  userRightID: [this.rightList[i].userRightID],
-                  userRightMenuName: [this.rightList[i].userRightMenuName],
-                  userRightCode: [this.rightList[i].userRightCode],
-                  menuStatus: [this.rightList[i].menuStatus]
-                })
-              );
-              tabFormArray = <FormArray>formArray.controls[i].get('UserRightTabModelList');
-
-              this.userTabDetails = [];
-              this.userService.getUserTabDetails(this.userId, this.rightList[i].userRightID).subscribe(val => {
-                if (val.status === "200") {
-                  this.userTabDetails = val.data;
-                }
-              });
-              tabFormArray.push(
-                this.fb.group({
-                  userRightID: [this.userTabDetails[0].userRightID],
-                  TabStatus: [this.userTabDetails[0].TabStatus],
-                })
-              );
-            }
-
-            // if (formArray.length > 0) {
-            //   formArray.removeAt(0);
-            // }
-          }
-        }
-      }
-    });
-  }*/
 
     get name() {
         return this.userForm.get("name");

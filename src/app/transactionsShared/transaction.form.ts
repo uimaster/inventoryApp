@@ -1559,7 +1559,7 @@ OnDestroy {
         const itemBarCodeVal = this.itemBarCode.nativeElement.value;
         if (itemBarCodeVal.length === this.ItemBarCodeLength) {
             this.addGrnBarcode();
-        } else {
+        } else if (itemBarCodeVal.length > this.ItemBarCodeLength){
             alert("Barcode length should be equal of " + this.ItemBarCodeLength);
         }
     }
@@ -1653,7 +1653,8 @@ OnDestroy {
             controlArray.controls[this.grnItemIndex].get("itemReceived_Qty").setValue(JSON.parse(itemQtyGnrVal) + existingQtyRec);
             // this.displayGrnBarcodeDialog = false;
             this.itemBarCode.nativeElement.value = "";
-            alert("Barcode added Successfully.");
+            this.BarcodeSuccessMsg = "Barcode added Successfully.";
+            // alert("Barcode added Successfully.");
         }
     }
 
