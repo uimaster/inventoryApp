@@ -1,98 +1,118 @@
 <p-panel class="Tabledata" header="Users Details">
-    <p-header>
-        <!-- <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add User" class="ui-button-success"
-              (click)="addUser()"></button> -->
-    </p-header>
-    <!-- <p-progressSpinner *ngIf="showLoader"></p-progressSpinner> -->
-    <form
-        (submit)="saveUser(userForm.value)" [formGroup]="userForm" class="userForm formData">
-        <!-- <div class="message error" *ngIf="showError">{{errorMsg}}</div>
-            <div class="message success" *ngIf="showSuccess">{{successMsg}}</div> -->
-        <div class="ui-g">
-            <div class="ui-g-3">
-                <div class="form-group">
-                    <span class="ui-float-label">
-                        <input formcontrolname="name" id="name" pinputtext type="text">
-                        <label for="name">Name</label>
-                    </span>
-                </div>
-            </div>
-            <div class="ui-g-3">
-                <div class="form-group">
-                    <span class="ui-float-label">
-                        <p-calendar [showIcon]="true" dateformat="dd-mm-yy" formcontrolname="expiryDate"></p-calendar>
-                        <label for="expiryDate">Expiry Date</label>
-                    </span>
-                </div>
-            </div>
-            <div class="ui-g-3">
-                <div class="form-group">
-                    <span class="ui-float-label">
-                        <input formcontrolname="activeStatus" id="activeStatus" pinputtext type="text">
-                        <label for="activeStatus">Active Status</label>
-                    </span>
-                </div>
-            </div>
-            <div class="ui-g-3">
-                <div class="form-group">
-                    <span class="ui-float-label">
-                        <input formcontrolname="userName" id="userName" pinputtext type="text">
-                        <label for="userName">User Name</label>
-                    </span>
-                </div>
-            </div>
-            <div class="ui-g-3">
-                <div class="form-group">
-                    <span class="ui-float-label">
-                        <input formcontrolname="userPassword" id="userPassword" pinputtext type="text">
-                        <label for="userPassword">Password</label>
-                    </span>
-                </div>
-            </div>
+  <p-header>
+    <!-- <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add User" class="ui-button-success"
+            (click)="addUser()"></button> -->
+  </p-header>
+  <!-- <p-progressSpinner *ngIf="showLoader"></p-progressSpinner> -->
+  <form [formGroup]="userForm" class="userForm formData">
+    <!-- <div class="message error" *ngIf="showError">{{errorMsg}}</div>
+          <div class="message success" *ngIf="showSuccess">{{successMsg}}</div> -->
+    <div class="ui-g">
+      <div class="ui-g-3">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <input formControlName="name" id="name" pInputText type="text">
+            <label for="name">Name</label>
+          </span>
         </div>
-        <div formarrayname="userRights">
-                <div *ngFor="let firstLevel of userForm.get('userRights')?.controls; let i = index" [formGroupName]="i">
-                    <p-accordion>
-                        <p-accordionTab [header]="firstLevel.controls.userRightMenuName.value">
-                            <label style="margin:10px">Menu Status:</label>
-                            Yes
-                            <p-radioButton formcontrolname="menuStatus" name="menuStatus" value="true"></p-radioButton>
-                            No
-                            <p-radioButton formcontrolname="menuStatus" name="menuStatus" value="false"></p-radioButton>
-                            <p-tabView formarrayname="userRightTabModelList">
-                                <p-tabPanel *ngFor="let secondLevel of firstLevel.get('userRightTabModelList').controls; let ix = index" [formGroupName]="ix" [header]="secondLevel.userRightTabName" [selected]="ix == 0">
-                                    <label>Tab Status:</label>
-                                    Yes
-                                    <p-radioButton formcontrolname="tabStatus" name="tabStatus" value="false"></p-radioButton>
-                                    No
-                                    <p-radioButton formcontrolname="tabStatus" name="tabStatus" value="false"></p-radioButton>
-                                    <!--<div formArrayName="userRightActionModelList">
-                                                        <div *ngFor="let thirdLevel of secondLevel.get('userRightActionModelList').controls; let jx = index"
-                                                          [formGroupName]="jx">
-                                                          <h5 style="margin-top: 10px">Actions Status:</h5><br />
-                                                          <label>Create:</label> Yes <p-radioButton name="Create" value="false"
-                                                            formControlName="createStatus">
-                                                          </p-radioButton> No <p-radioButton name="Create" value="false" formControlName="createStatus">
-                                                          </p-radioButton>
-                                                          <label>, Edit:</label> Yes <p-radioButton name="Edit" value="false"
-                                                            formControlName="modifyStatus">
-                                                          </p-radioButton> No <p-radioButton name="Edit" value="false" formControlName="modifyStatus">
-                                                          </p-radioButton>
-                                                          <label>, Read:</label> Yes <p-radioButton name="Read" value="false" formControlName="viewStatus">
-                                                          </p-radioButton> No <p-radioButton name="Read" value="false" formControlName="viewStatus">
-                                                          </p-radioButton>
-                                                          <label>, Delete:</label> Yes <p-radioButton name="Delete" value="false"
-                                                            formControlName="deleteStatus"></p-radioButton> No <p-radioButton name="Delete" value="false"
-                                                            formControlName="deleteStatus"></p-radioButton>
-                                                        </div>
-                                                      </div>--> 
-                                </p-tabPanel>
-                            </p-tabView>
-                        </p-accordionTab>
-                    </p-accordion>
-                </div>
+      </div>
+      <div class="ui-g-3">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <p-calendar [showIcon]="true" dateformat="dd-mm-yy" formControlName="expiryDate"></p-calendar>
+            <label for="expiryDate">Expiry Date</label>
+          </span>
         </div>
-        <button class="ui-button-secondaty" label="Cancel" pbutton type="submit"></button>
-        <button class="ui-button-success" label="Create User" pbutton type="submit"></button>
-    </form>
+      </div>
+      <div class="ui-g-3">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <input formControlName="activeStatus" id="activeStatus" pInputText type="text">
+            <label for="activeStatus">Active Status</label>
+          </span>
+        </div>
+      </div>
+      <div class="ui-g-3">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <input formControlName="userName" id="userName" pInputText type="text">
+            <label for="userName">User Name</label>
+          </span>
+        </div>
+      </div>
+      <div class="ui-g-3">
+        <div class="form-group">
+          <span class="ui-float-label">
+            <input formControlName="userPassword" id="userPassword" pInputText type="text">
+            <label for="userPassword">Password</label>
+          </span>
+        </div>
+      </div>
+    </div>
+    <ng-container *ngIf="showRightsAccordion">
+    <div formArrayName="userRights">
+      <div *ngFor="let firstLevel of userForm.get('userRights')?.controls; let i = index" [formGroupName]="i">
+        <p-accordion>
+          <p-accordionTab [header]="userForm.controls.userRights.controls[i].controls.userRightMenuName.value">            
+            <label style="margin:10px">Menu Status:</label> Yes <p-radioButton formControlName="menuStatus"
+              name="menuStatus" value="true" [(ngModel)]="menuStatusModel"></p-radioButton> No <p-radioButton formControlName="menuStatus"
+              name="menuStatus" value="false" [(ngModel)]="menuStatusModel"></p-radioButton>
+
+              <!-- let pair of frm.controls['custom_data'].get('pairs').controls
+              room of address.get('rooms').controls
+              -->
+
+            <div formArrayName="userRightTabModelList">
+            <p-tabView >
+              <p-tabPanel *ngFor="let secondLevel of firstLevel.get('userRightTabModelList').controls; let ix = index"
+                [formGroupName]="ix" [header]="userForm.controls.userRights.controls[i].controls.userRightTabModelList.controls[ix].controls.userRightTabName.value" [selected]="ix == 0">
+                <label>Tab Status:</label> Yes <p-radioButton formControlName="tabStatus" name="tabStatus"
+                  value=""></p-radioButton> No <p-radioButton formControlName="tabStatus" name="tabStatus"
+                  value=""></p-radioButton>
+
+                 <div formArrayName="userRightActionModelList">
+                  <div *ngFor="let thirdLevel of secondLevel.get('userRightActionModelList').controls; let jx = index"
+                    [formGroupName]="jx">
+                    <h5 style="margin-top: 10px">Actions Status:</h5><br />
+                    <label>Create:</label>
+
+                    <p-radioButton formControlName="createStatus" name="Create" value="" label="Yes"
+                      [(ngModel)]="createModel">
+                    </p-radioButton>
+                    <p-radioButton formControlName="createStatus" name="Create" value="" label="No"
+                      [(ngModel)]="createModel">
+                    </p-radioButton>
+                    <label>, Edit:</label>
+                    <p-radioButton formControlName="modifyStatus" name="Edit" value="" label="Yes"
+                      [(ngModel)]="editModel">
+                    </p-radioButton>
+                    <p-radioButton formControlName="modifyStatus" name="Edit" value="" label="No"
+                      [(ngModel)]="editModel">
+                    </p-radioButton>
+                    <label>, Read:</label>
+                    <p-radioButton formControlName="viewStatus" name="Read" value="" label="Yes"
+                      [(ngModel)]="readModel">
+                    </p-radioButton>
+                    <p-radioButton formControlName="viewStatus" name="Read" value="" label="No" [(ngModel)]="readModel">
+                    </p-radioButton>
+                    <label>, Delete:</label>
+                    <p-radioButton formControlName="deleteStatus" name="Delete" value="deleteModel" label="Yes"
+                      [(ngModel)]="deleteModel">
+                    </p-radioButton>
+                    <p-radioButton formControlName="deleteStatus" name="Delete" value="deleteModel" label="No"
+                      [(ngModel)]="deleteModel">
+                    </p-radioButton>
+                  </div>
+                </div>
+              </p-tabPanel>
+            </p-tabView> 
+            </div>
+          </p-accordionTab>
+        </p-accordion>
+      </div>
+    </div>
+  </ng-container>
+    <button class="ui-button-secondaty" label="Cancel" pButton type="button" ></button>
+    <button class="ui-button-success" label="Create User" pButton type="button" (click)="saveUser(userForm.value)"></button>
+  </form>
 </p-panel>

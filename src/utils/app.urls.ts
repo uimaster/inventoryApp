@@ -99,6 +99,8 @@ export const GETUSERDETAILS = BASEURL + 'Users/GetUsersDetails';
 export const GETUSERTABDETAILS = BASEURL + 'Users/GetUserTabDetails';
 export const GETUSERMASTER = BASEURL + 'Users/GetUsersRightsMaster';
 export const GETUSERTYPE = BASEURL + 'Users/GetUsersTypes';
+export const CREATEUSER = BASEURL + 'Users/POSTUpdateUser';
+export const GETUSERMENUDETAILS = BASEURL + 'Users/GetUserMenuDetails';
 
 export const GETPROCESSREQUEST = BASEURL + 'planning/GetProcessRequest';
 export const GETNOTIFICATION = BASEURL + 'dashboard/GetNotificationMessages';

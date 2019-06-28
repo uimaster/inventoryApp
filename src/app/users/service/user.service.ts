@@ -6,7 +6,7 @@ import { Observable } from "rxjs";
 
 @Injectable()
 export class UsersService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getUserList(): Observable<any> {
     const params = new HttpParams().set("CompanyID", "1");
@@ -69,4 +69,28 @@ export class UsersService {
     );
   }
 
+  getUserMenuDetails(userid, rightid): Observable<any> {
+    const params = new HttpParams()
+      .set("UserID", userid)
+      .set("UserRightID", rightid);
+    return this.http.get(urls.GETUSERMENUDETAILS, { params }).pipe(
+      map((res: any) => {
+        return res;
+      }),
+      catchError(err => {
+        return Observable.throw(err);
+      })
+    );
+  }
+
+  createUser(payload: any): Observable<any> {
+    return this.http.post(urls.CREATEUSER, payload).pipe(
+      map((res: any) => {
+        return res;
+      }),
+      catchError(err => {
+        return Observable.throw(err);
+      })
+    );
+  }
 }
