@@ -1,4 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef,
+  AfterViewInit
+} from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { FormGroup, FormBuilder, FormArray, Validators } from "@angular/forms";
 
@@ -9,7 +14,7 @@ import { UsersService } from "../service/user.service";
   templateUrl: "./user.create.component.html",
   styleUrls: ["./user.create.component.scss"]
 })
-export class CreateUsersComponent implements OnInit {
+export class CreateUsersComponent implements OnInit, AfterViewInit {
   public userDetails = [];
   public rightList = [];
   public userId = 0;
@@ -24,28 +29,32 @@ export class CreateUsersComponent implements OnInit {
   public editModel = false;
   public readModel = false;
   public showRightsAccordion: boolean;
+  public dyData;
   constructor(
     private userService: UsersService,
     private activeRoute: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private changeDetector: ChangeDetectorRef
   ) {}
 
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.activeRoute.params.subscribe(params => {
+        this.userId = params.id;
+        this.getUserDetails(this.userId);
+        this.changeDetector.detectChanges();
+      });
+    }, 500);
+  }
+
   ngOnInit() {
+    this.createUserForm();
     this.showRightsAccordion = false;
     this.statusList = [
       { label: "Active", value: 1 },
       { label: "Inactive", value: 0 }
     ];
     this.selectedStatus = this.statusList[0].value;
-    // this.getUserMaster();
-    this.createUserForm();
-
-    this.activeRoute.params.subscribe(params => {
-      this.userId = params.id;
-    });
-    if (this.userId > 0) {
-      this.getUserDetails(this.userId);
-    }
   }
 
   get name() {
@@ -74,7 +83,7 @@ export class CreateUsersComponent implements OnInit {
       userID: [0],
       userTypeID: [0],
       userName: [""],
-      userPassword: ["", Validators.required],
+      userPassword: [""],
       company_ID: [0],
       // userRights: []
       userRights: this.fb.array([this.createUserRights()])
@@ -117,7 +126,7 @@ export class CreateUsersComponent implements OnInit {
       if (res.status === "200") {
         alert("User Created Successfully, Please update below listed rights.");
         localStorage.setItem("createdUserId", res.data[0].userID);
-        this.getUserDetails();
+        // this.getUserDetails();
       }
     });
   }
@@ -131,9 +140,24 @@ export class CreateUsersComponent implements OnInit {
     }
     this.userService.getUserDetails(userId).subscribe(res => {
       if (res.status === "200") {
+        this.dyData = res.data[0].userRights;
+        console.log(this.dyData);
         if (res.data[0].userRights.length > 0) {
           this.showRightsAccordion = true;
           let data = res.data[0].userRights;
+          this.userForm.controls["name"].setValue(res.data[0].name);
+          // this.userForm.controls['expiryDate'].setValue(res.data[0].expiryDate);
+          this.userForm.controls["activeStatus"].setValue(
+            res.data[0].activeStatus
+          );
+          this.userForm.controls["userID"].setValue(res.data[0].userID);
+          this.userForm.controls["userTypeID"].setValue(res.data[0].userTypeID);
+          this.userForm.controls["userName"].setValue(res.data[0].userName);
+          this.userForm.controls["userPassword"].setValue(
+            res.data[0].userPassword
+          );
+          this.userForm.controls["company_ID"].setValue(res.data[0].company_ID);
+
           const userRightsArray = <FormArray>this.userForm.get("userRights");
 
           for (var i = 0; i < res.data[0].userRights.length; i++) {
@@ -197,9 +221,5 @@ export class CreateUsersComponent implements OnInit {
         }
       }
     });
-  }
-
-  saveUser(formData) {
-    console.log(JSON.stringify(formData));
   }
 }

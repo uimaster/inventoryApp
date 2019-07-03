@@ -49,70 +49,67 @@
         </div>
       </div>
     </div>
-    <ng-container *ngIf="showRightsAccordion">
-    <div formArrayName="userRights">
-      <div *ngFor="let firstLevel of userForm.get('userRights')?.controls; let i = index" [formGroupName]="i">
-        <p-accordion>
-          <p-accordionTab [header]="userForm.controls.userRights.controls[i].controls.userRightMenuName.value">            
-            <label style="margin:10px">Menu Status:</label> Yes <p-radioButton formControlName="menuStatus"
-              name="menuStatus" value="true" [(ngModel)]="menuStatusModel"></p-radioButton> No <p-radioButton formControlName="menuStatus"
-              name="menuStatus" value="false" [(ngModel)]="menuStatusModel"></p-radioButton>
-
-              <!-- let pair of frm.controls['custom_data'].get('pairs').controls
-              room of address.get('rooms').controls
-              -->
-
-            <div formArrayName="userRightTabModelList">
-            <p-tabView >
-              <p-tabPanel *ngFor="let secondLevel of firstLevel.get('userRightTabModelList').controls; let ix = index"
-                [formGroupName]="ix" [header]="userForm.controls.userRights.controls[i].controls.userRightTabModelList.controls[ix].controls.userRightTabName.value" [selected]="ix == 0">
-                <label>Tab Status:</label> Yes <p-radioButton formControlName="tabStatus" name="tabStatus"
-                  value=""></p-radioButton> No <p-radioButton formControlName="tabStatus" name="tabStatus"
-                  value=""></p-radioButton>
-
-                 <div formArrayName="userRightActionModelList">
-                  <div *ngFor="let thirdLevel of secondLevel.get('userRightActionModelList').controls; let jx = index"
-                    [formGroupName]="jx">
-                    <h5 style="margin-top: 10px">Actions Status:</h5><br />
-                    <label>Create:</label>
-
-                    <p-radioButton formControlName="createStatus" name="Create" value="" label="Yes"
-                      [(ngModel)]="createModel">
+    <ng-container *ngIf="dyData!==null" >
+      <div formArrayName="userRights">
+        <div *ngFor="let firstLevel of userForm.get('userRights')?.controls; let i = index" [formGroupName]="i">
+          <p-accordion>
+            <p-accordionTab [header]="userForm?.controls?.userRights?.controls[i]?.controls?.userRightMenuName.value"
+              [selected]="userForm?.controls?.userRights?.controls[i]?.controls?.userRightMenuName.value == 'Masters'">
+              <label style="margin:10px">Menu Status:</label>
+              <p-radioButton formControlName="menuStatus" name="menuStatus" value="" label="Yes"></p-radioButton>
+              <p-radioButton formControlName="menuStatus" name="menuStatus" value="" label="No"></p-radioButton>
+              
+              <ng-container >
+              <div formArrayName="userRightTabModelList">
+                <p-tabView>
+                  <p-tabPanel
+                    *ngFor="let secondLevel of firstLevel.get('userRightTabModelList')?.controls; let ix = index"
+                    [formGroupName]="ix"
+                    [header]="userForm?.controls?.userRights?.controls[i]?.controls?.userRightTabModelList?.controls[ix]?.controls?.userRightTabName.value"
+                    [selected]="ix == 0">
+                    <label>Tab Status:</label>
+                    <p-radioButton formControlName="tabStatus" name="tabStatus" value="" label="Yes">
                     </p-radioButton>
-                    <p-radioButton formControlName="createStatus" name="Create" value="" label="No"
-                      [(ngModel)]="createModel">
+                    <p-radioButton formControlName="tabStatus" name="tabStatus" value="" label="No">
                     </p-radioButton>
-                    <label>, Edit:</label>
-                    <p-radioButton formControlName="modifyStatus" name="Edit" value="" label="Yes"
-                      [(ngModel)]="editModel">
-                    </p-radioButton>
-                    <p-radioButton formControlName="modifyStatus" name="Edit" value="" label="No"
-                      [(ngModel)]="editModel">
-                    </p-radioButton>
-                    <label>, Read:</label>
-                    <p-radioButton formControlName="viewStatus" name="Read" value="" label="Yes"
-                      [(ngModel)]="readModel">
-                    </p-radioButton>
-                    <p-radioButton formControlName="viewStatus" name="Read" value="" label="No" [(ngModel)]="readModel">
-                    </p-radioButton>
-                    <label>, Delete:</label>
-                    <p-radioButton formControlName="deleteStatus" name="Delete" value="deleteModel" label="Yes"
-                      [(ngModel)]="deleteModel">
-                    </p-radioButton>
-                    <p-radioButton formControlName="deleteStatus" name="Delete" value="deleteModel" label="No"
-                      [(ngModel)]="deleteModel">
-                    </p-radioButton>
-                  </div>
-                </div>
-              </p-tabPanel>
-            </p-tabView> 
-            </div>
-          </p-accordionTab>
-        </p-accordion>
+                    <div formArrayName="userRightActionModelList">
+                      <div
+                        *ngFor="let thirdLevel of secondLevel.get('userRightActionModelList')?.controls; let jx = index"
+                        [formGroupName]="jx">
+                        <h5 style="margin-top: 10px">Actions Status:</h5><br />
+                        <label>Create:</label>
+                        <p-radioButton formControlName="createStatus" name="Create" value="" label="Yes">
+                        </p-radioButton>
+                        <p-radioButton formControlName="createStatus" name="Create" value="" label="No">
+                        </p-radioButton>
+                        <label>, Edit:</label>
+                        <p-radioButton formControlName="modifyStatus" name="Edit" value="" label="Yes">
+                        </p-radioButton>
+                        <p-radioButton formControlName="modifyStatus" name="Edit" value="" label="No">
+                        </p-radioButton>
+                        <label>, Read:</label>
+                        <p-radioButton formControlName="viewStatus" name="Read" value="" label="Yes">
+                        </p-radioButton>
+                        <p-radioButton formControlName="viewStatus" name="Read" value="" label="No">
+                        </p-radioButton>
+                        <label>, Delete:</label>
+                        <p-radioButton formControlName="deleteStatus" name="Delete" value="deleteModel" label="Yes">
+                        </p-radioButton>
+                        <p-radioButton formControlName="deleteStatus" name="Delete" value="deleteModel" label="No">
+                        </p-radioButton>
+                      </div>
+                    </div>
+                  </p-tabPanel>
+                </p-tabView>
+              </div>
+            </ng-container>
+            </p-accordionTab>
+          </p-accordion>
+        </div>
       </div>
-    </div>
-  </ng-container>
-    <button class="ui-button-secondaty" label="Cancel" pButton type="button" ></button>
-    <button class="ui-button-success" label="Create User" pButton type="button" (click)="saveUser(userForm.value)"></button>
+    </ng-container>
+    <button class="ui-button-secondaty" label="Cancel" pButton type="button"></button>
+    <button class="ui-button-success" label="Create User" [disabled]="userForm.invalid" pButton type="button"
+      (click)="createUser(userForm.value)"></button>
   </form>
 </p-panel>
