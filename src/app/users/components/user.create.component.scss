@@ -1,1 +1,8 @@
 .Tabledata{ .formData{padding: 20px  10px;}}
+input[type="checkbox"], input[type="radio"]{
+    width: 16px;
+    height: 16px;   
+}
+label{
+    font-weight: normal;
+}

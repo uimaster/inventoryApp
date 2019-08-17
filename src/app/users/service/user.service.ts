@@ -93,4 +93,15 @@ export class UsersService {
       })
     );
   }
+
+  createUserRights(payload: any): Observable<any> {
+    return this.http.post(urls.UPDATEUSERMENURIGHTS, payload).pipe(
+      map((res: any) => {
+        return res;
+      }),
+      catchError(err => {
+        return Observable.throw(err);
+      })
+    );
+  }
 }

@@ -15,6 +15,8 @@ import { SupplierService } from '../masters/supplier/services/supplier.service';
 import { TransactionServices } from '../transactionsShared/transaction.service';
 import { TransactionCommonModule } from '../transactionsShared/transaction.module';
 import { FiltersModule } from '../transFilters/transFilter.Module';
+import { TransactionPurchaseComponent } from './purchase/purchase.component';
+import { CreateEditStoreComponent } from './create/create.component';
 
 @NgModule({
   imports: [
@@ -27,7 +29,7 @@ import { FiltersModule } from '../transFilters/transFilter.Module';
     TransactionCommonModule,
     FiltersModule
   ],
-  declarations: [ PurchaseComponent, PurchaseOrderComponent, CreatePOrderComponent, POAuthListComponent],
+  declarations: [ TransactionPurchaseComponent,CreateEditStoreComponent,PurchaseComponent, PurchaseOrderComponent, CreatePOrderComponent, POAuthListComponent],
   providers: [ PurchaseService, StockService, LedgerService, SupplierService, TransactionServices],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

@@ -16,6 +16,7 @@ export class FiltersComponent implements OnInit {
   public today = new Date();
   public fromDate = '';
   public toDate = '';
+  public searchInput = '';
   public currentUrl = '';
   @Output() filterDates = new EventEmitter();
 
@@ -57,6 +58,9 @@ export class FiltersComponent implements OnInit {
   }
 
   setFilterDates() {
+    if(this.searchInput != '')
+      localStorage.setItem("t_searchText", this.searchInput);
+    
     if (this.fromDate === '') {
       this.fromDate = this.convertDate(this.today);
     }

@@ -1,5 +1,5 @@
 <!-- <app-navbar></app-navbar> -->
-
+<p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
 <p-panel header="Users List" class="Tabledata">
   <p-header>
       <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add User" class="ui-button-success" (click)="updateUser(0)"></button>
@@ -18,8 +18,7 @@
           <tbody>
           <ng-container *ngIf="userList">
               <tr *ngFor="let item of userList; index as i;">
-                  <td>{{item.name}}
-                  </td>
+                  <td>{{item.name}}</td>
                   <td>{{item.userName}}</td>
                   <td>{{item.company_ID}}</td>
                   <td>{{item.activeStatus}}</td>
