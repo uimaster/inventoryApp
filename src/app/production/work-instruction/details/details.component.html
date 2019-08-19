@@ -63,7 +63,11 @@
               <td>{{item.instructiondescription || '-'}}</td>
               <td>{{item.itemDesc  || '-'}}</td>
               <td>{{item.qty  || '0'}}</td>
-              <!-- <td>{{item.stockItemID}}</td> -->
+              <td>
+                <button pButton type="button" label="Scan" [disabled]="item.batchStatus===false" class="ui-button-success"
+                  (click)="getOpenBarcodeModal(item.stockitemId)">
+                </button>
+              </td>
             </tr>
             <!-- <tr *ngIf="workInstructionDetails.length > 0">
               <td colspan="5" class="text-right" style="background:#f6f6f6; padding-top:20px;">
@@ -104,6 +108,7 @@
           <th>Batch No.</th>
           <th>Item Name</th>
           <th>Quantity</th>
+          <th>action</th>
         </thead>
         <tbody>
           <tr *ngFor="let ctrl of workInstructionForm.get('AssemblyBatchDetails').controls; let i = index;"
@@ -111,6 +116,11 @@
             <td><input type="text" formControlName="batchno" pInputText disabled="disabled"></td>
             <td><input type="text" formControlName="stockItemID" pInputText disabled="disabled"></td>
             <td><input type="text" formControlName="qty" pInputText disabled="disabled"></td>
+            <td>
+              <button pButton type="button" label="Delete" class="ui-button-danger"
+                (click)="deleteItemBatch(i)">
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -124,3 +134,21 @@
     </button>
   </p> -->
 </form>
+
+
+<p-dialog header="Barcode Scan Dialog" [(visible)]="displayworksModal" [modal]="true" [responsive]="true"
+  [style]="{width: '350px', minWidth: '200px'}" [minY]="70" [maximizable]="true" [baseZIndex]="10000">
+  <p style="background-color:#ffcaca; padding:0 5px; line-height:34px; border-radius:4px;">{{plValidationMsg}}</p>
+  <p style="background-color:#beefc8; padding:0 5px; line-height:34px; border-radius:4px; color:#18722b;">
+    {{BarcodeSuccessMsg}}</p><br />
+  <div class="form-group">
+    <span class="ui-float-label">
+      <input type="text" pInputText id="barCode" #barCode (input)="getStartScan()" />
+      <label for="barCode">Barcode</label>
+    </span>
+  </div>
+  <p-footer class="text-center">
+    <button type="button" pButton (click)="displayworksModal=false" label="Cancel" class="ui-button-secondary"></button>
+    <!-- <button type="button" pButton (click)="startScan()" label="Scan"></button> -->
+  </p-footer>
+</p-dialog>

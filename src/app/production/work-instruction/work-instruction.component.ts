@@ -12,7 +12,7 @@ export class WorkInstructionComponent implements OnInit {
   constructor(private workInstructionService: WorkInstructionService, private router: Router) {}
 
   ngOnInit() {
-    this.getWorkInstructionList();
+    // this.getWorkInstructionList();
   }
 
   getItemDetails(id){
@@ -20,8 +20,8 @@ export class WorkInstructionComponent implements OnInit {
     this.router.navigate(['production/workInstructionDetails']);
   }
 
-  getWorkInstructionList() {
-    this.workInstructionService.getWorkInstructionList().subscribe(res => {
+  getWorkInstructionList(dates) {
+    this.workInstructionService.getWorkInstructionList(dates).subscribe(res => {
       if (res.status === "200") {
         if (res.data.length > 0) {
           this.workInstructionList = res.data;

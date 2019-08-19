@@ -56,8 +56,10 @@
             <p-accordionTab [header]="userForm?.controls?.userRights?.controls[i]?.controls?.userRightMenuName.value"
               [selected]="userForm?.controls?.userRights?.controls[i]?.controls?.userRightMenuName.value == 'Masters'">
               <label style="margin:10px">Menu Status:</label>
-              <p-radioButton formControlName="menuStatus" name="menuStatus" value="" label="Yes"></p-radioButton>
-              <p-radioButton formControlName="menuStatus" name="menuStatus" value="" label="No"></p-radioButton>
+              <input type="radio" group="menustatus" value="" formControlName="menuStatus" /> Yes
+              <input type="radio" group="menustatus" value="" formControlName="menuStatus" checked/> No
+              <!-- <p-radioButton formControlName="menuStatus" name="menuStatus" value="" label="Yes"></p-radioButton> -->
+              <!-- <p-radioButton formControlName="menuStatus" name="menuStatus" value="" label="No"></p-radioButton> -->
               
               <ng-container >
               <div formArrayName="userRightTabModelList">
