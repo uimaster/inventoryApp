@@ -77,20 +77,16 @@
             </div>
 
             <div class="ui-g-6" *ngIf="transationLinkRefNameGRN">
-                <div class="ui-g-10">
-                    <div class="form-group">
-                        <span class="ui-float-label">
-                            <p-multiSelect [options]="GRNpendingList" [(ngModel)]="selectedGrns" defaultLabel="GRN No." formControlName="transactionLinkID"
-                            ></p-multiSelect>
-                            <!-- <button pButton type="button" (click)="getSelectLinkRefGRN(i)" icon="fa fa fa-refresh" title="Load Items" class="ui-button-success barcodeBtn"></button> -->
-                            <!-- (onPanelHide)="getSelectLinkRefGRN()" -->
-                            <!-- <p-dropdown [options]="GRNpendingList" filter="true" formControlName="transactionLinkID"
-                            (onChange)="getSelectLinkRefGRN($event)" placeholder="GRN No." [style]="{'width':'95%'}"></p-dropdown> -->
-                        </span>
-                    </div>
-                </div>
-                <div class="ui-g-2">
-                    <button pButton type="button" (click)="getSelectLinkRefGRN(i)" icon="fa fa fa-refresh" title="Load Items" class="ui-button-success barcodeBtn"></button>
+                <div class="form-group">
+                    <span class="ui-float-label">
+                        <p-multiSelect [style]="{'width':'90%'}" [options]="GRNpendingList" [(ngModel)]="selectedGrns" defaultLabel="GRN No." formControlName="transactionLinkID"
+                        ></p-multiSelect>
+                        <!-- <button pButton type="button" (click)="getSelectLinkRefGRN(i)" icon="fa fa fa-refresh" title="Load Items" class="ui-button-success barcodeBtn"></button> -->
+                        <!-- (onPanelHide)="getSelectLinkRefGRN()" -->
+                        <!-- <p-dropdown [options]="GRNpendingList" filter="true" formControlName="transactionLinkID"
+                        (onChange)="getSelectLinkRefGRN($event)" placeholder="GRN No." [style]="{'width':'95%'}"></p-dropdown> -->
+                        <button pButton type="button" (click)="getSelectLinkRefGRN(i)" icon="fa fa fa-refresh" title="Load Items" class="ui-button-success" style="float: right;"></button>
+                    </span>
                 </div>
             </div>
 
