@@ -101,6 +101,8 @@ export const GETUSERMASTER = BASEURL + 'Users/GetUsersRightsMaster';
 export const GETUSERTYPE = BASEURL + 'Users/GetUsersTypes';
 export const CREATEUSER = BASEURL + 'Users/POSTUpdateUser';
 export const GETUSERMENUDETAILS = BASEURL + 'Users/GetUserMenuDetails';
+export const UPDATEUSERMENURIGHTS = BASEURL + 'Users/POSTUpdateUserMenuRights';
+export const UPDATEPASSWORD = BASEURL + 'Users/POSTChangePassword';
 
 export const GETPROCESSREQUEST = BASEURL + 'planning/GetProcessRequest';
 export const GETNOTIFICATION = BASEURL + 'dashboard/GetNotificationMessages';
@@ -117,3 +119,6 @@ export const GETFGITEMBOMLIST = BASEURL + 'Assembly/GetFGItemBOMList';
 export const GETWORKINSTRUCTIONDETAILSFORITEM = BASEURL + 'Assembly/GetWorkInstructionDetailsForItem';
 export const GETBARCODESTATUS = BASEURL + 'StockItem/GetStockItemRateByItemCode';
 export const GETASSEMBLER = BASEURL + 'Masters/GetAssemblerByCode';
+export const GETPENDINGGRNLIST = BASEURL + 'Transactions/GetPendingGRNList';
+export const GETTRANSACTIONLINKITEMS = BASEURL + 'Transactions/POSTTransctionLinkItemsList';
+export const UPDATETRANSACTIONPURCHASE = BASEURL + 'Transactions/UpdateTransactionPurchase';

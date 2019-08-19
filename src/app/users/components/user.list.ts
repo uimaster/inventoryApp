@@ -9,13 +9,17 @@ import { Router } from "@angular/router";
 })
 export class UsersListComponent implements OnInit {
   userList = [];
+  showLoader = false;
+
   constructor(private userService: UsersService, private router: Router) {}
 
   ngOnInit() {
     this.getUserList();
   }
   getUserList() {
+    this.showLoader = true;
     this.userService.getUserList().subscribe(res => {
+      this.showLoader = false;
       if (res && res.status === "200") {
         this.userList = res.data;
       }

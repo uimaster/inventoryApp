@@ -8,7 +8,6 @@ export class NotificationsService {
   notificationChange: Subject<Object> = new Subject<Object>();
 
   notify(severity: Severities, summary: string, detail: string) {
-  	console.log('enter');
-    this.notificationChange.next({ severity, summary, detail });
+  	this.notificationChange.next({ severity, summary, detail });
   }
 }

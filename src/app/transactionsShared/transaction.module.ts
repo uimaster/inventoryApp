@@ -10,12 +10,15 @@ import { StockService } from '../masters/stock/services/stock.service';
 import { LedgerService } from '../masters/ledger/services/ledger.service';
 import { SupplierService } from '../masters/supplier/services/supplier.service';
 import { CustomerService } from '../masters/customer/services/customer.service';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ConfirmationService} from 'primeng/api';
 
 @NgModule({
-  imports: [ CommonModule, RouterModule, PrimeNGModule, FormsModule, ReactiveFormsModule ],
+  imports: [ CommonModule, RouterModule, PrimeNGModule, FormsModule, ReactiveFormsModule,ConfirmDialogModule ],
   declarations: [ TransactionFormComponent],
   exports: [ TransactionFormComponent, PrimeNGModule],
-  providers: [ TransactionServices, PurchaseService, StockService, LedgerService, SupplierService, CustomerService],
+  providers: [ TransactionServices, PurchaseService, StockService, LedgerService, SupplierService, CustomerService,
+    ConfirmationService],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA]
 })
 

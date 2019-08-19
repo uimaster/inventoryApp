@@ -9,6 +9,8 @@ import {SupplierService} from "../masters/supplier/services/supplier.service";
 import {SelectItem} from "primeng/primeng";
 import {CustomerService} from "../masters/customer/services/customer.service";
 import {Alert} from "selenium-webdriver";
+import { NotificationsService } from '../notifications/notifications.service';
+import {ConfirmationService} from 'primeng/api';
 
 @Component({selector: "app-transaction-form", templateUrl: "./transaction.form.html", styleUrls: ["./transaction.form.scss"]})
 export class TransactionFormComponent implements OnInit,
@@ -32,6 +34,7 @@ OnDestroy {
     public customerList = [];
     public salesOrderPendingList = [];
     public POpendingList = [];
+    public GRNpendingList = [];
     public transactionTypeSeriesList = [];
     public boxDetailData = [];
     public batchDetailData = [];
@@ -70,6 +73,7 @@ OnDestroy {
     public showBarcode = false;
     public transationLinkRefInput = false;
     public transationLinkRefNamePO = false;
+    public transationLinkRefNameGRN = false;
     public GrnInput = false;
     public showBoxCode = false;
     // @ViewChild('taxSelect') taxSelect: ElementRef;
@@ -88,6 +92,7 @@ OnDestroy {
     public equalQtyList = [];
     public ItemBarCodeLength : any;
     public GRNvalidateStatus = false;
+    public selectedGrns = [];
 
     @ViewChild("itemBarCode")itemBarCode : ElementRef;
     @ViewChild("itemQtyGnr")itemQtyGnr : ElementRef;
@@ -107,7 +112,17 @@ OnDestroy {
     public disabledScanBtn = false;
     public lengthCalcStatus = false;
 
-    constructor(private fb : FormBuilder, private poService : PurchaseService, private stockService : StockService, private ledgerService : LedgerService, private trasactionService : TransactionServices, private supplierService : SupplierService, private customerService : CustomerService, private router : Router, private activatedRoute : ActivatedRoute) {}
+    constructor(private fb : FormBuilder, 
+        private poService : PurchaseService, 
+        private stockService : StockService, 
+        private ledgerService : LedgerService, 
+        private trasactionService : TransactionServices, 
+        private supplierService : SupplierService, 
+        private customerService : CustomerService, 
+        private router : Router, 
+        private activatedRoute : ActivatedRoute,
+        private notificationsService: NotificationsService,
+        private confirmationService: ConfirmationService) {}
 
     ngOnInit() {
         this.transItemDetails = JSON.parse(localStorage.getItem("transItemDetails"));
@@ -131,6 +146,7 @@ OnDestroy {
         this.showBarcode = JSON.parse(localStorage.getItem("showBarcode"));
         this.transationLinkRefInput = JSON.parse(localStorage.getItem("transationLinkRefInput"));
         this.transationLinkRefNamePO = JSON.parse(localStorage.getItem("transationLinkRefNamePO"));
+        this.transationLinkRefNameGRN = JSON.parse(localStorage.getItem("transationLinkRefNameGRN"));
         this.GrnInput = JSON.parse(localStorage.getItem("GrnInput"));
         this.showBoxCode = JSON.parse(localStorage.getItem("showBoxCode"));
         this.showActionBtn = JSON.parse(localStorage.getItem("showActionBtn"));
@@ -151,6 +167,7 @@ OnDestroy {
         this.getGstRate();
         // this.getPendingSalesOrderList();
         this.getPOPendingList();
+        //this.getGRNPendingList();
         this.getCustomers();
         this.getTransactionTypeSeries();
         setTimeout(() => {
@@ -551,6 +568,7 @@ OnDestroy {
     deleteItemLedger(index) {
         const ledgerArray = <FormArray>(this.transactionForm.get("transLedgerDetails"));
         ledgerArray.removeAt(index);
+        this.getAmount();
     }
 
     get taxRate() {
@@ -657,6 +675,9 @@ OnDestroy {
             this.trasactionService.getTransactionDetails(id).subscribe(res => {
                 if (res.status === "200") {
                     this.detailsData = res.data;
+                    if(this.transationLinkRefNameGRN){
+                        this.getGRNPendingList(this.detailsData[0].ledgerID);
+                    }
                     // if (this.detailsData[0].length > 0) {
                     this.transactionForm.controls["transactionID"].setValue(this.detailsData[0].transactionID);
                     this.transactionForm.controls["transactionDate"].setValue(this.convertToDateFormat(this.detailsData[0].transactionDate));
@@ -844,31 +865,55 @@ OnDestroy {
     }
 
     saveTransation(formData) {
-        if (this.transactionForm.valid) {
-            this.showLoader = true;
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to perform this action?',
+            accept: () => {
+                //Actual logic to perform a confirmation
+                if (this.transactionForm.valid) {
+                    this.showLoader = true;
+                    let fName = 'AddTransaction';
+                    if(this.transationLinkRefNameGRN){
+                        fName = 'UpdateTransactionPurchase';
+                        let obj = [];
+                        for (let index = 0; index < formData.transactionLinkID.length; index++) {
+                            const element = formData.transactionLinkID[index];
+                            obj.push({"TransactionLinkID":element});
+                        }
 
-            // const controlArray = <FormArray>this.transactionForm.get('transPOTerms');
-            // if (this.isEmpty(controlArray)) {
-            // let dateData = this.convertDateyymmdd(controlArray.controls[0].get('transactionDueDate').value);
-            // formData.transPOTerms[0].transactionDueDate = dateData;
-            // }
-
-            formData.transactionDate = this.convertDateyymmdd(formData.transactionDate);
-            this.trasactionService.AddTransaction(formData).subscribe(res => {
-                if (res && res.status === "200") {
-                    this.successMsg = res.message;
-                    this.showSuccess = true;
-                    let rollBackUrl = localStorage.getItem("rollBackUrl");
-                    setTimeout(() => {
-                        this.router.navigate(["/" + rollBackUrl]);
-                    }, 3000);
-                } else {
-                    this.errorMsg = res.message;
-                    this.showError = true;
-                    this.showLoader = false;
+                        for (let index = 0; index < formData.transItemDetails.length; index++) {
+                            formData.transItemDetails[index].itemReceived_Qty = formData.transItemDetails[index].itemQty;
+                        }
+                        //console.log('a',formData);
+                        formData.transLinkDetails = obj;
+                        formData.transactionLinkID = 0;
+                        formData.companyID = 1;
+                    }
+                    // const controlArray = <FormArray>this.transactionForm.get('transPOTerms');
+                    // if (this.isEmpty(controlArray)) {
+                    // let dateData = this.convertDateyymmdd(controlArray.controls[0].get('transactionDueDate').value);
+                    // formData.transPOTerms[0].transactionDueDate = dateData;
+                    // }
+        
+                    formData.transactionDate = this.convertDateyymmdd(formData.transactionDate);
+                    this.trasactionService[fName](formData).subscribe(res => {
+                        if (res && res.status === "200") {
+                            this.successMsg = res.message;
+                            //this.showSuccess = true;
+                            this.notificationsService.notify('success','Success','You have Updated/created successfully.');
+                            let rollBackUrl = localStorage.getItem("rollBackUrl");
+                            setTimeout(() => {
+                                this.router.navigate(["/" + rollBackUrl]);
+                            }, 3000);
+                        } else {
+                            this.errorMsg = res.message;
+                            //this.showError = true;
+                            this.notificationsService.notify('error','Error','Updatation/creation failed.')
+                            this.showLoader = false;
+                        }
+                    });
                 }
-            });
-        }
+            }
+        });
     }
 
     getCurrency() {
@@ -999,6 +1044,29 @@ OnDestroy {
         });
     }
 
+    getGRNPendingList(ledgerID) {
+        this.GRNpendingList = [];
+        //this.selectedGrns = [];
+        this.trasactionService.getPendingGRNList(ledgerID,this.transactionId).subscribe(res => {
+          if (res && res.status === "200") {
+            let data = res.data;
+            let selected = [];
+            for (let key in data) {
+              if (data.hasOwnProperty(key)) {
+                this.GRNpendingList.push({
+                  label: data[key].transactionNo,
+                  value: data[key].transactionID
+                });
+                if(data[key].grnSelected)
+                selected.push(data[key].transactionID);
+              }
+            }
+            this.selectedGrns = selected;
+            //console.log('selectedGrns',this.selectedGrns);
+          }
+        });
+    }
+
     getTaxRate(data, i) {
         const ledgerfrmArray = <FormArray>(this.transactionForm.get("transLedgerDetails"));
         ledgerfrmArray.controls[i].get("taxRate").setValue(data.selectedOption.rateofTax);
@@ -1029,6 +1097,89 @@ OnDestroy {
         }
         this.totalAmount = itemTotalAmount + grantLedgerAmnt;
         this.transactionForm.controls["transaction_Amount"].setValue(this.totalAmount);
+    }
+
+    getSelectLinkRefGRN(ids) {
+        let transactionIDs = this.transactionForm.controls['transactionLinkID'].value;
+        //console.log('transactionIDs',transactionIDs);
+        let inputPayload = [];
+        for (let index = 0; index < transactionIDs.length; index++) {
+            const element = transactionIDs[index];
+            inputPayload.push({
+                "TransactionID":element,
+                "TransactionLinkID": 0
+            });
+        }
+        this.trasactionService.getTransactionLinkItems(inputPayload).subscribe(res => {
+            if (res.status === "200") {
+                //console.log(res.data);
+                //details.push(res.data);
+                let detailsData = res.data;
+                // this.totalAmount = this.detailsData[0].transaction_Amount;
+                // this.transactionForm.controls["transaction_Amount"].setValue(this.detailsData[0].transaction_Amount);
+                // this.transactionForm.controls["ledgerID"].setValue(this.detailsData[0].ledgerID);
+                if (detailsData.length > 0 && this.transItemDetails) {
+                    this.ItemData = detailsData;
+                    const controlArray = <FormArray>(this.transactionForm.get("transItemDetails"));
+
+                    if (controlArray.length > 0) {
+                        while (controlArray.length !== 0) {
+                            controlArray.removeAt(0);
+                        }
+                    }
+                    this.barCodeApplicableStatus = [];
+                    for (var i = 0; i < this.ItemData.length; i++) {
+                        controlArray.push(this.fb.group({
+                            transactionID: [this.ItemData[i].transactionID],
+                            stockitemID: [this.ItemData[i].stockitemID],
+                            stockItemDesc: [this.ItemData[i].stockItemDesc],
+                            transactionItem_AdditionalDesciption: [this.ItemData[i].transactionItem_AdditionalDesciption],
+                            itemQty: [this.ItemData[i].itemQty],
+                            itemReceived_Qty: [this.ItemData[i].itemReceived_Qty],
+                            itemChallan_Qty: [0],
+                            itemPending_Qty: [this.ItemData[i].itemPending_Qty],
+                            itemRate: [this.ItemData[i].itemRate],
+                            itemAmount: [this.ItemData[i].itemAmount],
+                            itemStops: [this.ItemData[i].itemStops],
+                            itemLength: [this.ItemData[i].itemLength],
+                            itemEndLendth: [this.ItemData[i].itemEndLendth],
+                            itemStartLength: [this.ItemData[i].itemStartLength],
+                            itemBatchApplicable: [this.ItemData[i].itemBatchApplicable],
+                            packingBoxStockItemID: [this.ItemData[i].packingBoxStockItemID],
+                            transactionItemSerialNo: [this.ItemData[i].transactionItemSerialNo],
+                            locationID: [this.ItemData[i].locationID],
+                            boxCode: [this.ItemData[i].boxCode],
+                            itemBarCodeApplicableStatus: [this.ItemData[i].itemBarCodeApplicableStatus],
+                            itemBarCodeLength: [this.ItemData[i].itemBarCodeLength]
+                        }));
+                        this.barCodeApplicableStatus.push({status: this.ItemData[i].itemBarCodeApplicableStatus});
+                    }
+                    this.checkQty();
+                    this.getAmount();
+                }
+                //TODO:
+                // if (detailsData.length > 0 && this.transLedgerDetails) {
+                //     this.ledgerData = this.detailsData[0].transLedgerDetails;
+                //     const controlArray = <FormArray>(this.transactionForm.get("transLedgerDetails"));
+                //     if (controlArray.length > 0) {
+                //         while (controlArray.length !== 0) {
+                //             controlArray.removeAt(0);
+                //         }
+                //     }
+                //     for (var i = 0; i < this.ledgerData.length; i++) {
+                //         controlArray.push(this.fb.group({
+                //             transactionID: [this.ledgerData[i].transactionID],
+                //             ledgerID: [this.ledgerData[i].ledgerID],
+                //             taxRate: [this.ledgerData[i].taxRate],
+                //             ledgerAmount: [this.ledgerData[i].ledgerAmount]
+                //         }));
+                //     }
+                // }
+            }
+        });
+        return false;
+            
+        
     }
 
     getSelectLinkRef(event) {
@@ -1677,6 +1828,7 @@ OnDestroy {
             if (res && res.status === "200") {
                 let data = res.data;
                 this.setTaxTerms(data);
+                this.getGRNPendingList(supplierId);
             }
         });
     }
@@ -1776,6 +1928,7 @@ OnDestroy {
         localStorage.setItem("transationLinkRefInput", "false");
         localStorage.setItem("transationLinkRef", "false");
         localStorage.setItem("transationLinkRefNamePO", "false");
+        localStorage.setItem("transationLinkRefNameGRN", "false");
         localStorage.setItem("GrnInput", "false");
         localStorage.setItem("showBoxCode", "false");
         localStorage.setItem("showActionBtn", "false");

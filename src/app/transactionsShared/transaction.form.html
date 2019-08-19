@@ -1,5 +1,5 @@
-<div *ngIf="showLoader"
-  style="background: rgba(10,20,14,0.5); z-index: 1; position: fixed; left: 0; top: 0; right: 0; bottom: 0;">
+<p-confirmDialog header="Confirmation" icon="fa fa-question-circle" width="425"></p-confirmDialog>
+<div *ngIf="showLoader" style="background: rgba(10,20,14,0.5); z-index: 1; position: fixed; left: 0; top: 0; right: 0; bottom: 0;">
   <p-progressSpinner></p-progressSpinner>
 </div>
 <form [formGroup]="transactionForm" class="formData">
@@ -63,11 +63,27 @@
             <p-dropdown [options]="POpendingList" filter="true" formControlName="transactionLinkID"
               (onChange)="getSelectLinkRef($event)" placeholder="PO No." [style]="{'width':'95%'}"></p-dropdown>
           </span>
-        </div>
-      </div>
-      <div class="ui-g-6" *ngIf="transationLinkRefInput">
-        <div class="form-group">
-          <span class="ui-float-label">
+                </div>
+            </div>
+
+            <div class="ui-g-6" *ngIf="transationLinkRefNameGRN">
+                <div class="form-group">
+                    <span class="ui-float-label">
+                        <p-multiSelect [style]="{'width':'90%'}" [options]="GRNpendingList" [(ngModel)]="selectedGrns" defaultLabel="GRN No." formControlName="transactionLinkID"
+                        ></p-multiSelect>
+                        <!-- <button pButton type="button" (click)="getSelectLinkRefGRN(i)" icon="fa fa fa-refresh" title="Load Items" class="ui-button-success barcodeBtn"></button> -->
+                        <!-- (onPanelHide)="getSelectLinkRefGRN()" -->
+                        <!-- <p-dropdown [options]="GRNpendingList" filter="true" formControlName="transactionLinkID"
+                        (onChange)="getSelectLinkRefGRN($event)" placeholder="GRN No." [style]="{'width':'95%'}"></p-dropdown> -->
+                        <button pButton type="button" (click)="getSelectLinkRefGRN(i)" icon="fa fa fa-refresh" title="Load Items" class="ui-button-success" style="float: right;"></button>
+                    </span>
+                </div>
+            </div>
+
+
+            <div class="ui-g-6" *ngIf="transationLinkRefInput">
+                <div class="form-group">
+                    <span class="ui-float-label">
             <input type="text" formControlName="transactionLinkRef" pInputText id="transactionLinkID">
             <label for="transactionLinkRef">Commission No.</label>
             <!-- <p-dropdown [options]="POpendingList" formControlName="transactionLinkID"

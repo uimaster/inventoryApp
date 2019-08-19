@@ -19,7 +19,7 @@ export class TransactionServices {
   constructor(  private http: HttpClient) {}
 
   // GET TRANSACTION LIST //
-  getTransactionList(typeId, dates): Observable<any> {
+  getTransactionList(typeId, dates, SearchText = ''): Observable<any> {
     var starDate = '';
     var toDate = '';
 
@@ -34,7 +34,7 @@ export class TransactionServices {
       toDate = this.today;
     }
     const params = new HttpParams().set('CompanyID', '1').set('TransactionTypeID', typeId).set('FromDate', starDate)
-    .set('ToDate', toDate);
+    .set('ToDate', toDate).set('SearchText', SearchText);
     return this.http.get(urls.GETTRANSACTION, {params}).pipe(
       map(res => {
         return res;
@@ -112,6 +112,18 @@ export class TransactionServices {
     .catch((error) => Observable.throw('server Error.'));
   }
 
+  getPendingGRNList(LedgerID,TransactionID): Observable<any> {
+    let url = '';
+    const rollbackurl = localStorage.getItem('rollBackUrl');
+    url = urls.GETPENDINGGRNLIST;
+    const params = new HttpParams().set('LedgerID', LedgerID).set('TransactionID', TransactionID);
+    return this.http.get(url, {params})
+    .map((res: any) => {
+        return res;
+    })
+    .catch((error) => Observable.throw('server Error.'));
+  }
+
   generateReport(id) {
     const transactionType = localStorage.getItem('transactionTypeId');
     const params = new HttpParams().set('TransactionID', id).set('ReportTypeID', transactionType);
@@ -168,6 +180,22 @@ export class TransactionServices {
         return res;
       })
     );
+  }
+
+  getTransactionLinkItems(payload: any): Observable<any> {
+    return this.http.post(urls.GETTRANSACTIONLINKITEMS, payload)
+    .map((res: any) => {
+      return res;
+    })
+      .catch((error) => Observable.throw(error.json() || 'Server error'));
+  }
+
+  UpdateTransactionPurchase(payload: any): Observable<any> {
+    return this.http.post(urls.UPDATETRANSACTIONPURCHASE, payload)
+    .map((res: any) => {
+      return res;
+    })
+      .catch((error) => Observable.throw(error.json() || 'Server error'));
   }
 
 }
