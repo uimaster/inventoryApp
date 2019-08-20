@@ -239,8 +239,7 @@
                     <td><input type="text" formControlName="itemQty" pInputText (keyup)="getAmount()" [class.verified]="equalQtyList[i]===i && showScannedQty" [class.pending]="equalQtyList[i]!==i && showScannedQty"></td>
 
                     <td *ngIf="showBoxCode"><input type="text" formControlName="boxCode" pInputText [attr.disabled]="showActionBtn == true? true : null"></td>
-
-                    <td *ngIf="!showScannedQty"><input type="text" formControlName="itemRate" pInputText (keyup)="getAmount()" [attr.disabled]="showActionBtn == true? true : null"></td>
+                    <td *ngIf="!showScannedQty"><input type="text" formControlName="itemRate" pInputText (keyup)="getAmount()" [attr.disabled]="(showActionBtn == true && !enableRateInput)? true : null"></td>
 
                     <td *ngIf="!showScannedQty"><input type="text" formControlName="itemAmount" pInputText (keyup)="getAmount()" [attr.disabled]="showActionBtn == true? true : null"></td>
 
