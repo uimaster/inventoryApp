@@ -16,7 +16,17 @@ export class DetailsComponent implements OnInit {
   public showLoader = false;
   public displayworksModal = false;
   public plValidationMsg = "";
-  @ViewChild("barCode") barCode: ElementRef;
+  public displayGrnBarcodeDialog = false;
+  @ViewChild("itemBarCode") itemBarCode: ElementRef;
+  @ViewChild("itemQtyGnr") itemQtyGnr: ElementRef;
+  @ViewChild("startLength") startLength: ElementRef;
+  @ViewChild("endtLength") endtLength: ElementRef;
+  public grnBarcodeTitle: any;
+  public grnValidationMsg = "";
+  public BarcodeSuccessMsg = "";
+  public GRNvalidateStatus = false;
+  public ItemBarCodeLength: any;
+  public currentIndex: number;
 
   constructor(
     private fb: FormBuilder,
@@ -26,10 +36,11 @@ export class DetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.currentIndex = 0;
     this.createForm();
     setTimeout(() => {
       this.getWorkInstructionDetails();
-    }, 100);
+    }, 500);
   }
 
   createForm() {
@@ -43,7 +54,7 @@ export class DetailsComponent implements OnInit {
       StockItemID: [],
       AssemblerID: [0],
       AssemblerName: ["", Validators.required],
-      AssemblyWorkInstructionDetails: this.fb.array([]),
+      assemblyWorkInstructionDetails: this.fb.array([]),
       AssemblyBatchDetails: this.fb.array([])
     });
   }
@@ -84,10 +95,20 @@ export class DetailsComponent implements OnInit {
   }
 
   deleteItemBatch(index) {
-    const BatchFormArray = <FormArray>(
+    const batchFormArray = <FormArray>(
       this.workInstructionForm.controls["AssemblyBatchDetails"]
     );
-    BatchFormArray.removeAt(index);
+    const itemCode = batchFormArray.controls[index].get("stockItemID").value;
+    const detailsFormArray = <FormArray>(
+      this.workInstructionForm.controls["assemblyWorkInstructionDetails"]
+    );
+    for (let i = 0; i < detailsFormArray.length; i++) {
+      if (detailsFormArray.controls[i].get("stockItemID").value === itemCode) {
+        const getQty = detailsFormArray.controls[i].get("qty").value;
+        detailsFormArray.controls[i].get("qty").setValue(getQty - 1);
+      }
+    }
+    batchFormArray.removeAt(index);
   }
 
   getWorkInstructionDetails() {
@@ -95,6 +116,9 @@ export class DetailsComponent implements OnInit {
       if (res.status === "200") {
         if (res.data.length > 0) {
           this.workInstructionDetails = res.data;
+          this.workInstructionForm.controls["AssemblyWorkInstructionID"].setValue(
+            this.workInstructionDetails[0].assemblyWorkInstructionID
+          );
           this.workInstructionForm.controls["StockItemID"].setValue(
             this.workInstructionDetails[0].stockItemID
           );
@@ -111,6 +135,40 @@ export class DetailsComponent implements OnInit {
           this.workInstructionForm.controls["AssemblerID"].setValue(
             this.workInstructionDetails[0].assemblerCode
           );
+
+          const AssemblFormArray = <FormArray>(
+            this.workInstructionForm.controls["assemblyWorkInstructionDetails"]
+          );
+
+          if (
+            this.workInstructionDetails[0].assemblyWorkInstructionDetails
+              .length > 0
+          ) {
+            for (
+              var i = 0;
+              i <
+              this.workInstructionDetails[0].assemblyWorkInstructionDetails
+                .length;
+              i++
+            ) {
+              AssemblFormArray.push(
+                this.fb.group({
+                  instructionSRNo: [
+                    this.workInstructionDetails[0]
+                      .assemblyWorkInstructionDetails[i].instructionSRNo
+                  ],
+                  stockItemID: [
+                    this.workInstructionDetails[0]
+                      .assemblyWorkInstructionDetails[i].stockitemId
+                  ],
+                  qty: [
+                    this.workInstructionDetails[0]
+                      .assemblyWorkInstructionDetails[i].qty
+                  ]
+                })
+              );
+            }
+          }
 
           const BatchFormArray = <FormArray>(
             this.workInstructionForm.controls["AssemblyBatchDetails"]
@@ -147,82 +205,107 @@ export class DetailsComponent implements OnInit {
     });
   }
 
-  getOpenBarcodeModal() {
-    this.displayworksModal = true;
-    this.barCode.nativeElement.value = "";
-    this.plValidationMsg = "";
-  }
+  addGrnBarcode(barcodeSeries) {
+    const itemBarCodeVal = this.itemBarCode.nativeElement.value;
+    const itemCode = (this.ItemBarCodeLength = this.workInstructionDetails[0].assemblyWorkInstructionDetails[
+      this.currentIndex
+    ].batchLength);
 
-  getStartScan() {
-    // setTimeout(() => {
-    var inputData = this.barCode.nativeElement.value;
-    if (inputData !== "") {
-      var barcodeVal = inputData.trim().split("-");
-      if (barcodeVal[1]) {
-        if (barcodeVal[1].length === 7) {
-          this.startScan();
-        }
-      }
-    } else {
-      alert("Please enter correct Barcode.");
-    }
-    // }, 1000);
-  }
-
-  startScan() {
-    var inputData = this.barCode.nativeElement.value;
-    const barchArray = <FormArray>(
-      this.workInstructionForm.controls["AssemblyBatchDetails"]
-    );
-    for (var i = 0; i < barchArray.length; i++) {
-      barchArray.removeAt(i);
-    }
-
-    if (inputData !== "") {
-      var barcodeVal = inputData.split("-");
-      var splitBarcode = "";
-      var splitBatchCode = "";
-      if ((barcodeVal !== 0 && barcodeVal !== undefined) || barcodeVal !== "") {
-        if (barcodeVal[0].trim() !== null) {
-          splitBarcode = barcodeVal[0].trim();
-        }
-        if (barcodeVal[1].trim() !== null) {
-          splitBatchCode = barcodeVal[1].trim();
-        }
-        this.getBatchValidateForSerial(splitBarcode, splitBatchCode, 1);
-      } else {
-        alert("Please enter correct data.");
-      }
-    }
-  }
-
-  getBatchValidateForSerial(itemcode, batchcode, type) {
-    const AssemblFormArray = <FormArray>(
-      this.workInstructionForm.controls["AssemblyWorkInstructionDetails"]
-    );
-    const BatchFormArray = <FormArray>(
-      this.workInstructionForm.controls["AssemblyBatchDetails"]
-    );
-    this.transactionService
-      .validateBatch(itemcode, batchcode, type)
-      .subscribe(res => {
-        if (res.status === "200") {
-          // AssemblFormArray.push(this.fb.group({
-          //     InstructionSRNo: [currentRowData.instructionSRNo],
-          //     StockitemId: [currentRowData.stockItemID],
-          //     Qty: [currentRowData.qty]
-          // }));
-          BatchFormArray.push(
-            this.fb.group({
-              batchid: [res.data[0].batchid],
-              batchno: [res.data[0].batchno],
-              stockItemID: [res.data[0].stockItemID],
-              qty: [JSON.parse(res.data[0].qty)]
-            })
+    if (itemBarCodeVal !== null || itemBarCodeVal !== "") {
+      this.transactionService
+        .validateBatch(itemCode, barcodeSeries, 2)
+        .subscribe(res => {
+          const BatchFormArray = <FormArray>(
+            this.workInstructionForm.controls["AssemblyBatchDetails"]
           );
-        } else {
-          alert(res.message);
-        }
-      });
+          if (res.status === "200") {
+            BatchFormArray.push(
+              this.fb.group({
+                batchid: [res.data[0].batchid],
+                batchno: [res.data[0].batchno],
+                stockItemID: [res.data[0].stockItemID],
+                qty: [res.data[0].qty]
+              })
+            );
+            this.displayGrnBarcodeDialog = false;
+            const itemcode = BatchFormArray.controls[this.currentIndex].get(
+              "stockItemID"
+            ).value;
+            const detailsFormArray = <FormArray>(
+              this.workInstructionForm.controls[
+                "assemblyWorkInstructionDetails"
+              ]
+            );
+            for (let i = 0; i < detailsFormArray.length; i++) {
+              if (
+                detailsFormArray.controls[i].get("stockItemID").value ===
+                itemcode
+              ) {
+                const getQty = detailsFormArray.controls[i].get("qty").value;
+                detailsFormArray.controls[i].get("qty").setValue(getQty + 1);
+              }
+            }
+          } else {
+            alert(res.message);
+            this.itemBarCode.nativeElement.value = "";
+          }
+        });
+    }
   }
+
+  clearErrorBox() {
+    this.plValidationMsg = "";
+    this.BarcodeSuccessMsg = "";
+  }
+
+  showGrnBarcodeDialog(index) {
+    // if (this.workInstructionDetails[0].assemblyWorkInstructionDetails[index].batchStatus && this.workInstructionDetails[0].assemblyWorkInstructionDetails[index].qty > this.workInstructionDetails[0].assemblyWorkInstructionDetails[index].scanQty) {
+    if (
+      this.workInstructionDetails[0].assemblyWorkInstructionDetails[index]
+        .batchStatus
+    ) {
+      this.currentIndex = index;
+      this.displayGrnBarcodeDialog = true;
+      this.grnValidationMsg = "";
+      this.BarcodeSuccessMsg = "";
+      var stockItemId = 0;
+      const controlArray = <FormArray>(
+        this.workInstructionForm.get("assemblyWorkInstructionDetails")
+      );
+      stockItemId = controlArray.controls[index].get("stockItemID").value;
+      this.ItemBarCodeLength = this.workInstructionDetails[0].assemblyWorkInstructionDetails[
+        index
+      ].batchLength;
+      // this.ItemBarCodeLength = controlArray.controls[index].get("batchLength").value;
+      this.itemBarCode.nativeElement.value = "";
+    } else {
+      alert("This Item is not applicable for Barcode Scan.");
+      return false;
+    }
+  }
+
+  callGRNBarcode() {
+    this.grnValidationMsg = "";
+    this.BarcodeSuccessMsg = "";
+    const itemBarCodeVal = this.itemBarCode.nativeElement.value;
+    if (itemBarCodeVal.length === this.ItemBarCodeLength) {
+      this.addGrnBarcode(itemBarCodeVal);
+    } else if (itemBarCodeVal.length > this.ItemBarCodeLength) {
+      alert("Barcode length should be equal of " + this.ItemBarCodeLength);
+    }
+  }
+
+  saveWorkInstruction(data) {
+    this.showLoader = true;
+    // let date = this.convertToDateFormat(data.AssemblyWorkInstructionDate);
+    // this.workInstructionForm.controls['AssemblyWorkInstructionDate'].setValue(date);
+    this.workInstructionService.postWorkInstructionDetails(data).subscribe(val => {
+        alert(val.message);
+        this.showLoader = false;
+        setTimeout(() => {
+            this.router.navigate(["/production/workInstruction"]);
+        }, 2000);
+    });
+    this.showLoader = false;
+}
 }

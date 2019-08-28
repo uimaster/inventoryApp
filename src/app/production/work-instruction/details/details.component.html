@@ -12,7 +12,7 @@
         <div class="ui-g-3">
           <div class="form-group" style="margin:0">
             <span class="ui-float-label">
-              <input type="text" formControlName="serialNumber" pInputText disabled>
+              <input type="text" formControlName="serialNumber" pInputText readonly>
               <label for="transactionNo">Serial No.</label>
             </span>
           </div>
@@ -20,7 +20,7 @@
         <div class="ui-g-3" style="margin:0">
           <div class="form-group">
             <span class="ui-float-label">
-              <input type="text" pInputText formControlName="BatchNo" disabled>
+              <input type="text" pInputText formControlName="BatchNo" readonly>
               <label for="transactionNo">Finish Good Id</label>
             </span>
           </div>
@@ -28,7 +28,7 @@
         <div class="ui-g-3">
           <div class="form-group" style="margin:0">
             <span class="ui-float-label">
-              <input type="text" pInputText formControlName="AssemblerID" disabled>
+              <input type="text" pInputText formControlName="AssemblerID" readonly>
               <label for="transactionNo">Assembly Code</label>
             </span>
           </div>
@@ -36,7 +36,7 @@
         <div class="ui-g-3" style="margin:0">
           <div class="form-group">
             <span class="ui-float-label">
-              <input type="text" pInputText formControlName="AssemblerName" disabled>
+              <input type="text" pInputText formControlName="AssemblerName" readonly>
               <label for="transactionNo">Assembly Name</label>
             </span>
           </div>
@@ -49,51 +49,31 @@
       <table class="table">
         <thead>
           <tr>
-            <th>Instruction SR. No.</th>
-            <th>Instruction Description</th>
+            <th>SR. No.</th>
+            <th>Description</th>
             <th>Item Desc.</th>
             <th>Qty</th>
             <!-- <th>stockItemID</th> -->
           </tr>
         </thead>
-        <tbody>
-          <ng-container *ngIf="workInstructionDetails">
-            <tr *ngFor="let item of workInstructionDetails[0]?.assemblyWorkInstructionDetails;">
-              <td style="text-align: center">{{item.instructionSRNo}}</td>
+        <tbody formArrayName="assemblyWorkInstructionDetails">
+            <!-- <tr *ngFor="let item of workInstructionDetails[0]?.assemblyWorkInstructionDetails;"> -->
+              <!-- <td style="text-align: center">{{item.instructionSRNo}}</td>
               <td>{{item.instructiondescription || '-'}}</td>
               <td>{{item.itemDesc  || '-'}}</td>
-              <td>{{item.qty  || '0'}}</td>
+              <td>{{item.qty  || '0'}}</td> -->
+
+              <tr *ngFor="let ctrl of workInstructionForm.get('assemblyWorkInstructionDetails').controls; let x = index;"
+                [formGroupName]="x">
+                <td><input type="text" formControlName="instructionSRNo" pInputText readonly></td>
+                <td><input type="text" formControlName="stockItemID" pInputText readonly></td>
+                <td><input type="text" formControlName="qty" pInputText readonly></td>
+              <!-- </tr> -->
               <td>
-                <button pButton type="button" label="Scan" [disabled]="item.batchStatus===false" class="ui-button-success"
-                  (click)="getOpenBarcodeModal(item.stockitemId)">
+                <button pButton type="button" label="Scan" class="ui-button-success" (click)="showGrnBarcodeDialog(x)">
                 </button>
               </td>
             </tr>
-            <!-- <tr *ngIf="workInstructionDetails.length > 0">
-              <td colspan="5" class="text-right" style="background:#f6f6f6; padding-top:20px;">
-                <button pButton type="button" [disabled]="rowLength > 0 || disableAll" label="Next"
-                  style="width:100px; padding:5px; float:right; font-size:16px; margin-right:10px; "
-                  class="ui-button-success right" (click)="getValidateQty()"></button>
-                <div class="form-group" style="width:100px; float:right; margin-right:10px; margin-bottom:0">
-                  <span class="ui-float-label">
-                    <input type="text" pInputText #quantity [disabled]="!disabledSerial || disableAll">
-                    <label for="transactionNo">Quantity</label>
-                  </span>
-                </div>
-                <div class="form-group" style="width:250px; float:right; margin-right:10px; margin-bottom:0">
-                  <span class="ui-float-label">
-                    <input type="text" pInputText #serialNum [disabled]="disabledSerial || disableAll"
-                      (input)="startScanSerial($event)">
-                    <label for="transactionNo">Serial No.</label>
-                  </span>
-                </div>
-                <small [hidden]="rowLength === 0" style=" float: right;
-                                margin-right: 10px; margin-bottom: 0; margin-top: 1px;
-                                font-size: 11px; width: 170px;">Serial Length is: <b>{{rowLength}}</b>, Please enter
-                  same length serial to start scan.</small>
-              </td>
-            </tr> -->
-          </ng-container>
         </tbody>
       </table>
     </div>
@@ -113,9 +93,9 @@
         <tbody>
           <tr *ngFor="let ctrl of workInstructionForm.get('AssemblyBatchDetails').controls; let i = index;"
             [formGroupName]="i">
-            <td><input type="text" formControlName="batchno" pInputText disabled="disabled"></td>
-            <td><input type="text" formControlName="stockItemID" pInputText disabled="disabled"></td>
-            <td><input type="text" formControlName="qty" pInputText disabled="disabled"></td>
+            <td><input type="text" formControlName="batchno" pInputText readonly></td>
+            <td><input type="text" formControlName="stockItemID" pInputText readonly></td>
+            <td><input type="text" formControlName="qty" pInputText readonly></td>
             <td>
               <button pButton type="button" label="Delete" class="ui-button-danger"
                 (click)="deleteItemBatch(i)">
@@ -126,29 +106,35 @@
       </table>
     </div>
   </p-panel>
-  <!-- <br />
+  <br />
   <p class="text-center" style="margin-bottom:10px;">
     <a pButton type="button" label="Cancel" class="ui-button-secondary" (click)="cancel()"></a>
-    <button pButton type="button" label="Save" [disabled]="!disableAll" class="ui-button-success"
+    <button pButton type="button" label="Save" class="ui-button-success"
       (click)="saveWorkInstruction(workInstructionForm.value)">
     </button>
-  </p> -->
+  </p>
 </form>
 
-
-<p-dialog header="Barcode Scan Dialog" [(visible)]="displayworksModal" [modal]="true" [responsive]="true"
-  [style]="{width: '350px', minWidth: '200px'}" [minY]="70" [maximizable]="true" [baseZIndex]="10000">
-  <p style="background-color:#ffcaca; padding:0 5px; line-height:34px; border-radius:4px;">{{plValidationMsg}}</p>
-  <p style="background-color:#beefc8; padding:0 5px; line-height:34px; border-radius:4px; color:#18722b;">
-    {{BarcodeSuccessMsg}}</p><br />
-  <div class="form-group">
-    <span class="ui-float-label">
-      <input type="text" pInputText id="barCode" #barCode (input)="getStartScan()" />
-      <label for="barCode">Barcode</label>
-    </span>
-  </div>
-  <p-footer class="text-center">
-    <button type="button" pButton (click)="displayworksModal=false" label="Cancel" class="ui-button-secondary"></button>
-    <!-- <button type="button" pButton (click)="startScan()" label="Scan"></button> -->
-  </p-footer>
-</p-dialog>
+<div class="lengthModal">
+  <p-dialog [header]="grnBarcodeTitle" [(visible)]="displayGrnBarcodeDialog" [modal]="true" [responsive]="true"
+    [style]="{width: '350px', minWidth: '200px'}" [minY]="70" [maximizable]="true" [baseZIndex]="10000">
+    <div>
+      <p style="border-radius:4px; color:#18722b; margin-bottom: 0"><small>This item's Bar Code Length is
+          {{ItemBarCodeLength}}.</small></p>
+      <p style="background-color:#ffcaca; padding:0 5px; line-height:34px; border-radius:4px;">{{grnValidationMsg}}</p>
+      <p style="background-color:#beefc8; padding:0 5px; line-height:34px; border-radius:4px; color:#18722b;">
+        {{BarcodeSuccessMsg}}</p><br />
+      <div class="form-group">
+        <span class="ui-float-label">
+          <input type="text" pInputText #itemBarCode (input)="clearErrorBox(); callGRNBarcode();">
+          <label for="barCode">Enter Barcode</label>
+        </span>
+      </div>
+    </div>
+    <p-footer>
+      <button type="button" pButton (click)="displayGrnBarcodeDialog=false" label="Cancel"
+        class="ui-button-secondary"></button>
+      <button type="button" pButton (click)="addGrnBarcode()" label="Add"></button>
+    </p-footer>
+  </p-dialog>
+</div>
