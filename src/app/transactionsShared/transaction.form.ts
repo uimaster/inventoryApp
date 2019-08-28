@@ -57,6 +57,7 @@ OnDestroy {
     public date5 = new Date();
     public date4 = new Date();
     public showActionBtn = false;
+    public enableRateInput = false;
     public showSupplier = false;
     public showLedger = true;
     public transationLinkRef = false;
@@ -150,6 +151,7 @@ OnDestroy {
         this.GrnInput = JSON.parse(localStorage.getItem("GrnInput"));
         this.showBoxCode = JSON.parse(localStorage.getItem("showBoxCode"));
         this.showActionBtn = JSON.parse(localStorage.getItem("showActionBtn"));
+        this.enableRateInput = JSON.parse(localStorage.getItem("enableRateInput"));
         this.showBarcode4Pl = JSON.parse(localStorage.getItem("showBarcode4Pl"));
         this.showBarcode4Fg = JSON.parse(localStorage.getItem("showBarcode4Fg"));
         this.showScannedQty = JSON.parse(localStorage.getItem("showScannedQty"));
@@ -1932,6 +1934,7 @@ OnDestroy {
         localStorage.setItem("GrnInput", "false");
         localStorage.setItem("showBoxCode", "false");
         localStorage.setItem("showActionBtn", "false");
+        localStorage.setItem("enableRateInput", "false");
         localStorage.setItem("showBarcode4Pl", "false");
         localStorage.setItem("showBarcode4Fg", "false");
         localStorage.setItem("showScannedQty", "false");

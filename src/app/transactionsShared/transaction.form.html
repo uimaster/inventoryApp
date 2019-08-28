@@ -218,7 +218,7 @@
           <td *ngIf="showBoxCode"><input type="text" formControlName="boxCode" pInputText
               [attr.disabled]="showActionBtn == true? true : null"></td>
           <td *ngIf="!showScannedQty"><input type="text" formControlName="itemRate" pInputText (keyup)="getAmount()"
-              [attr.disabled]="showActionBtn == true? true : null"></td>
+              [attr.disabled]="(showActionBtn == true && !enableRateInput)? true : null"></td>
           <td *ngIf="!showScannedQty"><input type="text" formControlName="itemAmount" pInputText (keyup)="getAmount()"
               [attr.disabled]="showActionBtn == true? true : null"></td>
           <td style="text-align:center">
