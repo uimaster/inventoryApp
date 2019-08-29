@@ -49,31 +49,27 @@
       <table class="table">
         <thead>
           <tr>
-            <th>SR. No.</th>
+            <th>S.No</th>
             <th>Description</th>
+            <th>Item Code.</th>
             <th>Item Desc.</th>
             <th>Qty</th>
-            <!-- <th>stockItemID</th> -->
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody formArrayName="assemblyWorkInstructionDetails">
-            <!-- <tr *ngFor="let item of workInstructionDetails[0]?.assemblyWorkInstructionDetails;"> -->
-              <!-- <td style="text-align: center">{{item.instructionSRNo}}</td>
-              <td>{{item.instructiondescription || '-'}}</td>
-              <td>{{item.itemDesc  || '-'}}</td>
-              <td>{{item.qty  || '0'}}</td> -->
-
-              <tr *ngFor="let ctrl of workInstructionForm.get('assemblyWorkInstructionDetails').controls; let x = index;"
-                [formGroupName]="x">
-                <td><input type="text" formControlName="instructionSRNo" pInputText readonly></td>
-                <td><input type="text" formControlName="stockItemID" pInputText readonly></td>
-                <td><input type="text" formControlName="qty" pInputText readonly></td>
-              <!-- </tr> -->
-              <td>
-                <button pButton type="button" label="Scan" class="ui-button-success" (click)="showGrnBarcodeDialog(x)">
-                </button>
-              </td>
-            </tr>
+          <tr *ngFor="let ctrl of workInstructionForm.get('assemblyWorkInstructionDetails').controls; let x = index;"
+            [formGroupName]="x">
+            <td>{{x+1}}</td>
+            <td><input type="text" formControlName="instructiondescription" pInputText readonly></td>
+            <td><input type="text" formControlName="itemCode" pInputText readonly></td>
+            <td><input type="text" formControlName="itemDesc" pInputText readonly></td>
+            <td><input type="text" formControlName="qty" pInputText readonly></td>
+            <td>
+              <button pButton type="button" label="Scan" class="ui-button-success" (click)="showGrnBarcodeDialog(x)">
+              </button>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -85,20 +81,21 @@
     <div style="max-height:200px; overflow:auto; padding: 15px;">
       <table width="100%" class="fieldTable">
         <thead>
+          <th>S. No</th>
           <th>Batch No.</th>
-          <th>Item Name</th>
+          <th>Item Code</th>
           <th>Quantity</th>
           <th>action</th>
         </thead>
         <tbody>
           <tr *ngFor="let ctrl of workInstructionForm.get('AssemblyBatchDetails').controls; let i = index;"
             [formGroupName]="i">
-            <td><input type="text" formControlName="batchno" pInputText readonly></td>
-            <td><input type="text" formControlName="stockItemID" pInputText readonly></td>
+            <td>{{i+1}}</td>
+            <td><input type="text" formControlName="batchNo" pInputText readonly></td>
+            <td><input type="text" formControlName="itemCode" pInputText readonly></td>
             <td><input type="text" formControlName="qty" pInputText readonly></td>
             <td>
-              <button pButton type="button" label="Delete" class="ui-button-danger"
-                (click)="deleteItemBatch(i)">
+              <button pButton type="button" label="Delete" class="ui-button-danger" (click)="deleteItemBatch(i)">
               </button>
             </td>
           </tr>
@@ -114,7 +111,6 @@
     </button>
   </p>
 </form>
-
 <div class="lengthModal">
   <p-dialog [header]="grnBarcodeTitle" [(visible)]="displayGrnBarcodeDialog" [modal]="true" [responsive]="true"
     [style]="{width: '350px', minWidth: '200px'}" [minY]="70" [maximizable]="true" [baseZIndex]="10000">

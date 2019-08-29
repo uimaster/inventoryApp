@@ -60,15 +60,26 @@ export class DetailsComponent implements OnInit {
   }
 
   instructionDetailsForm() {
-    return this.fb.group({ InstructionSRNo: [], StockitemId: [], Qty: [] });
+    return this.fb.group({ 
+      InstructionSRNo: [],
+      StockitemId: [],
+      Qty: [],
+      batchLength:[],
+      batchStatus: [],
+      itemCode: [],
+      itemDesc: [],
+      scanQty: [],
+      instructiondescription:[]
+    });
   }
 
   instructionBatchDetailsForm() {
     return this.fb.group({
-      batchid: [0],
-      batchno: [""],
+      batchID: [0],
+      batchNo: [""],
       stockItemID: [0],
-      qty: [0]
+      qty: [0],
+      itemCode: [0]
     });
   }
   get serialNumber() {
@@ -157,13 +168,37 @@ export class DetailsComponent implements OnInit {
                     this.workInstructionDetails[0]
                       .assemblyWorkInstructionDetails[i].instructionSRNo
                   ],
-                  stockItemID: [
+                  stockitemId: [
                     this.workInstructionDetails[0]
                       .assemblyWorkInstructionDetails[i].stockitemId
                   ],
                   qty: [
                     this.workInstructionDetails[0]
                       .assemblyWorkInstructionDetails[i].qty
+                  ],
+                  batchLength: [
+                    this.workInstructionDetails[0]
+                      .assemblyWorkInstructionDetails[i].batchLength
+                  ],
+                  batchStatus: [
+                    this.workInstructionDetails[0]
+                      .assemblyWorkInstructionDetails[i].batchStatus
+                  ],
+                  itemCode: [
+                    this.workInstructionDetails[0]
+                      .assemblyWorkInstructionDetails[i].itemCode
+                  ],
+                  itemDesc: [
+                    this.workInstructionDetails[0]
+                      .assemblyWorkInstructionDetails[i].itemDesc
+                  ],
+                  scanQty: [
+                    this.workInstructionDetails[0]
+                      .assemblyWorkInstructionDetails[i].scanQty
+                  ],
+                  instructiondescription: [
+                    this.workInstructionDetails[0]
+                      .assemblyWorkInstructionDetails[i].instructiondescription
                   ]
                 })
               );
@@ -181,11 +216,11 @@ export class DetailsComponent implements OnInit {
             ) {
               BatchFormArray.push(
                 this.fb.group({
-                  batchid: [
+                  batchID: [
                     this.workInstructionDetails[0].assemblyBatchDetails[i]
                       .batchID
                   ],
-                  batchno: [
+                  batchNo: [
                     this.workInstructionDetails[0].assemblyBatchDetails[i]
                       .batchNo
                   ],
@@ -195,6 +230,9 @@ export class DetailsComponent implements OnInit {
                   ],
                   qty: [
                     this.workInstructionDetails[0].assemblyBatchDetails[i].qty
+                  ],
+                  itemCode: [
+                    this.workInstructionDetails[0].assemblyBatchDetails[i].itemCode
                   ]
                 })
               );
@@ -221,10 +259,11 @@ export class DetailsComponent implements OnInit {
           if (res.status === "200") {
             BatchFormArray.push(
               this.fb.group({
-                batchid: [res.data[0].batchid],
-                batchno: [res.data[0].batchno],
+                batchID: [res.data[0].batchID],
+                batchNo: [res.data[0].batchNo],
                 stockItemID: [res.data[0].stockItemID],
-                qty: [res.data[0].qty]
+                qty: [res.data[0].qty],
+                itemCode: [res.data[0].itemCode]
               })
             );
             this.displayGrnBarcodeDialog = false;
