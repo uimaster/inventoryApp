@@ -62,7 +62,7 @@ export class DetailsComponent implements OnInit {
   instructionDetailsForm() {
     return this.fb.group({ 
       InstructionSRNo: [],
-      StockitemId: [],
+      stockItemID: [],
       Qty: [],
       batchLength:[],
       batchStatus: [],
@@ -168,7 +168,7 @@ export class DetailsComponent implements OnInit {
                     this.workInstructionDetails[0]
                       .assemblyWorkInstructionDetails[i].instructionSRNo
                   ],
-                  stockitemId: [
+                  stockItemID: [
                     this.workInstructionDetails[0]
                       .assemblyWorkInstructionDetails[i].stockitemId
                   ],
@@ -247,7 +247,7 @@ export class DetailsComponent implements OnInit {
     const itemBarCodeVal = this.itemBarCode.nativeElement.value;
     const itemCode = (this.ItemBarCodeLength = this.workInstructionDetails[0].assemblyWorkInstructionDetails[
       this.currentIndex
-    ].batchLength);
+    ].itemCode);
 
     if (itemBarCodeVal !== null || itemBarCodeVal !== "") {
       this.transactionService
@@ -259,13 +259,14 @@ export class DetailsComponent implements OnInit {
           if (res.status === "200") {
             BatchFormArray.push(
               this.fb.group({
-                batchID: [res.data[0].batchID],
-                batchNo: [res.data[0].batchNo],
+                batchID: [res.data[0].batchid],
+                batchNo: [res.data[0].batchno],
                 stockItemID: [res.data[0].stockItemID],
                 qty: [res.data[0].qty],
                 itemCode: [res.data[0].itemCode]
               })
             );
+            debugger;
             this.displayGrnBarcodeDialog = false;
             const itemcode = BatchFormArray.controls[this.currentIndex].get(
               "stockItemID"

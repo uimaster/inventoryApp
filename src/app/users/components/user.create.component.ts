@@ -4,12 +4,11 @@ import {
   ChangeDetectorRef,
   AfterViewInit
 } from "@angular/core";
-import { Router,ActivatedRoute } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { FormGroup, FormBuilder, FormArray, Validators } from "@angular/forms";
 
 import { UsersService } from "../service/user.service";
-import { NotificationsService } from '../../notifications/notifications.service';
-
+import { NotificationsService } from "../../notifications/notifications.service";
 
 @Component({
   selector: "app-create-users",
@@ -38,42 +37,42 @@ export class CreateUsersComponent implements OnInit {
   constructor(
     private userService: UsersService,
     private activeRoute: ActivatedRoute,
-    private router:Router,
+    private router: Router,
     private fb: FormBuilder,
     private changeDetector: ChangeDetectorRef,
     private notificationsService: NotificationsService
   ) {
     this.activeRoute.params.subscribe(params => {
       this.userId = params.id;
-      //console.log('poarams',params);
-      //return false;
-      this.createUserForm();
+      // console.log('poarams',params);
+      // return false;
+      // this.createUserForm();
       this.showRightsAccordion = false;
       this.statusList = [
         { label: "Active", value: 1 },
         { label: "Inactive", value: 0 }
       ];
       this.selectedStatus = this.statusList[0].value;
-      //if(this.userId > 0)
+      // if(this.userId > 0)
       this.getUserDetails(this.userId);
-      //this.changeDetector.detectChanges();
+      // this.changeDetector.detectChanges();
     });
   }
 
-  //ngAfterViewInit() {
-    // setTimeout(() => {
-    //   this.activeRoute.params.subscribe(params => {
-    //     this.userId = params.id;
-    //     //console.log('poarams',params);
-    //     //return false;
-    //     this.getUserDetails(this.userId);
-    //     this.changeDetector.detectChanges();
-    //   });
-    // }, 500);
-  //}
+  // ngAfterViewInit() {
+  // setTimeout(() => {
+  //   this.activeRoute.params.subscribe(params => {
+  //     this.userId = params.id;
+  //     //console.log('poarams',params);
+  //     //return false;
+  //     this.getUserDetails(this.userId);
+  //     this.changeDetector.detectChanges();
+  //   });
+  // }, 500);
+  // }
 
   ngOnInit() {
-    //this.createUserForm();
+    this.createUserForm();
     // this.showRightsAccordion = false;
     // this.statusList = [
     //   { label: "Active", value: 1 },
@@ -147,15 +146,15 @@ export class CreateUsersComponent implements OnInit {
   }
 
   createUser(data) {
-    //data.userRights.userID = data.userID;
+    // data.userRights.userID = data.userID;
     let nData = data;
-    nData.userRights.forEach((row) => {
-      //console.log(row);
+    nData.userRights.forEach(row => {
+      // console.log(row);
       row.userID = data.userID;
       row.userRightMenuID = row.userRightID;
       row.userRightMenuCode = row.userRightCode;
       row.userRightMenuStatus = row.menuStatus;
-      row.userRightTabModelList.forEach((row1) => {
+      row.userRightTabModelList.forEach(row1 => {
         row1.userRightTabID = row1.userRightID;
         row1.userRightTabParentID = row1.userRightParentID;
         row1.userRightTabStatus = row1.tabStatus;
@@ -184,61 +183,67 @@ export class CreateUsersComponent implements OnInit {
         //localStorage.setItem("createdUserId", res.data[0].userID);
         for (var i = 0; i < nData.userRights.length; i++) {
           this.showLoader = true;
-          this.userService.createUserRights(nData.userRights[i]).subscribe(res1 => {
-            // console.log('res1',res1);
-            this.showLoader = false;
-            if(res1.status === '200'){
+          this.userService
+            .createUserRights(nData.userRights[i])
+            .subscribe(res1 => {
+              // console.log('res1',res1);
+              this.showLoader = false;
+              if (res1.status === "200") {
+              } else {
+                this.notificationsService.notify(
+                  "error",
+                  "Error",
+                  "Updatation/creation failed."
+                );
+              }
 
-            }
-            else{
-              this.notificationsService.notify('error','Error','Updatation/creation failed.');
-            }
-            
-            //   this.notificationsService.notify('success','Success','User rights Updated/created successfully.');
-            // else
-            //   this.notificationsService.notify('error','Error','Updatation/creation failed.');
-          });
+              //   this.notificationsService.notify('success','Success','User rights Updated/created successfully.');
+              // else
+              //   this.notificationsService.notify('error','Error','Updatation/creation failed.');
+            });
         }
-        
-        this.notificationsService.notify('success','Success','User Updated/created successfully.');
+
+        this.notificationsService.notify(
+          "success",
+          "Success",
+          "User Updated/created successfully."
+        );
         setTimeout(() => {
-          this.router.navigate(['/users']);
+          this.router.navigate(["/users"]);
         }, 3000);
-        //alert("User Created Successfully, Please update below listed rights.");   
+        // alert("User Created Successfully, Please update below listed rights.");
         // this.getUserDetails();
+      } else {
+        this.notificationsService.notify(
+          "error",
+          "Error",
+          "Updatation/creation failed."
+        );
       }
-      else{
-        this.notificationsService.notify('error','Error','Updatation/creation failed.');
-      }
-      this.showLoader = false;    
+      this.showLoader = false;
     });
   }
 
   getUserDetails(userId) {
-    // let userId = 0;
-    // if (user && user > 0) {
-    //   userId = user;
-    // } else {
-    //   userId = JSON.parse(localStorage.getItem("createdUserId"));
-    // }
     this.showLoader = true;
     this.userService.getUserDetails(userId).subscribe(res => {
+      debugger;
       if (res.status === "200") {
         this.showLoader = false;
         this.dyData = res.data[0].userRights;
-        console.log(new Date());
         if (res.data[0].userRights.length > 0) {
           this.showRightsAccordion = true;
           let data = res.data[0].userRights;
           this.userForm.controls["name"].setValue(res.data[0].name);
-          if(this.userId > 0)
-            this.userForm.controls['expiryDate'].setValue(new Date(res.data[0].expiryDate));
-          else{
+          if (this.userId > 0) {
+            this.userForm.controls["expiryDate"].setValue(
+              new Date(res.data[0].expiryDate)
+            );
+          } else {
             var parts = res.data[0].expiryDate.split("/");
             let expiryDate = new Date(parts[2], parts[1] - 1, parts[0]);
-            this.userForm.controls['expiryDate'].setValue(expiryDate);
+            this.userForm.controls["expiryDate"].setValue(expiryDate);
           }
-            
 
           this.userForm.controls["activeStatus"].setValue(
             res.data[0].activeStatus
@@ -252,23 +257,7 @@ export class CreateUsersComponent implements OnInit {
           this.userForm.controls["company_ID"].setValue(res.data[0].company_ID);
 
           const userRightsArray = <FormArray>this.userForm.get("userRights");
-          
-          // this.userForm.setControl('userRights', this.fb.array((res.data[0].userRights || []).map((x) => {
-          //   x.userRightID = x.userRightMenuID;
-          //   x.menuStatus = x.userRightMenuStatus;
-          //   x.userRightCode = x.userRightMenuCode;
-          //   x.userRightMenuName = x.userRightMenuName;
-          //   x.userRightTabModelList = this.fb.array([this.createTabList()])
-          //   return this.fb.group(x);
-          // } )));
-          // //this.changeDetector.detectChanges();
-          // for (var i = 0; i < res.data[0].userRights.length; i++) {
-          //   this.getUserMenuDetails(
-          //     res.data[0].userRights[i].userRightMenuID,
-          //     userRightsArray,
-          //     i
-          //   )
-          //  }
+
           for (var i = 0; i < res.data[0].userRights.length; i++) {
             userRightsArray.push(
               this.fb.group({
@@ -289,71 +278,49 @@ export class CreateUsersComponent implements OnInit {
           if (userRightsArray.length > 0) {
             userRightsArray.removeAt(0);
           }
-          //this.changeDetector.detectChanges();
         }
       }
     });
   }
 
   getUserMenuDetails(userMenuId, parentFormArray, index) {
-    //let userId = localStorage.getItem("createdUserId");
     this.showLoader = true;
-    this.userService.getUserMenuDetails(this.userId, userMenuId).subscribe(res => {
-      if (res.status === "200") {
-        this.showLoader = false;
-        let data = res.data[0].userRightTabModelList;
-        const userRightsTabArray = parentFormArray.controls[index].get(
-          "userRightTabModelList"
-        );
-        //const userRightsArray = (<FormArray>this.userForm.controls['userRights']).at(index);
-        //console.log(userRightsArray);
-        // userRightsArray.controls[index].get(
-        //   "userRightTabModelList"
-        // );
-        // userRightsArray.patchValue('userRightTabModelList', this.fb.array((data || []).map((x) => {
-        //   x.userRightID= x.userRightTabID;
-        //   x.tabStatus= x.userRightTabStatus;
-        //   x.actionStatus = '';
-        //   x.userRightCode= x.userRightTabCode;
-        //   x.userRightParentID= x.userRightTabParentID;
-        //   x.userRightTabName= x.userRightTabName;
-        //   x.userRightActionModelList = this.fb.array([
-        //     this.fb.group({
-        //       createStatus: x.createStatus,
-        //       modifyStatus: x.modifyStatus,
-        //           viewStatus: x.viewStatus,
-        //           deleteStatus: x.deleteStatus
-        //       })
-        //   ])
-        //   return this.fb.group(x);
-        // } )));
-
-        for (var i = 0; i < data.length; i++) {
-          userRightsTabArray.push(
-            this.fb.group({
-              userRightID: [data[i].userRightTabID],
-              tabStatus: [data[i].userRightTabStatus],
-              actionStatus: [],
-              userRightCode: [data[i].userRightTabCode],
-              userRightParentID: [data[i].userRightTabParentID],
-              userRightTabName: [data[i].userRightTabName],
-              userRightActionModelList: this.fb.array([
-                this.fb.group({
-                  createStatus: [data[i].createStatus],
-                  modifyStatus: [data[i].modifyStatus],
-                  viewStatus: [data[i].viewStatus],
-                  deleteStatus: [data[i].deleteStatus]
-                })
-              ])
-            })
+    this.userService
+      .getUserMenuDetails(this.userId, userMenuId)
+      .subscribe(res => {
+        if (res.status === "200") {
+          this.showLoader = false;
+          let data = res.data[0].userRightTabModelList;
+          const userRightsTabArray = parentFormArray.controls[index].get(
+            "userRightTabModelList"
           );
+
+          for (var i = 0; i < data.length; i++) {
+            userRightsTabArray.push(
+              this.fb.group({
+                userRightID: [data[i].userRightTabID],
+                tabStatus: [data[i].userRightTabStatus],
+                actionStatus: [],
+                userRightCode: [data[i].userRightTabCode],
+                userRightParentID: [data[i].userRightTabParentID],
+                userRightTabName: [data[i].userRightTabName],
+                userRightActionModelList: this.fb.array([
+                  this.fb.group({
+                    createStatus: [data[i].createStatus],
+                    modifyStatus: [data[i].modifyStatus],
+                    viewStatus: [data[i].viewStatus],
+                    deleteStatus: [data[i].deleteStatus]
+                  })
+                ])
+              })
+            );
+          }
+          if (userRightsTabArray.length > 0) {
+            userRightsTabArray.removeAt(0);
+          }
+          //this.changeDetector.detectChanges();
         }
-        if (userRightsTabArray.length > 0) {
-          userRightsTabArray.removeAt(0);
-        }
-        //this.changeDetector.detectChanges();
-      }
-    });
+      });
   }
 
   convertToDateFormat(Datestr) {

@@ -59,8 +59,7 @@
               <label style="margin:10px">Menu Status:</label>
               <label><input type="radio" [value]="true" formControlName="menuStatus" > Yes</label>
               <label><input type="radio" [value]="false" formControlName="menuStatus"> No </label>
-              <!-- <p-radioButton type="radio" formControlName="menuStatus" [value]="true" label="Yes"></p-radioButton>
-              <p-radioButton type="radio" formControlName="menuStatus" [value]="false" label="No"></p-radioButton> -->
+              
               
               <ng-container >
               <div formArrayName="userRightTabModelList">
@@ -73,10 +72,7 @@
                     <label>Tab Status:</label>
                     <label><input type="radio" [value]="true" formControlName="tabStatus" > Yes</label>
                     <label><input type="radio" [value]="false" formControlName="tabStatus"> No </label>
-                    <!-- <p-radioButton formControlName="tabStatus" name="tabStatus" [value]="true" label="Yes">
-                    </p-radioButton>
-                    <p-radioButton formControlName="tabStatus" name="tabStatus" [value]="false" label="No">
-                    </p-radioButton> -->
+                    
                     <div formArrayName="userRightActionModelList">
                       <div
                         *ngFor="let thirdLevel of secondLevel.get('userRightActionModelList')?.controls; let jx = index"
@@ -85,31 +81,19 @@
                         <label>Create:</label>
                         <label><input type="radio" [value]="true" formControlName="createStatus" > Yes</label>
                         <label><input type="radio" [value]="false" formControlName="createStatus"> No </label>
-                        <!-- <p-radioButton formControlName="createStatus" name="Create" [value]="true" label="Yes">
-                        </p-radioButton>
-                        <p-radioButton formControlName="createStatus" name="Create" [value]="false" label="No">
-                        </p-radioButton> -->
+                        
                         <label>, Edit:</label>
                         <label><input type="radio" [value]="true" formControlName="modifyStatus" > Yes</label>
                         <label><input type="radio" [value]="false" formControlName="modifyStatus"> No </label>
-                        <!-- <p-radioButton formControlName="modifyStatus" name="Edit" [value]="true" label="Yes">
-                        </p-radioButton>
-                        <p-radioButton formControlName="modifyStatus" name="Edit" [value]="false" label="No">
-                        </p-radioButton> -->
+                     
                         <label>, Read:</label>
                         <label><input type="radio" [value]="true" formControlName="viewStatus" > Yes</label>
                         <label><input type="radio" [value]="false" formControlName="viewStatus"> No </label>
-                        <!-- <p-radioButton formControlName="viewStatus" name="Read" [value]="true" label="Yes">
-                        </p-radioButton>
-                        <p-radioButton formControlName="viewStatus" name="Read" [value]="false" label="No">
-                        </p-radioButton> -->
+                     
                         <label>, Delete:</label>
                         <label><input type="radio" [value]="true" formControlName="deleteStatus" > Yes</label>
                         <label><input type="radio" [value]="false" formControlName="deleteStatus"> No </label>
-                        <!-- <p-radioButton formControlName="deleteStatus" name="Delete" [value]="true" label="Yes">
-                        </p-radioButton>
-                        <p-radioButton formControlName="deleteStatus" name="Delete" [value]="false" label="No">
-                        </p-radioButton> -->
+                        
                       </div>
                     </div>
                   </p-tabPanel>
