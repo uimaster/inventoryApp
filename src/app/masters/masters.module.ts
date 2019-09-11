@@ -30,7 +30,7 @@ import { PricelistModule } from './pricelist/pricelist.module';
     SupplierModule,
     PricelistModule
   ],
-  declarations: [MastersComponent,],
+  declarations: [MastersComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: []
 })

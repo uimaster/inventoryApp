@@ -227,7 +227,6 @@ export class CreateUsersComponent implements OnInit {
   getUserDetails(userId) {
     this.showLoader = true;
     this.userService.getUserDetails(userId).subscribe(res => {
-      debugger;
       if (res.status === "200") {
         this.showLoader = false;
         this.dyData = res.data[0].userRights;

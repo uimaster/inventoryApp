@@ -1,6 +1,6 @@
 <p-panel header="Ledgers List" class="Tabledata">
   <p-header>
-    <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addLedger()"></button>
+    <button [disabled]="!userRightMenuData[0]?.createStatus" pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addLedger()"></button>
   </p-header>
   <div class="table-responsive">
     <table class="table">
@@ -23,8 +23,8 @@
             <td>{{ledger.rateofTax}}</td>
             <td>{{ledger.gstRate}}</td>
             <td>
-              <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="setLedger(ledger,ledger.ledger_ID)"></button>
-              <button pButton type="button" label="Delete" class="ui-button-danger"></button>
+              <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="setLedger(ledger,ledger.ledger_ID)" [disabled]="!userRightMenuData[0]?.modifyStatus"></button>
+              <button pButton type="button" label="Delete" class="ui-button-danger" [disabled]="!userRightMenuData[0]?.deleteStatus"></button>
             </td>
           </tr>
         </ng-container>

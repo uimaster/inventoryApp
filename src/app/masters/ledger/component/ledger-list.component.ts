@@ -5,6 +5,7 @@ import {LedgerService} from '../services/ledger.service';
 import {SharedLedgerService} from '../services/shared-ledger.service';
 import {Router} from '@angular/router';
 import {Subscription} from 'rxjs';
+import { UsersService } from '../../../users/service/user.service';
 
 @Component({
     selector: 'app-unit-list',
@@ -13,11 +14,23 @@ import {Subscription} from 'rxjs';
 })
 export class LedgerListComponent implements OnInit, OnDestroy {
     public ledgerList: any;
+    public userRightMenuData = {};
     public ledgerDataSubscription: Subscription;
-    constructor( private ledgerService: LedgerService, private sharedledgerservice: SharedLedgerService, private router: Router) { }
+    constructor( private ledgerService: LedgerService, private sharedledgerservice: SharedLedgerService, private router: Router, private userService: UsersService) { }
 
     ngOnInit() {
         this.getLedgerList();
+        this.getUserMenuDetails();
+    }
+
+    getUserMenuDetails() {
+      let userID = localStorage.getItem('userID');
+      let userRightMenuID = localStorage.getItem('userRightMenuID');
+      this.userService.getUserMenuDetails(userID, userRightMenuID).subscribe( val => {
+        if (val.status === '200') {
+          this.userRightMenuData = val.data[0].userRightTabModelList;
+        }
+      });
     }
 
     getLedgerList() {

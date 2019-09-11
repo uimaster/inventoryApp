@@ -31,6 +31,12 @@ export class NavbarComponent implements OnInit{
     }, 90000);
   }
 
+  redirect(userrightId: number): any {
+    if (userrightId !== undefined) {
+      localStorage.setItem('userRightMenuID', JSON.stringify(userrightId));
+    }
+  }
+
   getUserDetails() {
     const userId = localStorage.getItem("userID");
     this.userService.getUserDetails(userId).subscribe(res => {

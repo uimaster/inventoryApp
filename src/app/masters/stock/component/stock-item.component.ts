@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { StockService } from '../services/stock.service';
 import { StockResponse } from '../models/stock.model';
+import { UsersService } from '../../../users/service/user.service';
 
 
 @Component({
@@ -17,11 +18,21 @@ export class StockItemComponent implements OnInit {
   stockListResponseFailed: Observable<boolean>;
   public stockList;
   public listData;
-  
-  constructor( private stockService: StockService, private router: Router) { }
+  public userRightMenuData = {};
+  constructor( private stockService: StockService, private router: Router, private userService: UsersService) { }
 
   ngOnInit() {
     this.getStockList();
+  }
+
+  getUserMenuDetails() {
+    let userID = localStorage.getItem('userID');
+    let userRightMenuID = localStorage.getItem('userRightMenuID');
+    this.userService.getUserMenuDetails(userID, userRightMenuID).subscribe( val => {
+      if (val.status === '200') {
+        this.userRightMenuData = val.data[0].userRightTabModelList;
+      }
+    });
   }
 
   getStockList() {

@@ -6,7 +6,7 @@
       <div class="wrraper">
         <div class="row">
           <div class="no-padding DashboardTop">
-            <div class="col-sm-3 no-padding dashboardlscol">
+            <div class="col-sm-3 no-padding dashboardlscol" *ngIf="userRightMenuData[0]?.userRightTabStatus">
               <div class="dashboard-volumn" routerLinkActive="active">
                 <a routerLink="ledgers">
                   <div class="col-sm-12 no-padding">
@@ -22,7 +22,7 @@
 
               </div>
             </div>
-            <div class="col-sm-3 no-padding dashboardlscol">
+            <div class="col-sm-3 no-padding dashboardlscol" *ngIf="userRightMenuData[1]?.userRightTabStatus">
               <div class="dashboard-volumn" routerLinkActive="active">
                 <a routerLink="stockItems">
                   <div class="col-sm-12 no-padding">
@@ -38,7 +38,7 @@
 
               </div>
             </div>
-            <div class="col-sm-3 no-padding dashboardlscol">
+            <div class="col-sm-3 no-padding dashboardlscol" *ngIf="userRightMenuData[2]?.userRightTabStatus">
               <div class="dashboard-volumn" routerLinkActive="active">
                 <a routerLink="stockGroups">
                   <div class="col-sm-12 no-padding">
@@ -54,7 +54,7 @@
 
               </div>
             </div>
-            <div class="col-sm-3 no-padding dashboardlscol">
+            <div class="col-sm-3 no-padding dashboardlscol" *ngIf="userRightMenuData[3]?.userRightTabStatus">
               <div class="dashboard-volumn" routerLinkActive="active">
                 <a routerLink="units">
                   <div class="col-sm-12 no-padding">
@@ -69,7 +69,7 @@
                 </a>
               </div>
             </div>
-            <div class="col-sm-3 no-padding dashboardlscol">
+            <div class="col-sm-3 no-padding dashboardlscol" *ngIf="userRightMenuData[4]?.userRightTabStatus">
               <div class="dashboard-volumn" routerLinkActive="active">
                 <a routerLink="customers">
                   <div class="col-sm-12 no-padding">
@@ -84,7 +84,7 @@
                 </a>
               </div>
             </div>
-            <div class="col-sm-3 no-padding dashboardlscol">
+            <div class="col-sm-3 no-padding dashboardlscol" *ngIf="userRightMenuData[5]?.userRightTabStatus">
               <div class="dashboard-volumn" routerLinkActive="active">
                 <a routerLink="suppliers">
                   <div class="col-sm-12 no-padding">

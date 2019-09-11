@@ -1,7 +1,7 @@
 <p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
 <p-panel header="Stock Items" class="Tabledata">
     <p-header>
-        <button pButton type="button" style="float:right; margin-top: 5px;" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addStockItem(0)"></button>
+        <button pButton type="button" style="float:right; margin-top: 5px;" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addStockItem(0)" [disabled]="!userRightMenuData[1]?.createStatus"></button>
         <div style="float:right; width: 250px;">
             <span class="ui-float-label">
               <input style="width:100%" type="text" pInputText placeholder="Search.."
@@ -29,8 +29,8 @@
                     <td>{{stock.stockGroupName}}</td>
                     <td>{{stock.unitName}}</td>
                     <td>
-                        <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="editStock(stock.stockItemID)"></button>
-                        <button pButton type="button" label="Delete" class="ui-button-danger"></button>
+                        <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="editStock(stock.stockItemID)" [disabled]="!userRightMenuData[1]?.modifyStatus"></button>
+                        <button pButton type="button" label="Delete" class="ui-button-danger" [disabled]="!userRightMenuData[1]?.deleteStatus"></button>
                     </td>
                 </tr>
             </tbody>

@@ -7,6 +7,7 @@ import {SharedLedgerService} from '../services/shared-ledger.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, Validators} from '@angular/forms';
 import {returnLabel} from "../../../generic_function";
+import { UsersService } from '../../../users/service/user.service';
 
 @Component({
     selector: 'app-ledger',
@@ -27,12 +28,14 @@ export class LedgerComponent implements OnInit, OnDestroy {
     userId = localStorage.getItem('userID');
     showError = false;
     showSuccess = false;
+    public userRightMenuData = {};
     constructor(
       private ledgerService: LedgerService,
       private ledgerSharedService: SharedLedgerService,
       private _route: ActivatedRoute,
       private _formBuilder: FormBuilder,
-      private router: Router
+      private router: Router,
+      private userService: UsersService
     ) { }
 
 
@@ -48,7 +51,6 @@ export class LedgerComponent implements OnInit, OnDestroy {
         }, 1000);
 
         this.getLedgerGroupList();
-
     }
 
     getLedgerGroupList() {
