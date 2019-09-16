@@ -3,6 +3,7 @@ import {Observable} from 'rxjs/Observable';
 import {StockGroupService} from '../services/stock-group.service';
 import {StockGroupResponse} from '../models/stock-group.model';
 import {Router} from "@angular/router";
+import { UsersService } from '../../../users/service/user.service';
 
 
 @Component({
@@ -13,11 +14,24 @@ import {Router} from "@angular/router";
 export class StockGroupListComponent implements OnInit {
 
     public stockGroupList;
-    constructor( private stockGroupService: StockGroupService, private _router: Router) { }
+    public userRightMenuData = {};
+    constructor( private stockGroupService: StockGroupService, private _router: Router, private userService: UsersService) { }
 
     ngOnInit() {
         this.getStockGroupList();
+        this.getUserMenuDetails();
     }
+
+    getUserMenuDetails() {
+      let userID = localStorage.getItem('userID');
+      let userRightMenuID = localStorage.getItem('userRightMenuID');
+      this.userService.getUserMenuDetails(userID, userRightMenuID).subscribe( val => {
+        if (val.status === '200') {
+          this.userRightMenuData = val.data[0].userRightTabModelList;
+        }
+      });
+    }
+
 
     getStockGroupList() {
         this.stockGroupService.getAllStockGroups().subscribe((res: StockGroupResponse) => {

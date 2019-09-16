@@ -6,7 +6,7 @@
 <ng-template #showBlock> -->
 <p-panel header="Bom List" class="Tabledata">
     <p-header>
-        <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addBom()"></button>
+        <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addBom()" [disabled]="!userRightMenuData[0]?.createStatus"></button>
         <!-- <button pButton type="button" style="float:right" icon="fa fa-file-excel-o" label="Export" class="ui-button-success" (click)="exportAsXLSX()"></button> -->
     </p-header>
 
@@ -44,8 +44,8 @@
                     <td>{{bom.bomType}}</td>
                     <td>{{bom.bomDate}}</td>
                     <td>
-                        <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="setBom(bom.bomid)"></button>
-                        <button pButton type="button" label="Delete" class="ui-button-danger" ></button>
+                        <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="setBom(bom.bomid)" [disabled]="!userRightMenuData[0]?.modifyStatus"></button>
+                        <button pButton type="button" label="Delete" class="ui-button-danger" [disabled]="!userRightMenuData[0]?.deleteStatus"></button>
                     </td>
                 </tr>
             </ng-container>

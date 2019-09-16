@@ -7,6 +7,7 @@ import {BomResponse} from '../models/bom.model';
 import { DatePipe } from '@angular/common';
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
+import { UsersService } from '../../../users/service/user.service';
 const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
 
@@ -18,12 +19,24 @@ const EXCEL_EXTENSION = '.xlsx';
 export class BomListComponent implements OnInit, OnDestroy {
     public bomList: any;
     public listData: any;
-    public showLoader:boolean = false;
+    public showLoader = false;
     public bomListDataSubscription: Subscription;
-    constructor(private bomService: BomService, private router: Router,private datePipe: DatePipe) { }
+    public userRightMenuData = {};
+    constructor(private bomService: BomService, private router: Router,private datePipe: DatePipe, private userService: UsersService) { }
 
     ngOnInit() {
         this.getBomList();
+        this.getUserMenuDetails();
+    }
+
+    getUserMenuDetails() {
+      let userID = localStorage.getItem('userID');
+      let userRightMenuID = localStorage.getItem('userRightMenuID');
+      this.userService.getUserMenuDetails(userID, userRightMenuID).subscribe( val => {
+        if (val.status === '200') {
+          this.userRightMenuData = val.data[0].userRightTabModelList;
+        }
+      });
     }
 
     getBomList() {

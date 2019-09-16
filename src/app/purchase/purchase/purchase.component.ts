@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TransactionServices } from '../../transactionsShared/transaction.service';
 import { Router } from '@angular/router';
 import { BASEURL } from '../../../utils/app.urls';
+import { UsersService } from '../../users/service/user.service';
 
 @Component({
   selector: 'app-purchase',
@@ -10,7 +11,8 @@ import { BASEURL } from '../../../utils/app.urls';
 })
 export class TransactionPurchaseComponent implements OnInit, OnDestroy {
   grnList = [];
-  constructor( private transactionSerivices: TransactionServices, private router: Router ) { }
+  public userRightMenuData = {};
+  constructor( private transactionSerivices: TransactionServices, private router: Router, private userService: UsersService) { }
 
   ngOnInit() {
     // this.getTransactionList();
@@ -37,6 +39,8 @@ export class TransactionPurchaseComponent implements OnInit, OnDestroy {
     localStorage.setItem('enableRateInput', 'true');
     localStorage.setItem('showBarcode4Grn', 'true');
     localStorage.setItem('showProjects', 'true');
+  
+    this.getUserMenuDetails();
   }
 
 
@@ -51,6 +55,16 @@ export class TransactionPurchaseComponent implements OnInit, OnDestroy {
         if (res.status === '200') {
           this.grnList = res.data;
         }
+      }
+    });
+  }
+
+  getUserMenuDetails() {
+    let userID = localStorage.getItem('userID');
+    let userRightMenuID = localStorage.getItem('userRightMenuID');
+    this.userService.getUserMenuDetails(userID, userRightMenuID).subscribe( val => {
+      if (val.status === '200') {
+        this.userRightMenuData = val.data[0].userRightTabModelList;
       }
     });
   }

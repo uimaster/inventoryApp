@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TransactionServices } from '../../transactionsShared/transaction.service';
 import { Router } from '@angular/router';
 import { BASEURL } from '../../../utils/app.urls';
+import { UsersService } from '../../users/service/user.service';
 
 @Component({
   selector: 'app-stock-note',
@@ -10,7 +11,8 @@ import { BASEURL } from '../../../utils/app.urls';
 })
 export class StockNoteComponent implements OnInit {
   stockIssueList = [];
-  constructor( private transactionSerivices: TransactionServices, private router: Router ) { }
+  public userRightMenuData = {};
+  constructor( private transactionSerivices: TransactionServices, private router: Router, private userService: UsersService ) { }
 
   ngOnInit() {
     // this.getTransactionList();
@@ -33,6 +35,16 @@ export class StockNoteComponent implements OnInit {
     localStorage.setItem('showBarcode4Grn', 'true');
     localStorage.setItem('GrnInput', 'false');
     localStorage.setItem('showBarcode', 'true');
+  }
+
+  getUserMenuDetails() {
+    let userID = localStorage.getItem('userID');
+    let userRightMenuID = localStorage.getItem('userRightMenuID');
+    this.userService.getUserMenuDetails(userID, userRightMenuID).subscribe( val => {
+      if (val.status === '200') {
+        this.userRightMenuData = val.data[0].userRightTabModelList;
+      }
+    });
   }
 
   getTransactionList(dates) {

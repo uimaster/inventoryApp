@@ -1,18 +1,20 @@
 <p-panel header="Customer List" class="Tabledata">
     <p-header>
-        <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addCustomer()"></button>
+        <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addCustomer()" [disabled]="!userRightMenuData[4]?.createStatus"></button>
+        <input style="margin-left: 20px;" type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)">
     </p-header>
-    <div class="ui-g"><div class="ui-g-12"><div><span class="ui-float-label"><input style="width:100%" type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)"></span></div></div></div>  
+    <div class="ui-g"><div class="ui-g-12"><div><span class="ui-float-label">
+      </span></div></div></div>  
     <div class="table-responsive">
         <table class="table">
             <thead>
             <tr>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Contact No</th>
-                <th>Customer GSTIN</th>
-                <th>Email</th>
-                <th>Actions</th>
+                <th width="25%">Name</th>
+                <th width="15%">Address</th>
+                <th width="15%">Contact No</th>
+                <th width="15%">Customer GSTIN</th>
+                <th width="15%">Email</th>
+                <th width="15%">Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -26,8 +28,8 @@
                     <td>{{customer.customerGSTIN}}</td>
                     <td>{{customer.EmailID}}</td>
                     <td>
-                        <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="setCustomer(customer.customer_ID)"></button>
-                        <button pButton type="button" label="Delete" class="ui-button-danger" ></button>
+                        <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="setCustomer(customer.customer_ID)" [disabled]="!userRightMenuData[4]?.modifyStatus"></button>
+                        <button pButton type="button" label="Delete" class="ui-button-danger" [disabled]="!userRightMenuData[4]?.deleteStatus"></button>
                     </td>
                 </tr>
             </ng-container>

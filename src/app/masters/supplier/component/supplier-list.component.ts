@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {SupplierService} from "../services/supplier.service";
 import {SupplierResponse} from "../models/supplier.model";
+import { UsersService } from '../../../users/service/user.service';
 
 @Component({
     selector: 'app-supplier-list',
@@ -14,10 +15,22 @@ export class SupplierListComponent implements OnInit, OnDestroy {
     public supplierList: any;
     public listData: any;
     public supplierListDataSubscription: Subscription;
-    constructor(private supplierService:SupplierService, private router: Router) { }
+    public userRightMenuData = {};
+    constructor(private supplierService: SupplierService, private router: Router, private userService: UsersService) { }
 
     ngOnInit() {
         this.getSupplierList();
+        this.getUserMenuDetails();
+    }
+
+    getUserMenuDetails() {
+      let userID = localStorage.getItem('userID');
+      let userRightMenuID = localStorage.getItem('userRightMenuID');
+      this.userService.getUserMenuDetails(userID, userRightMenuID).subscribe( val => {
+        if (val.status === '200') {
+          this.userRightMenuData = val.data[0].userRightTabModelList;
+        }
+      });
     }
 
     getSupplierList() {

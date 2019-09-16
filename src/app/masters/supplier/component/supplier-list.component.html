@@ -1,6 +1,6 @@
 <p-panel header="Customer List" class="Tabledata">
     <p-header>
-        <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addSupplier()"></button>
+        <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addSupplier()" [disabled]="!userRightMenuData[5]?.createStatus"></button>
     </p-header>
     <div class="ui-g"><div class="ui-g-12"><div><span class="ui-float-label"><input style="width:100%" type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)"></span></div></div></div>  
     <div class="table-responsive">
@@ -26,8 +26,8 @@
                     <td>{{supplier.gstin}}</td>
                     <td>{{supplier.emailID}}</td>
                     <td>
-                        <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="setSupplier(supplier.supplier_ID)"></button>
-                        <button pButton type="button" label="Delete" class="ui-button-danger"></button>
+                        <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="setSupplier(supplier.supplier_ID)" [disabled]="!userRightMenuData[5]?.modifyStatus"></button>
+                        <button pButton type="button" label="Delete" class="ui-button-danger" [disabled]="!userRightMenuData[5]?.deleteStatus"></button>
                     </td>
                 </tr>
             </ng-container>

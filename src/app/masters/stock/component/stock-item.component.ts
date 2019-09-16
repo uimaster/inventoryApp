@@ -23,6 +23,7 @@ export class StockItemComponent implements OnInit {
 
   ngOnInit() {
     this.getStockList();
+    this.getUserMenuDetails();
   }
 
   getUserMenuDetails() {

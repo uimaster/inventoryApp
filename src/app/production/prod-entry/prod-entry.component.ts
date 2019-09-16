@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TransactionServices } from '../../transactionsShared/transaction.service';
 import { Router } from '@angular/router';
 import { BASEURL } from '../../../utils/app.urls';
+import { UsersService } from '../../users/service/user.service';
 
 @Component({
   selector: 'app-prod-entry',
@@ -10,7 +11,8 @@ import { BASEURL } from '../../../utils/app.urls';
 })
 export class ProdEntryComponent implements OnInit {
   prodEntriesList = [];
-  constructor( private transactionSerivices: TransactionServices, private router: Router) { }
+  public userRightMenuData = {};
+  constructor( private transactionSerivices: TransactionServices, private router: Router, private userService: UsersService) { }
 
   ngOnInit() {
     // this.getTransactionList();
@@ -29,6 +31,8 @@ export class ProdEntryComponent implements OnInit {
     localStorage.setItem('FormHeader', 'Production Entery Edit/Create Form');
     localStorage.setItem('transationLinkRef', 'false');
     localStorage.setItem('showLocation', 'false');
+
+    this.getUserMenuDetails();
   }
 
   getTransactionList(dates) {
@@ -37,6 +41,16 @@ export class ProdEntryComponent implements OnInit {
         if (res.status === '200') {
           this.prodEntriesList = res.data;
         }
+      }
+    });
+  }
+
+  getUserMenuDetails() {
+    let userID = localStorage.getItem('userID');
+    let userRightMenuID = localStorage.getItem('userRightMenuID');
+    this.userService.getUserMenuDetails(userID, userRightMenuID).subscribe( val => {
+      if (val.status === '200') {
+        this.userRightMenuData = val.data[0].userRightTabModelList;
       }
     });
   }

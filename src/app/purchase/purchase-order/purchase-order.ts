@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { PurchaseService } from './../purchase.service';
 import { TransactionServices } from '../../transactionsShared/transaction.service';
 import { BASEURL } from '../../../utils/app.urls';
+import { UsersService } from '../../users/service/user.service';
 
 @Component({
   selector: 'app-purchase-order',
@@ -12,14 +13,27 @@ import { BASEURL } from '../../../utils/app.urls';
 export class PurchaseOrderComponent implements OnInit {
 
   purchaseList = [];
+  public userRightMenuData = {};
   constructor(
     private purchaseService: PurchaseService,
     private router: Router,
-    private transactionSerivices: TransactionServices
+    private transactionSerivices: TransactionServices,
+    private userService: UsersService
     ) { }
 
   ngOnInit() {
     localStorage.setItem('transactionTypeId', '1');
+    this.getUserMenuDetails();
+  }
+
+  getUserMenuDetails() {
+    let userID = localStorage.getItem('userID');
+    let userRightMenuID = localStorage.getItem('userRightMenuID');
+    this.userService.getUserMenuDetails(userID, userRightMenuID).subscribe( val => {
+      if (val.status === '200') {
+        this.userRightMenuData = val.data[0].userRightTabModelList;
+      }
+    });
   }
 
   getPurchaseList(dates) {

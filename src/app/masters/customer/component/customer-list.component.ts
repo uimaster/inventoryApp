@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {CustomerService} from '../services/customer.service';
 import {CustomerResponse} from '../models/customer.model';
+import { UsersService } from '../../../users/service/user.service';
 
 @Component({
     selector: 'app-customer-list',
@@ -14,10 +15,22 @@ export class CustomerListComponent implements OnInit, OnDestroy {
     public customerList: any;
     public listData: any;
     public customerListDataSubscription: Subscription;
-    constructor(private customerService: CustomerService, private router: Router) { }
+    public userRightMenuData = {};
+    constructor(private customerService: CustomerService, private router: Router, private userService: UsersService) { }
 
     ngOnInit() {
         this.getCustomerList();
+        this.getUserMenuDetails();
+    }
+
+    getUserMenuDetails() {
+      let userID = localStorage.getItem('userID');
+      let userRightMenuID = localStorage.getItem('userRightMenuID');
+      this.userService.getUserMenuDetails(userID, userRightMenuID).subscribe( val => {
+        if (val.status === '200') {
+          this.userRightMenuData = val.data[0].userRightTabModelList;
+        }
+      });
     }
 
     getCustomerList() {

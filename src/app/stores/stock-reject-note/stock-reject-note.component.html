@@ -1,7 +1,7 @@
 <app-filters (filterDates)='getTransactionList($event)'></app-filters>
 <p-panel header="Store Rejection Note" class="Tabledata">
   <p-header>
-      <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addRecord()"></button>
+      <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addRecord()" [disabled]="!userRightMenuData[3]?.createStatus"></button>
 
     </p-header>
   <div *ngIf="stockRejectList" class="table-responsive">
@@ -27,8 +27,8 @@
                   <td>Need to clarify</td>
                   <td>{{item.itemAmount}}</td>
                   <td>
-                      <button pButton type="button" style="margin-right: 5px;" icon="fa fa-pencil" class="ui-button-success" (click)="editRecord(item.transactionID)" ></button>
-                      <button pButton type="button" style="margin-right: 5px;" icon="fa fa-trash-o" class="ui-button-danger"></button>
+                      <button pButton type="button" style="margin-right: 5px;" icon="fa fa-pencil" class="ui-button-success" (click)="editRecord(item.transactionID)" [disabled]="!userRightMenuData[3]?.modifyStatus" ></button>
+                      <button pButton type="button" style="margin-right: 5px;" icon="fa fa-trash-o" class="ui-button-danger" [disabled]="!userRightMenuData[3]?.deleteStatus"></button>
                       <a pButton type="button" icon="fa fa-print" class="ui-button-info" target="_blank" (click)="generateReport(item.transactionID)"> </a>
                   </td>
               </tr>

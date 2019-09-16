@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TransactionServices } from '../../transactionsShared/transaction.service';
 import { Router } from '@angular/router';
 import { BASEURL } from '../../../utils/app.urls';
+import { UsersService } from '../../users/service/user.service';
 
 @Component({
   selector: 'app-fginward',
@@ -10,7 +11,8 @@ import { BASEURL } from '../../../utils/app.urls';
 })
 export class FGInwardComponent implements OnInit, OnDestroy {
   fgList = [];
-  constructor( private transactionServices: TransactionServices, private router: Router) { }
+  public userRightMenuData = {};
+  constructor( private transactionServices: TransactionServices, private router: Router, private userService: UsersService) { }
 
   ngOnInit() {
     // this.getTransactionList();
@@ -32,6 +34,18 @@ export class FGInwardComponent implements OnInit, OnDestroy {
     localStorage.setItem('showBarcode', 'true');
     localStorage.setItem('showActionBtn', 'true');
     localStorage.setItem('showBarcode4Fg', 'true');
+    this.getUserMenuDetails();
+
+  }
+
+  getUserMenuDetails() {
+    let userID = localStorage.getItem('userID');
+    let userRightMenuID = localStorage.getItem('userRightMenuID');
+    this.userService.getUserMenuDetails(userID, userRightMenuID).subscribe( val => {
+      if (val.status === '200') {
+        this.userRightMenuData = val.data[0].userRightTabModelList;
+      }
+    });
   }
 
 

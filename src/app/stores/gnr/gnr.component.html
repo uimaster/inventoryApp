@@ -1,7 +1,7 @@
 <app-filters (filterDates)='getTransactionList($event)'></app-filters>
 <p-panel header="Good Receipt Note" class="Tabledata">
   <p-header>
-      <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addNote()"></button>
+      <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addNote()" [disabled]="!userRightMenuData[0]?.createStatus"></button>
 
     </p-header>
   <div *ngIf="grnList" class="table-responsive">
@@ -27,8 +27,8 @@
                   <td>{{item.transactionLinkDocNo}}</td>
                   <td>{{item.transactionDueDate}}</td>
                   <td>
-                      <button pButton type="button" style="margin-right: 5px;" icon="fa fa-pencil" class="ui-button-success" (click)="editNote(item.transactionID)" ></button>
-                      <button pButton type="button" style="margin-right: 5px;" icon="fa fa-trash-o" class="ui-button-danger"></button>
+                      <button pButton type="button" style="margin-right: 5px;" icon="fa fa-pencil" class="ui-button-success" (click)="editNote(item.transactionID)" [disabled]="!userRightMenuData[0]?.modifyStatus"></button>
+                      <button pButton type="button" style="margin-right: 5px;" icon="fa fa-trash-o" class="ui-button-danger" [disabled]="!userRightMenuData[0]?.deleteStatus"></button>
                       <a pButton type="button" icon="fa fa-print" class="ui-button-info" target="_blank" (click)="generateReport(item.transactionID)"> </a>
                   </td>
               </tr>

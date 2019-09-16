@@ -2,7 +2,7 @@
 <p-panel header="PO Authentication" class="Tabledata">
   <p-header>
       <button pButton type="button" style="float:right" [disabled]="!POAuthList || POAuthList.length < 1" label="Authorise" class="ui-button-success" (click)="DoAutherize()"></button>
-      <button pButton type="button" style="float:right" icon="fa fa-trash-o" label="Delete" class="ui-button-danger"></button>
+      <button pButton type="button" style="float:right" icon="fa fa-trash-o" label="Delete" [disabled]="!userRightMenuData[1]?.deleteStatus" class="ui-button-danger"></button>
       <button pButton type="button" style="float:right" icon="fa fa-print" label="Print" class="ui-button-info"></button>
     </p-header>
   <div *ngIf="POAuthList" class="table-responsive">

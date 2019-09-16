@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TransactionServices } from '../../transactionsShared/transaction.service';
 import { Router } from '@angular/router';
 import { BASEURL } from '../../../utils/app.urls';
+import { UsersService } from '../../users/service/user.service';
 
 @Component({
   selector: 'app-delievery-challan',
@@ -9,9 +10,9 @@ import { BASEURL } from '../../../utils/app.urls';
   styleUrls: ['./delievery-challan.component.scss']
 })
 export class DelieveryChallanComponent implements OnInit {
-
+  public userRightMenuData = {};
   challanList = [];
-  constructor( private transactionSerivices: TransactionServices, private router: Router ) { }
+  constructor( private transactionSerivices: TransactionServices, private router: Router, private userService: UsersService ) { }
 
   ngOnInit() {
     // this.getTransactionList();
@@ -30,6 +31,17 @@ export class DelieveryChallanComponent implements OnInit {
     localStorage.setItem('FormHeader', 'Good Receipt Note Edit/Create Form');
     localStorage.setItem('transationLinkRef', 'false');
     localStorage.setItem('showLocation', 'false');
+    this.getUserMenuDetails();
+  }
+
+  getUserMenuDetails() {
+    let userID = localStorage.getItem('userID');
+    let userRightMenuID = localStorage.getItem('userRightMenuID');
+    this.userService.getUserMenuDetails(userID, userRightMenuID).subscribe( val => {
+      if (val.status === '200') {
+        this.userRightMenuData = val.data[0].userRightTabModelList;
+      }
+    });
   }
 
   getTransactionList(dates) {

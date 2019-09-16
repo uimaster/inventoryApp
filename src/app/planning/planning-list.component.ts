@@ -5,6 +5,7 @@ import { FormBuilder, Validators, FormArray } from "@angular/forms";
 import { Subscription } from "rxjs";
 import { PlanningService } from "./services/planning.service";
 import { DatePipe } from "@angular/common";
+import { UsersService } from '../users/service/user.service';
 @Component({
   selector: "app-planning-list",
   templateUrl: "./planning-list.component.html",
@@ -18,13 +19,15 @@ export class PlanningListComponent implements OnInit, OnDestroy {
   public disablFmBtn = false;
   public disablRmBtn = false;
   public planningListDataSubscription: Subscription;
+  public userRightMenuData = {};
 
   constructor(
     private _planningService: PlanningService,
     private router: Router,
     private _route: ActivatedRoute,
     private datePipe: DatePipe,
-    private _formBuilder: FormBuilder
+    private _formBuilder: FormBuilder,
+    private userService: UsersService
   ) {}
 
   ngOnInit() {
@@ -35,6 +38,17 @@ export class PlanningListComponent implements OnInit, OnDestroy {
         this.getList("getFGList");
       } else if (this.type === "rmq") {
         this.getList("getRMQList");
+      }
+    });
+    this.getUserMenuDetails();
+  }
+
+  getUserMenuDetails() {
+    let userID = localStorage.getItem('userID');
+    let userRightMenuID = localStorage.getItem('userRightMenuID');
+    this.userService.getUserMenuDetails(userID, userRightMenuID).subscribe( val => {
+      if (val.status === '200') {
+        this.userRightMenuData = val.data[0].userRightTabModelList;
       }
     });
   }

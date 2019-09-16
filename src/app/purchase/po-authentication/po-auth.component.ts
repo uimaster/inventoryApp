@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { PurchaseService } from './../purchase.service';
 import { TransactionServices } from '../../transactionsShared/transaction.service';
+import { UsersService } from '../../users/service/user.service';
 
 @Component({
   selector: 'app-purchase-order',
@@ -20,12 +21,14 @@ export class POAuthListComponent implements OnInit {
   display = false;
   unauthenticationData: any;
   unauthenticationForm: any;
+  public userRightMenuData = {};
   constructor(
     private purchaseService: PurchaseService,
     private router: Router,
     private fb: FormBuilder,
     private http: HttpClient,
-    private trasactionService: TransactionServices
+    private trasactionService: TransactionServices,
+    private userService: UsersService
     ) {
     // this.createForm();
   }
@@ -33,6 +36,17 @@ export class POAuthListComponent implements OnInit {
   ngOnInit() {
     // this.getPOAuthList();
     this.createUnauthoriseForm();
+    this.getUserMenuDetails();
+  }
+
+  getUserMenuDetails() {
+    let userID = localStorage.getItem('userID');
+    let userRightMenuID = localStorage.getItem('userRightMenuID');
+    this.userService.getUserMenuDetails(userID, userRightMenuID).subscribe( val => {
+      if (val.status === '200') {
+        this.userRightMenuData = val.data[0].userRightTabModelList;
+      }
+    });
   }
 
   showDialog(data) {

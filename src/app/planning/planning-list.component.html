@@ -1,7 +1,7 @@
 <p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
 <p-panel header="FG List" class="Tabledata" *ngIf="type=='fg'">
     <p-header>
-        <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="add('fg')"></button>
+        <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="add('fg')" [disabled]="!userRightMenuData[0]?.createStatus"></button>
     </p-header>
 
     <div class="table-responsive">
@@ -23,9 +23,9 @@
                     <td>{{plan.periodFromDate}}</td>
                     <td>{{plan.periodToDate}}</td>
                     <td>
-                        <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="set('fg',plan.planID)"></button>
+                        <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="set('fg',plan.planID)" [disabled]="!userRightMenuData[0]?.modifyStatus"></button>
                         <button pButton type="button" label="Generate RM" class="ui-button-success" (click)="generateRm(plan.planID)"></button>
-                        <button pButton type="button" label="Delete" class="ui-button-danger" ></button>
+                        <button pButton type="button" label="Delete" class="ui-button-danger" [disabled]="!userRightMenuData[0]?.deleteStatus"></button>
                     </td>
                 </tr>
             </ng-container>
@@ -36,7 +36,7 @@
 
 <p-panel header="RMQ List" class="Tabledata" *ngIf="type=='rmq'">
     <p-header>
-        <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="add('rmq')"></button>
+        <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="add('rmq')" [disabled]="!userRightMenuData[1]?.createStatus"></button>
     </p-header>
 
     <div class="table-responsive">
@@ -55,8 +55,8 @@
                     <td>{{plan.rmqDate}}</td>
                     <td>
                         <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="set('rmq',plan.rmqid)"></button>
-                        <button pButton type="button" label="Generate PO" class="ui-button-success" (click)="generatePo(plan.rmqid)"></button>
-                        <button pButton type="button" label="Delete" class="ui-button-danger" ></button>
+                        <button pButton type="button" label="Generate PO" class="ui-button-success" (click)="generatePo(plan.rmqid)" [disabled]="!userRightMenuData[1]?.modifyStatus"></button>
+                        <button pButton type="button" label="Delete" class="ui-button-danger" [disabled]="!userRightMenuData[1]?.deleteStatus"></button>
                     </td>
                 </tr>
             </ng-container>
