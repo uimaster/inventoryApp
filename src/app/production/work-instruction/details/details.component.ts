@@ -60,16 +60,16 @@ export class DetailsComponent implements OnInit {
   }
 
   instructionDetailsForm() {
-    return this.fb.group({ 
+    return this.fb.group({
       InstructionSRNo: [],
       stockItemID: [],
       Qty: [],
-      batchLength:[],
+      batchLength: [],
       batchStatus: [],
       itemCode: [],
       itemDesc: [],
       scanQty: [],
-      instructiondescription:[]
+      instructiondescription: []
     });
   }
 
@@ -127,9 +127,9 @@ export class DetailsComponent implements OnInit {
       if (res.status === "200") {
         if (res.data.length > 0) {
           this.workInstructionDetails = res.data;
-          this.workInstructionForm.controls["AssemblyWorkInstructionID"].setValue(
-            this.workInstructionDetails[0].assemblyWorkInstructionID
-          );
+          this.workInstructionForm.controls[
+            "AssemblyWorkInstructionID"
+          ].setValue(this.workInstructionDetails[0].assemblyWorkInstructionID);
           this.workInstructionForm.controls["StockItemID"].setValue(
             this.workInstructionDetails[0].stockItemID
           );
@@ -232,7 +232,8 @@ export class DetailsComponent implements OnInit {
                     this.workInstructionDetails[0].assemblyBatchDetails[i].qty
                   ],
                   itemCode: [
-                    this.workInstructionDetails[0].assemblyBatchDetails[i].itemCode
+                    this.workInstructionDetails[0].assemblyBatchDetails[i]
+                      .itemCode
                   ]
                 })
               );
@@ -299,25 +300,32 @@ export class DetailsComponent implements OnInit {
   }
 
   showGrnBarcodeDialog(index) {
-    // if (this.workInstructionDetails[0].assemblyWorkInstructionDetails[index].batchStatus && this.workInstructionDetails[0].assemblyWorkInstructionDetails[index].qty > this.workInstructionDetails[0].assemblyWorkInstructionDetails[index].scanQty) {
+    const qtyDetailForm = <FormArray>(this.workInstructionForm.controls["assemblyWorkInstructionDetails"]);
+    const currentQty = qtyDetailForm.controls[index].get("qty").value;
+    const scannedQty = this.workInstructionDetails[0].assemblyWorkInstructionDetails[index].scanQty;
+
     if (
       this.workInstructionDetails[0].assemblyWorkInstructionDetails[index]
         .batchStatus
     ) {
-      this.currentIndex = index;
-      this.displayGrnBarcodeDialog = true;
-      this.grnValidationMsg = "";
-      this.BarcodeSuccessMsg = "";
-      var stockItemId = 0;
-      const controlArray = <FormArray>(
-        this.workInstructionForm.get("assemblyWorkInstructionDetails")
-      );
-      stockItemId = controlArray.controls[index].get("stockItemID").value;
-      this.ItemBarCodeLength = this.workInstructionDetails[0].assemblyWorkInstructionDetails[
-        index
-      ].batchLength;
-      // this.ItemBarCodeLength = controlArray.controls[index].get("batchLength").value;
-      this.itemBarCode.nativeElement.value = "";
+      debugger;
+      if (scannedQty > currentQty) {
+        this.currentIndex = index;
+        this.displayGrnBarcodeDialog = true;
+        this.grnValidationMsg = "";
+        this.BarcodeSuccessMsg = "";
+        var stockItemId = 0;
+        const controlArray = <FormArray>(
+          this.workInstructionForm.get("assemblyWorkInstructionDetails")
+        );
+        stockItemId = controlArray.controls[index].get("stockItemID").value;
+        this.ItemBarCodeLength = this.workInstructionDetails[0].assemblyWorkInstructionDetails[
+          index
+        ].batchLength;
+        this.itemBarCode.nativeElement.value = "";
+      } {
+        alert('Quantity can not be greater than Scanable Quantity');
+      }
     } else {
       alert("This Item is not applicable for Barcode Scan.");
       return false;
@@ -339,13 +347,15 @@ export class DetailsComponent implements OnInit {
     this.showLoader = true;
     // let date = this.convertToDateFormat(data.AssemblyWorkInstructionDate);
     // this.workInstructionForm.controls['AssemblyWorkInstructionDate'].setValue(date);
-    this.workInstructionService.postWorkInstructionDetails(data).subscribe(val => {
+    this.workInstructionService
+      .postWorkInstructionDetails(data)
+      .subscribe(val => {
         alert(val.message);
         this.showLoader = false;
         setTimeout(() => {
-            this.router.navigate(["/production/workInstruction"]);
+          this.router.navigate(["/production/workInstruction"]);
         }, 2000);
-    });
+      });
     this.showLoader = false;
-}
+  }
 }

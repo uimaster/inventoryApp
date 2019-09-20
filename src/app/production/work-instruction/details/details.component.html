@@ -49,7 +49,6 @@
       <table class="table">
         <thead>
           <tr>
-            <th>S.No</th>
             <th>Description</th>
             <th>Item Code.</th>
             <th>Item Desc.</th>
@@ -60,7 +59,6 @@
         <tbody formArrayName="assemblyWorkInstructionDetails">
           <tr *ngFor="let ctrl of workInstructionForm.get('assemblyWorkInstructionDetails').controls; let x = index;"
             [formGroupName]="x">
-            <td>{{x+1}}</td>
             <td><input type="text" formControlName="instructiondescription" pInputText readonly></td>
             <td><input type="text" formControlName="itemCode" pInputText readonly></td>
             <td><input type="text" formControlName="itemDesc" pInputText readonly></td>
@@ -81,7 +79,6 @@
     <div style="max-height:200px; overflow:auto; padding: 15px;">
       <table width="100%" class="fieldTable">
         <thead>
-          <th>S. No</th>
           <th>Batch No.</th>
           <th>Item Code</th>
           <th>Quantity</th>
@@ -90,7 +87,6 @@
         <tbody>
           <tr *ngFor="let ctrl of workInstructionForm.get('AssemblyBatchDetails').controls; let i = index;"
             [formGroupName]="i">
-            <td>{{i+1}}</td>
             <td><input type="text" formControlName="batchNo" pInputText readonly></td>
             <td><input type="text" formControlName="itemCode" pInputText readonly></td>
             <td><input type="text" formControlName="qty" pInputText readonly></td>
