@@ -311,6 +311,11 @@ OnDestroy {
     removeBatch(index) {
         const stockItemArray = <FormArray>(this.transactionForm.get("transBatchDetails"));
         stockItemArray.removeAt(index);
+        const controlArray = <FormArray>(this.transactionForm.get("transItemDetails"));
+        const existingQty = controlArray.controls[this.grnItemIndex].get("itemQty").value || 0;
+        const existingQtyRec = controlArray.controls[this.grnItemIndex].get("itemChallan_Qty").value || 0;
+        controlArray.controls[this.grnItemIndex].get("itemQty").setValue(JSON.parse(existingQty) - 1);
+        controlArray.controls[this.grnItemIndex].get("itemChallan_Qty").setValue(JSON.parse(existingQtyRec) - 1);
     }
 
     get batchNo() {
@@ -1707,14 +1712,18 @@ OnDestroy {
     }
 
     callGRNBarcode() {
+      setTimeout(() => {
         this.grnValidationMsg = "";
         this.BarcodeSuccessMsg = "";
         const itemBarCodeVal = this.itemBarCode.nativeElement.value;
         if (itemBarCodeVal.length === this.ItemBarCodeLength) {
             this.addGrnBarcode();
-        } else if (itemBarCodeVal.length > this.ItemBarCodeLength){
+          } else if (itemBarCodeVal.length > this.ItemBarCodeLength) {
             alert("Barcode length should be equal of " + this.ItemBarCodeLength);
+            this.itemBarCode.nativeElement.value = '';
+            return false;
         }
+      }, 1000);
     }
 
     addGrnBarcode() {
@@ -1800,10 +1809,10 @@ OnDestroy {
             if (batchArray.controls[0].get("batchNo").value === 0) {
                 batchArray.removeAt(0);
             }
-            const existingQty = controlArray.controls[this.grnItemIndex].get("itemQty").value;
-            const existingQtyRec = controlArray.controls[this.grnItemIndex].get("itemReceived_Qty").value;
-            controlArray.controls[this.grnItemIndex].get("itemQty").setValue(JSON.parse(itemQtyGnrVal) + existingQty);
-            controlArray.controls[this.grnItemIndex].get("itemReceived_Qty").setValue(JSON.parse(itemQtyGnrVal) + existingQtyRec);
+            const existingQty = controlArray.controls[this.grnItemIndex].get("itemQty").value || 0;
+            const existingQtyRec = controlArray.controls[this.grnItemIndex].get("itemChallan_Qty").value || 0;
+            controlArray.controls[this.grnItemIndex].get("itemQty").setValue(JSON.parse(itemQtyGnrVal) + JSON.parse(existingQty));
+            controlArray.controls[this.grnItemIndex].get("itemChallan_Qty").setValue(JSON.parse(itemQtyGnrVal) + JSON.parse(existingQtyRec));
             // this.displayGrnBarcodeDialog = false;
             this.itemBarCode.nativeElement.value = "";
             this.BarcodeSuccessMsg = "Barcode added Successfully.";

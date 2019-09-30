@@ -308,8 +308,7 @@ export class DetailsComponent implements OnInit {
       this.workInstructionDetails[0].assemblyWorkInstructionDetails[index]
         .batchStatus
     ) {
-      debugger;
-      if (scannedQty > currentQty) {
+        if (scannedQty > currentQty) {
         this.currentIndex = index;
         this.displayGrnBarcodeDialog = true;
         this.grnValidationMsg = "";
