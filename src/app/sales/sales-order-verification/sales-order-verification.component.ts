@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SalesService } from '../sales.service';
+import { UsersService } from '../../users/service/user.service';
 
 @Component({
   selector: 'app-sales-order-verification',
@@ -9,10 +10,22 @@ import { SalesService } from '../sales.service';
 export class SalesOrderVerificationComponent implements OnInit {
   verificationList = [];
   authorizaionCheckedList = [];
-  constructor(private salesService: SalesService) { }
+  public userRightMenuData = {};
+  constructor(private salesService: SalesService, private userService: UsersService) { }
 
   ngOnInit() {
    this.getSalesOrderList();
+   this.getUserMenuDetails();
+  }
+
+  getUserMenuDetails() {
+    let userID = localStorage.getItem('userID');
+    let userRightMenuID = localStorage.getItem('userRightMenuID');
+    this.userService.getUserMenuDetails(userID, userRightMenuID).subscribe( val => {
+      if (val.status === '200') {
+        this.userRightMenuData = val.data[0].userRightTabModelList;
+      }
+    });
   }
 
   getSalesOrderList() {

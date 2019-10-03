@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TransactionServices } from '../../transactionsShared/transaction.service';
 import { Router } from '@angular/router';
 import { BASEURL } from '../../../utils/app.urls';
+import { UsersService } from '../../users/service/user.service';
 
 @Component({
   selector: 'app-sales-order',
@@ -10,8 +11,9 @@ import { BASEURL } from '../../../utils/app.urls';
 })
 export class SalesOrderComponent implements OnInit {
   public salesOrderList = [];
+  public userRightMenuData = {};
   constructor(
-    private transComService: TransactionServices, private router: Router
+    private transComService: TransactionServices, private router: Router, private userService: UsersService
   ) { }
 
   ngOnInit() {
@@ -35,7 +37,19 @@ export class SalesOrderComponent implements OnInit {
     localStorage.setItem('transationLinkRefInput', 'true');
     localStorage.setItem('showBoxCode', 'true');
     localStorage.setItem('showLength4So', 'true');
+    this.getUserMenuDetails();
   }
+
+  getUserMenuDetails() {
+    let userID = localStorage.getItem('userID');
+    let userRightMenuID = localStorage.getItem('userRightMenuID');
+    this.userService.getUserMenuDetails(userID, userRightMenuID).subscribe( val => {
+      if (val.status === '200') {
+        this.userRightMenuData = val.data[0].userRightTabModelList;
+      }
+    });
+  }
+
 
   getSalesOrderList(dates) {
     this.transComService.getTransactionList('10', dates).subscribe( res => {

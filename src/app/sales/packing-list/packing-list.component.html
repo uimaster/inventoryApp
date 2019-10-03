@@ -1,7 +1,7 @@
 <app-filters (filterDates)='getSalesOrderList($event)'></app-filters>
 <p-panel header="Packing List" class="Tabledata">
   <p-header>
-      <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addPackingList()"></button>
+      <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addPackingList()" [disabled]="!userRightMenuData[1]?.createStatus"></button>
 
     </p-header>
   <div *ngIf="packingList" class="table-responsive">
@@ -25,8 +25,8 @@
                 <td>{{item.ledgerName}}</td>
                 <td>{{item.transactionLinkDocNo}}</td>
                 <td>
-                  <button pButton type="button" style="margin-right: 5px;" icon="fa fa-pencil" class="ui-button-success" (click)="editPackingList(item.transactionID)" ></button>
-                  <button pButton type="button" style="margin-right: 5px;" icon="fa fa-trash-o" class="ui-button-danger"></button>
+                  <button pButton type="button" style="margin-right: 5px;" icon="fa fa-pencil" class="ui-button-success" (click)="editPackingList(item.transactionID)" [disabled]="!userRightMenuData[1]?.modifyStatus"></button>
+                  <button pButton type="button" style="margin-right: 5px;" icon="fa fa-trash-o" class="ui-button-danger" [disabled]="!userRightMenuData[1]?.deleteStatus"></button>
                   <a pButton type="button" icon="fa fa-print" class="ui-button-info" target="_blank" (click)="generateReport(item.transactionID)"> </a>
                 </td>
               </tr>

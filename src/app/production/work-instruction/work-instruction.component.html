@@ -1,7 +1,7 @@
 <app-filters (filterDates)='getWorkInstructionList($event)'></app-filters>
 <p-panel header="Good Receipt Note" class="Tabledata">
     <p-header>
-        <button pButton type="button" style="float:right" icon="pi pi-plus"  label="Add Work Instruction" class="ui-button-success" routerLink="/production/addworkInstruction"></button>
+        <button pButton type="button" style="float:right" icon="pi pi-plus"  label="Add Work Instruction" class="ui-button-success" routerLink="/production/addworkInstruction" [disabled]="!userRightMenuData[2]?.createStatus"></button>
 
     </p-header>
     <div class="table-responsive" *ngIf="workInstructionList">

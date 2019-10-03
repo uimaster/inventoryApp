@@ -5,7 +5,7 @@
       <div class="wrraper">
         <div class="row">
           <div class="no-padding DashboardTop">
-            <div class="col-sm-3 no-padding dashboardlscol">
+            <div class="col-sm-3 no-padding dashboardlscol" *ngIf="userRightMenuData[0]?.userRightTabStatus">
               <div class="dashboard-volumn" routerLinkActive="active">
                 <a routerLink="salesOrder">
                   <div class="col-sm-12 no-padding">
@@ -20,7 +20,7 @@
                 </a>
               </div>
             </div>
-            <div class="col-sm-3 no-padding dashboardlscol">
+            <div class="col-sm-3 no-padding dashboardlscol" *ngIf="userRightMenuData[1]?.userRightTabStatus">
               <div class="dashboard-volumn" routerLinkActive="active">
                 <a routerLink="packingList">
                   <div class="col-sm-12 no-padding">
@@ -37,7 +37,7 @@
               </div>
             </div>
 
-            <div class="col-sm-3 no-padding dashboardlscol">
+            <div class="col-sm-3 no-padding dashboardlscol" *ngIf="userRightMenuData[2]?.userRightTabStatus">
               <div class="dashboard-volumn" routerLinkActive="active">
                 <a routerLink="salesInvoice">
                   <div class="col-sm-12 no-padding">
@@ -52,22 +52,7 @@
                 </a>
               </div>
             </div>
-            <!-- <div class="col-sm-3 no-padding dashboardlscol">
-              <div class="dashboard-volumn" routerLinkActive="active">
-                <a routerLink="salesInvoicePrint">
-                  <div class="col-sm-12 no-padding">
-                    <div class="col-sm-4 no-padding dashboard-volumn-lst">
-                        <i class="fa fa-clipboard" aria-hidden="true"></i>
-                    </div>
-                    <div class="col-sm-8 no-padding dashboard-volumn-lst">
-                      <p>No. 522</p>
-                      <h3>Sales Invoice Printing</h3>
-                    </div>
-                  </div>
-                </a>
-              </div>
-            </div> -->
-            <div class="col-sm-3 no-padding dashboardlscol">
+            <div class="col-sm-3 no-padding dashboardlscol" *ngIf="userRightMenuData[3]?.userRightTabStatus">
               <div class="dashboard-volumn" routerLinkActive="active">
                 <a routerLink="salesOrderVerify">
                   <div class="col-sm-12 no-padding">
@@ -82,22 +67,7 @@
                 </a>
               </div>
             </div>
-            <!-- <div class="col-sm-3 no-padding dashboardlscol">
-              <div class="dashboard-volumn" routerLinkActive="active">
-                <a routerLink="salesOrderAccept">
-                  <div class="col-sm-12 no-padding">
-                    <div class="col-sm-4 no-padding dashboard-volumn-lst">
-                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                    </div>
-                    <div class="col-sm-8 no-padding dashboard-volumn-lst">
-                      <p>No. 522</p>
-                      <h3>Sales Order Acceptance</h3>
-                    </div>
-                  </div>
-                </a>
-              </div>
-            </div> -->
-            <div class="col-sm-3 no-padding dashboardlscol">
+            <div class="col-sm-3 no-padding dashboardlscol" *ngIf="userRightMenuData[4]?.userRightTabStatus">
               <div class="dashboard-volumn" routerLinkActive="active">
                 <a routerLink="salesInvoiceGenerate">
                   <div class="col-sm-12 no-padding">

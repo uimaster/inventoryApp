@@ -2,7 +2,7 @@
 <p-panel header="Sales Order List" class="Tabledata">
   <p-header>
 
-      <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addSalesOrder()"></button>
+      <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addSalesOrder()" [disabled]="!userRightMenuData[0]?.createStatus"></button>
 
   </p-header>
   <div *ngIf="salesOrderList" class="table-responsive">
@@ -30,8 +30,8 @@
                   <td>{{item.transaction_Amount}}</td>
                   <td>{{item.transactionLinkDocNo}}</td>
                   <td>
-                      <button pButton type="button" style="margin-right: 5px;" icon="fa fa-pencil" class="ui-button-success" (click)="editSalesOrder(item.transactionID)" ></button>
-                      <button pButton type="button" style="margin-right: 5px;" icon="fa fa-trash-o" class="ui-button-danger"></button>
+                      <button pButton type="button" style="margin-right: 5px;" icon="fa fa-pencil" class="ui-button-success" (click)="editSalesOrder(item.transactionID)" [disabled]="!userRightMenuData[0]?.modifyStatus"></button>
+                      <button pButton type="button" style="margin-right: 5px;" icon="fa fa-trash-o" class="ui-button-danger" [disabled]="!userRightMenuData[0]?.deleteStatus"></button>
                       <a pButton type="button" icon="fa fa-print" class="ui-button-info" target="_blank" (click)="generateReport(item.transactionID)"> </a>
                   </td>
               </tr>

@@ -3,6 +3,7 @@ import {Observable} from 'rxjs/Observable';
 import {Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {AssemblyInstructionService} from '../services/assembly-instruction.service';
+import { UsersService } from '../../../users/service/user.service';
 
 @Component({
     selector: 'app-assembly-instruction-list',
@@ -14,10 +15,22 @@ export class AssemblyInstructionListComponent implements OnInit, OnDestroy {
     public listData: any;
     public showLoader:boolean = false;
     public aiListDataSubscription: Subscription;
-    constructor(private assemblyInstructionService: AssemblyInstructionService, private router: Router) { }
+    public userRightMenuData = {};
+    constructor(private assemblyInstructionService: AssemblyInstructionService, private router: Router, private userService: UsersService) { }
 
     ngOnInit() {
         this.getBomList();
+        this.getUserMenuDetails();
+    }
+
+    getUserMenuDetails() {
+      let userID = localStorage.getItem('userID');
+      let userRightMenuID = localStorage.getItem('userRightMenuID');
+      this.userService.getUserMenuDetails(userID, userRightMenuID).subscribe( val => {
+        if (val.status === '200') {
+          this.userRightMenuData = val.data[0].userRightTabModelList;
+        }
+      });
     }
 
     getBomList() {

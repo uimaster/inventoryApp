@@ -6,7 +6,7 @@
 <ng-template #showBlock> -->
 <p-panel header="Assembly Instruction List" class="Tabledata">
     <p-header>
-        <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addAI()"></button>
+        <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addAI()" [disabled]="!userRightMenuData[3]?.createStatus"></button>
     </p-header>
 <!--     
     <div class="ui-g">
@@ -38,8 +38,8 @@
                     <td>{{ai.asemblyInstructionDate}}</td>
                     <td>{{ai.itemDesc}}</td>
                     <td>
-                        <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="setBom(ai.assemblyInstructionId)"></button>
-                        <button pButton type="button" label="Delete" class="ui-button-danger" ></button>
+                        <button pButton type="button" style="margin-right: 5px;" label="Edit" class="ui-button-success" (click)="setBom(ai.assemblyInstructionId)" [disabled]="!userRightMenuData[3]?.modifyStatus"></button>
+                        <button pButton type="button" label="Delete" class="ui-button-danger" [disabled]="!userRightMenuData[3]?.deleteStatus"></button>
                     </td>
                 </tr>
             </ng-container>

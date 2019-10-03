@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TransactionServices } from '../../transactionsShared/transaction.service';
 import { BASEURL } from '../../../utils/app.urls';
+import { UsersService } from '../../users/service/user.service';
 
 
 @Component({
@@ -11,8 +12,9 @@ import { BASEURL } from '../../../utils/app.urls';
 })
 export class PackingListComponent implements OnInit, OnDestroy {
   public packingList = [];
+  public userRightMenuData = {};
   constructor(
-    private transComService: TransactionServices, private router: Router,
+    private transComService: TransactionServices, private router: Router, private userService: UsersService
   ) { }
 
   ngOnInit() {
@@ -36,6 +38,18 @@ export class PackingListComponent implements OnInit, OnDestroy {
     localStorage.setItem('showActionBtn', 'true');
     localStorage.setItem('showBarcode4Pl', 'true');
     localStorage.setItem('showScannedQty', 'true');
+    
+    this.getUserMenuDetails();
+  }
+
+  getUserMenuDetails() {
+    let userID = localStorage.getItem('userID');
+    let userRightMenuID = localStorage.getItem('userRightMenuID');
+    this.userService.getUserMenuDetails(userID, userRightMenuID).subscribe( val => {
+      if (val.status === '200') {
+        this.userRightMenuData = val.data[0].userRightTabModelList;
+      }
+    });
   }
 
 

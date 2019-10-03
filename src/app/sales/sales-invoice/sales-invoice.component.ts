@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { BASEURL } from "../../../utils/app.urls";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { SalesService } from "../sales.service";
+import { UsersService } from '../../users/service/user.service';
 
 @Component({
   selector: "app-sales-invoice",
@@ -21,11 +22,13 @@ export class SalesInvoiceComponent implements OnInit {
   public formData = [];
   public enabledCtrls = false;
   public tableCheck = true;
+  public userRightMenuData = {};
   constructor(
     private transComService: TransactionServices,
     private router: Router,
     private fb: FormBuilder,
-    private saleService: SalesService
+    private saleService: SalesService,
+    private userService: UsersService
   ) {}
 
   ngOnInit() {
@@ -51,6 +54,18 @@ export class SalesInvoiceComponent implements OnInit {
     this.createShipppingForm();
     this.getShippingLedgers();
     // this.veiwShipDetails();
+
+    this.getUserMenuDetails()
+  }
+
+  getUserMenuDetails() {
+    let userID = localStorage.getItem('userID');
+    let userRightMenuID = localStorage.getItem('userRightMenuID');
+    this.userService.getUserMenuDetails(userID, userRightMenuID).subscribe( val => {
+      if (val.status === '200') {
+        this.userRightMenuData = val.data[0].userRightTabModelList;
+      }
+    });
   }
 
   getSalesOrderList(dates) {
