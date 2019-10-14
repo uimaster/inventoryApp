@@ -118,7 +118,7 @@ export class PricelistComponent implements OnInit, OnDestroy {
             stockItemID: [0],
             itemName:[''],
             //itemSerialNo: [0],
-            itemRate: [0],
+            itemRate: [0, [Validators.maxLength(5)]],
             stopsRate: [0],
             lengthRate: [0],
             discountPercentage: [0]
@@ -132,7 +132,7 @@ export class PricelistComponent implements OnInit, OnDestroy {
             stockItemID: [0],
             itemName:'',
            // itemSerialNo: [0],
-            itemRate: [0],
+            itemRate: [0, [Validators.maxLength(5)]],
             stopsRate: [0],
             lengthRate: [0],
             discountPercentage: [0]
@@ -158,6 +158,8 @@ export class PricelistComponent implements OnInit, OnDestroy {
         //     element.itemSerialNo = index+1;
         // }
        // console.log(form);
+       if(!form.valid)
+        return false;
         form.priceListTypeID = Number(this.typeID);
         form.priceListDate = this.datePipe.transform(form.priceListDate, 'yyyy-MM-dd');
         this.priceListService.updatePricelist(form).subscribe((res: PricelistResponse) => {

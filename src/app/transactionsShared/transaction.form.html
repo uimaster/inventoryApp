@@ -255,7 +255,8 @@
               </p-dropdown>
             </td>
             <td><input type="text" formControlName="taxRate" pInputText></td>
-            <td><input type="text" formControlName="ledgerAmount" pInputText (keyup)="getAmount()"></td>
+            <td><input type="text" formControlName="ledgerAmount" pInputText ></td>
+            <!-- (keyup)="getAmount()" -->
             <td align="center">
               <button pButton type="button" icon="fa fa-plus" class="ui-button-success"
                 (click)="addItemLedger()"></button>

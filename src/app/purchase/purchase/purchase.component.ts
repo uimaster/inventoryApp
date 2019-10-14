@@ -37,6 +37,7 @@ export class TransactionPurchaseComponent implements OnInit, OnDestroy {
     localStorage.setItem('GrnInput', 'false');
     localStorage.setItem('showActionBtn', 'true');
     localStorage.setItem('enableRateInput', 'true');
+    //localStorage.setItem('enableAmountInput', 'true');
     localStorage.setItem('showBarcode4Grn', 'true');
     localStorage.setItem('showProjects', 'true');
   

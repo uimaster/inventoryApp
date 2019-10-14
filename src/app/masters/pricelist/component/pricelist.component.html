@@ -85,7 +85,7 @@
             <div class="ui-g-2">
               <div class="form-group">
                 <span class="ui-float-label">
-                  <input type="number" formControlName="itemRate" pInputText id="itemRate">
+                  <input type="text" pattern="\d*" maxlength="4" formControlName="itemRate" pInputText id="itemRate">
                   <label for="itemRate">Item Rate</label>
                 </span>
               </div>
@@ -93,7 +93,7 @@
             <div class="ui-g-1">
                 <div class="form-group">
                     <span class="ui-float-label">
-                    <input type="number" formControlName="stopsRate" pInputText id="stopsRate">
+                    <input type="text" pattern="\d*" maxlength="4" formControlName="stopsRate" pInputText id="stopsRate">
                     <label for="stopsRate">Stops Rate</label>
                     </span>
                 </div>
@@ -101,16 +101,16 @@
             <div class="ui-g-1">
                 <div class="form-group">
                     <span class="ui-float-label">
-                    <input type="number" formControlName="lengthRate" pInputText id="lengthRate">
+                    <input type="text" pattern="\d*" maxlength="4" formControlName="lengthRate" pInputText id="lengthRate">
                     <label for="lengthRate">Length Rate</label>
                     </span>
                 </div>
             </div>
-            <div class="ui-g-2">
+            <div class="ui-g-1">
               <div class="form-group">
                 <span class="ui-float-label">
-                  <input type="number" formControlName="discountPercentage" pInputText id="discountPercentage">
-                  <label for="discountPercentage">Discount Percentage</label>
+                  <input type="text" pattern="\d*" maxlength="4" formControlName="discountPercentage" pInputText id="discountPercentage">
+                  <label for="discountPercentage">Disc %</label>
                 </span>
               </div>
             </div>
