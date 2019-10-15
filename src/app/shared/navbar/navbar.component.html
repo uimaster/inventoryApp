@@ -65,39 +65,39 @@
               <a routerLink="/dashboard"  routerLinkActive="active"><i class="fa fa-tachometer" aria-hidden="true"></i>
                 <span>Dashboard</span></a>
             </li>
-            <li *ngIf="userDetails[0]?.userRightMenuStatus || 1">
+            <li *ngIf="userDetails[0]?.userRightMenuStatus">
               <a routerLink="/masters" (click)="redirect(userDetails[0]?.userRightMenuID)" routerLinkActive="active"><i class="fa fa-address-book" aria-hidden="true"></i>
                 <span>Masters</span></a>
             </li>
-            <li *ngIf="userDetails[1]?.userRightMenuStatus || 1">
+            <li *ngIf="userDetails[1]?.userRightMenuStatus">
               <a routerLink="/bill-material" (click)="redirect(userDetails[1]?.userRightMenuID)" routerLinkActive="active"><i class="fa fa-tasks" aria-hidden="true"></i>
                 <span>Bill Of Material</span></a>
             </li>
-            <li *ngIf="userDetails[2]?.userRightMenuStatus || 1">
+            <li *ngIf="userDetails[2]?.userRightMenuStatus">
               <a routerLink="/planning" (click)="redirect(userDetails[2]?.userRightMenuID)" routerLinkActive="active"><i class="fa fa-address-card" aria-hidden="true"></i>
                 <span>Planning</span></a>
             </li>
-            <li *ngIf="userDetails[3]?.userRightMenuStatus || 1">
+            <li *ngIf="userDetails[3]?.userRightMenuStatus">
               <a routerLink="/purchase" (click)="redirect(userDetails[3]?.userRightMenuID)" routerLinkActive="active"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
                 <span>Purchase</span></a>
             </li>
-            <li  *ngIf="userDetails[4]?.userRightMenuStatus || 1">
+            <li  *ngIf="userDetails[4]?.userRightMenuStatus">
               <a routerLink="/stores" (click)="redirect(userDetails[4]?.userRightMenuID)" routerLinkActive="active"><i class="fa fa-archive" aria-hidden="true"></i>
                 <span>Stores</span></a>
             </li>
-            <li *ngIf="userDetails[5]?.userRightMenuStatus || 1">
+            <li *ngIf="userDetails[5]?.userRightMenuStatus">
               <a routerLink="/production" (click)="redirect(userDetails[5]?.userRightMenuID)" routerLinkActive="active"><i class="fa fa-product-hunt"
                   aria-hidden="true"></i>
                 <span>Production</span></a>
             </li>
-            <li *ngIf="userDetails[6]?.userRightMenuStatus || 1">
+            <li *ngIf="userDetails[6]?.userRightMenuStatus">
               <a routerLink="/sales" (click)="redirect(userDetails[6]?.userRightMenuID)" routerLinkActive="active"><i class="fa fa-balance-scale" aria-hidden="true"></i>
                 <span>Sales</span></a>
             </li>
             <!-- <li>
               <a routerLink="/utilities" routerLinkActive="active"><i class="fa fa-sliders" aria-hidden="true"></i> <span>Utilities</span></a>
             </li> -->
-            <li *ngIf="userDetails[7]?.userRightMenuStatus || 1">
+            <li *ngIf="userDetails[7]?.userRightMenuStatus">
               <a routerLink="/reports" (click)="redirect(userDetails[7]?.userRightMenuID)" routerLinkActive="active"><i class="fa fa-file" aria-hidden="true"></i>
                 <span>Reports</span></a>
             </li>
