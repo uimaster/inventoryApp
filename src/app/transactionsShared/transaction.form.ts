@@ -685,9 +685,12 @@ OnDestroy {
             this.trasactionService.getTransactionDetails(id).subscribe(res => {
                 if (res.status === "200") {
                     this.detailsData = res.data;
-                    this.transactionForm.controls["poNo"].setValue(this.detailsData[0].poNo);
+                    
                     if(this.transationLinkRefNameGRN){
                         this.getGRNPendingList(this.detailsData[0].ledgerID);
+                    }
+                    else{
+                        this.transactionForm.controls["poNo"].setValue(this.detailsData[0].poNo);
                     }
                     // if (this.detailsData[0].length > 0) {
                     this.transactionForm.controls["transactionID"].setValue(this.detailsData[0].transactionID);
@@ -1067,18 +1070,18 @@ OnDestroy {
             for (let key in data) {
               if (data.hasOwnProperty(key)) {
                 this.GRNpendingList.push({
-                  label: data[key].transactionNo + (data[key].purchaseno? '|' + data[key].purchaseno:''),
+                  label: data[key].transactionNo + (data[key].pono? '|' + data[key].pono:''),
                   value: data[key].transactionID
                 });
                 this.purchaseNos.push({
-                    label: data[key].purchaseno,
+                    label: data[key].pono,
                     value: data[key].transactionID
                 });
                 if(data[key].grnSelected)
                     selected.push(data[key].transactionID);
                 
-                if(data[key].grnSelected && data[key].purchaseno)
-                    poNos.push(data[key].purchaseno);
+                if(data[key].grnSelected && data[key].pono)
+                    poNos.push(data[key].pono);
                 }
             }
             this.selectedGrns = selected;
@@ -1156,7 +1159,8 @@ OnDestroy {
                 "TransactionLinkID": 0
             });
             let obj = this.purchaseNos.find(o => o.value === element);
-            poNos.push(obj.label);
+            if(obj.label)
+                poNos.push(obj.label);
         }
         this.transactionForm.controls["poNo"].setValue(poNos.toString());
 
