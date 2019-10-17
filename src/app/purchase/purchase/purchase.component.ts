@@ -40,6 +40,7 @@ export class TransactionPurchaseComponent implements OnInit, OnDestroy {
     //localStorage.setItem('enableAmountInput', 'true');
     localStorage.setItem('showBarcode4Grn', 'true');
     localStorage.setItem('showProjects', 'true');
+    localStorage.setItem('showPO', 'true');
   
     this.getUserMenuDetails();
   }

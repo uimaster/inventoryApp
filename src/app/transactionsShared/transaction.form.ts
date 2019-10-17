@@ -35,6 +35,7 @@ OnDestroy {
     public salesOrderPendingList = [];
     public POpendingList = [];
     public GRNpendingList = [];
+    public purchaseNos = [];
     public transactionTypeSeriesList = [];
     public boxDetailData = [];
     public batchDetailData = [];
@@ -530,7 +531,7 @@ OnDestroy {
     deleteItemDetails(index) {
         const stockItemArray = <FormArray>(this.transactionForm.get("transItemDetails"));
         stockItemArray.removeAt(index);
-        this.getAmount();
+        this.getAmount(true);
     }
 
     get stockitemID() {
@@ -577,7 +578,7 @@ OnDestroy {
     deleteItemLedger(index) {
         const ledgerArray = <FormArray>(this.transactionForm.get("transLedgerDetails"));
         ledgerArray.removeAt(index);
-        this.getAmount();
+        this.getAmount(true);
     }
 
     get taxRate() {
@@ -684,6 +685,7 @@ OnDestroy {
             this.trasactionService.getTransactionDetails(id).subscribe(res => {
                 if (res.status === "200") {
                     this.detailsData = res.data;
+                    this.transactionForm.controls["poNo"].setValue(this.detailsData[0].poNo);
                     if(this.transationLinkRefNameGRN){
                         this.getGRNPendingList(this.detailsData[0].ledgerID);
                     }
@@ -691,7 +693,7 @@ OnDestroy {
                     this.transactionForm.controls["transactionID"].setValue(this.detailsData[0].transactionID);
                     this.transactionForm.controls["transactionDate"].setValue(this.convertToDateFormat(this.detailsData[0].transactionDate));
                     this.transactionForm.controls["transactionNo"].setValue(this.detailsData[0].transactionNo);
-                    this.transactionForm.controls["poNo"].setValue(this.detailsData[0].poNo);
+                    
                     this.transactionForm.controls["transactionTypeId"].setValue(this.detailsData[0].transactionTypeId);
                     this.transactionForm.controls["transactionSeriesID"].setValue(this.detailsData[0].transactionSeriesID);
                     this.transactionForm.controls["ledgerID"].setValue(this.detailsData[0].ledgerID);
@@ -1055,22 +1057,32 @@ OnDestroy {
 
     getGRNPendingList(ledgerID) {
         this.GRNpendingList = [];
+        this.purchaseNos = [];
         //this.selectedGrns = [];
         this.trasactionService.getPendingGRNList(ledgerID,this.transactionId).subscribe(res => {
           if (res && res.status === "200") {
             let data = res.data;
             let selected = [];
+            let poNos = [];
             for (let key in data) {
               if (data.hasOwnProperty(key)) {
                 this.GRNpendingList.push({
-                  label: data[key].transactionNo,
+                  label: data[key].transactionNo + (data[key].purchaseno? '|' + data[key].purchaseno:''),
                   value: data[key].transactionID
                 });
+                this.purchaseNos.push({
+                    label: data[key].purchaseno,
+                    value: data[key].transactionID
+                });
                 if(data[key].grnSelected)
-                selected.push(data[key].transactionID);
-              }
+                    selected.push(data[key].transactionID);
+                
+                if(data[key].grnSelected && data[key].purchaseno)
+                    poNos.push(data[key].purchaseno);
+                }
             }
             this.selectedGrns = selected;
+            this.transactionForm.controls["poNo"].setValue(poNos.toString());
             //console.log('selectedGrns',this.selectedGrns);
           }
         });
@@ -1079,11 +1091,31 @@ OnDestroy {
     getTaxRate(data, i) {
         const ledgerfrmArray = <FormArray>(this.transactionForm.get("transLedgerDetails"));
         ledgerfrmArray.controls[i].get("taxRate").setValue(data.selectedOption.rateofTax);
-        this.getAmount();
+        this.getAmountForRow(i);
+    }
+
+    getAmountForRow(i) {
+        const itemfrmArray = <FormArray>(this.transactionForm.get("transItemDetails"));
+        var itemTotalAmount = 0;
+        for (let i = 0; i < itemfrmArray.length; i++) {
+            const itemRate = itemfrmArray.controls[i].get("itemRate").value;
+            const itemQnt = itemfrmArray.controls[i].get("itemQty").value;
+            const itemAmount = itemRate * itemQnt;
+            itemfrmArray.controls[i].get("itemAmount").setValue(itemAmount);
+            itemTotalAmount = itemTotalAmount + itemAmount;
+        }
+        
+        const ledgerfrmArray = <FormArray>(this.transactionForm.get("transLedgerDetails"));
+        var ledgerAmnt = 0;
+        const taxRate = ledgerfrmArray.controls[i].get("taxRate").value;
+        const onePercnt = itemTotalAmount / 100;
+        ledgerAmnt = taxRate * onePercnt;
+        ledgerfrmArray.controls[i].get("ledgerAmount").setValue(ledgerAmnt);
+        this.getAmount(true);
     }
 
     // GET TOTAL AMOUNT //
-    getAmount() {
+    getAmount(doNotSet=false) {
         const itemfrmArray = <FormArray>(this.transactionForm.get("transItemDetails"));
         var itemTotalAmount = 0;
         for (let i = 0; i < itemfrmArray.length; i++) {
@@ -1101,7 +1133,11 @@ OnDestroy {
             const taxRate = ledgerfrmArray.controls[i].get("taxRate").value;
             const onePercnt = itemTotalAmount / 100;
             ledgerAmnt = taxRate * onePercnt;
-            ledgerfrmArray.controls[i].get("ledgerAmount").setValue(ledgerAmnt);
+            if(!doNotSet)
+                ledgerfrmArray.controls[i].get("ledgerAmount").setValue(ledgerAmnt);
+            else
+                ledgerAmnt = Number(ledgerfrmArray.controls[i].get("ledgerAmount").value);
+
             grantLedgerAmnt = grantLedgerAmnt + ledgerAmnt;
         }
         this.totalAmount = itemTotalAmount + grantLedgerAmnt;
@@ -1112,13 +1148,18 @@ OnDestroy {
         let transactionIDs = this.transactionForm.controls['transactionLinkID'].value;
         //console.log('transactionIDs',transactionIDs);
         let inputPayload = [];
+        let poNos = [];
         for (let index = 0; index < transactionIDs.length; index++) {
             const element = transactionIDs[index];
             inputPayload.push({
                 "TransactionID":element,
                 "TransactionLinkID": 0
             });
+            let obj = this.purchaseNos.find(o => o.value === element);
+            poNos.push(obj.label);
         }
+        this.transactionForm.controls["poNo"].setValue(poNos.toString());
+
         this.trasactionService.getTransactionLinkItems(inputPayload).subscribe(res => {
             if (res.status === "200") {
                 //console.log(res.data);
