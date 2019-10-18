@@ -1079,7 +1079,7 @@ OnDestroy {
                 
                 // if(data[key].grnSelected && data[key].purchaseno)
                 //     poNos.push(data[key].purchaseno);
-                // }
+                 }
             }
             this.selectedGrns = selected;
            // this.transactionForm.controls["poNo"].setValue(poNos.toString());
