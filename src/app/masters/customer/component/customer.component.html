@@ -326,7 +326,7 @@
     <br/>
     <p style="text-align: center">
       <button pButton type="submit" label="Submit" class="ui-button-success" [disabled]="!cForm.valid" style="margin-right: 10px;"></button>
-      <button pButton type="button" label="Cancel" class="ui-button-secondary"></button>
+      <button pButton type="button" label="Cancel" class="ui-button-secondary" (click)="back('/masters/customers')"></button>
     </p>
   </form>
 </p-panel>

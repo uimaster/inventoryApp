@@ -1931,6 +1931,9 @@ OnDestroy {
         });
     }
 
+    goBack() {
+      history.back();
+    }
     ngOnDestroy() {
         localStorage.setItem("barcodeFields", "false");
         localStorage.setItem("showTransactionSeries", "false");

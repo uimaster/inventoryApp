@@ -11,6 +11,7 @@ import * as XLSX from 'xlsx';
 const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
 import { NotificationsService } from '../../../notifications/notifications.service';
+import { CommonService } from '../../../shared/services/common.services';
 
 
 @Component({
@@ -40,7 +41,9 @@ export class PricelistComponent implements OnInit, OnDestroy {
       private _formBuilder: FormBuilder,
       private router: Router,
       private datePipe: DatePipe,
-      private notificationsService: NotificationsService
+      private notificationsService: NotificationsService,
+      private commonService: CommonService
+
     ) { }
     public priceList;
     public cForm;
@@ -72,6 +75,11 @@ export class PricelistComponent implements OnInit, OnDestroy {
           }
       });
     }
+
+    back(url){
+      this.commonService.getNavigate(url);
+    }
+
 
     getPricelistData(priceListId) {
         //this.showLoader = true;

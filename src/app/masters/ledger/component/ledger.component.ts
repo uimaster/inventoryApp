@@ -8,6 +8,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, Validators} from '@angular/forms';
 import {returnLabel} from "../../../generic_function";
 import { UsersService } from '../../../users/service/user.service';
+import { CommonService } from '../../../shared/services/common.services';
 
 @Component({
     selector: 'app-ledger',
@@ -35,7 +36,8 @@ export class LedgerComponent implements OnInit, OnDestroy {
       private _route: ActivatedRoute,
       private _formBuilder: FormBuilder,
       private router: Router,
-      private userService: UsersService
+      private userService: UsersService,
+      private commonService: CommonService
     ) { }
 
 
@@ -51,6 +53,10 @@ export class LedgerComponent implements OnInit, OnDestroy {
         }, 1000);
 
         this.getLedgerGroupList();
+    }
+
+    back(url){
+      this.commonService.getNavigate(url);
     }
 
     getLedgerGroupList() {

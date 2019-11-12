@@ -56,7 +56,7 @@
     <br/>
     <p style="text-align: center">
       <button pButton type="submit" [disabled]="!stockGroupForm.valid" label="Submit" class="ui-button-success" style="margin-right: 10px;"></button>
-      <button pButton type="button" label="Cancel" class="ui-button-secondary"></button>
+      <button pButton type="button" label="Cancel" class="ui-button-secondary" (click)="back('/masters/stockGroups')"></button>
     </p>
   </form>
 </p-panel>

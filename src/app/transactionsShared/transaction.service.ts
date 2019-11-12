@@ -19,9 +19,10 @@ export class TransactionServices {
   constructor(  private http: HttpClient) {}
 
   // GET TRANSACTION LIST //
-  getTransactionList(typeId, dates, SearchText = ''): Observable<any> {
+  getTransactionList(typeId, dates): Observable<any> {
     var starDate = '';
     var toDate = '';
+    var SearchText = localStorage.getItem('t_searchText') || '';
 
     if (dates !== '') {
       starDate = dates[0];
@@ -192,6 +193,17 @@ export class TransactionServices {
 
   UpdateTransactionPurchase(payload: any): Observable<any> {
     return this.http.post(urls.UPDATETRANSACTIONPURCHASE, payload)
+    .map((res: any) => {
+      return res;
+    })
+      .catch((error) => Observable.throw(error.json() || 'Server error'));
+  }
+
+  deleteTransaction(payload: any): Observable<any> {
+
+    const params = new HttpParams().set('TransactionID', payload.TransactionID).set('DeleteRemarks', 'delete').set('UserID', payload.UserID);
+
+    return this.http.delete(urls.DELETETRANSACTION, {params})
     .map((res: any) => {
       return res;
     })

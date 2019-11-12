@@ -5,6 +5,7 @@ import {UnitService} from '../services/unit.service';
 import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, Validators} from '@angular/forms';
+import { CommonService } from '../../../shared/services/common.services';
 
 @Component({
     selector: 'app-unit',
@@ -24,7 +25,8 @@ export class UnitComponent implements OnInit, OnDestroy {
       private unitService: UnitService,
       private _route: ActivatedRoute,
       private _formBuilder: FormBuilder,
-      private router: Router
+      private router: Router,
+      private commonService: CommonService
     ) { }
     public unit;
     public uForm;
@@ -37,6 +39,11 @@ export class UnitComponent implements OnInit, OnDestroy {
 
 
     }
+
+    back(url){
+      this.commonService.getNavigate(url);
+    }
+
 
     getUnitData() {
         this.unitDataSubscription = this.unitService.getAllUnits().subscribe((res: UnitResponse) => {

@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, Validators} from '@angular/forms';
 import {StockGroupService} from '../services/stock-group.service';
 import {StockGroup, StockGroupResponse} from '../models/stock-group.model';
+import { CommonService } from '../../../shared/services/common.services';
 
 @Component({
     selector: 'app-stock-group',
@@ -29,7 +30,8 @@ export class StockGroupComponent implements OnInit, OnDestroy {
       private stockGroupService: StockGroupService,
       private _route: ActivatedRoute,
       private _formBuilder: FormBuilder,
-      private _router: Router
+      private _router: Router,
+      private commonService: CommonService
     ) { }
 
     ngOnInit() {
@@ -45,6 +47,11 @@ export class StockGroupComponent implements OnInit, OnDestroy {
 
 
     }
+
+    back(url){
+      this.commonService.getNavigate(url);
+    }
+
 
     getStockData() {
         this.stockGroupDataSubscription = this.stockGroupService.getAllStockGroups().subscribe((res: StockGroupResponse) => {

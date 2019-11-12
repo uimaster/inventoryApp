@@ -14,6 +14,7 @@ import {StockGroupService} from "../../stock-group/services/stock-group.service"
 import {SupplierService} from "../../supplier/services/supplier.service";
 import {TouchSequence} from "selenium-webdriver";
 import {SelectItem} from "primeng/api";
+import { CommonService } from '../../../shared/services/common.services';
 
 @Component({selector: "app-stock-detail", templateUrl: "./stock-detail.component.html", styleUrls: ["./stock-detail.component.scss"]})
 export class StockDetailComponent implements OnInit,
@@ -66,7 +67,7 @@ OnDestroy {
             value: "False"
         }
     ];
-    constructor(private stockService : StockService, private ledgerService : LedgerService, private unitService : UnitService, private _route : ActivatedRoute, private _formBuilder : FormBuilder, private router : Router, private stockGroupService : StockGroupService, private supplierService : SupplierService) {
+    constructor(private stockService : StockService, private ledgerService : LedgerService, private unitService : UnitService, private _route : ActivatedRoute, private _formBuilder : FormBuilder, private router : Router, private stockGroupService : StockGroupService, private supplierService : SupplierService, private commonService: CommonService) {
         this.stockForm();
         this.barCodeApplicable = [
             {
@@ -78,13 +79,13 @@ OnDestroy {
             }
         ];
     }
-
+    
     ngOnInit() {
-        this.selectedBarcodeApplicable = this.barCodeApplicable[0].value;
-        this.selectedlengthAPPLICABLE = this.barCodeApplicable[0].value;
-        this.selectedstopsAPPLICABLE = this.barCodeApplicable[0].value;
-        this.selectedshowInRMReport = this.barCodeApplicable[0].value;
-        this.selectedActiveStatus = this.statusList[0].value;
+        this.selectedBarcodeApplicable = this.barCodeApplicable[1].value;
+        this.selectedlengthAPPLICABLE = this.barCodeApplicable[1].value;
+        this.selectedstopsAPPLICABLE = this.barCodeApplicable[1].value;
+        this.selectedshowInRMReport = this.barCodeApplicable[1].value;
+        this.selectedActiveStatus = this.statusList[1].value;
         setTimeout(() => {
             this._route.params.subscribe(params => {
                 this.stockItemId = params.id;
@@ -99,6 +100,10 @@ OnDestroy {
         this.getLocation();
         this.getSupplier();
         this.getStockItemGroup();
+    }
+
+    back(url){
+      this.commonService.getNavigate(url);
     }
 
     getStockItemGroup() {

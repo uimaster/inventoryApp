@@ -460,7 +460,7 @@
   <p style="text-align: center">
     <button pButton type="button" (click)="saveTransation(transactionForm.value)" label="Submit"
       class="ui-button-success" [disabled]="!transactionForm.valid" style="margin-right: 10px;"></button>
-    <button pButton type="button" label="Cancel" class="ui-button-secondary"></button>
+    <button pButton type="button" label="Cancel" class="ui-button-secondary" (click)="goBack()"></button>
   </p>
 </form>
 <div class="lengthModal">

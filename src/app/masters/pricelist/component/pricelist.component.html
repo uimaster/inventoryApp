@@ -130,7 +130,7 @@
     <br/>
     <p class="fixed-footer">
       <button pButton type="submit" label="Submit" class="ui-button-success" [disabled]="!cForm.valid" style="margin-right: 10px;"></button>
-      <button pButton type="button" label="Cancel" class="ui-button-secondary"></button>
+      <button pButton type="button" label="Cancel" class="ui-button-secondary" (click)="back('/masters/pricelist/2')"></button>
     </p>
   </form>
 </p-panel>

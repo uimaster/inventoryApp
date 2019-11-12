@@ -8,6 +8,7 @@ import {SupplierResponse} from '../models/supplier.model';
 import { LedgerService } from '../../ledger/services/ledger.service';
 import { StockService } from '../../stock/services/stock.service';
 import { CustomerService } from '../../customer/services/customer.service';
+import { CommonService } from '../../../shared/services/common.services';
 
 
 @Component({
@@ -38,7 +39,8 @@ export class SupplierComponent implements OnInit, OnDestroy {
       private router: Router,
       private ledgerService: LedgerService,
       private stockService: StockService,
-      private customerService: CustomerService
+      private customerService: CustomerService,
+      private commonService: CommonService
     ) { }
     ngOnInit() {
       this.supplierForm();
@@ -52,6 +54,10 @@ export class SupplierComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         this.getSupplierData(this.supplierID);
       }, 500);
+    }
+
+    back(url){
+      this.commonService.getNavigate(url);
     }
 
     getSupplierData(supplierID) {

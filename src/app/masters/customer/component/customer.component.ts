@@ -7,6 +7,7 @@ import {CustomerService} from '../services/customer.service';
 import {CustomerResponse} from '../models/customer.model';
 import { LedgerService } from '../../ledger/services/ledger.service';
 import { StockService } from '../../stock/services/stock.service';
+import { CommonService } from '../../../shared/services/common.services';
 
 @Component({
     selector: 'app-customer',
@@ -32,7 +33,9 @@ export class CustomerComponent implements OnInit, OnDestroy {
       private _formBuilder: FormBuilder,
       private router: Router,
       private ledgerService: LedgerService,
-      private stockService: StockService
+      private stockService: StockService,
+      private commonService: CommonService
+
     ) { }
     public customer;
     public cForm;
@@ -50,6 +53,11 @@ export class CustomerComponent implements OnInit, OnDestroy {
         this.getCustomerData(this.customerID);
       }, 500);
     }
+
+    back(url){
+      this.commonService.getNavigate(url);
+    }
+
 
     getCustomerData(customerId) {
         this.customerDataSubscription = this.customerService.getCustomerData(this.customerID).subscribe((res: CustomerResponse) => {

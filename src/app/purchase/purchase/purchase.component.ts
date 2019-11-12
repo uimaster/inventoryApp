@@ -43,6 +43,21 @@ export class TransactionPurchaseComponent implements OnInit, OnDestroy {
     this.getUserMenuDetails();
   }
 
+  deleteTransaction() {
+    let transactionId = localStorage.getItem('transactionID') || 0;
+    let userID = localStorage.getItem('userID') || 0;
+    let DeleteRemarks = '';
+
+    const payload = {
+      'TransactionID': transactionId,
+      'DeleteRemarks': DeleteRemarks,
+      'UserID': userID
+    };
+
+    this.transactionSerivices.deleteTransaction(payload).subscribe(res => {
+      console.log(res);
+    });
+  }
 
 
   getTransactionList(dates) {

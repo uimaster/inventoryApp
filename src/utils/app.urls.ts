@@ -122,3 +122,4 @@ export const GETASSEMBLER = BASEURL + 'Masters/GetAssemblerByCode';
 export const GETPENDINGGRNLIST = BASEURL + 'Transactions/GetPendingGRNList';
 export const GETTRANSACTIONLINKITEMS = BASEURL + 'Transactions/POSTTransctionLinkItemsList';
 export const UPDATETRANSACTIONPURCHASE = BASEURL + 'Transactions/UpdateTransactionPurchase';
+export const DELETETRANSACTION = BASEURL + 'Transactions/GetDeleteTransaction';
