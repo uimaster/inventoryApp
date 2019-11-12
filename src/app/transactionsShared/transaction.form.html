@@ -144,7 +144,7 @@
       <div
         style="border: 3px solid #ddd; width: 100%; min-height: 115px; text-align: center; line-height: 115px;  border-radius: 10px;">
         <h4 style="vertical-align: middle; display: inline-block;"> Total Amount: <br />
-          <span style="font-size:42px;">{{totalAmount}}</span>
+          <span style="font-size:42px;">{{totalAmount | currency:'INR'}}</span>
         </h4>
       </div>
       <br />
@@ -212,14 +212,14 @@
           <td *ngIf="GrnInput"><input type="text" formControlName="itemPending_Qty" pInputText disabled="disabled">
           </td>
           <td *ngIf="GrnInput"><input type="text" formControlName="itemChallan_Qty" pInputText></td>
-          <td><input type="text" formControlName="itemQty" pInputText (keyup)="getAmount()"
+          <td><input type="text" formControlName="itemQty" pInputText (keyup)="getAmount(true)"
               [class.verified]="equalQtyList[i]===i && showScannedQty"
               [class.pending]="equalQtyList[i]!==i && showScannedQty"></td>
           <td *ngIf="showBoxCode"><input type="text" formControlName="boxCode" pInputText
               [attr.disabled]="showActionBtn == true? true : null"></td>
-          <td *ngIf="!showScannedQty"><input type="text" formControlName="itemRate" pInputText (keyup)="getAmount()"
+          <td *ngIf="!showScannedQty"><input type="text" formControlName="itemRate" pInputText (keyup)="getAmount(true)"
               [attr.disabled]="(showActionBtn == true && !enableRateInput)? true : null"></td>
-          <td *ngIf="!showScannedQty"><input type="text" formControlName="itemAmount" pInputText (keyup)="getAmount()"
+          <td *ngIf="!showScannedQty"><input type="text" formControlName="itemAmount" pInputText (keyup)="getAmount(true)"
               [attr.disabled]="showActionBtn == true? true : null"></td>
           <td style="text-align:center">
             <button pButton type="button" *ngIf="!showActionBtn" icon="fa fa-plus" class="ui-button-success"
@@ -255,7 +255,8 @@
               </p-dropdown>
             </td>
             <td><input type="text" formControlName="taxRate" pInputText></td>
-            <td><input type="text" formControlName="ledgerAmount" pInputText (keyup)="getAmount()"></td>
+            <td><input type="text" formControlName="ledgerAmount" pInputText (keyup)="getAmount(true)"></td>
+            <!-- (keyup)="getAmount()" -->
             <td align="center">
               <button pButton type="button" icon="fa fa-plus" class="ui-button-success"
                 (click)="addItemLedger()"></button>

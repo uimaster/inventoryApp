@@ -1,8 +1,8 @@
 <app-filters (filterDates)='getTransactionList($event)'></app-filters>
 <p-panel header="Good Receipt Note" class="Tabledata">
   <p-header>
-      <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addPurchase()" [disabled]="!userRightMenuData[2]?.createStatus"></button>
-
+      <!-- <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addPurchase()" [disabled]="!userRightMenuData[2]?.createStatus"></button> -->
+      <button pButton type="button" style="float:right" icon="pi pi-plus" label="Add" class="ui-button-success" (click)="addPurchase()" ></button>
     </p-header>
   <div *ngIf="grnList" class="table-responsive">
       <table class="table">
@@ -14,6 +14,7 @@
               <th>Supplier</th>
               <th>PO No.</th>
               <th>PO Date</th>
+              <th>Amount</th>
               <th>Action</th>
           </tr>
           </thead>
@@ -26,6 +27,7 @@
                   <td>{{item.ledgerName}}</td>
                   <td>{{item.transactionLinkDocNo}}</td>
                   <td>{{item.transactionDueDate}}</td>
+                  <td>{{item.transaction_Amount}}</td>
                   <td>
                       <button pButton type="button" style="margin-right: 5px;" icon="fa fa-pencil" class="ui-button-success" (click)="editPurchase(item.transactionID)" [disabled]="!userRightMenuData[2]?.modifyStatus"></button>
                       <button pButton type="button" style="margin-right: 5px;" icon="fa fa-trash-o" class="ui-button-danger" [disabled]="!userRightMenuData[2]?.deleteStatus" (click)="deleteTransaction()"></button>

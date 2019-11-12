@@ -43,6 +43,7 @@ export class CreateComponent implements OnInit {
   filteredItems = []; 
   ledgerList = [];
   itemName:string;
+  public displayItemDescDialog = [];
   
   ngOnInit() {
     this.showLoader = true;
@@ -400,5 +401,12 @@ export class CreateComponent implements OnInit {
             type: EXCEL_TYPE
         });
         FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+    }
+
+    showDialog(index){
+        this.displayItemDescDialog[index] = true;
+    }
+    closeDialog(index){
+        this.displayItemDescDialog[index] = false;
     }
 }

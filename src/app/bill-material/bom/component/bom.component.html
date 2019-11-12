@@ -103,7 +103,7 @@
     <fieldset formArrayName="bomDetail" style="overflow-x:auto; min-height:300px" >
       <legend>Bom Item Details</legend>
       <div *ngFor="let ctrl of cForm.get('bomDetail').controls; let i = index;">
-        <div [formGroupName]="i" style="width:133%;">
+        <div [formGroupName]="i" >
           <div class="ui-g">
             <div class="ui-g-1" style="width: 4%">
               <div class="form-group">
@@ -113,7 +113,7 @@
                 </span>
               </div>
             </div>
-            <div class="ui-g-3">
+            <div class="ui-g-4">
               <div class="form-group">
                 <span class="ui-float-label">
                   <!-- <p-dropdown [options]="allStockItems" formControlName="stockItemID" placeholder="Stock Item" filter="true" [style]="{'width':'95%'}">
@@ -134,7 +134,7 @@
                 </span>
               </div>
             </div>
-            <div class="ui-g-1">
+            <div class="ui-g-2">
               <div class="form-group">
                 <span class="ui-float-label">
                   <input type="number" formControlName="qty" pInputText id="qty">
@@ -142,34 +142,7 @@
                 </span>
               </div>
             </div>
-            <div class="ui-g-1">
-              <div class="form-group">
-                <span class="ui-float-label">
-                <p-dropdown  [options]="allBomLevels" formControlName="bmlid" filter="true" [style]="{'width':'95%'}">
-                </p-dropdown>
-                <label for="bmlid">BOM Level</label>
-                </span>
-              </div>
-            </div>
             <div class="ui-g-2">
-                <div class="form-group">
-                  <span class="ui-float-label">
-                  <p-dropdown [options]="allBomComTypes" formControlName="bomcomtypeid" filter="true" [style]="{'width':'95%'}">
-                  </p-dropdown>
-                  <label for="bomcomtypeid">BOM Component Type</label>
-                  </span>
-                </div>
-            </div>
-            <div class="ui-g-2">
-            <div class="form-group">
-                <span class="ui-float-label">
-                <p-dropdown [options]="allParameterTypes" formControlName="parameterid" filter="true" [style]="{'width':'95%'}">
-                </p-dropdown>
-                <label for="parameterid">Parameter Type</label>
-                </span>
-            </div>
-            </div>
-            <div class="ui-g-1">
               <div class="form-group">
                 <span class="ui-float-label">
                   <input type="text" formControlName="parameterval" pInputText id="parameterval">
@@ -177,6 +150,60 @@
                 </span>
               </div>
             </div>
+            <div class="ui-g-2">
+                <button pButton type="button" class="ui-button-success" label="details" (click)="showDialog(i)"
+                pTooltip="Click to fill details" tooltipPosition="top"></button>
+              
+              <p-dialog header="Details" [(visible)]="displayItemDescDialog[i]" [modal]="true"
+                [responsive]="true" [style]="{width: '700px', minWidth: '200px'}" [minY]="70" width="600" height="400" [maximizable]="true"
+                [baseZIndex]="10000">
+                <div class="ui-g" style="height: 350px;">
+                  <div class="ui-g-4">
+                    <div class="form-group">
+                      <span class="ui-float-label">
+                      <p-dropdown  [options]="allBomLevels" formControlName="bmlid" filter="true" [style]="{'width':'95%'}">
+                      </p-dropdown>
+                      <label for="bmlid">BOM Level</label>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="ui-g-4">
+                    <div class="form-group">
+                      <span class="ui-float-label">
+                      <p-dropdown [options]="allBomComTypes" formControlName="bomcomtypeid" filter="true" [style]="{'width':'95%'}">
+                      </p-dropdown>
+                      <label for="bomcomtypeid">BOM Component Type</label>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="ui-g-4">
+                    <div class="form-group">
+                        <span class="ui-float-label">
+                        <p-dropdown [options]="allParameterTypes" formControlName="parameterid" filter="true" [style]="{'width':'95%'}">
+                        </p-dropdown>
+                        <label for="parameterid">Parameter Type</label>
+                        </span>
+                    </div>
+                  </div>
+                  
+                </div>      
+                <!-- <div class="form-group">
+                  <span class="ui-float-label">
+                    <textarea [rows]="4" style="width:100%" pInputTextarea
+                      formControlName="stockItemID"></textarea>
+                    <label for="itemDesc">Enter Additional Desc.</label>
+                  </span>
+                </div> -->
+                <p-footer>
+                  <button type="button" pButton (click)="closeDialog(i)" label="Cancel"
+                    class="ui-button-secondary"></button>
+                  <button type="button" pButton (click)="closeDialog(i)" label="Add"></button>
+                </p-footer>
+              </p-dialog>
+            </div>
+            
+            
+            
             <div class="ui-g-1">
               <button pButton type="button" icon="fa fa-trash-o" class="ui-button-danger" [disabled]="i<1" (click)="removeItems(i)"></button>
             </div>

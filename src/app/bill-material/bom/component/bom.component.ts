@@ -27,6 +27,7 @@ export class BomComponent implements OnInit, OnDestroy {
     public allStockItems = [];
     public allParameterTypes = [];
     public bomDataSubscription: Subscription;
+    public displayItemDescDialog = [];
     // showError = false;
     // showSuccess = false;
     companyId = localStorage.getItem('companyID');
@@ -317,5 +318,12 @@ export class BomComponent implements OnInit, OnDestroy {
             type: EXCEL_TYPE
         });
         FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+    }
+
+    showDialog(index){
+      this.displayItemDescDialog[index] = true;
+    }
+    closeDialog(index){
+      this.displayItemDescDialog[index] = false;
     }
 }
