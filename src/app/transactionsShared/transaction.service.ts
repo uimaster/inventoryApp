@@ -19,7 +19,7 @@ export class TransactionServices {
   constructor(  private http: HttpClient) {}
 
   // GET TRANSACTION LIST //
-  getTransactionList(typeId, dates): Observable<any> {
+  getTransactionList(typeId, dates, searchtxt?): Observable<any> {
     var starDate = '';
     var toDate = '';
     var SearchText = localStorage.getItem('t_searchText') || '';

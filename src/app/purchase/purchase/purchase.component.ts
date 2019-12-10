@@ -67,7 +67,7 @@ export class TransactionPurchaseComponent implements OnInit, OnDestroy {
     if(localStorage.getItem('t_searchText') && localStorage.getItem('t_searchText') !== '') {
       searchText = localStorage.getItem('t_searchText');
     }
-    this.transactionSerivices.getTransactionList(18, dates,searchText).subscribe ( res => {
+    this.transactionSerivices.getTransactionList(18, dates, searchText).subscribe ( res => {
       if (res) {
         if (res.status === '200') {
           this.grnList = res.data;
