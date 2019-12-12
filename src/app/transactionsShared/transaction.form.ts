@@ -34,6 +34,7 @@ OnDestroy {
     public customerList = [];
     public salesOrderPendingList = [];
     public POpendingList = [];
+    public PendingReturnableDCList = [];
     public GRNpendingList = [];
     public purchaseNos = [];
     public transactionTypeSeriesList = [];
@@ -78,6 +79,7 @@ OnDestroy {
     public transationLinkRefNamePO = false;
     public transationLinkRefNameGRN = false;
     public GrnInput = false;
+    public PendingReturnableDC = false;
     public showBoxCode = false;
     // @ViewChild('taxSelect') taxSelect: ElementRef;
     public allBarCodesScanned = false;
@@ -151,6 +153,7 @@ OnDestroy {
         this.transationLinkRefNamePO = JSON.parse(localStorage.getItem("transationLinkRefNamePO"));
         this.transationLinkRefNameGRN = JSON.parse(localStorage.getItem("transationLinkRefNameGRN"));
         this.GrnInput = JSON.parse(localStorage.getItem("GrnInput"));
+        this.PendingReturnableDC = JSON.parse(localStorage.getItem("PendingReturnableDC"));
         this.showBoxCode = JSON.parse(localStorage.getItem("showBoxCode"));
         this.showActionBtn = JSON.parse(localStorage.getItem("showActionBtn"));
         this.enableRateInput = JSON.parse(localStorage.getItem("enableRateInput"));
@@ -175,6 +178,7 @@ OnDestroy {
         //this.getGRNPendingList();
         this.getCustomers();
         this.getTransactionTypeSeries();
+        this.getPendingReturnableDCList();
         setTimeout(() => {
             this.getTrasactionDetails(this.transactionId);
         }, 2000);
@@ -1049,6 +1053,19 @@ OnDestroy {
                 for (let key in data) {
                     if (data.hasOwnProperty(key)) {
                         this.POpendingList.push({label: data[key].transactionNo, value: data[key].transactionID});
+                    }
+                }
+            }
+        });
+    }
+
+    getPendingReturnableDCList() {
+        this.trasactionService.getPendingReturanbleDCList().subscribe(res => {
+            if (res && res.status === "200") {
+                let data = res.data;
+                for (let key in data) {
+                    if (data.hasOwnProperty(key)) {
+                        this.PendingReturnableDCList.push({label: data[key].transactionNo, value: data[key].transactionID});
                     }
                 }
             }
@@ -1996,5 +2013,6 @@ OnDestroy {
         localStorage.setItem("showScannedQty", "false");
         localStorage.setItem("showBarcode4Grn", "false");
         localStorage.setItem("showLength4So", "false");
+        localStorage.setItem("PendingReturnableDC", "false");
     }
 }

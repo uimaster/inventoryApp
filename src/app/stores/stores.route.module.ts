@@ -11,6 +11,7 @@ import { DelieveryChallanComponent } from './delievery-challan/delievery-challan
 import { ReturnableChallanComponent } from './returnable-challan/returnable-challan.component';
 import { PhysicalStockComponent } from './physical-stock/physical-stock.component';
 import { CreateEditStoreComponent } from './create/create.component';
+import { ReturnableGnrComponent } from './returnable-gnr/returnable-gnr.component';
 
 export const routes: Routes = [
   { path: '',  component: StoreComponent,
@@ -25,7 +26,8 @@ export const routes: Routes = [
           { path: 'stockRejectNote', component: StockRejectNoteComponent },
           { path: 'delieveryChallan', component: DelieveryChallanComponent },
           { path: 'rerurnableChallan', component: ReturnableChallanComponent },
-          { path: 'physicalStock', component: PhysicalStockComponent }
+          { path: 'physicalStock', component: PhysicalStockComponent },
+          { path: 'returnable-grn', component: ReturnableGnrComponent },
         ]
       }
     ]

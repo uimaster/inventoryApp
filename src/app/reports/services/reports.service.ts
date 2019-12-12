@@ -67,6 +67,15 @@ export class ReportsService {
         );
     }
 
+    getSupplierReviewDueReportList(FromDate,ToDate): Observable<any> {
+        const params = new HttpParams().set('FromDate', FromDate).set('ToDate', ToDate);
+        return this.http.get(urls.SUPPLIERDUEFORREVIEWREPORT, {params}).pipe(
+            map(res => {
+                return res;
+            })
+        );
+    }
+
     getSODetailsReportList(FromDate,ToDate,ReportTypeID,TransactionSeriesID,SearchText): Observable<any> {
         const params = new HttpParams().set('FromDate', FromDate).set('ToDate', ToDate)
             .set('ReportTypeID', ReportTypeID)

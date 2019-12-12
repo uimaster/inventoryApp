@@ -641,3 +641,40 @@
         </div>
     </div>
 </p-panel>
+
+<p-panel header="Supplier Review Due Report" class="Tabledata" *ngIf="type=='supplier-review-due-report' && filter =='true'">
+    <p-header>
+        <button pButton type="button" style="float:right" icon="fa fa-file-excel-o" label="Export" class="ui-button-success" (click)="exportAsXLSX()"></button>
+    </p-header>
+    <div class="ui-g"><div class="ui-g-12"><div><span class="ui-float-label"><input style="width:100%" type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)"></span></div></div></div>    
+        
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th width="10%">SNo</th>
+                <th width="10%">Supplier</th>
+                <th width="10%">Address</th>
+                <th width="10%">Due Date</th>
+                <th width="10%">Contact Person</th>
+                <th width="10%">Contact No</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container *ngIf="reportsList">
+                <tr *ngFor="let report of reportsList| paginate: { itemsPerPage: 10, currentPage: p }; index as i;">
+                    <td>{{i+1}}</td>
+                    <td>{{report.supplierName}}</td>
+                    <td>{{report.supplierAddress}}</td>
+                    <td>{{report.reviewDueDate | date:'dd/MM/yyyy'}}</td>
+                    <td>{{report.contactPerson}}</td>
+                    <td>{{report.contactNo}}</td>
+                </tr>
+            </ng-container>
+            </tbody>
+        </table>
+        <div style="text-align: center;margin: 10px;padding: 10px;">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+    </div>
+</p-panel>

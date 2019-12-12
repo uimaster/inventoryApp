@@ -15,6 +15,7 @@ import { PhysicalStockComponent } from './physical-stock/physical-stock.componen
 import { TransactionServices } from '../transactionsShared/transaction.service';
 import { TransactionCommonModule } from '../transactionsShared/transaction.module';
 import { FiltersModule } from '../transFilters/transFilter.Module';
+import { ReturnableGnrComponent } from './returnable-gnr/returnable-gnr.component';
 
 @NgModule({
   imports: [
@@ -34,7 +35,8 @@ import { FiltersModule } from '../transFilters/transFilter.Module';
     StockRejectNoteComponent,
     DelieveryChallanComponent,
     ReturnableChallanComponent,
-    PhysicalStockComponent
+    PhysicalStockComponent,
+    ReturnableGnrComponent
   ],
   providers : [ TransactionServices ]
 })

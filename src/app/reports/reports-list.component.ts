@@ -86,6 +86,9 @@ export class ReportsListComponent implements OnInit, OnDestroy {
                     case 'pcb-details-report':
                         this.getList('getPCBDetailsReportList');
                         break; 
+                    case 'supplier-review-due-report':
+                        this.getList('getSupplierReviewDueReportList');
+                        break;     
                     default:
                         break;
                 }
@@ -290,6 +293,17 @@ export class ReportsListComponent implements OnInit, OnDestroy {
             );
         }
         if(this.type=='pcb-details-report'){
+            this.reportsListDataSubscription = this._reportsService[fName](fromDate,toDate).subscribe(
+                result => {
+                    if (result && result.status === '200')  {
+                        this.reportsList = result.data;
+                        this.listData = result.data;
+                    }
+                    this.showLoader = false;
+                },
+            );
+        }
+        if(this.type=='supplier-review-due-report'){
             this.reportsListDataSubscription = this._reportsService[fName](fromDate,toDate).subscribe(
                 result => {
                     if (result && result.status === '200')  {

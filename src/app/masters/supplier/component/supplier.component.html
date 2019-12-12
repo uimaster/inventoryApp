@@ -79,6 +79,40 @@
                 </div>
             </div>
 
+            <div class="ui-g-4">
+                <div class="form-group">
+                    <span class="ui-float-label">
+                        <p-dropdown [options]="supplierTypes" formControlName="supplierTypeID"  placeholder="Supplier Type" [filter]="true"></p-dropdown>
+                    </span>
+                </div>
+            </div>
+
+            <div class="ui-g-4">
+                <div class="form-group">
+                    <span class="ui-float-label">
+                        <p-dropdown [options]="reviewRequired" formControlName="reviewRequiredStatus"  placeholder="Review Required" [filter]="true"></p-dropdown>
+                    </span>
+                </div>
+            </div>
+
+            <div class="ui-g-4">
+                <div class="form-group">
+                    <span class="ui-float-label">
+                        <input type="number" pInputText formControlName="reviewFrequency">
+                        <label for="reviewFrequency">Review Frequency</label>
+                    </span>
+                </div>
+            </div>
+
+            <div class="ui-g-4">
+                <div class="form-group">
+                    <span class="ui-float-label">
+                    <p-calendar [(ngModel)]="date5" [showIcon]="true" dateFormat="dd-mm-yy"
+                        (onSelect)="getSelectedDate($event,'reviewDueDate')" formControlName="reviewDueDate">
+                    </p-calendar>
+                    </span>
+                </div>
+            </div>        
         </div>
 
 

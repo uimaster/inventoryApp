@@ -125,6 +125,18 @@ export class TransactionServices {
     .catch((error) => Observable.throw('server Error.'));
   }
 
+  getPendingReturanbleDCList(): Observable<any> {
+    let url = '';
+    url = urls.GETPENDINGRETURANBLEDCLIST;
+    const params = new HttpParams().set('CompanyID', '1');
+    //.set('TransactionID', TransactionID);
+    return this.http.get(url, {params})
+    .map((res: any) => {
+        return res;
+    })
+    .catch((error) => Observable.throw('server Error.'));
+  }
+
   generateReport(id) {
     const transactionType = localStorage.getItem('transactionTypeId');
     const params = new HttpParams().set('TransactionID', id).set('ReportTypeID', transactionType);

@@ -31,6 +31,9 @@ export class SupplierComponent implements OnInit, OnDestroy {
     companyId = JSON.parse(localStorage.getItem('companyID'));
     userId = JSON.parse(localStorage.getItem('userID'));
     public stateList = [];
+    public supplierTypes = [{label: 'Schindler Approved', value: '1'}, {label: 'LCPL Approved', value: '2'}];
+    public reviewRequired = [{label: 'False', value: 'false'}, {label: 'True', value: 'true'}];
+    public date5 = new Date();
 
     constructor(
       private supplierService: SupplierService,
@@ -73,7 +76,14 @@ export class SupplierComponent implements OnInit, OnDestroy {
                 this.suForm.controls['contactperson'].setValue(this.supplier['contactperson']);
                 this.suForm.controls['contactMobile'].setValue(this.supplier['contactMobile']);
                 this.suForm.controls['landLineNos'].setValue(this.supplier['landLineNos']);
-
+                this.suForm.controls['supplierTypeID'].setValue(this.supplier['supplierTypeID']);
+                this.suForm.controls['reviewRequiredStatus'].setValue(this.supplier['reviewRequiredStatus']);
+                this.suForm.controls['reviewFrequency'].setValue(this.supplier['reviewFrequency']);
+                if(this.supplier['reviewDueDate'] != '')
+                  this.suForm.controls['reviewDueDate'].setValue(this.convertToDateFormat(this.supplier['reviewDueDate']));
+                else
+                  this.getSelectedDate(this.date5, "reviewDueDate");
+                
                 const controlArray = <FormArray> this.suForm.get('supplierTaxes');
                  for ( var i = 0; i < this.supplier.supplierTaxes.length; i++) {
                   controlArray.push(
@@ -148,7 +158,10 @@ export class SupplierComponent implements OnInit, OnDestroy {
             supplierTaxes:  this._formBuilder.array([this.createSupplierTaxes()]),
             supplierAddressList:  this._formBuilder.array([this.createSupplierAddressList()]),
             supplierTerms:  this._formBuilder.array([this.createSupplierTerms()]),
-
+            supplierTypeID:[0],
+            reviewRequiredStatus:[''],
+            reviewFrequency:[''],
+            reviewDueDate:['']
         });
     }
 
@@ -204,8 +217,6 @@ export class SupplierComponent implements OnInit, OnDestroy {
       stockItemArray.removeAt(index);
     }
 
-
-
     createSupplierAddressList() {
         return this._formBuilder.group({
             locationName: [''],
@@ -256,6 +267,7 @@ export class SupplierComponent implements OnInit, OnDestroy {
     }
 
     saveSupplier(form: any) {
+        form.reviewDueDate = this.convertDateyymmdd(form.reviewDueDate);
         this.supplierService.updateSupplier(form).subscribe((res: SupplierResponse) => {
             if (res.status === '200') {
               this.showSuccess = true;
@@ -327,4 +339,43 @@ export class SupplierComponent implements OnInit, OnDestroy {
       supplierArray.controls[frmArray].get('stateCode').setValue(stateCode);
     }
 
+    convertToDateFormat(Datestr) {
+      let dDate = new Date(Datestr.replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
+      let year = dDate.getFullYear();
+      var month: any = dDate.getMonth() + 1;
+      if (month < 10) {
+          month = "0" + month;
+      }
+      var day: any = dDate.getDate();
+      if (day < 10) {
+          day = "0" + day;
+      }
+      let fDate = day + "-" + month + "-" + year;
+      return fDate;
+    }
+
+    convertDateyymmdd(cDate) {
+      if (cDate != "") {
+          var datedata = cDate.split("-");
+          var formatedDateString = datedata[2] + "-" + datedata[1] + "-" + datedata[0];
+          console.log(formatedDateString);
+          return formatedDateString;
+      }
+    }
+
+    getSelectedDate(date, inputTaget) {
+      console.log(date);
+      let dDate = new Date(date);
+      let year = dDate.getFullYear();
+      var month: any = dDate.getMonth() + 1;
+      if (month < 10) {
+          month = "0" + month;
+      }
+      var day: any = dDate.getDate();
+      if (day < 10) {
+          day = "0" + day;
+      }
+      let fDate = day + "-" + month + "-" + year;
+      this.suForm.controls[inputTaget].setValue(fDate);
+    }
 }

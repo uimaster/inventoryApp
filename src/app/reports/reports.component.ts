@@ -20,7 +20,7 @@ export class ReportsComponent implements OnInit {
     let userRightMenuID = localStorage.getItem('userRightMenuID');
     this.userService.getUserMenuDetails(userID, userRightMenuID).subscribe( val => {
       if (val.status === '200') {
-        this.userRightMenuData = val.data[0].userRightTabModelList;
+        //this.userRightMenuData = val.data[0].userRightTabModelList;
       }
     });
   }
