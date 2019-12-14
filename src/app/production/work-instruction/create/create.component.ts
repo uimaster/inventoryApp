@@ -276,11 +276,21 @@ export class CreateWorkInstructionComponent implements OnInit {
         // let date = this.convertToDateFormat(data.AssemblyWorkInstructionDate);
         // this.workInstructionForm.controls['AssemblyWorkInstructionDate'].setValue(date);
         this.workInstructionService.postWorkInstructionDetails(data).subscribe(val => {
-            alert(val.message);
-            this.showLoader = false;
-            setTimeout(() => {
-                this.router.navigate(["/production/workInstruction"]);
-            }, 2000);
+            // alert(val.message);
+            // this.showLoader = false;
+            // setTimeout(() => {
+            //     this.router.navigate(["/production/workInstruction"]);
+            // }, 2000);
+
+            if (val.status === '200') {
+                this.showLoader = false;
+                setTimeout(() => {
+                  this.router.navigate(['/production/workInstruction']);
+                }, 3000);
+            } else {
+                this.showLoader = false;
+            }
+
         });
         this.showLoader = false;
     }
