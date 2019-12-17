@@ -27,8 +27,8 @@ export class ReturnableGnrComponent implements OnInit, OnDestroy {
     localStorage.setItem('showCurrency', 'false');
     localStorage.setItem('showLedger', 'false');
     localStorage.setItem('showSupplier', 'true');
-    localStorage.setItem('FormHeader', 'Good Receipt Note Edit/Create Form');
-    localStorage.setItem('transactionTypeId', '3');
+    localStorage.setItem('FormHeader', 'Returnable GRN Edit/Create Form');
+    localStorage.setItem('transactionTypeId', '20');
     localStorage.setItem('transationLinkRef', 'false');
     localStorage.setItem('showLocation', 'true');
     localStorage.setItem('showBarcode', 'true');
@@ -37,7 +37,7 @@ export class ReturnableGnrComponent implements OnInit, OnDestroy {
     localStorage.setItem('showActionBtn', 'true');
     localStorage.setItem('showBarcode4Grn', 'true');
     localStorage.setItem('PendingReturnableDC', 'true');
-    localStorage.setItem('transationLinkRefNameGRN', 'true');
+    localStorage.setItem('transationLinkRefNameGRN', 'false');
     this.getUserMenuDetails();
   }
 
