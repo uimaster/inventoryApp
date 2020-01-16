@@ -191,22 +191,19 @@
               style="visibility: hidden; height: 0; width: 0; font-size: 0;">
           </td>
           <td style="text-align: left;">
-            <button pButton type="button" class="ui-button-success" label="..." (click)="displayItemDescDialog=true"
-              pTooltip="Click to fill Items Additional Description." tooltipPosition="top"></button>
-            <p-dialog header="Add Item Description" [(visible)]="displayItemDescDialog" [modal]="true"
-              [responsive]="true" [style]="{width: '350px', minWidth: '200px'}" [minY]="70" [maximizable]="true"
-              [baseZIndex]="10000">
+            <button pButton type="button" class="ui-button-success" label="..." (click)="displayItemDescDialog[i]=true" pTooltip="Click to fill Items Additional Description." tooltipPosition="top"></button>
+            <p-dialog header="Add Item te Description" [(visible)]="displayItemDescDialog[i]" [modal]="true" [responsive]="true" [style]="{width: '350px', minWidth: '200px'}" [minY]="70" [maximizable]="true" [baseZIndex]="10000">
               <div class="form-group">
                 <span class="ui-float-label">
                   <textarea [rows]="4" style="width:100%" pInputTextarea
                     formControlName="transactionItem_AdditionalDesciption"></textarea>
-                  <label for="itemDesc">Enter Additional Desc.</label>
+                  <label for="transactionItem_AdditionalDesciption">Enter Additional Desc.</label>
                 </span>
               </div>
               <p-footer>
-                <button type="button" pButton (click)="displayItemDescDialog=false" label="Cancel"
+                <button type="button" pButton (click)="displayItemDescDialog[i]=false" label="Cancel"
                   class="ui-button-secondary"></button>
-                <button type="button" pButton (click)="displayItemDescDialog=false" label="Add"></button>
+                <button type="button" pButton (click)="displayItemDescDialog[i]=false" label="Add"></button>
               </p-footer>
             </p-dialog>
             <!-- <textarea [rows]="2" style="width:98%" pInputTextarea  formControlName="transactionItem_AdditionalDesciption" placeholder="Additional Desc."></textarea> -->

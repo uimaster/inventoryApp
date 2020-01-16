@@ -16,11 +16,12 @@
                 <th width="10%">Supplier</th>
                 <th width="7%">Item Code</th>
                 <th width="20%">Item Desc</th>
+                <th width="5%">Uom</th>
                 <th width="5%">Item Qty</th>
-                <th width="8%">Pending Qty</th>
+                <th width="5%">Pending Qty</th>
                 <th width="5%">Rate</th>
                 <th width="5%">Amount</th>
-                <th width="8%">Total Amount</th>
+                <th width="6%">Total Amount</th>
                 <th width="8%">Due Date</th>
                 <th width="8%">Status</th>
             </tr>
@@ -33,6 +34,7 @@
                     <td>{{report.supplierName}}</td>
                     <td>{{report.itemCode}}</td>
                     <td>{{report.itemDesc}}</td>
+                    <td>{{report.uom}}</td>
                     <td>{{report.itemQty}}</td>
                     <td>{{report.pendingQty}}</td>
                     <td>{{report.itemRate}}</td>
@@ -290,7 +292,6 @@
                 <th width="5%">SNo</th>
                 <th width="10%">Item Code</th>
                 <th width="15%">Item Name</th>
-                <th width="5%">Supplier Name</th>
                 <th width="10%">OpBal</th>
                 <th width="5%">GRN Qty</th>
                 <th width="10%">Purchase Rtn</th>
@@ -299,6 +300,7 @@
                 <th width="10%">Closing Qty</th>
                 <th width="10%">Closing Rate</th>
                 <th width="10%">Closing Value</th>
+                <th width="5%">Supplier</th>
             </tr>
             </thead>
             <tbody>
@@ -310,7 +312,6 @@
                         </a>
                     </td>
                     <td>{{report.itemName}}</td>
-                    <td>{{report.supplierName}}</td>
                     <td>{{report.opBalQty}}</td>
                     <td>{{report.grnQty}}</td>
                     <td>{{report.purchaseReturnQty}}</td>
@@ -319,6 +320,7 @@
                     <td>{{report.closingQty}}</td>
                     <td>{{report.closingRate}}</td>
                     <td>{{report.closingValue}}</td>
+                    <td>{{report.supplierName}}</td>
                 </tr>
             </ng-container>
             </tbody>
@@ -660,6 +662,7 @@
                 <th width="10%">Due Date</th>
                 <th width="10%">Contact Person</th>
                 <th width="10%">Contact No</th>
+                <th width="10%"></th>
             </tr>
             </thead>
             <tbody>
@@ -671,6 +674,8 @@
                     <td>{{report.reviewDueDate | date:'dd/MM/yyyy'}}</td>
                     <td>{{report.contactPerson}}</td>
                     <td>{{report.contactNo}}</td>
+                    <td><button pButton type="button" label="UpdateReview" class="ui-button-rounded ui-button-info smallBtn" (click)="showDialog(item)">
+                    </button></td>
                 </tr>
             </ng-container>
             </tbody>
@@ -680,3 +685,68 @@
         </div>
     </div>
 </p-panel>
+
+<p-panel header="Returnable DC Report" class="Tabledata" *ngIf="type=='returnable-dc' && filter =='true'">
+    <p-header>
+        <button pButton type="button" style="float:right" icon="fa fa-file-excel-o" label="Export" class="ui-button-success" (click)="exportAsXLSX()"></button>
+    </p-header>
+    <div class="ui-g"><div class="ui-g-12"><div><span class="ui-float-label"><input style="width:100%" type="text" pInputText placeholder="Search.." (keyup)="applyFilter($event.target.value)"></span></div></div></div>    
+        
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th width="8%">PO No</th>
+                <th width="8%">PO Date</th>
+                <th width="10%">Supplier</th>
+                <th width="7%">Item Code</th>
+                <th width="20%">Item Desc</th>
+                <th width="5%">Uom</th>
+                <th width="5%">Item Qty</th>
+                <th width="5%">Pending Qty</th>
+                <th width="5%">Rate</th>
+                <th width="5%">Amount</th>
+                <th width="6%">Total Amount</th>
+                <th width="8%">Due Date</th>
+                <th width="8%">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container *ngIf="reportsList">
+                <tr *ngFor="let report of reportsList| paginate: { itemsPerPage: 10, currentPage: p }; index as i;">
+                    <td>{{report.pono}}</td>
+                    <td>{{report.poDate | date:'dd/MM/yyyy'}}</td>
+                    <td>{{report.supplierName}}</td>
+                    <td>{{report.itemCode}}</td>
+                    <td>{{report.itemDesc}}</td>
+                    <td>{{report.uom}}</td>
+                    <td>{{report.itemQty}}</td>
+                    <td>{{report.pendingQty}}</td>
+                    <td>{{report.itemRate}}</td>
+                    <td>{{report.itemAmount}}</td>
+                    <td>{{report.totalAmount}}</td>
+                    <td>{{ formatDate(report.poDueDate)}}</td>
+                    <td>
+                        <span *ngIf="report.trstatus == 1"><i style="color:orange" class="fa fa-clock-o fa-2x"></i></span>
+                        <span *ngIf="report.trstatus == 2"><i style="color:green" class="fa fa-check-square-o fa-2x"></i></span>
+                    </td>
+                </tr>
+            </ng-container>
+            </tbody>
+        </table>
+        <div style="text-align: center;margin: 10px;padding: 10px;">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+    </div>
+</p-panel>
+
+<p-dialog header="Update Review" [(visible)]="display" [modal]="true" [responsive]="true" [width]="350" [minWidth]="200" [minY]="70"
+[maximizable]="true" [baseZIndex]="10000" >
+
+  <form [formGroup]="updateReviewForm" *ngIf="updateReviewForm">
+      <p-footer style="text-align: right; display: block; ">
+        <button type="button" pButton icon="pi pi-close"  (click)="display=false" label="No" class="ui-button-secondary"></button>
+        <button type="button" pButton icon="pi pi-check" [disabled]="!updateReviewForm.valid" label="OK" (click)="DoUpdateReview(); display=false"></button>
+      </p-footer>
+  </form>
+</p-dialog>

@@ -94,6 +94,7 @@ export const STOCKITEMLIST = BASEURL + 'Stockitem/GetStockItemsforTransaction';
 export const GETSHIPPINGDETAILS = BASEURL + 'Transactions/GetShippingDetailsForInvoice';
 export const UPDATESHIPPINGDETAILS = BASEURL + 'Transactions/UpdateShippingInfoForInvoices';
 export const GETSHIPPINGLEDGERS = BASEURL + 'Ledger/getTransporterList';
+export const RETURNABLEDCREPORT = BASEURL + 'Reports/GenerateReturnableDCReport';
 
 // Users
 export const USERLIST = BASEURL + 'Users/GetUsersList';

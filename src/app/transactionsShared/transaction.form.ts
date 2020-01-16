@@ -89,7 +89,7 @@ OnDestroy {
     public displayGrnBarcodeDialog = false;
     public displayLengthDialog = false;
     public showBarcode4Grn = false;
-    public displayItemDescDialog = false;
+    public displayItemDescDialog = [];
     public ledgerLocationList = [];
     public barCodeApplicableStatus = [];
     public selectedSeries;
@@ -510,7 +510,7 @@ OnDestroy {
         stockItemArray.push(this.fb.group({
             transactionID: [1],
             stockitemID: [1],
-            transactionItem_AdditionalDesciption: [],
+            transactionItem_AdditionalDesciption: [""],
             locationID: [1],
             itemQty: [0],
             itemReceived_Qty: [0],

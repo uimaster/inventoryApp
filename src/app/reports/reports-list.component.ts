@@ -25,7 +25,9 @@ export class ReportsListComponent implements OnInit, OnDestroy {
     public filter = 'false';
     p: number = 1;
     stockItemID = 0;
-    
+    updateReviewForm:any;
+    display = false;
+
     constructor(
         private _reportsService: ReportsService,
         private router: Router,
@@ -86,8 +88,12 @@ export class ReportsListComponent implements OnInit, OnDestroy {
                     case 'pcb-details-report':
                         this.getList('getPCBDetailsReportList');
                         break; 
+                    case 'returnable-dc':
+                        this.getList('getReturnableDCList');
+                        break; 
                     case 'supplier-review-due-report':
                         this.getList('getSupplierReviewDueReportList');
+                        this.createUpdateReviewForm();
                         break;     
                     default:
                         break;
@@ -314,6 +320,17 @@ export class ReportsListComponent implements OnInit, OnDestroy {
                 },
             );
         }
+        if(this.type=='returnable-dc'){
+            this.reportsListDataSubscription = this._reportsService[fName](ReportsTypeID,StockItemID,LedgerID,fromDate,toDate,searchText).subscribe(
+                result => {
+                    if (result && result.status === '200')  {
+                        this.reportsList = result.data;
+                        this.listData = result.data;
+                    }
+                    this.showLoader = false;
+                },
+            );
+        }
     }
 
     set(type,planID){
@@ -399,4 +416,31 @@ export class ReportsListComponent implements OnInit, OnDestroy {
     openStockItemDetails(stockItemID){
         this.router.navigate(['/reports/list/stockitem-details-report/', stockItemID]);
     }
+
+    createUpdateReviewForm(){
+        this.updateReviewForm = this._formBuilder.group({
+            SupplierID: ['', [Validators.required]],
+            ReviewDueDate: ['', [Validators.required]],
+            ReviewDate: ['', [Validators.required]],
+            ReviewRemarks: ['', [Validators.required]]
+        });
+    }
+
+    showDialog(){
+        this.display = true;
+    }
+
+    DoUpdateReview() {
+    //     this.updateReviewForm.controls['transactionID'].setValue(this.unauthenticationData.transactionID);
+    //     this.purchaseService.pOAuthrize(JSON.stringify([this.unauthenticationForm.value])).subscribe ( res => {
+    //       if (res && res.status === 200) {
+    //         alert(res.message);
+    //         this.getPOAuthList([]);
+    //         this.unauthenticationForm.controls['AuthRemarks'].setValue('');
+    //       } else {
+    //         alert(res.message);
+    //         this.getPOAuthList([]);
+    //       }
+    //     });
+      }
 }

@@ -21,6 +21,17 @@ export class ReportsService {
       );
     }
 
+    getReturnableDCList(ReportTypeID,StockItemID,LedgerID,FromDate,ToDate,SearchText): Observable<any> {
+        const params = new HttpParams().set('ReportTypeID', ReportTypeID)
+          .set('StockitemID', StockItemID).set('LedgerID', LedgerID)
+          .set('FromDate', FromDate).set('ToDate', ToDate).set('SearchText', SearchText);
+        return this.http.get(urls.RETURNABLEDCREPORT, {params}).pipe(
+            map(res => {
+                return res;
+            })
+        );
+    }
+
     getSOReportList(ReportTypeID,StockItemID,LedgerID,FromDate,ToDate,TransactionSeriesID,SearchText): Observable<any> {
         const params = new HttpParams().set('ReportTypeID', ReportTypeID)
             .set('StockitemID', StockItemID).set('LedgerID', LedgerID)
