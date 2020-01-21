@@ -16,6 +16,7 @@ export class NavbarComponent implements OnInit{
   public notificationList: any[] = [];
   public getNotiSub: Subscription;
   public notiCount: number;
+  public name = '';
 
   constructor(
     private router: Router,
@@ -41,6 +42,9 @@ export class NavbarComponent implements OnInit{
     const userId = localStorage.getItem("userID");
     this.userService.getUserDetails(userId).subscribe(res => {
       if (res.status === "200") {
+        if (res && res.data[0].name){
+          this.name = res.data[0].name;
+        }
         if (res && res.data[0].userRights.length > 0) {
           this.userDetails = res.data[0].userRights;
         }
