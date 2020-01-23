@@ -57,6 +57,7 @@ export class CreatePOrderComponent implements OnInit {
 
   ngOnInit() {
     this.getTransactionList();
+    localStorage.setItem('t_searchText','');
     localStorage.setItem('transItemDetails', 'true');
     localStorage.setItem('transLedgerDetails', 'true');
     localStorage.setItem('transPOTerms', 'true');

@@ -16,6 +16,7 @@ export class GnrComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // this.getTransactionList();
+    localStorage.setItem('t_searchText','');
     localStorage.setItem('transItemDetails', 'true');
     localStorage.setItem('transLedgerDetails', 'true');
     localStorage.setItem('transPOTerms', 'false');

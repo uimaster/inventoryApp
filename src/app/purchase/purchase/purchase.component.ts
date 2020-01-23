@@ -15,6 +15,7 @@ export class TransactionPurchaseComponent implements OnInit, OnDestroy {
   constructor( private transactionSerivices: TransactionServices, private router: Router, private userService: UsersService) { }
 
   ngOnInit() {
+    localStorage.setItem('t_searchText','');
     // this.getTransactionList();
     localStorage.setItem('transItemDetails', 'true');
     localStorage.setItem('transLedgerDetails', 'true');

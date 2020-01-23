@@ -34,6 +34,7 @@ export class POAuthListComponent implements OnInit {
   }
 
   ngOnInit() {
+    localStorage.setItem('t_searchText','');
     // this.getPOAuthList();
     this.createUnauthoriseForm();
     this.getUserMenuDetails();

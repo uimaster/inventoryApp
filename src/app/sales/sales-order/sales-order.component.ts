@@ -18,6 +18,7 @@ export class SalesOrderComponent implements OnInit {
 
   ngOnInit() {
     // this.getSalesOrderList();
+    localStorage.setItem('t_searchText','');
     localStorage.setItem('transItemDetails', 'true');
     localStorage.setItem('transLedgerDetails', 'true');
     localStorage.setItem('transPOTerms', 'false');

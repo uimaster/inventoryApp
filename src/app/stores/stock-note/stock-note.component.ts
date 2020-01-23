@@ -16,7 +16,7 @@ export class StockNoteComponent implements OnInit {
 
   ngOnInit() {
     // this.getTransactionList();
-
+    localStorage.setItem('t_searchText','');
     localStorage.setItem('transItemDetails', 'true');
     localStorage.setItem('transLedgerDetails', 'false');
     localStorage.setItem('transPOTerms', 'false');
@@ -35,6 +35,7 @@ export class StockNoteComponent implements OnInit {
     localStorage.setItem('showBarcode4Grn', 'true');
     localStorage.setItem('GrnInput', 'false');
     localStorage.setItem('showBarcode', 'true');
+    this.getUserMenuDetails()
   }
 
   getUserMenuDetails() {

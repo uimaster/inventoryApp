@@ -19,6 +19,7 @@ export class PackingListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // this.getSalesOrderList();
+    localStorage.setItem('t_searchText','');
     localStorage.setItem('transItemDetails', 'true');
     localStorage.setItem('transLedgerDetails', 'false');
     localStorage.setItem('transPOTerms', 'false');

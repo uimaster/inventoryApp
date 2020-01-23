@@ -18,7 +18,7 @@ export class PhysicalStockComponent implements OnInit {
 
   ngOnInit() {
     // this.getTransactionList();
-
+    localStorage.setItem('t_searchText','');
     localStorage.setItem('transItemDetails', 'true');
     localStorage.setItem('transLedgerDetails', 'false');
     localStorage.setItem('transPOTerms', 'false');

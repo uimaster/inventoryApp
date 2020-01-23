@@ -74,6 +74,7 @@ OnDestroy {
     public barcodeFields = false;
     public showTransactionSeries = false;
     public showPO = false;
+    public showAmendement = false;
     public showBarcode = false;
     public transationLinkRefInput = false;
     public transationLinkRefNamePO = false;
@@ -148,6 +149,7 @@ OnDestroy {
         this.barcodeFields = JSON.parse(localStorage.getItem("barcodeFields"));
         this.showTransactionSeries = JSON.parse(localStorage.getItem("showTransactionSeries"));
         this.showPO = JSON.parse(localStorage.getItem("showPO"));
+        this.showAmendement = JSON.parse(localStorage.getItem("showAmendement"));
         this.showBarcode = JSON.parse(localStorage.getItem("showBarcode"));
         this.transationLinkRefInput = JSON.parse(localStorage.getItem("transationLinkRefInput"));
         this.transationLinkRefNamePO = JSON.parse(localStorage.getItem("transationLinkRefNamePO"));
@@ -1998,6 +2000,7 @@ OnDestroy {
         localStorage.setItem("barcodeFields", "false");
         localStorage.setItem("showTransactionSeries", "false");
         localStorage.setItem("showPO", "false");
+        localStorage.setItem("showAmendement", "false");
         localStorage.setItem("showBarcode", "false");
         localStorage.setItem("transationLinkRefInput", "false");
         localStorage.setItem("transationLinkRef", "false");

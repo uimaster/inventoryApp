@@ -23,6 +23,7 @@ export class PurchaseOrderComponent implements OnInit {
 
   ngOnInit() {
     localStorage.setItem('transactionTypeId', '1');
+    localStorage.setItem('t_searchText','');
     this.getUserMenuDetails();
   }
 
@@ -58,6 +59,7 @@ export class PurchaseOrderComponent implements OnInit {
     localStorage.setItem('rollBackUrl', backUrl);
 
     localStorage.setItem('transactionID', id);
+    localStorage.setItem('showAmendement', 'true');
     this.router.navigate(['/purchase/addPOrder']);
 
   }
