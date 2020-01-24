@@ -58,8 +58,8 @@ export class FiltersComponent implements OnInit {
   }
 
   setFilterDates() {
-    if(this.searchInput != '')
-      localStorage.setItem("t_searchText", this.searchInput);
+    //if(this.searchInput != '')
+    localStorage.setItem("t_searchText", this.searchInput);
     
     if (this.fromDate === '') {
       this.fromDate = this.convertDate(this.today);

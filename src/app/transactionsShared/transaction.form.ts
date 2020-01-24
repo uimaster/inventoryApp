@@ -117,6 +117,8 @@ OnDestroy {
     public BarcodeSuccessMsg = "";
     public disabledScanBtn = false;
     public lengthCalcStatus = false;
+    public showGRNFIFOList = false;
+    public GRNFIFOList = [];
 
     constructor(private fb : FormBuilder, 
         private poService : PurchaseService, 
@@ -165,7 +167,10 @@ OnDestroy {
         this.showScannedQty = JSON.parse(localStorage.getItem("showScannedQty"));
         this.showBarcode4Grn = JSON.parse(localStorage.getItem("showBarcode4Grn"));
         this.showLength4So = JSON.parse(localStorage.getItem("showLength4So"));
-
+        this.showGRNFIFOList = JSON.parse(localStorage.getItem("showGRNFIFOList"));
+        // if(this.showGRNFIFOList){
+        //     this.getGRNFIFOList();
+        // }
         this.showLoader = true;
         this.getItemList();
         this.getCurrency();
@@ -882,11 +887,20 @@ OnDestroy {
     }
 
     saveTransation(formData) {
+        if(this.showGRNFIFOList){
+            for (let index = 0; index < formData.transItemDetails.length; index++) {
+                if(formData.transItemDetails[index].transactionItem_AdditionalDesciption == ''){
+                    this.notificationsService.notify('error','Error','Please select GRN No in item details.')
+                    return false;
+                }
+            }
+        }
         this.confirmationService.confirm({
             message: 'Are you sure that you want to perform this action?',
             accept: () => {
                 //Actual logic to perform a confirmation
                 if (this.transactionForm.valid) {
+                    //console.log('a',formData); return false;
                     this.showLoader = true;
                     let fName = 'AddTransaction';
                     if(this.transationLinkRefNameGRN){
@@ -992,6 +1006,7 @@ OnDestroy {
             }
         }
         this.getItemRate(itemId, index);
+        this.getGRNFIFOList(itemId,index);
     }
 
     getLocation() {
@@ -1993,6 +2008,24 @@ OnDestroy {
         });
     }
 
+    getGRNFIFOList(stockItemID,index){
+        let transactionDate = this.transactionForm.get('transactionDate').value;
+        this.GRNFIFOList[index] = [];
+        this.trasactionService.getGRNFIFOList(transactionDate,stockItemID).subscribe(res => {
+            if (res && res.status === "200") {
+                let data = res.data;
+                for (let key in data) {
+                    if (data.hasOwnProperty(key)) {
+                        this.GRNFIFOList[index].push({
+                            label: data[key].grnNo + '|' + data[key].grnQty + '|' + data[key].grnDate , 
+                            value: data[key].grnNo + '|' + data[key].grnQty
+                        });
+                    }
+                }
+            }
+        });
+    }
+
     goBack() {
       history.back();
     }
@@ -2017,5 +2050,6 @@ OnDestroy {
         localStorage.setItem("showBarcode4Grn", "false");
         localStorage.setItem("showLength4So", "false");
         localStorage.setItem("PendingReturnableDC", "false");
+        localStorage.setItem("showGRNFIFOList", "false");
     }
 }

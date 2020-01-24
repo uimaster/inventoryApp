@@ -49,7 +49,7 @@ export const VALIDATEBATCH = BASEURL + 'StockItem/GetValidateBatch';
 export const GETTRANSACTIONTYPESERIES = BASEURL + 'Transactions/GetTransactionTypeSeries';
 export const GETITEMSRATE = BASEURL + 'StockItem/GetStockItemRate';
 export const GETLEDGERLOCATION = BASEURL + 'Masters/GetLedgerLocationList';
-
+export const GETGRNFIFOLIST = BASEURL + 'Transactions/GetGRNFIFOList';
 
 // PriceLIST
 export const GETPRICELISTLIST = BASEURL + 'PriceLists/GetPriceLists';

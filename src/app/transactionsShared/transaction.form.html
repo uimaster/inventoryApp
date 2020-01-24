@@ -175,12 +175,13 @@
       <thead>
         <th width="4%">S.No.</th>
         <th width="30%">Item Name</th>
-        <th width="3%">&nbsp;</th>
+        <th width="3%" *ngIf="!showGRNFIFOList">&nbsp;</th>
         <th width="10%" *ngIf="showLength4So">Length</th>
         <th width="10%" *ngIf="showLength4So">Stops</th>
         <th width="10%" *ngIf="showScannedQty">Scanned Qty</th>
         <th width="10%" *ngIf="GrnInput">Order Qty.</th>
         <th width="10%" *ngIf="GrnInput">Challan Qty.</th>
+        <th width="25%" *ngIf="showGRNFIFOList">GRN No</th>
         <th width="10%">Qty</th>
         <th width="10%" *ngIf="showBoxCode">Box Code</th>
         <th width="10%" *ngIf="!showScannedQty">Rate</th>
@@ -198,7 +199,7 @@
             <input type="text" formControlName="stockitemID" pInputText
               style="visibility: hidden; height: 0; width: 0; font-size: 0;">
           </td>
-          <td style="text-align: left;">
+          <td style="text-align: left;" *ngIf="!showGRNFIFOList">
             <button pButton type="button" class="ui-button-success" label="..." (click)="displayItemDescDialog[i]=true" pTooltip="Click to fill Items Additional Description." tooltipPosition="top"></button>
             <p-dialog header="Add Item te Description" [(visible)]="displayItemDescDialog[i]" [modal]="true" [responsive]="true" [style]="{width: '350px', minWidth: '200px'}" [minY]="70" [maximizable]="true" [baseZIndex]="10000">
               <div class="form-group">
@@ -226,6 +227,9 @@
           <td *ngIf="GrnInput"><input type="text" formControlName="itemPending_Qty" pInputText disabled="disabled">
           </td>
           <td *ngIf="GrnInput"><input type="text" formControlName="itemChallan_Qty" pInputText></td>
+          <td *ngIf="showGRNFIFOList" style="text-align: left;">
+            <p-dropdown [options]="GRNFIFOList[i]" formControlName="transactionItem_AdditionalDesciption" placeholder="GRN No" [style]="{'width':'95%'}"></p-dropdown>
+          </td>
           <td><input type="text" formControlName="itemQty" pInputText (keyup)="getAmount(true)"
               [class.verified]="equalQtyList[i]===i && showScannedQty"
               [class.pending]="equalQtyList[i]!==i && showScannedQty"></td>

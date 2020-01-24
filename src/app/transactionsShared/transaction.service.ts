@@ -203,6 +203,15 @@ export class TransactionServices {
       .catch((error) => Observable.throw(error.json() || 'Server error'));
   }
 
+  getGRNFIFOList(date,stockItemId): Observable<any> {
+    const params = new HttpParams().set('TransactionDate', date).set('StockItemID', stockItemId);
+    return this.http.get(urls.GETGRNFIFOLIST, {params}).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+
   UpdateTransactionPurchase(payload: any): Observable<any> {
     return this.http.post(urls.UPDATETRANSACTIONPURCHASE, payload)
     .map((res: any) => {

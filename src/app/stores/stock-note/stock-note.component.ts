@@ -35,6 +35,7 @@ export class StockNoteComponent implements OnInit {
     localStorage.setItem('showBarcode4Grn', 'true');
     localStorage.setItem('GrnInput', 'false');
     localStorage.setItem('showBarcode', 'true');
+    localStorage.setItem('showGRNFIFOList','true');
     this.getUserMenuDetails()
   }
 
